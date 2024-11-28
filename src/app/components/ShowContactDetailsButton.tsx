@@ -1,0 +1,67 @@
+"use client";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+} from "@nextui-org/react";
+import React from "react";
+import {
+  ArrowCircleRight,
+  Compass,
+  PhoneCall,
+  MapPin,
+  Envelope,
+  Printer,
+} from "@phosphor-icons/react/dist/ssr";
+
+export default function ShowContactDetailsButton({
+  phone,
+  fax,
+  email,
+}: {
+  phone: string;
+  fax: string;
+  email: string;
+}) {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [scrollBehavior, setScrollBehavior] = React.useState<
+    "inside" | "normal" | "outside"
+  >("inside");
+
+  return (
+    <>
+      <Button
+        className={`${
+          isOpen === false ? "" : "hidden"
+        } w-full mt-2 bg-blue-950 text-white font-bold text-md`}
+        onPress={onOpen}
+      >
+        İletişim Bilgilerini Göster
+      </Button>
+      <div className={`${isOpen === true ? "" : "hidden"}`}>
+        {phone && (
+          <p className="flex flex-row justify-center gap-x-2">
+            <PhoneCall width={20} height={20} />
+            {phone}
+          </p>
+        )}
+        {fax && (
+          <p className="flex flex-row justify-center gap-x-2">
+            <Printer width={20} height={20} />
+            {fax}
+          </p>
+        )}
+        {email && (
+          <p className="flex flex-row justify-center gap-x-2">
+            <Envelope width={20} height={20} />
+            {email}
+          </p>
+        )}
+      </div>
+    </>
+  );
+}

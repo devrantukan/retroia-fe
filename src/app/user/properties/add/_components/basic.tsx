@@ -1,5 +1,13 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
-import { Button, Card, Input, Select, SelectItem, Textarea, cn } from "@nextui-org/react";
+import {
+  Button,
+  Card,
+  Input,
+  Select,
+  SelectItem,
+  Textarea,
+  cn,
+} from "@nextui-org/react";
 import { PropertyStatus, PropertyType } from "@prisma/client";
 import React from "react";
 import { useFormContext } from "react-hook-form";
@@ -18,12 +26,21 @@ const Basic = (props: Props) => {
     trigger,
     getValues,
   } = useFormContext<AddPropertyInputType>();
+
+  console.log(getValues());
+
   const handleNext = async () => {
-    if (await trigger(["name", "description", "typeId", "statusId", "price"])) props.next();
+    if (await trigger(["name", "description", "typeId", "statusId", "price"]))
+      props.next();
   };
 
   return (
-    <Card className={cn("p-2 gap-3 grid grid-cols-1 md:grid-cols-3", props.className)}>
+    <Card
+      className={cn(
+        "p-2 gap-3 grid grid-cols-1 md:grid-cols-3",
+        props.className
+      )}
+    >
       <Input
         {...register("name")}
         errorMessage={errors.name?.message}

@@ -21,8 +21,13 @@ export const AddPropertyFormSchema = z.object({
     streetAddress: z.string().min(1, "Enter the street address"),
     city: z.string().min(1, "Enter the city name"),
     state: z.string().min(1, "Enter the state name"),
-    zip: z.string().refine((data) => validator.isPostalCode(data, "US"), "Enter the zip code"),
-    region: z.string().min(1, "Enter the region"),
+    zip: z
+      .string()
+      .refine(
+        (data) => validator.isPostalCode(data, "US"),
+        "Enter the zip code"
+      ),
+    country: z.string().min(1, "Enter the country"),
     landmark: z.string(),
   }),
   propertyFeature: z.object({
@@ -48,7 +53,9 @@ export const AddPropertyFormSchema = z.object({
   }),
   contact: z.object({
     name: z.string().min(1, "Please enter the contact name"),
-    phone: z.string().refine(validator.isMobilePhone, "Please enter a valid phone number"),
+    phone: z
+      .string()
+      .refine(validator.isMobilePhone, "Please enter a valid phone number"),
     email: z.string().email(),
   }),
 });

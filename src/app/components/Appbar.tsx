@@ -12,16 +12,17 @@ import {
 } from "@nextui-org/react";
 import Link from "next/link";
 import React, { ReactNode } from "react";
+import Image from "next/image";
 
-interface Props {
-  children: ReactNode;
-}
-
-const Appbar = ({ children }: Props) => {
+const Appbar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   return (
-    <Navbar className="shadow-md" onMenuOpenChange={setIsMenuOpen}>
-      <NavbarContent>
+    <Navbar
+      className="shadow-md bg-blue-950  w-full flex justify-between "
+      onMenuOpenChange={setIsMenuOpen}
+      maxWidth={"full"}
+    >
+      <NavbarContent justify="start">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="sm:hidden"
@@ -31,15 +32,67 @@ const Appbar = ({ children }: Props) => {
             href={"/"}
             className="flex items-center text-primary-400 hover:text-primary-600 transition-colors"
           >
-            <HomeModernIcon className="w-16" />
-            <p className="font-bold text-inherit">Sk Real Estate</p>
+            <Image
+              src={"/retroia-logo.png"}
+              width={128}
+              height={96}
+              alt="Retroia Logo"
+            />
           </Link>
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center"></NavbarContent>
-      <NavbarContent justify="end">{children}</NavbarContent>
-      <NavbarMenu></NavbarMenu>
+      <NavbarContent className="hidden sm:flex gap-4 text-white" justify="end">
+        <NavbarItem>
+          <Link color="foreground" href="/ofislerimiz">
+            Ofislerimiz
+          </Link>
+        </NavbarItem>
+        <NavbarItem isActive>
+          <Link href="/danismanlarimiz" aria-current="page">
+            Danışmanlarımız
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" href="/gayrimenkul-danismani-basvuru-formu">
+            Danışman ol
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link
+            color="foreground"
+            href="/gayrimenkullerinizi-satalim-kiralayalim"
+          >
+            Retroia ile Sat Kirala
+          </Link>
+        </NavbarItem>
+      </NavbarContent>
+
+      <NavbarMenu>
+        <NavbarItem>
+          <Link color="foreground" href="/ofislerimiz">
+            Ofislerimiz
+          </Link>
+        </NavbarItem>
+        <NavbarItem isActive>
+          <Link href="/danismanlarimiz" aria-current="page">
+            Danışmanlarımız
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" href="/gayrimenkul-danismani-basvuru-formu">
+            Danışman ol
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link
+            color="foreground"
+            href="/gayrimenkullerinizi-satalim-kiralayalim"
+          >
+            Retroia ile Sat Kirala
+          </Link>
+        </NavbarItem>
+      </NavbarMenu>
     </Navbar>
   );
 };

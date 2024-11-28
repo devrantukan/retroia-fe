@@ -23,13 +23,18 @@ const Location = (props: Props) => {
         "location.city",
         "location.state",
         "location.zip",
-        "location.region",
+        "location.country",
       ])
     )
       props.next();
   };
   return (
-    <Card className={cn("p-2  grid grid-cols-1 md:grid-cols-2 gap-3", props.className)}>
+    <Card
+      className={cn(
+        "p-2  grid grid-cols-1 md:grid-cols-2 gap-3",
+        props.className
+      )}
+    >
       <Input
         {...register("location.streetAddress")}
         errorMessage={errors.location?.streetAddress?.message}
@@ -64,12 +69,12 @@ const Location = (props: Props) => {
       />
 
       <Input
-        {...register("location.region")}
-        errorMessage={errors.location?.region?.message}
-        isInvalid={!!errors.location?.region}
-        label="Region/Neighborhood"
+        {...register("location.country")}
+        errorMessage={errors.location?.country?.message}
+        isInvalid={!!errors.location?.country}
+        label="Country"
         className="col-span-2"
-        defaultValue={getValues().location.region}
+        defaultValue={getValues().location.country}
       />
 
       <Textarea

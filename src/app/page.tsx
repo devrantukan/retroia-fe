@@ -3,6 +3,7 @@ import Image from "next/image";
 import PropertyCard from "./components/PropertyCard";
 import PropertyContainer from "./components/PropertyContainer";
 import Search from "./components/Search";
+import HomepageHero from "./components/HomepageHero";
 const PAGE_SIZE = 8;
 
 interface Props {
@@ -57,12 +58,12 @@ export default async function Home({ searchParams }: Props) {
 
   return (
     <div>
-      <Search />
-      <PropertyContainer totalPages={totalPages} currentPage={+pagenum}>
+      <HomepageHero />
+      {/* <PropertyContainer totalPages={totalPages} currentPage={+pagenum}>
         {properties.map((propertyItem) => (
           <PropertyCard property={propertyItem} key={propertyItem.id} />
         ))}
-      </PropertyContainer>
+      </PropertyContainer> */}
     </div>
   );
 }

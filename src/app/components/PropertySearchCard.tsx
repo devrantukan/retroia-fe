@@ -3,10 +3,10 @@ import { Prisma } from "@prisma/client";
 import Link from "next/link";
 import { Avatar } from "@nextui-org/react";
 
-const PropertyCard = ({ property }: any) => {
+const PropertySearchCard = ({ property }: any) => {
   console.log("hit is:", property);
   return (
-    <Card className="w-full flex lg:flex-row mb-4" shadow="md">
+    <Card className="w-full flex lg:flex-row  hover:scale-101 my-2" shadow="md">
       <Link
         className="hover:text-primary-500 transition-colors w-4/5"
         href={`/property/${property.id}`}
@@ -20,20 +20,21 @@ const PropertyCard = ({ property }: any) => {
                 : `/images/${Math.floor(Math.random() * 9 + 1)}.jpg`
             }
             className="object-fill w-64 h-48"
-            alt={property.name}
+            alt={property.title}
           />
           <div className="flex flex-col mt-2">
             <div className="p-4 h-full">
-              {/* <p className="text-slate-600">
-                {property.location.country} / {property.location.city} /{" "}
-                {property.location.district} / {property.location.neighborhood}
-              </p> */}
+              <p className="text-slate-600">
+                {property.country} / {property.city} / {property.district} /{" "}
+                {property.neighborhood}
+              </p>
               <p className="text-primary-600 text-xl font-bold">
-                {property.name}
+                {property.title}
               </p>
             </div>
             <div className="bg-gradient-to-br from-slate-50 to-slate-200 p-4 flex justify-start">
-              <p className="text-2xl lining-nums font-semibold tracking-wider">
+              <p className="text-2xl lining-nums  font-semibold tracking-wider">
+                {" "}
                 {property.price.toLocaleString("tr-TR", {
                   minimumFractionDigits: 0,
                   maximumFractionDigits: 0,
@@ -44,34 +45,25 @@ const PropertyCard = ({ property }: any) => {
           </div>
         </div>
       </Link>
-      <div className="w-1/5 flex items-center flex-col my-auto  hover:bg-slate-100 hover:cursor-pointer rounded-xl mr-4">
-        {/* <Avatar
-          showFallback
-          name={property.agent?.name + " " + property.agent?.surname}
-          src="https://images.unsplash.com/broken"
-        />
-        <p>
-          {property.agent?.name} {property.agent?.surname}
-        </p>
-        <p>{property.agent?.office.title}</p> */}
+      <div className="w-1/5 flex items-center flex-col my-auto hover:bg-slate-100 hover:cursor-pointer rounded-xl mr-4">
         <Link
-          href={`/danisman/${property.agentId}/${property.agent.slug}`}
+          href={`/danisman/${property.agentId}/${property.agentSlug}`}
           className="flex justify-center items-center flex-col my-6"
         >
           <Avatar
             showFallback
-            name={property.agent?.name + " " + property.agent?.surname}
-            src={property.agent?.avatarUrl}
+            name={property.agentName + " " + property.agentSurname}
+            src={property.agentAvatarUrl}
             className="h-16 w-16 mb-2"
           />
           <p className="font-bold">
-            {property.agent.name} {property.agent.surname}
+            {property.agentName} {property.agentSurname}
           </p>
-          <p className="font-light">{property.agent.office.name}</p>
+          <p>{property.agentOffice.name}</p>
         </Link>
       </div>
     </Card>
   );
 };
 
-export default PropertyCard;
+export default PropertySearchCard;
