@@ -1,10 +1,11 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
 
-const AnyReactComponent: React.FC<{ text: string }> = ({ text }) => (
-  <div>{text}</div>
-);
-
+const AnyReactComponent2: React.FC<{
+  text: string;
+  lat: number;
+  lng: number;
+}> = ({ text }) => <div>{text}</div>;
 export default function OfficeMap() {
   const defaultProps = {
     center: {
@@ -27,3 +28,13 @@ export default function OfficeMap() {
     </div>
   );
 }
+
+interface AnyReactComponentProps {
+  lat: number;
+  lng: number;
+  text: string;
+}
+
+const AnyReactComponent: React.FC<AnyReactComponentProps> = ({ text }) => (
+  <div>{text}</div>
+);

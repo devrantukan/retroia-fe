@@ -8,12 +8,16 @@ import {
 } from "@remixicon/react";
 import Image from "next/image";
 
+interface propertyPages {
+  id: number;
+  page: string;
+  href: string;
+}
+
 const propertyPages = [
   { id: 0, page: "Satılık Konutlar", href: "/konut/satilik" },
   { id: 1, page: "Satılık Ticari Gayrimenkuller", href: "/ticari/satilik" },
   { id: 2, page: "Satılık Arsalar", href: "/arsa-arazi/satilik" },
-
-  ,
 ];
 
 const cooperatePages = [
