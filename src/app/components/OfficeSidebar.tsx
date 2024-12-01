@@ -10,6 +10,11 @@ import {
   PhoneCall,
   MapPin,
   CheckCircle,
+  Globe,
+  InstagramLogo,
+  LinkedinLogo,
+  FacebookLogo,
+  XLogo,
 } from "@phosphor-icons/react/dist/ssr";
 
 import ShowContactDetailsButton from "./ShowContactDetailsButton";
@@ -37,6 +42,74 @@ const OfficeSidebar = ({ office }: Props) => {
         fax={office.fax}
         email={office.email}
       />
+      <div className="m-4">
+        <ul className="flex flex-row gap-x-2 justify-between">
+          {office.xAccountId && (
+            <li key={1}>
+              <Link target="_blank" href={`https://x.com/${office.xAccountId}`}>
+                <XLogo
+                  width={32}
+                  height={32}
+                  className="border rounded-2xl p-1 hover:bg-slate-200"
+                />
+              </Link>
+            </li>
+          )}
+          {office.facebookAccountId && (
+            <li key={2}>
+              <Link
+                target="_blank"
+                href={`https://facebook.com/${office.facebookAccountId}`}
+              >
+                <FacebookLogo
+                  width={32}
+                  height={32}
+                  className="border rounded-2xl p-1 hover:bg-slate-200"
+                />
+              </Link>
+            </li>
+          )}
+          {office.linkedInAccountId && (
+            <li key={3}>
+              <Link
+                target="_blank"
+                href={`https://linkedin.com/${office.linkedInAccountId}`}
+              >
+                <LinkedinLogo
+                  width={32}
+                  height={32}
+                  className="border rounded-2xl p-1 hover:bg-slate-200"
+                />
+              </Link>
+            </li>
+          )}
+          {office.instagramAccountId && (
+            <li key={4}>
+              <Link
+                target="_blank"
+                href={`https://instagram.com/${office.instagramAccountId}`}
+              >
+                <InstagramLogo
+                  width={32}
+                  height={32}
+                  className="border rounded-2xl p-1 hover:bg-slate-200"
+                />
+              </Link>
+            </li>
+          )}
+          {office.webUrl && (
+            <li key={5}>
+              <Link target="_blank" href={`${office.webUrl}`}>
+                <Globe
+                  width={32}
+                  height={32}
+                  className="border rounded-2xl p-1 hover:bg-slate-200"
+                />
+              </Link>
+            </li>
+          )}
+        </ul>
+      </div>
       <p className="text-lg font-medium mx-4 text-slate-600 text-center capitalize my-2">
         {office.streetAddress}
       </p>
@@ -55,8 +128,14 @@ const OfficeSidebar = ({ office }: Props) => {
         Ofis Konumu
       </Button>
       <Button className="mt-4 bg-blue-950 text-white font-bold text-md">
-        <Compass width={20} height={20} />
-        Yol Tarifi Al
+        <Link
+          target="_blank"
+          href={`https://www.google.com/maps?daddr=${office.latitude},${office.longitude}`}
+          className="flex flex-row gap-x-1 justify-center items-center"
+        >
+          <Compass width={20} height={20} />
+          Yol Tarifi Al
+        </Link>
       </Button>
       <div className="bg-blue-200 mt-4 rounded-lg p-4">
         <p className="font-bold mb-2">Aramıza Katıl</p>

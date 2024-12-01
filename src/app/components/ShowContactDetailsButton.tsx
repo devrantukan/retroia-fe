@@ -37,12 +37,13 @@ export default function ShowContactDetailsButton({
       <Button
         className={`${
           isOpen === false ? "" : "hidden"
-        } w-full mt-2 bg-blue-950 text-white font-bold text-md`}
+        } w-full mt-4 bg-blue-950 text-white font-bold text-md`}
         onPress={onOpen}
       >
+        <PhoneCall width={20} height={20} />
         İletişim Bilgilerini Göster
       </Button>
-      <div className={`${isOpen === true ? "" : "hidden"}`}>
+      <div className={`${isOpen === true ? "" : "hidden"} mt-4`}>
         {phone && (
           <p className="flex flex-row justify-center gap-x-2">
             <PhoneCall width={20} height={20} />

@@ -23,7 +23,11 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
             <Card>
               <CardBody>
                 {officeWorker.properties.map((property: any) => (
-                  <PropertyCard property={property} key={property._id} />
+                  <PropertyCard
+                    property={property}
+                    key={property._id}
+                    showAvatar={false}
+                  />
                 ))}
               </CardBody>
             </Card>

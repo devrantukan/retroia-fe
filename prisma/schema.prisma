@@ -134,6 +134,13 @@ model Office {
   description   String
   email         String
   phone         String
+  fax           String
+  xAccountId    String
+  facebookAccountId    String
+  linkedInAccountId    String
+  instagramAccountId    String
+  youtubeAccountId      String
+  webUrl        String
   slug          String
 
 }
@@ -147,6 +154,14 @@ model OfficeWorker {
   about       String
   email       String
   phone       String
+  xAccountId    String
+  facebookAccountId    String
+  linkedInAccountId    String
+  instagramAccountId    String
+  youtubeAccountId      String
+  webUrl        String
+  commercialDocumentId  String
+  companyLegalName      String
   officeId    Int 
   office      Office   @relation(fields: [officeId], references: [id])
   properties  Property[]

@@ -3,7 +3,7 @@ import { Prisma } from "@prisma/client";
 import Link from "next/link";
 import { Avatar } from "@nextui-org/react";
 
-const PropertyCard = ({ property }: any) => {
+const PropertyCard = ({ property, showAvatar }: any) => {
   console.log("hit is:", property);
   return (
     <Card className="w-full flex lg:flex-row mb-4" shadow="md">
@@ -54,21 +54,23 @@ const PropertyCard = ({ property }: any) => {
           {property.agent?.name} {property.agent?.surname}
         </p>
         <p>{property.agent?.office.title}</p> */}
-        <Link
-          href={`/danisman/${property.agentId}/${property.agent.slug}`}
-          className="flex justify-center items-center flex-col my-6"
-        >
-          <Avatar
-            showFallback
-            name={property.agent?.name + " " + property.agent?.surname}
-            src={property.agent?.avatarUrl}
-            className="h-16 w-16 mb-2"
-          />
-          <p className="font-bold">
-            {property.agent.name} {property.agent.surname}
-          </p>
-          <p className="font-light">{property.agent.office.name}</p>
-        </Link>
+        {showAvatar == true && (
+          <Link
+            href={`/danisman/${property.agentId}/${property.agent.slug}`}
+            className="flex justify-center items-center flex-col my-6"
+          >
+            <Avatar
+              showFallback
+              name={property.agent?.name + " " + property.agent?.surname}
+              src={property.agent?.avatarUrl}
+              className="h-16 w-16 mb-2"
+            />
+            <p className="font-bold">
+              {property.agent.name} {property.agent.surname}
+            </p>
+            <p className="font-light">{property.agent.office.name}</p>
+          </Link>
+        )}
       </div>
     </Card>
   );

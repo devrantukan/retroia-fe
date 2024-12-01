@@ -18,7 +18,14 @@ const OfficeWorkerPage = async ({ params }: Props) => {
       id: +params.id,
     },
     include: {
-      office: true,
+      office: {
+        include: {
+          neighborhood: true,
+          district: true,
+          city: true,
+          country: true,
+        },
+      },
       properties: {
         include: {
           status: true,
