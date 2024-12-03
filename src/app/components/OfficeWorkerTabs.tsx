@@ -4,6 +4,7 @@ import React from "react";
 import { Tabs, Tab, Card, CardBody } from "@nextui-org/react";
 import Link from "next/link";
 import PropertyCard from "./PropertyCard";
+import OfficeWorkerReviews from "./OfficeWorkerReviews";
 
 interface Props {
   officeWorker: any;
@@ -41,8 +42,7 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
           <Tab key="customer-reviews" title="Müşteri Yorumları">
             <Card>
               <CardBody>
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                qui officia deserunt mollit anim id est laborum.
+                <OfficeWorkerReviews officeWorker={officeWorker} index={0} />
               </CardBody>
             </Card>
           </Tab>

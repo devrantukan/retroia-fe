@@ -58,20 +58,18 @@ export default function Footer() {
   return (
     <footer
       role="contentinfo"
-      className="flex flex-col border border-t-gray-300 text-sm font-medium p-6 w-full w-screen-sm md:w-screen-md"
+      className="flex flex-col border border-t-gray-300 text-sm font-medium p-6 w-full w-screen-sm md:w-screen-md lg:text-left text-center "
     >
-      <div className="w-full flex flex-row justify-between">
-        <nav
-          aria-label="Social media links"
-          className="flex flex-col items-baseline h-full"
-        >
+      <div className="w-full flex lg:flex-row flex-col justify-between">
+        <nav aria-label="Social media links" className="flex flex-col h-full">
           <Image
             src={"/retroia-logo-dark.png"}
             width={128}
             height={96}
             alt="Retroia Logo"
+            className="mx-auto lg:mx-0"
           />
-          <ul className="flex flex-row flex-nowrap gap-x-4  h-[110px] items-end">
+          <ul className="flex flex-row flex-nowrap gap-x-4  items-end w-full justify-center lg:justify-normal invisible lg:visible">
             {socialLinks.map(({ id, Icon, href }) => (
               <li key={id}>
                 <a href={href} className={classes.socialLink}>
@@ -83,7 +81,7 @@ export default function Footer() {
         </nav>
         <nav
           aria-label="Footer navigation"
-          className="flex flex-row gap-8 mt-4"
+          className="flex lg:flex-row flex-col gap-8 mt-4"
         >
           <div>
             <p className="mb-4  text-blue-950">GAYRİMENKULLER</p>
@@ -116,6 +114,15 @@ export default function Footer() {
               ))}
             </ul>
           </div>
+          <ul className="flex flex-row flex-nowrap gap-x-4  items-end w-full justify-center  lg:hidden">
+            {socialLinks.map(({ id, Icon, href }) => (
+              <li key={id}>
+                <a href={href} className={classes.socialLink}>
+                  <Icon className={classes.socialIcon} />
+                </a>
+              </li>
+            ))}
+          </ul>
         </nav>
       </div>
       <p className="mt-4 text-neutral-900 font-normal">

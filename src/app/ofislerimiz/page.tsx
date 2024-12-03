@@ -12,7 +12,7 @@ const OfficesPage = async () => {
   if (!offices) return notFound();
   return (
     <div>
-      <div className="h-[480px] bg-slate-300 m-4 p-4 rounded-xl mb-12 ">
+      <div className="h-[480px] bg-slate-300 m-6 p-4 rounded-xl mb-12 ">
         <h1 className="mt-24 text-3xl font-extralight ml-12">
           xx İLDE {offices.length} RETROİA OFİSİ
           <br />
@@ -21,7 +21,7 @@ const OfficesPage = async () => {
           </span>
         </h1>
       </div>
-      <div className="m-4 flex flex-col">
+      <div className="m-6 flex flex-col">
         {offices.map((office, index) => (
           <OfficeCard office={office} key={index} />
         ))}

@@ -10,6 +10,9 @@ import OfficeMap from "./OfficeMap";
 import { useRouter } from "next/navigation";
 import { Compass, MapPin } from "@phosphor-icons/react/dist/ssr";
 import OfficeWorkerCardLight from "./OfficeWorkerCardLight";
+import OfficeImages from "./OfficeImages";
+import OfficeWorkerReviews from "./OfficeWorkerReviews";
+import Image from "next/image";
 
 interface Props {
   office: any;
@@ -69,16 +72,62 @@ const OfficeTabs = ({ office }: Props) => {
               </CardBody>
             </Card>
           </Tab>
+          <Tab key="projects" title="Projelerimiz">
+            <Card>
+              <CardBody>Projects will be displayed here</CardBody>
+            </Card>
+          </Tab>
           <Tab key="about-us" title="Hakkımızda">
             <Card>
-              <CardBody>{office.description}</CardBody>
+              <CardBody>
+                <div>
+                  <div
+                    id="about"
+                    className="relative bg-white overflow-hidden "
+                  >
+                    <div className="max-w-7xl mx-auto">
+                      <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+                        <svg
+                          className="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2"
+                          fill="currentColor"
+                          viewBox="0 0 100 100"
+                          preserveAspectRatio="none"
+                          aria-hidden="true"
+                        >
+                          <polygon points="50,0 100,0 50,100 0,100"></polygon>
+                        </svg>
+
+                        <div className="pt-1"></div>
+
+                        <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+                          <div className="sm:text-center lg:text-left">
+                            <h2 className="my-6 text-2xl tracking-tight font-extrabold text-gray-900 sm:text-3xl md:text-4xl">
+                              Hakkımızda
+                            </h2>
+
+                            <p>{office.description}</p>
+                          </div>
+                        </main>
+                      </div>
+                    </div>
+                    <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+                      <Image
+                        className="h-56 w-full object-cover object-top sm:h-72 md:h-96 lg:w-full lg:h-full"
+                        src="https://cdn.pixabay.com/photo/2024/11/08/09/45/facade-9182972_960_720.jpg 1x, https://cdn.pixabay.com/photo/2024/11/08/09/45/facade-9182972_1280.jpg"
+                        alt=""
+                        width={800}
+                        height={640}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </CardBody>
             </Card>
           </Tab>
           <Tab key="our-office" title="Ofisimiz">
             <Card>
               <CardBody>
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                qui officia deserunt mollit anim id est laborum.
+                <OfficeImages />
               </CardBody>
             </Card>
           </Tab>
@@ -147,8 +196,7 @@ const OfficeTabs = ({ office }: Props) => {
           <Tab key="customer-reviews" title="Müşteri Yorumları">
             <Card>
               <CardBody>
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                qui officia deserunt mollit anim id est laborum.
+                <OfficeWorkerReviews officeWorker={"officeWorker"} index={0} />
               </CardBody>
             </Card>
           </Tab>

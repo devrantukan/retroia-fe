@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 
 import OfficeTabs from "@/app/components/OfficeTabs";
+import Share from "@/app/components/Share";
 
 interface Props {
   params: {
@@ -49,6 +50,10 @@ const OfficePage = async ({ params }: Props) => {
       <div className="p-4">
         <div className="flex lg:flex-row flex-col">
           <OfficeSidebar office={office} />
+
+          <div className="absolute right-0 mr-10 mt-4 flex gap-x-2">
+            <Share />
+          </div>
           <OfficeTabs office={office} />
         </div>
       </div>

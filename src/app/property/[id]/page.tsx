@@ -71,7 +71,10 @@ const PropertyPage = async ({ params }: Props) => {
             /> */}
 
             <Title title="Agent Details" className="mt-7" />
-            <Attribute label="Owner Name" value={property.agent?.name} />
+            <Attribute
+              label="Name"
+              value={property.agent?.name + " " + property.agent?.surname}
+            />
             <Attribute label="Email" value={property.agent?.email} />
             <Attribute label="Phone" value={property.agent?.phone} />
             <ShowOnMapButton />

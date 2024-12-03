@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const HomepageRefineTabs = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       <h1 className="text-3xl font-medium text-left text-slate-600  mb-2">
         Doğru Gayrimenkulün Olduğu Yerde
       </h1>
@@ -15,11 +15,11 @@ const HomepageRefineTabs = () => {
         <br />
         yatırımı da yapmanızı sağlamak için doğru mülk nerede ise biz oradayız.
       </h1>
-      <div className=" flex flex-col justify-between  h-[400px] w-[700px] ">
+      <div className="flex flex-col justify-between lg:h-[400px] lg:w-[700px] ">
         <div className="flex flex-col">
           <Tabs aria-label="Options">
             <Tab key="properties" title="Konut">
-              <Card className="bg-slate-300 h-[300px]">
+              <Card className="bg-slate-300 lg:h-[300px]">
                 <CardBody>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.

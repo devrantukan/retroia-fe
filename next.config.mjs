@@ -7,7 +7,20 @@ const nextConfig = {images: {
         port: '',
         pathname: '/*',
       },
+      {
+        protocol: 'https',
+        hostname: 'flowbite.s3.amazonaws.com',
+  
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.pixabay.com',
+  
+      },
+  
     ],
   },};
 
+
+  
 export default nextConfig;

@@ -33,6 +33,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.51.0",
     "react-instantsearch-dom": "^6.40.4",
+    "react-share-social": "^0.1.60",
     "react-toastify": "^10.0.5",
     "stripe": "^15.8.0",
     "typesense": "^1.8.2",

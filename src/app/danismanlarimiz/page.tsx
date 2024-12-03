@@ -17,13 +17,13 @@ const OfficeWorkersPage = async () => {
   if (!officeWorkers) return notFound();
   return (
     <div>
-      <div className="h-[480px] bg-slate-300 m-4 p-4 rounded-xl mb-12">
+      <div className="h-[480px] bg-slate-300 m-6 p-4 rounded-xl mb-12">
         <h1 className="mt-24 ml-12 text-3xl font-extralight">
           {officeWorkers.length} DANIŞMAN İÇİNDEN <br />
           <span className="font-bold text-xl">SİZE EN UYGUNU BULUN</span>
         </h1>
       </div>
-      <div className="m-4 flex flex-col lg:flex-row">
+      <div className="m-6 flex flex-col lg:flex-row">
         {officeWorkers.map((officeWorker, index) => (
           <OfficeWorkerCard
             officeWorker={officeWorker}
