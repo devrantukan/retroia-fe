@@ -10,17 +10,12 @@ import { Textarea } from "@nextui-org/input";
 
 import { Input } from "@nextui-org/react";
 import { toast } from "react-toastify";
+import { HandEye } from "@phosphor-icons/react/dist/ssr";
 
 export default function ReviewForm() {
   const [rating, setRating] = useState(0);
 
-  const [state, formAction] = useFormState(submitReview, {
-    success: false,
-    errors: [],
-    message: "",
-  });
-
-  const handleSubmit = async (formData: FormData) => {
+  const handleSubmit = async (state: void, formData: FormData) => {
     const result = await submitReview(null, formData);
     if (result.success) {
       toast.success(result.message);
@@ -30,10 +25,11 @@ export default function ReviewForm() {
       );
     }
   };
+  const [state, formAction] = useFormState(handleSubmit, undefined);
 
   return (
     <div className=" bg-white  w-full mb-2">
-      <form action={handleSubmit} className="space-y-4">
+      <form action={formAction} className="space-y-4">
         <Input type="text" label="First Name" />
         <Input type="text" label="Last Name" />
         <Input type="email" label="Email" />
