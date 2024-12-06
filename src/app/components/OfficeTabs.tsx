@@ -149,7 +149,7 @@ const OfficeTabs = ({ office }: Props) => {
                     worker: { id: string; slug: string; name: string },
                     index: number
                   ) => (
-                    <div className="lg:w-1/3 w-full mr-4">
+                    <div className="lg:w-1/3 w-full mr-4" key={index}>
                       <OfficeWorkerCardLight
                         officeWorker={worker}
                         key={index}
