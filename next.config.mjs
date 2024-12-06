@@ -17,6 +17,12 @@ const nextConfig = {images: {
         hostname: 'cdn.pixabay.com',
   
       },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3001',
+
+      },
   
     ],
   },};

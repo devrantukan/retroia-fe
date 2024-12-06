@@ -11,8 +11,15 @@ import {
 import React from "react";
 import { ShareSocial } from "react-share-social";
 import { ShareFat } from "@phosphor-icons/react/dist/ssr";
+import { usePathname } from "next/navigation";
 
 export default function Share() {
+  const currentPage = usePathname();
+  console.log(currentPage);
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  console.log(baseUrl);
+
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [scrollBehavior, setScrollBehavior] = React.useState<
     "inside" | "normal" | "outside"
@@ -40,7 +47,7 @@ export default function Share() {
               </ModalHeader>
               <ModalBody>
                 <ShareSocial
-                  url="url_to_share.com"
+                  url={`${baseUrl}${currentPage}`}
                   socialTypes={["facebook", "twitter", "linkedin", "whatsapp"]}
                 />
               </ModalBody>

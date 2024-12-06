@@ -11,10 +11,11 @@ interface Props {
 }
 
 const OfficeWorkerCard = ({ officeWorker, index }: Props) => {
-  console.log(officeWorker);
   return (
-    <Card key={index} className="lg:w-1/3 w-full px-4 m-2 pb-2">
-      <Link href={`/danisman/${officeWorker.id}/${officeWorker.slug}`}>
+    <Card key={index} className="w-[300px] h-[400px] px-4 m-2 pb-2">
+      <Link
+        href={`ofis/${officeWorker.office.id}/${officeWorker.office.slug}/${officeWorker.role.slug}/${officeWorker.id}/${officeWorker.slug}`}
+      >
         <Image
           src={`${officeWorker.avatarUrl}`}
           alt={""}

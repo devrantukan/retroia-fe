@@ -29,8 +29,18 @@ const OfficeTabs = ({ office }: Props) => {
     // console.log(property);
   });
 
+  // find all reviews of office workers
+  let reviewsOfOffice: any[] = [];
+  office.workers.map((worker: any) => {
+    if (worker.reviews.length > 0) {
+      reviewsOfOffice.push(worker.reviews);
+    }
+  });
+
+  console.log("rewiews", reviewsOfOffice);
+
   const router = useRouter();
-  const [activeTab, setActiveTab] = React.useState("tab1");
+  const [activeTab, setActiveTab] = React.useState("properties");
 
   const handleTabChange = (value: React.Key) => {
     //update the state
@@ -127,23 +137,25 @@ const OfficeTabs = ({ office }: Props) => {
           <Tab key="our-office" title="Ofisimiz">
             <Card>
               <CardBody>
-                <OfficeImages />
+                <OfficeImages images={office.images} />
               </CardBody>
             </Card>
           </Tab>
           <Tab key="our-staff" title="Ekibimiz">
-            <Card>
-              <CardBody className="flex lg:flex-row flex-col">
+            <Card className="flex lg:flex-row flex-col">
+              <CardBody>
                 {office.workers.map(
                   (
                     worker: { id: string; slug: string; name: string },
                     index: number
                   ) => (
-                    <OfficeWorkerCardLight
-                      officeWorker={worker}
-                      key={index}
-                      index={index}
-                    />
+                    <div className="lg:w-1/3 w-full mr-4">
+                      <OfficeWorkerCardLight
+                        officeWorker={worker}
+                        key={index}
+                        index={index}
+                      />
+                    </div>
                   )
                 )}
               </CardBody>
@@ -153,7 +165,7 @@ const OfficeTabs = ({ office }: Props) => {
             <Card>
               <CardBody className="flex lg:flex-row flex-col">
                 <div className="lg:w-2/3 h-full  w-full lg:mb-0 mb-4">
-                  <OfficeMap />
+                  <OfficeMap lat={office.latitude} lng={office.longitude} />
                 </div>
                 <div className="lg:w-1/3  w-full lg:ml-4 flex flex-col">
                   <ShowContactDetailsButton
@@ -196,7 +208,7 @@ const OfficeTabs = ({ office }: Props) => {
           <Tab key="customer-reviews" title="Müşteri Yorumları">
             <Card>
               <CardBody>
-                <OfficeWorkerReviews officeWorker={"officeWorker"} index={0} />
+                {/* <OfficeWorkerReviews reviews={reviewsOfOffice} /> */}
               </CardBody>
             </Card>
           </Tab>

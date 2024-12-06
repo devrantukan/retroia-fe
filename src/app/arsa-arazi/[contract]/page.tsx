@@ -13,8 +13,6 @@ interface Props {
 }
 
 export default async function Home({ params }: Props) {
-  console.log("params is: ", params);
-
   params.type = "arsa-arazi";
 
   const contract = await prisma.propertyContract.findFirst({
@@ -24,7 +22,7 @@ export default async function Home({ params }: Props) {
     },
     where: { slug: params.contract },
   });
-  console.log("type", params.type);
+
   const type = await prisma.propertyType.findFirst({
     where: {
       slug: params.type,

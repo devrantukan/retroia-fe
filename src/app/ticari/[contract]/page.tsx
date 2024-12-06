@@ -13,8 +13,6 @@ interface Props {
 }
 
 export default async function Home({ params }: Props) {
-  console.log("params is: ", params.contract);
-
   const contract = await prisma.propertyContract.findFirst({
     select: {
       slug: true,
@@ -22,7 +20,7 @@ export default async function Home({ params }: Props) {
     },
     where: { slug: params.contract },
   });
-  console.log(params.type);
+
   params.type = "ticari";
   const type = await prisma.propertyType.findFirst({
     where: {
@@ -30,7 +28,6 @@ export default async function Home({ params }: Props) {
     },
   });
 
-  console.log(contract);
   return (
     <div>
       <Search type={type?.value ?? ""} contract={contract?.value ?? ""} />

@@ -1,4 +1,4 @@
-import { Input } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { RadioGroup, Radio } from "@nextui-org/react";
 import { Textarea } from "@nextui-org/react";
 import { Select, SelectItem } from "@nextui-org/select";
@@ -19,13 +19,17 @@ export default function ProspectCustomerForm() {
           Doldurunuz.
         </h2>
         <RadioGroup label="Hizmet Tipi Seçiniz">
-          <Radio value="rental">Kiralık</Radio>
-          <Radio value="forSale">Satılık</Radio>
+          <div className="flex flex-row gap-x-4">
+            <Radio value="rental">Kiralık</Radio>
+            <Radio value="forSale">Satılık</Radio>
+          </div>
         </RadioGroup>
         <RadioGroup label="Gayrimenkul Tipi Seçiniz">
-          <Radio value="rental">Konut</Radio>
-          <Radio value="forSale">Ticari</Radio>
-          <Radio value="forSale">Arsa ve Arazi</Radio>
+          <div className="flex flex-row gap-x-4">
+            <Radio value="konut">Konut</Radio>
+            <Radio value="ticari">Ticari</Radio>
+            <Radio value="arsa-arazi">Arsa ve Arazi</Radio>
+          </div>
         </RadioGroup>
         {/* <Select
         items={}
@@ -46,25 +50,31 @@ export default function ProspectCustomerForm() {
         <Textarea
           label="Address"
           variant="bordered"
-          placeholder="Enter your description"
+          placeholder="Gayrimenkulunüzün Adresini Giriniz."
           disableAnimation
           disableAutosize
           classNames={{
-            base: "max-w-xs",
-            input: "resize-y min-h-[40px]",
+            base: "w-full",
+            input: "resize-y min-h-[60px]",
           }}
         />
         <Textarea
           label="Notes"
           variant="bordered"
-          placeholder="Enter your description"
+          placeholder="Lütfen İletmek İstediğiniz Notları Giriniz."
           disableAnimation
           disableAutosize
           classNames={{
-            base: "max-w-xs",
-            input: "resize-y min-h-[40px]",
+            base: "w-full",
+            input: "resize-y min-h-[60px]",
           }}
         />
+        <Button
+          type="submit"
+          className="mt-8 bg-blue-950 text-white font-bold text-md "
+        >
+          Başvuruyu Tamamla
+        </Button>
       </div>
     </div>
   );

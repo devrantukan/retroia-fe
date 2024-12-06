@@ -1,5 +1,5 @@
 "use client";
-import { Checkbox, Input } from "@nextui-org/react";
+import { Button, Checkbox, Input } from "@nextui-org/react";
 import { RadioGroup, Radio } from "@nextui-org/react";
 import { Textarea } from "@nextui-org/react";
 import { Select, SelectItem } from "@nextui-org/select";
@@ -122,6 +122,12 @@ export default function ProspectAgentForm() {
           Retroia&apos;nın hizmetlerine ilişkin tanıtım amaçlı elektronik
           iletilere, SMS gönderilerine ve aramalara izin veriyorum.
         </Checkbox>
+        <Button
+          type="submit"
+          className="mt-8 bg-blue-950 text-white font-bold text-md "
+        >
+          Başvuruyu Tamamla
+        </Button>
       </div>
     </div>
   );

@@ -29,9 +29,17 @@ const OfficePage = async ({ params }: Props) => {
               agent: {
                 include: {
                   office: true,
+                  role: true,
                 },
               },
               images: true,
+            },
+          },
+          office: true,
+          role: true,
+          reviews: {
+            where: {
+              isApproved: 1,
             },
           },
         },
@@ -41,6 +49,7 @@ const OfficePage = async ({ params }: Props) => {
       city: true,
       district: true,
       neighborhood: true,
+      images: true,
     },
   });
 

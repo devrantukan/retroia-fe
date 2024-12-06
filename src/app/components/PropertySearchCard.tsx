@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Avatar } from "@nextui-org/react";
 
 const PropertySearchCard = ({ property }: any) => {
-  console.log("hit is:", property);
   return (
     <Card className="w-full flex lg:flex-row  hover:scale-101 my-2" shadow="md">
       <Link

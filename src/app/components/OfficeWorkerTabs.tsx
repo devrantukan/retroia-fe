@@ -42,7 +42,7 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
           <Tab key="customer-reviews" title="Müşteri Yorumları">
             <Card>
               <CardBody>
-                <OfficeWorkerReviews officeWorker={officeWorker} index={0} />
+                <OfficeWorkerReviews reviews={officeWorker.reviews} />
               </CardBody>
             </Card>
           </Tab>

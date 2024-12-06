@@ -19,11 +19,6 @@ const Search = ({ type, contract }: { type: string; contract: string }) => {
   //   router.replace(`${pathName}?${params.toString()}`);
   // }, 1000);
 
-  console.log("contract", contract);
-  console.log("cslug", contract);
-
-  console.log("T is:", type);
-
   return (
     <div className="p-4 flex  bg-gradient-to-br from-sky-400 to-[#102960]">
       <BlogSearchComponent type={type} contract={contract} />

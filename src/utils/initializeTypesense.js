@@ -75,7 +75,7 @@ async function insertData(item) {
     published_date: Math.floor(new Date("2023-08-24").getTime() / 1000)  // Convert to Unix timestamp. In Typesense, only integer or float fields can be used as sorting fields.
   };
 
-  console.log(samplePost)
+
 
   return await client.collections("posts").documents().create(samplePost);
 }
@@ -128,7 +128,7 @@ async function main() {
     },
   });
 
-  console.log(properties);
+
   properties.map(async item => {
     // Add your logic here
     await insertData(item);

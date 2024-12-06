@@ -1,11 +1,9 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
-
+import Image from "next/image";
 const AnyReactComponent: React.FC<{ text: string }> = ({ text }) => (
   <div>{text}</div>
 );
-
-import Image from "next/image";
 
 const Marker: React.FC = () => {
   return (
@@ -18,12 +16,13 @@ const Marker: React.FC = () => {
     />
   );
 };
+export default function SimpleMap({ lat, lng }: { lat: number; lng: number }) {
+  console.log("ddd", lat);
 
-export default function SimpleMap() {
   const defaultProps = {
     center: {
-      lat: 37.7156643,
-      lng: 27.2174949,
+      lat: lat,
+      lng: lng,
     },
     zoom: 16,
   };

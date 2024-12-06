@@ -9,11 +9,16 @@ import OfficeWorkerCard from "../components/OfficeWorkerCard";
 
 const OfficeWorkersPage = async () => {
   const officeWorkers = await prisma.officeWorker.findMany({
+    where: {
+      roleId: { in: [7, 6] },
+    },
     include: {
       properties: true,
       office: true,
+      role: true,
     },
   });
+
   if (!officeWorkers) return notFound();
   return (
     <div>
@@ -23,13 +28,15 @@ const OfficeWorkersPage = async () => {
           <span className="font-bold text-xl">SİZE EN UYGUNU BULUN</span>
         </h1>
       </div>
-      <div className="m-6 flex flex-col lg:flex-row">
+      <div className="m-4 flex flex-row flex-wrap gap-x-4">
         {officeWorkers.map((officeWorker, index) => (
-          <OfficeWorkerCard
-            officeWorker={officeWorker}
-            index={index}
-            key={index}
-          />
+          <div key={index}>
+            <OfficeWorkerCard
+              officeWorker={officeWorker}
+              index={index}
+              key={index}
+            />
+          </div>
         ))}
       </div>
     </div>
