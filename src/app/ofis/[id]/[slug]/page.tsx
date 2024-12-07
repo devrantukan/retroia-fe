@@ -50,6 +50,12 @@ const OfficePage = async ({ params }: Props) => {
       district: true,
       neighborhood: true,
       images: true,
+      projects: {
+        include: {
+          images: true,
+          location: true,
+        },
+      },
     },
   });
 

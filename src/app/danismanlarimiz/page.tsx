@@ -28,7 +28,7 @@ const OfficeWorkersPage = async () => {
           <span className="font-bold text-xl">SİZE EN UYGUNU BULUN</span>
         </h1>
       </div>
-      <div className="m-4 flex flex-row flex-wrap gap-x-4">
+      <div className="m-4 flex flex-row flex-wrap gap-x-4 gap-y-6">
         {officeWorkers.map((officeWorker, index) => (
           <div key={index}>
             <OfficeWorkerCard

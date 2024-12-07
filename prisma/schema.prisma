@@ -143,6 +143,7 @@ model Office {
   youtubeAccountId      String
   webUrl        String
   slug          String
+  projects    Project[]
 
 
 }
@@ -177,6 +178,7 @@ model OfficeWorker {
   officeId    Int 
   office      Office   @relation(fields: [officeId], references: [id])
   properties  Property[]
+
   slug        String
   reviews     OfficeWorkerReview[]
 }
@@ -229,3 +231,51 @@ model Neighborhood {
   offices              Office[]
   district District @relation(fields: [district_id], references: [district_id])
 }
+
+
+model Project {
+  id          Int               @id @default(autoincrement())
+  name        String
+  description String
+  location    ProjectLocation?
+  feature     ProjectFeature?
+  images      ProjectImage[]  
+  officeId    Int 
+  office      Office   @relation(fields: [officeId], references: [id])
+  assignedAgents String
+}
+
+model ProjectLocation {
+  id            Int      @id @default(autoincrement())
+  streetAddress String
+  city          String
+  state         String
+  zip           String
+  country       String
+  landmark      String
+  district      String
+  neighborhood  String
+  projectId    Int      @unique
+  project      Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model ProjectFeature {
+  id              Int      @id @default(autoincrement())
+  bedrooms        Int
+  bathrooms       Int
+  parkingSpots    Int
+  area            Int
+  hasSwimmingPool Boolean
+  hasGardenYard   Boolean
+  hasBalcony      Boolean
+  projectId    Int      @unique
+  project      Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model ProjectImage {
+  id         Int      @id @default(autoincrement())
+  url        String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId Int
+}
+

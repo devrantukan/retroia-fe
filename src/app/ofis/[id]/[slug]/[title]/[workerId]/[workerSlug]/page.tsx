@@ -51,6 +51,35 @@ const OfficeWorkerPage = async ({ params }: Props) => {
     },
   });
 
+  // find the office worker's projects
+  const projects = await prisma.project.findMany({
+    where: {
+      officeId: officeWorker?.office?.id,
+      // assignedAgents: {
+      //   contains: +params.workerId,
+      // },
+    },
+
+    include: {
+      images: true,
+      location: true,
+    },
+  });
+
+  // find the office worker's projects
+  let assignedProjects: any[] = [];
+  projects.map((project) => {
+    if (project.assignedAgents.includes(params.workerId)) {
+      assignedProjects.push(project);
+    }
+  });
+
+  console.log("asp", assignedProjects);
+
+  if (officeWorker) {
+    (officeWorker as any).assignedProjects = assignedProjects;
+  }
+
   if (!officeWorker) return notFound();
   return (
     <div>

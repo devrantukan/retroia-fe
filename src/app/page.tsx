@@ -7,13 +7,25 @@ import HomepageHero from "./components/HomepageHero";
 import HomepageCustomerBanner from "./components/HomepageCustomerBanner";
 import HomepageAgentBanner from "./components/HomepageAgentBanner";
 import HomepageAgentSlider from "./components/HomepageAgentSlider";
+import HomepageRentalList from "./components/HomepageRentalList";
+import HomepageForSaleList from "./components/HomepageForSaleList";
 const PAGE_SIZE = 8;
 
 interface Props {
   searchParams: { [key: string]: string | string[] | undefined };
 }
+/* Randomize array in-place using Durstenfeld shuffle algorithm */
+
+function shuffleArray(array: any[]): void {
+  for (var i = array.length - 1; i >= 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+}
 export default async function Home({ searchParams }: Props) {
-  const agents = await prisma.officeWorker.findMany({
+  let agents = await prisma.officeWorker.findMany({
     where: {
       roleId: { in: [7, 6] },
     },
@@ -23,55 +35,61 @@ export default async function Home({ searchParams }: Props) {
     },
   });
 
-  const pagenum = searchParams.pagenum ?? 0;
-  const query = searchParams.query ?? "";
-  const propertiesPromise = prisma.property.findMany({
-    select: {
-      id: true,
-      name: true,
-      price: true,
-      images: {
-        select: {
-          url: true,
-        },
-      },
-      location: {
-        select: {
-          city: true,
-          state: true,
-        },
-      },
-    },
-    ...(!!query && {
-      where: {
-        name: {
-          contains: String(query),
-        },
-      },
-    }),
-    skip: +pagenum * PAGE_SIZE,
-    take: PAGE_SIZE,
-  });
-  const totalPropertiesPromise = prisma.property.count({
-    ...(!!query && {
-      where: {
-        name: {
-          contains: String(query),
-        },
-      },
-    }),
-  });
+  shuffleArray(agents);
 
-  const [properties, totalProperties] = await Promise.all([
-    propertiesPromise,
-    totalPropertiesPromise,
-  ]);
+  // const pagenum = searchParams.pagenum ?? 0;
+  // const query = searchParams.query ?? "";
+  // const propertiesPromise = prisma.property.findMany({
+  //   select: {
+  //     id: true,
+  //     name: true,
+  //     price: true,
+  //     images: {
+  //       select: {
+  //         url: true,
+  //       },
+  //     },
+  //     location: {
+  //       select: {
+  //         city: true,
+  //         state: true,
+  //       },
+  //     },
+  //   },
+  //   ...(!!query && {
+  //     where: {
+  //       name: {
+  //         contains: String(query),
+  //       },
+  //     },
+  //   }),
+  //   skip: +pagenum * PAGE_SIZE,
+  //   take: PAGE_SIZE,
+  // });
+  // const totalPropertiesPromise = prisma.property.count({
+  //   ...(!!query && {
+  //     where: {
+  //       name: {
+  //         contains: String(query),
+  //       },
+  //     },
+  //   }),
+  // });
 
-  const totalPages = Math.floor(totalProperties / PAGE_SIZE);
+  // const [properties, totalProperties] = await Promise.all([
+  //   propertiesPromise,
+  //   totalPropertiesPromise,
+  // ]);
+
+  // const totalPages = Math.floor(totalProperties / PAGE_SIZE);
 
   return (
     <div>
       <HomepageHero />
+      <div className="flex flex-row mb-6 ">
+        <HomepageRentalList />
+        <HomepageForSaleList />
+      </div>
       <div className="flex flex-row">
         <HomepageCustomerBanner />
         <HomepageAgentBanner />

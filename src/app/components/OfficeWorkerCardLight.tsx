@@ -2,8 +2,7 @@ import Link from "next/link";
 import React from "react";
 
 import Image from "next/image";
-import { Button, Card } from "@nextui-org/react";
-import { Envelope, PhoneCall } from "@phosphor-icons/react/dist/ssr";
+import { Card } from "@nextui-org/react";
 
 interface Props {
   officeWorker: any;
@@ -17,7 +16,13 @@ const OfficeWorkerCardLight = ({ officeWorker, index }: Props) => {
       className="w-full m-2 pb-2 rounded-none border-0 shadow-none"
     >
       <Link
-        href={`/ofis/${officeWorker.office.id}/${officeWorker.office.slug}/${officeWorker.role.slug}/${officeWorker.id}/${officeWorker.slug}`}
+        href={
+          officeWorker.roleId === 8 ||
+          officeWorker.roleId === 9 ||
+          officeWorker.roleId === 10
+            ? "#"
+            : `/ofis/${officeWorker.office.id}/${officeWorker.office.slug}/${officeWorker.role.slug}/${officeWorker.id}/${officeWorker.slug}`
+        }
         className="flex flex-col"
       >
         <Image
@@ -38,5 +43,4 @@ const OfficeWorkerCardLight = ({ officeWorker, index }: Props) => {
     </Card>
   );
 };
-
 export default OfficeWorkerCardLight;

@@ -13,6 +13,7 @@ import OfficeWorkerCardLight from "./OfficeWorkerCardLight";
 import OfficeImages from "./OfficeImages";
 import OfficeWorkerReviews from "./OfficeWorkerReviews";
 import Image from "next/image";
+import ProjectCard from "./ProjectCard";
 
 interface Props {
   office: any;
@@ -21,23 +22,23 @@ interface Props {
 const OfficeTabs = ({ office }: Props) => {
   // find all properties of office workers
   let propertiesOfOffice: any[] = [];
-  office.workers.map((worker: any) => {
+  office.workers.forEach((worker: any) => {
     propertiesOfOffice.push(worker.properties);
   });
 
-  propertiesOfOffice.flat().map((property: any) => {
+  propertiesOfOffice.flat().forEach((property: any) => {
     // console.log(property);
   });
 
   // find all reviews of office workers
   let reviewsOfOffice: any[] = [];
-  office.workers.map((worker: any) => {
+  office.workers.forEach((worker: any) => {
     if (worker.reviews.length > 0) {
       reviewsOfOffice.push(worker.reviews);
     }
   });
 
-  console.log("rewiews", reviewsOfOffice);
+  console.log("reviews", reviewsOfOffice);
 
   const router = useRouter();
   const [activeTab, setActiveTab] = React.useState("properties");
@@ -84,7 +85,11 @@ const OfficeTabs = ({ office }: Props) => {
           </Tab>
           <Tab key="projects" title="Projelerimiz">
             <Card>
-              <CardBody>Projects will be displayed here</CardBody>
+              <CardBody>
+                {office.projects.map((project: any, index: number) => (
+                  <ProjectCard project={project} key={index} />
+                ))}
+              </CardBody>
             </Card>
           </Tab>
           <Tab key="about-us" title="Hakkımızda">
@@ -208,7 +213,17 @@ const OfficeTabs = ({ office }: Props) => {
           <Tab key="customer-reviews" title="Müşteri Yorumları">
             <Card>
               <CardBody>
-                {/* <OfficeWorkerReviews reviews={reviewsOfOffice} /> */}
+                {reviewsOfOffice.map((reviews, index) => (
+                  <OfficeWorkerReviews reviews={reviews} key={index} />
+                ))}
+                <div className="mt-6 text-center">
+                  <button
+                    type="button"
+                    className="mb-2 me-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
+                  >
+                    Daha fazla yorum göster
+                  </button>
+                </div>
               </CardBody>
             </Card>
           </Tab>
