@@ -28,7 +28,7 @@ export default function HomepageForSaleList({
           >
             <Tab key="konut" title="Konut">
               <Card>
-                <CardBody className="grid grid-cols-1  lg:grid-cols-2 lg:h-[460px] h-full gap-x-4">
+                <CardBody className="grid grid-cols-1 lg:h-[720px] h-full gap-x-4">
                   {properties
                     .filter((property) => property.contract.slug === "satilik")
                     .filter((property) => property.type.slug == "konut")
@@ -50,7 +50,7 @@ export default function HomepageForSaleList({
             </Tab>
             <Tab key="ticari" title="Ticari">
               <Card>
-                <CardBody className="grid grid-cols-1  lg:grid-cols-2 lg:h-[460px] h-full gap-x-4">
+                <CardBody className="grid grid-cols-1 lg:h-[720px] h-full gap-x-4">
                   {properties
                     .filter((property) => property.contract.slug === "satilik")
                     .filter((property) => property.type.slug == "ticari")
@@ -72,7 +72,7 @@ export default function HomepageForSaleList({
             </Tab>
             <Tab key="arsa-arazi" title="Arsa Arazi">
               <Card>
-                <CardBody className="grid grid-cols-1  lg:grid-cols-2 lg:h-[460px] h-full gap-x-4">
+                <CardBody className="grid grid-cols-1 lg:h-[720px] h-full gap-x-4">
                   {properties
                     .filter((property) => property.contract.slug === "satilik")
                     .filter((property) => property.type.slug == "arsa-arazi")

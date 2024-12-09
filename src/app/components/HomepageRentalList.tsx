@@ -16,7 +16,7 @@ export default function HomepageRentalList({
   const [selected, setSelected] = React.useState("konut");
   return (
     <>
-      <div className="flex flex-col lg:w-full items-start  mx-6 lg:mr-0 p-6 pt-8 lg:h-[580px]  rounded-xl bg-gradient-to-r from-blue-950 from-40% via-sky-500 via-70% to-sky-200 to-90% lg:mb-0 mb-6">
+      <div className="flex flex-col lg:w-full items-start  mx-6 lg:mr-0 p-6 pt-8   rounded-xl bg-gradient-to-r from-blue-950 from-40% via-sky-500 via-70% to-sky-200 to-90% lg:mb-0 mb-6">
         <h2 className="absolute lg:text-xl text-lg font-semibold text-white mb-6 mt-2">
           Kiralık Gayrimenkuller
         </h2>
@@ -29,7 +29,7 @@ export default function HomepageRentalList({
           >
             <Tab key="konut" title="Konut">
               <Card>
-                <CardBody className="grid grid-cols-1  lg:grid-cols-2 lg:h-[460px] h-full gap-x-4">
+                <CardBody className="grid grid-cols-1 lg:h-[720px] h-full gap-x-4">
                   {properties
                     .filter((property) => property.contract.slug === "kiralik")
                     .filter((property) => property.type.slug == "konut")
@@ -51,7 +51,7 @@ export default function HomepageRentalList({
             </Tab>
             <Tab key="ticari" title="Ticari">
               <Card>
-                <CardBody className="grid grid-cols-1  lg:grid-cols-2 lg:h-[460px] h-full gap-x-4">
+                <CardBody className="grid grid-cols-1 lg:h-[720px] h-full gap-x-4">
                   {properties
                     .filter((property) => property.contract.slug === "kiralik")
                     .filter((property) => property.type.slug == "ticari")
@@ -73,7 +73,7 @@ export default function HomepageRentalList({
             </Tab>
             <Tab key="arsa-arazi" title="Arsa Arazi">
               <Card>
-                <CardBody className="grid grid-cols-1  lg:grid-cols-2 lg:h-[460px] h-full gap-x-4">
+                <CardBody className="grid grid-cols-1 lg:h-[720px] h-full gap-x-4">
                   {properties
                     .filter((property) => property.contract.slug === "kiralik")
                     .filter((property) => property.type.slug == "arsa-arazi")

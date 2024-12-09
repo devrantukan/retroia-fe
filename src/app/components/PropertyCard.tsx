@@ -18,20 +18,20 @@ const PropertyCard = ({ property, showAvatar }: any) => {
                 ? property.images[0].url
                 : `/images/${Math.floor(Math.random() * 9 + 1)}.jpg`
             }
-            className="object-fill w-full lg:w-auto h-auto lg:max-w-xs"
+            className="object-cover w-full lg:w-auto h-auto lg:max-w-[240px]"
             alt={property.name}
           />
           <div className="flex flex-col mt-2">
-            <div className="p-4 h-full">
+            <div className="p-4 h-1/2">
               {/* <p className="text-slate-600">
                 {property.location.country} / {property.location.city} /{" "}
                 {property.location.district} / {property.location.neighborhood}
               </p> */}
-              <p className="text-primary-600 text-xl font-bold">
+              <p className="text-primary-600 text-xl font-bold w-[340px] ">
                 {property.name}
               </p>
             </div>
-            <div className="bg-gradient-to-br from-slate-50 to-slate-200 p-4 flex justify-start">
+            <div className="bg-gradient-to-br from-slate-50 to-slate-200 p-4 flex justify-start h-1/2">
               <p className="text-2xl lining-nums font-semibold tracking-wider">
                 {property.price.toLocaleString("tr-TR", {
                   minimumFractionDigits: 0,
