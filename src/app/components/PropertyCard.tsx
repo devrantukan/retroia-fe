@@ -7,10 +7,10 @@ const PropertyCard = ({ property, showAvatar }: any) => {
   return (
     <Card className="w-full flex lg:flex-row mb-4" shadow="md">
       <Link
-        className="hover:text-primary-500 transition-colors w-4/5"
+        className="hover:text-primary-500 transition-colors lg:w-4/5 w-full"
         href={`/property/${property.id}`}
       >
-        <div className="flex lg:flex-row ">
+        <div className="flex lg:flex-row flex-col">
           <Image
             radius="none"
             src={
@@ -18,7 +18,7 @@ const PropertyCard = ({ property, showAvatar }: any) => {
                 ? property.images[0].url
                 : `/images/${Math.floor(Math.random() * 9 + 1)}.jpg`
             }
-            className="object-fill w-64 h-48"
+            className="object-fill w-full lg:w-auto h-auto lg:max-w-xs"
             alt={property.name}
           />
           <div className="flex flex-col mt-2">
@@ -43,7 +43,7 @@ const PropertyCard = ({ property, showAvatar }: any) => {
           </div>
         </div>
       </Link>
-      <div className="w-1/5 flex items-center flex-col my-auto  hover:bg-slate-100 hover:cursor-pointer rounded-xl mr-4">
+      <div className="lg:w-1/5 w-full flex lg:items-center items-start  flex-col my-auto  hover:bg-slate-100 hover:cursor-pointer rounded-xl mr-4">
         {/* <Avatar
           showFallback
           name={property.agent?.name + " " + property.agent?.surname}
@@ -56,13 +56,13 @@ const PropertyCard = ({ property, showAvatar }: any) => {
         {showAvatar == true && (
           <Link
             href={`/danisman/${property.agentId}/${property.agent.slug}`}
-            className="flex justify-center items-center flex-col my-6"
+            className="flex  w-full lg:justify-center  items-center  flex-row lg:flex-col lg:my-6 gap-x-2 lg:gap-x-0"
           >
             <Avatar
               showFallback
               name={property.agent?.name + " " + property.agent?.surname}
               src={property.agent?.avatarUrl}
-              className="h-16 w-16 mb-2"
+              className="h-16 w-16 lg:m-0 m-2  mb-2 lg:mx-auto"
             />
             <p className="font-bold">
               {property.agent.name} {property.agent.surname}

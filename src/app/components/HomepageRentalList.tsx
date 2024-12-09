@@ -6,60 +6,95 @@ import React from "react";
 
 import { ArrowCircleRight } from "@phosphor-icons/react/dist/ssr";
 import { Tabs, Tab, Card, CardBody } from "@nextui-org/react";
+import PropertyCard from "./PropertyCard";
 
-export default function HomepageRentalList() {
+export default function HomepageRentalList({
+  properties,
+}: {
+  properties: any[];
+}) {
   const [selected, setSelected] = React.useState("konut");
   return (
     <>
-      <div className="flex flex-col items-start ml-6 p-6 pt-8 h-[500px] w-full rounded-xl bg-gradient-to-r from-blue-950 from-30% via-sky-500 via-60% to-sky-200 to-90%">
-        <h2 className="absolute text-2xl text-white mb-6">
+      <div className="flex flex-col lg:w-full items-start  mx-6 lg:mr-0 p-6 pt-8 lg:h-[580px]  rounded-xl bg-gradient-to-r from-blue-950 from-40% via-sky-500 via-70% to-sky-200 to-90% lg:mb-0 mb-6">
+        <h2 className="absolute lg:text-xl text-lg font-semibold text-white mb-6 mt-2">
           Kiralık Gayrimenkuller
         </h2>
-        <div className="flex flex-col items-end">
+        <div className="flex flex-col w-full">
           <Tabs
             aria-label="Options"
             selectedKey={selected}
             onSelectionChange={(key) => setSelected(key.toString())}
+            className="w-full flex justify-end"
           >
             <Tab key="konut" title="Konut">
               <Card>
-                <CardBody>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
+                <CardBody className="grid grid-cols-1  lg:grid-cols-2 lg:h-[460px] h-full gap-x-4">
+                  {properties
+                    .filter((property) => property.contract.slug === "kiralik")
+                    .filter((property) => property.type.slug == "konut")
+                    .slice(0, 4)
+                    .map((property, index) => (
+                      <PropertyCard property={property} key={index} />
+                    ))}
+                  <Button className="bg-blue-950">
+                    <Link
+                      href={`/konut/kiralik`}
+                      className="text-white font-bold flex flex-row"
+                    >
+                      <span className="mr-4">Daha Fazla Görüntüle</span>
+                      <ArrowCircleRight width={20} height={20} />
+                    </Link>
+                  </Button>
                 </CardBody>
               </Card>
             </Tab>
             <Tab key="ticari" title="Ticari">
               <Card>
-                <CardBody>
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur.
+                <CardBody className="grid grid-cols-1  lg:grid-cols-2 lg:h-[460px] h-full gap-x-4">
+                  {properties
+                    .filter((property) => property.contract.slug === "kiralik")
+                    .filter((property) => property.type.slug == "ticari")
+                    .slice(0, 4)
+                    .map((property, index) => (
+                      <PropertyCard property={property} key={index} />
+                    ))}
+                  <Button className="bg-blue-950">
+                    <Link
+                      href={`/ticari/kiralik`}
+                      className="text-white font-bold flex flex-row"
+                    >
+                      <span className="mr-4">Daha Fazla Görüntüle</span>
+                      <ArrowCircleRight width={20} height={20} />
+                    </Link>
+                  </Button>
                 </CardBody>
               </Card>
             </Tab>
             <Tab key="arsa-arazi" title="Arsa Arazi">
               <Card>
-                <CardBody>
-                  Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                  qui officia deserunt mollit anim id est laborum.
+                <CardBody className="grid grid-cols-1  lg:grid-cols-2 lg:h-[460px] h-full gap-x-4">
+                  {properties
+                    .filter((property) => property.contract.slug === "kiralik")
+                    .filter((property) => property.type.slug == "arsa-arazi")
+                    .slice(0, 4)
+                    .map((property, index) => (
+                      <PropertyCard property={property} key={index} />
+                    ))}
+                  <Button className="bg-blue-950">
+                    <Link
+                      href={`/arsa-arazi/kiralik`}
+                      className="text-white font-bold flex flex-row"
+                    >
+                      <span className="mr-4">Daha Fazla Görüntüle</span>
+                      <ArrowCircleRight width={20} height={20} />
+                    </Link>
+                  </Button>
                 </CardBody>
               </Card>
             </Tab>
           </Tabs>
         </div>
-        <Button className="bg-white">
-          <Link
-            href="/gayrimenkul-danismani-basvuru-formu"
-            className="text-blue-950 font-bold flex flex-row"
-          >
-            <span className="mr-4">Daha Fazla Görüntüle</span>
-            <ArrowCircleRight width={20} height={20} />
-          </Link>
-        </Button>
       </div>
     </>
   );

@@ -37,6 +37,32 @@ export default async function Home({ searchParams }: Props) {
 
   shuffleArray(agents);
 
+  const properties = await prisma.property.findMany({
+    select: {
+      id: true,
+      name: true,
+      price: true,
+      images: {
+        select: {
+          url: true,
+        },
+      },
+      location: {
+        select: {
+          city: true,
+          state: true,
+        },
+      },
+      type: true,
+      contract: true,
+    },
+
+    skip: 0,
+    take: 50,
+  });
+
+  console.log(properties);
+
   // const pagenum = searchParams.pagenum ?? 0;
   // const query = searchParams.query ?? "";
   // const propertiesPromise = prisma.property.findMany({
@@ -86,11 +112,11 @@ export default async function Home({ searchParams }: Props) {
   return (
     <div>
       <HomepageHero />
-      <div className="flex flex-row mb-6 ">
-        <HomepageRentalList />
-        <HomepageForSaleList />
+      <div className="flex lg:flex-row flex-col gap-y-6  ">
+        <HomepageRentalList properties={properties} />
+        <HomepageForSaleList properties={properties} />
       </div>
-      <div className="flex flex-row">
+      <div className="flex lg:flex-row flex-col gap-y-6 mt-6 gap-x-6">
         <HomepageCustomerBanner />
         <HomepageAgentBanner />
       </div>
