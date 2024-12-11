@@ -7,7 +7,15 @@ import { useDebouncedCallback } from "use-debounce";
 import BlogSearchComponent from "./BlogSearchComponent";
 import prisma from "@/lib/prisma";
 
-const Search = ({ type, contract }: { type: string; contract: string }) => {
+const Search = ({
+  type,
+  contract,
+  country,
+}: {
+  type: string;
+  contract: string;
+  country: string;
+}) => {
   // const searchParams = useSearchParams();
   // const pathName = usePathname();
   // const router = useRouter();
@@ -21,7 +29,7 @@ const Search = ({ type, contract }: { type: string; contract: string }) => {
 
   return (
     <div className="p-4 flex  bg-gradient-to-br from-sky-400 to-[#102960]">
-      <BlogSearchComponent type={type} contract={contract} />
+      <BlogSearchComponent type={type} contract={contract} country={country} />
       {/* <Input
         onChange={(e) => handleChange(e.target.value)}
         className="w-96 shadow"

@@ -112,6 +112,7 @@ model Country {
   country_name      String
   cities           City[]
   offices          Office[]
+  slug             String
 }
 
 model Office {

@@ -15,10 +15,8 @@ import { usePathname } from "next/navigation";
 
 export default function Share() {
   const currentPage = usePathname();
-  console.log(currentPage);
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  console.log(baseUrl);
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [scrollBehavior, setScrollBehavior] = React.useState<

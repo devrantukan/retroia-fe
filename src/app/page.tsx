@@ -61,8 +61,6 @@ export default async function Home({ searchParams }: Props) {
     take: 50,
   });
 
-  console.log(properties);
-
   // const pagenum = searchParams.pagenum ?? 0;
   // const query = searchParams.query ?? "";
   // const propertiesPromise = prisma.property.findMany({

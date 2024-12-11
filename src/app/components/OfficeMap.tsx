@@ -17,8 +17,6 @@ const Marker: React.FC = () => {
   );
 };
 export default function SimpleMap({ lat, lng }: { lat: number; lng: number }) {
-  console.log("ddd", lat);
-
   const defaultProps = {
     center: {
       lat: lat,

@@ -41,6 +41,8 @@ import {
 } from "@/components/ui/select";
 
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
 const languages = [
   { label: "English", value: "en" },
@@ -93,14 +95,32 @@ const FormSchema = z.object({
       required_error: "Para Birimi seçiniz.",
     })
     .optional(),
+  propertyType: z.string({
+    required_error: "Tip seçiniz.",
+  }),
 });
 
-export function HomepageRefineForm() {
+export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
+  const [selectedPropertyType, setSelectedPropertyType] = React.useState("");
+
+  const router = useRouter();
+
+  useEffect(() => {
+    setSelectedPropertyType(propertyType);
+    form.setValue("propertyType", propertyType);
+  }, []);
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log("data is", JSON.stringify(data, null, 2));
+    const url = `${data.propertyType}/${data.contract}${
+      data.country ? `/${data.country}` : ""
+    }`;
+    console.log(url);
+    router.push(url);
     toast({
       title: "You submitted the following values:",
       description: (
@@ -110,7 +130,6 @@ export function HomepageRefineForm() {
       ),
     });
   }
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -157,9 +176,9 @@ export function HomepageRefineForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="1">Türkiye</SelectItem>
-                    <SelectItem value="2">KKTC</SelectItem>
-                    <SelectItem value="3">İspanya</SelectItem>
+                    <SelectItem value="turkiye">Türkiye</SelectItem>
+                    <SelectItem value="kktc">KKTC</SelectItem>
+                    <SelectItem value="ispanya">İspanya</SelectItem>
                   </SelectContent>
                 </Select>
 
@@ -380,6 +399,28 @@ export function HomepageRefineForm() {
             />
             <FormField
               control={form.control}
+              name="propertyType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Type</FormLabel>
+                  <FormControl className="bg-white">
+                    <Input
+                      placeholder="Type"
+                      {...field}
+                      value={selectedPropertyType}
+                      onChangeCapture={(e) =>
+                        setSelectedPropertyType(
+                          (e.target as HTMLInputElement).value
+                        )
+                      }
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="currency"
               render={({ field }) => (
                 <FormItem>
@@ -408,9 +449,7 @@ export function HomepageRefineForm() {
           </div>
         </div>
         <div className="flex justify-end">
-          <Button className="w-20 bg-blue-950" type="submit">
-            Harita
-          </Button>
+          <Button className="w-20 bg-blue-950">Harita</Button>
           <Button className="ml-2 w-56 bg-orange-600" type="submit">
             Ara
           </Button>

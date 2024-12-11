@@ -30,13 +30,14 @@ const BlogHitComponent = ({ hit }) => {
   );
 };
 
-const BlogSearchComponent = ({type, contract }) => {
+const BlogSearchComponent = ({type, contract, country }) => {
   const postCollection = `posts`;
 
-  console.log('parameters:', contract, type)
+  console.log('parameters1:', contract, type, country)
 
+  const filters = country ? `type:=${type}&&contract:=${contract}&&country:=${country}` : `type:=${type}&&contract:=${contract}`
  
-
+console.log(filters)
   return (
     <InstantSearch
       indexName={postCollection}
@@ -45,7 +46,8 @@ const BlogSearchComponent = ({type, contract }) => {
     >
             <Configure
         analytics={false}
-       filters={`type:=${type}&&contract:=${contract}`}
+  
+       filters={filters}
         hitsPerPage={6}
       />
 

@@ -16,7 +16,7 @@ export default function HomepageRentalList({
   const [selected, setSelected] = React.useState("konut");
   return (
     <>
-      <div className="flex flex-col lg:w-full items-start  mx-6 lg:mr-0 p-6 pt-8   rounded-xl bg-gradient-to-r from-blue-950 from-40% via-sky-500 via-70% to-sky-200 to-90% lg:mb-0 mb-6">
+      <div className="flex flex-col lg:w-full items-start  mx-6 lg:mr-0 lg:p-6 p-4 pt-8   rounded-xl bg-gradient-to-r from-blue-950 from-40% via-sky-500 via-70% to-sky-200 to-90% lg:mb-0 mb-6">
         <h2 className="absolute lg:text-xl text-lg font-semibold text-white mb-6 mt-2">
           Kiralık Gayrimenkuller
         </h2>

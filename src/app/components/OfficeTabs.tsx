@@ -38,8 +38,6 @@ const OfficeTabs = ({ office }: Props) => {
     }
   });
 
-  console.log("reviews", reviewsOfOffice);
-
   const router = useRouter();
   const [activeTab, setActiveTab] = React.useState("properties");
 
@@ -147,22 +145,241 @@ const OfficeTabs = ({ office }: Props) => {
             </Card>
           </Tab>
           <Tab key="our-staff" title="Ekibimiz">
-            <Card className="flex lg:flex-row flex-col">
+            <Card>
               <CardBody>
-                {office.workers.map(
-                  (
-                    worker: { id: string; slug: string; name: string },
-                    index: number
-                  ) => (
-                    <div className="lg:w-1/3 w-full mr-4" key={index}>
-                      <OfficeWorkerCardLight
-                        officeWorker={worker}
-                        key={index}
-                        index={index}
-                      />
-                    </div>
-                  )
-                )}
+                <div className="w-full flex lg:flex-row flex-col">
+                  <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
+                    {office.workers
+                      .filter(
+                        (worker: { slug: string; role: { slug: string } }) =>
+                          worker.role.slug === "broker"
+                      )
+                      .map(
+                        (
+                          worker: { id: string; slug: string; name: string },
+                          index: number
+                        ) => (
+                          <OfficeWorkerCardLight
+                            officeWorker={worker}
+                            key={index}
+                            index={index}
+                          />
+                        )
+                      )}
+                  </div>
+                </div>
+                <div className="w-full flex lg:flex-row flex-col">
+                  <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
+                    {office.workers
+                      .filter(
+                        (worker: { slug: string; role: { slug: string } }) =>
+                          worker.role.slug ===
+                          "takim-lideri-gayrimenkul-danismani"
+                      )
+                      .map(
+                        (
+                          worker: { id: string; slug: string; name: string },
+                          index: number
+                        ) => (
+                          <OfficeWorkerCardLight
+                            officeWorker={worker}
+                            key={index}
+                            index={index}
+                          />
+                        )
+                      )}
+                  </div>
+                </div>
+                <div className="w-full flex lg:flex-row flex-col">
+                  <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
+                    {office.workers
+                      .filter(
+                        (worker: { slug: string; role: { slug: string } }) =>
+                          worker.role.slug === "broker-manager"
+                      )
+                      .map(
+                        (
+                          worker: { id: string; slug: string; name: string },
+                          index: number
+                        ) => (
+                          <OfficeWorkerCardLight
+                            officeWorker={worker}
+                            key={index}
+                            index={index}
+                          />
+                        )
+                      )}
+                  </div>
+                </div>
+
+                <div className="w-full flex lg:flex-row flex-col">
+                  <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
+                    {office.workers
+                      .filter(
+                        (worker: { slug: string; role: { slug: string } }) =>
+                          worker.role.slug === "is-gelistirme"
+                      )
+                      .map(
+                        (
+                          worker: { id: string; slug: string; name: string },
+                          index: number
+                        ) => (
+                          <OfficeWorkerCardLight
+                            officeWorker={worker}
+                            key={index}
+                            index={index}
+                          />
+                        )
+                      )}
+                  </div>
+                </div>
+                <div className="w-full flex lg:flex-row flex-col">
+                  <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
+                    {office.workers
+                      .filter(
+                        (worker: { slug: string; role: { slug: string } }) =>
+                          worker.role.slug === "proje-gelistirme"
+                      )
+                      .map(
+                        (
+                          worker: { id: string; slug: string; name: string },
+                          index: number
+                        ) => (
+                          <OfficeWorkerCardLight
+                            officeWorker={worker}
+                            key={index}
+                            index={index}
+                          />
+                        )
+                      )}
+                  </div>
+                </div>
+                <div className="w-full flex lg:flex-row flex-col">
+                  <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
+                    {office.workers
+                      .filter(
+                        (worker: { slug: string; role: { slug: string } }) =>
+                          worker.role.slug === "ofisler-muduru"
+                      )
+                      .map(
+                        (
+                          worker: { id: string; slug: string; name: string },
+                          index: number
+                        ) => (
+                          <OfficeWorkerCardLight
+                            officeWorker={worker}
+                            key={index}
+                            index={index}
+                          />
+                        )
+                      )}
+                  </div>
+                </div>
+                <div className="w-full flex lg:flex-row flex-col">
+                  <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
+                    {office.workers
+                      .filter(
+                        (worker: { slug: string; role: { slug: string } }) =>
+                          worker.role.slug === "pazarlama-muduru"
+                      )
+                      .map(
+                        (
+                          worker: { id: string; slug: string; name: string },
+                          index: number
+                        ) => (
+                          <OfficeWorkerCardLight
+                            officeWorker={worker}
+                            key={index}
+                            index={index}
+                          />
+                        )
+                      )}
+                  </div>
+                </div>
+                <div className="w-full flex lg:flex-row flex-col">
+                  <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
+                    {office.workers
+                      .filter(
+                        (worker: { slug: string; role: { slug: string } }) =>
+                          worker.role.slug === "proje-satis-temsilcisi"
+                      )
+                      .map(
+                        (
+                          worker: { id: string; slug: string; name: string },
+                          index: number
+                        ) => (
+                          <OfficeWorkerCardLight
+                            officeWorker={worker}
+                            key={index}
+                            index={index}
+                          />
+                        )
+                      )}
+                  </div>
+                </div>
+                <div className="w-full flex lg:flex-row flex-col">
+                  <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
+                    {office.workers
+                      .filter(
+                        (worker: { slug: string; role: { slug: string } }) =>
+                          worker.role.slug === "gayrimenkul-danismani"
+                      )
+                      .map(
+                        (
+                          worker: { id: string; slug: string; name: string },
+                          index: number
+                        ) => (
+                          <OfficeWorkerCardLight
+                            officeWorker={worker}
+                            key={index}
+                            index={index}
+                          />
+                        )
+                      )}
+                  </div>
+                </div>
+                <div className="w-full flex lg:flex-row flex-col">
+                  <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
+                    {office.workers
+                      .filter(
+                        (worker: { slug: string; role: { slug: string } }) =>
+                          worker.role.slug === "gd-asistani"
+                      )
+                      .map(
+                        (
+                          worker: { id: string; slug: string; name: string },
+                          index: number
+                        ) => (
+                          <OfficeWorkerCardLight
+                            officeWorker={worker}
+                            key={index}
+                            index={index}
+                          />
+                        )
+                      )}
+                  </div>
+                </div>
+                <div className="w-full flex lg:flex-row flex-col">
+                  <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
+                    {office.workers
+                      .filter(
+                        (worker: { slug: string; role: { slug: string } }) =>
+                          worker.role.slug === "ofis-asistani"
+                      )
+                      .map(
+                        (
+                          worker: { id: string; slug: string; name: string },
+                          index: number
+                        ) => (
+                          <OfficeWorkerCardLight
+                            officeWorker={worker}
+                            key={index}
+                            index={index}
+                          />
+                        )
+                      )}
+                  </div>
+                </div>
               </CardBody>
             </Card>
           </Tab>

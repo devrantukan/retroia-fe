@@ -9,6 +9,7 @@ interface Props {
   params: {
     type: string;
     contract: string;
+    country: string;
   };
 }
 
@@ -29,7 +30,11 @@ export default async function Home({ params }: Props) {
 
   return (
     <div>
-      <Search type={type?.value ?? ""} contract={contract?.value ?? ""} />
+      <Search
+        type={type?.value ?? ""}
+        contract={contract?.value ?? ""}
+        country={params.country}
+      />
     </div>
   );
 }

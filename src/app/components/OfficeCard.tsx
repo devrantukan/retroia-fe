@@ -12,7 +12,7 @@ interface Props {
 
 const OfficeCard = ({ office, key }: Props) => {
   return (
-    <Card key={key} className="lg:w-1/5 w-full p-2 pb-4 mr-4">
+    <Card className="lg:w-1/5 w-full p-2 pb-4 mr-4">
       <Link href={`/ofis/${office.id}/${office.slug}`}>
         <Image
           src={`${office.avatarUrl}`}

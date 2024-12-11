@@ -16,15 +16,16 @@ export default function HomepageForSaleList({
   const [selected, setSelected] = React.useState("konut");
   return (
     <>
-      <div className="flex flex-col lg:w-full items-start mx-6 p-6 pt-8 rounded-xl h-[500px]rounded-xl bg-gradient-to-r from-blue-950 from-40% via-sky-500 via-70% to-sky-200 to-90%">
+      <div className="flex flex-col lg:w-full items-start mx-6 lg:p-6 p-4 pt-8 rounded-xl h-[500px]rounded-xl bg-gradient-to-r from-blue-950 from-40% via-sky-500 via-70% to-sky-200 to-90%">
         <h2 className="absolute lg:text-xl text-lg font-semibold text-white mb-6 mt-2">
           Satılık Gayrimenkuller
         </h2>
-        <div className="flex flex-col items-end">
+        <div className="flex flex-col w-full">
           <Tabs
             aria-label="Options"
             selectedKey={selected}
             onSelectionChange={(key) => setSelected(key.toString())}
+            className="w-full flex justify-end"
           >
             <Tab key="konut" title="Konut">
               <Card>
@@ -60,7 +61,7 @@ export default function HomepageForSaleList({
                     ))}
                   <Button className="bg-blue-950">
                     <Link
-                      href={`/konut/satilik`}
+                      href={`/ticari/satilik`}
                       className="text-white font-bold flex flex-row"
                     >
                       <span className="mr-4">Daha Fazla Görüntüle</span>
@@ -82,7 +83,7 @@ export default function HomepageForSaleList({
                     ))}
                   <Button className="bg-blue-950">
                     <Link
-                      href={`/konut/satilik`}
+                      href={`/arsa-arazi/satilik`}
                       className="text-white font-bold flex flex-row"
                     >
                       <span className="mr-4">Daha Fazla Görüntüle</span>

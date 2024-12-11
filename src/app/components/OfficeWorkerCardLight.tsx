@@ -13,7 +13,7 @@ const OfficeWorkerCardLight = ({ officeWorker, index }: Props) => {
   return (
     <Card
       key={index}
-      className="w-full m-2 pb-2 rounded-none border-0 shadow-none"
+      className=" w-full m-2 pb-2 rounded-none border-0 shadow-none"
     >
       <Link
         href={

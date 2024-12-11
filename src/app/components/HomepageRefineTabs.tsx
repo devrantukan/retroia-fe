@@ -22,21 +22,21 @@ const HomepageRefineTabs = () => {
             <Tab key="properties" title="Konut">
               <Card className="bg-slate-300 ">
                 <CardBody>
-                  <HomepageRefineForm />
+                  <HomepageRefineForm propertyType={"konut"} />
                 </CardBody>
               </Card>
             </Tab>
             <Tab key="about-us" title="Ticari">
               <Card className="bg-slate-300">
                 <CardBody>
-                  <HomepageRefineForm />
+                  <HomepageRefineForm propertyType={"ticari"} />
                 </CardBody>
               </Card>
             </Tab>
             <Tab key="our-office" title="Arsa/Arazi">
               <Card className="bg-slate-300">
                 <CardBody>
-                  <HomepageRefineForm />
+                  <HomepageRefineForm propertyType={"arsa-arazi"} />
                 </CardBody>
               </Card>
             </Tab>

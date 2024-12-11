@@ -9,12 +9,12 @@ interface Props {
   params: {
     type: string;
     contract: string;
+    country: string;
   };
 }
 
 export default async function Home({ params }: Props) {
-  params.type = "arsa-arazi";
-
+  console.log("params is", params);
   const contract = await prisma.propertyContract.findFirst({
     select: {
       slug: true,
@@ -29,12 +29,20 @@ export default async function Home({ params }: Props) {
     },
   });
 
+  const country = await prisma.country.findFirst({
+    where: {
+      slug: params.country,
+    },
+  });
+
+  console.log(country);
+
   return (
     <div>
       <Search
         type={type?.value ?? ""}
         contract={contract?.value ?? ""}
-        country=""
+        country={country?.country_name ?? ""}
       />
     </div>
   );

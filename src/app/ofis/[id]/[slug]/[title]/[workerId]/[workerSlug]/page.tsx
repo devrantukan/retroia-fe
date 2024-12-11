@@ -74,8 +74,6 @@ const OfficeWorkerPage = async ({ params }: Props) => {
     }
   });
 
-  console.log("asp", assignedProjects);
-
   if (officeWorker) {
     (officeWorker as any).assignedProjects = assignedProjects;
   }

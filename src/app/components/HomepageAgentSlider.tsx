@@ -28,7 +28,7 @@ export default function HomepageAgentSlider({ agents }: { agents: any[] }) {
             {agents.map((agent, index) => (
               <CarouselItem
                 key={index}
-                className="pl-1 mx-4 md:basis-1/2 lg:basis-1/4"
+                className="pl-1 mx-4 md:basis-1/2 lg:basis-1/4 xl:basis-1/4"
               >
                 <OfficeWorkerCard officeWorker={agent} index={index} />
               </CarouselItem>
