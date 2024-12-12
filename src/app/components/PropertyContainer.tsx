@@ -11,7 +11,11 @@ const PropertyContainer = ({ children, currentPage, totalPages }: Props) => {
     <div className="p-5 flex flex-col gap-10 items-center">
       <div className="flex flex-wrap justify-center gap-6">{children}</div>
       {/* ToDo: Put Pagination Here */}
-      <PaginationContainer currentPage={currentPage} totalPages={totalPages} />
+      <PaginationContainer
+        currentPage={currentPage}
+        totalPages={totalPages}
+        route=""
+      />
     </div>
   );
 };

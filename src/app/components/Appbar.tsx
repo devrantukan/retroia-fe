@@ -13,9 +13,14 @@ import {
 import Link from "next/link";
 import React, { ReactNode } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import path from "path";
 
 const Appbar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const pathname = usePathname();
+  console.log(pathname);
   return (
     <Navbar
       className="shadow-md bg-blue-950  w-full flex justify-between "
@@ -43,24 +48,45 @@ const Appbar = () => {
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4 text-white" justify="end">
-        <NavbarItem>
-          <Link color="foreground" href="/ofislerimiz">
+        <NavbarItem isActive={pathname === "/ofislerimiz"}>
+          <Link
+            href="/ofislerimiz"
+            {...(pathname === "/ofislerimiz"
+              ? { "aria-current": "page" }
+              : { color: "foreground" })}
+          >
             Ofislerimiz
           </Link>
         </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="/danismanlarimiz" aria-current="page">
+        <NavbarItem isActive={pathname === "/danismanlarimiz"}>
+          <Link
+            href="/danismanlarimiz"
+            {...(pathname === "/danismanlarimiz"
+              ? { "aria-current": "page" }
+              : { color: "foreground" })}
+          >
             Danışmanlarımız
           </Link>
         </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="/gayrimenkul-danismani-basvuru-formu">
+        <NavbarItem
+          isActive={pathname === "/gayrimenkul-danismani-basvuru-formu"}
+        >
+          <Link
+            {...(pathname === "/ofislerimiz"
+              ? { "aria-current": "page" }
+              : { color: "foreground" })}
+            href="/gayrimenkul-danismani-basvuru-formu"
+          >
             Danışman ol
           </Link>
         </NavbarItem>
-        <NavbarItem>
+        <NavbarItem
+          isActive={pathname === "/gayrimenkullerinizi-satalim-kiralayalim"}
+        >
           <Link
-            color="foreground"
+            {...(pathname === "/ofislerimiz"
+              ? { "aria-current": "page" }
+              : { color: "foreground" })}
             href="/gayrimenkullerinizi-satalim-kiralayalim"
           >
             Retroia ile Sat Kirala
@@ -69,24 +95,45 @@ const Appbar = () => {
       </NavbarContent>
 
       <NavbarMenu>
-        <NavbarItem>
-          <Link color="foreground" href="/ofislerimiz">
+        <NavbarItem isActive={pathname === "/ofislerimiz"}>
+          <Link
+            href="/ofislerimiz"
+            {...(pathname === "/ofislerimiz"
+              ? { "aria-current": "page" }
+              : { color: "foreground" })}
+          >
             Ofislerimiz
           </Link>
         </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="/danismanlarimiz" aria-current="page">
+        <NavbarItem isActive={pathname === "/danismanlarimiz"}>
+          <Link
+            href="/danismanlarimiz"
+            {...(pathname === "/danismanlarimiz"
+              ? { "aria-current": "page" }
+              : { color: "foreground" })}
+          >
             Danışmanlarımız
           </Link>
         </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="/gayrimenkul-danismani-basvuru-formu">
+        <NavbarItem
+          isActive={pathname === "/gayrimenkul-danismani-basvuru-formu"}
+        >
+          <Link
+            {...(pathname === "/ofislerimiz"
+              ? { "aria-current": "page" }
+              : { color: "foreground" })}
+            href="/gayrimenkul-danismani-basvuru-formu"
+          >
             Danışman ol
           </Link>
         </NavbarItem>
-        <NavbarItem>
+        <NavbarItem
+          isActive={pathname === "/gayrimenkullerinizi-satalim-kiralayalim"}
+        >
           <Link
-            color="foreground"
+            {...(pathname === "/ofislerimiz"
+              ? { "aria-current": "page" }
+              : { color: "foreground" })}
             href="/gayrimenkullerinizi-satalim-kiralayalim"
           >
             Retroia ile Sat Kirala
@@ -96,5 +143,4 @@ const Appbar = () => {
     </Navbar>
   );
 };
-
 export default Appbar;

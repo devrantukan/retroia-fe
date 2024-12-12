@@ -19,7 +19,7 @@ const OfficesPage = async () => {
           </span>
         </h1>
       </div>
-      <div className="m-6 flex flex-row">
+      <div className="m-6 grid lg:grid-cols-3 grid-rows-1">
         {offices.map((office, index) => (
           <OfficeCard office={office} key={index} />
         ))}

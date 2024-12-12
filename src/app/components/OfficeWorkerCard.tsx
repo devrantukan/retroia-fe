@@ -19,23 +19,23 @@ const OfficeWorkerCard = ({ officeWorker, index }: Props) => {
         <Image
           src={`${officeWorker.avatarUrl}`}
           alt={""}
-          width={400}
-          height={540}
-          className=" cursor-pointer w-2/3  mx-auto mb-4 "
+          width={640}
+          height={800}
+          className="object-fill cursor-pointer w-[70%]  mx-auto mb-4 "
         />
-        <h2 className="text-lg font-semibold text-left text-blue-950">
+        <h2 className="text-lg font-semibold text-left text-blue-950 mb-2">
           {officeWorker.name} {officeWorker.surname}
         </h2>
-        <p>{officeWorker.title}</p>
-        <div className="flex flex-row items-center gap-x-1">
+        <p className="font-semilight text-sm">{officeWorker.role?.title}</p>
+        <div className="flex flex-row items-center gap-x-1 text-gray-600 text-sm">
           <Envelope width={20} height={20} />
           {officeWorker.email}
         </div>
-        <div className="flex flex-row items-center gap-x-1 mb-2">
+        <div className="flex flex-row items-center gap-x-1 mb-2 text-gray-600 text-sm">
           <PhoneCall width={20} height={20} />
           {officeWorker.phone}
         </div>
-        <p>{officeWorker.office?.name}</p>
+        <p className="font-semibold text-md">{officeWorker.office?.name}</p>
       </Link>
     </Card>
   );

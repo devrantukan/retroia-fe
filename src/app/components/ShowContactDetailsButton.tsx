@@ -17,6 +17,7 @@ import {
   Envelope,
   Printer,
 } from "@phosphor-icons/react/dist/ssr";
+import Link from "next/link";
 
 export default function ShowContactDetailsButton({
   phone,
@@ -47,7 +48,7 @@ export default function ShowContactDetailsButton({
         {phone && (
           <p className="flex flex-row justify-center gap-x-2">
             <PhoneCall width={20} height={20} />
-            {phone}
+            <Link href={`tel:${phone}`}>{phone}</Link>
           </p>
         )}
         {fax && (
@@ -59,7 +60,7 @@ export default function ShowContactDetailsButton({
         {email && (
           <p className="flex flex-row justify-center gap-x-2">
             <Envelope width={20} height={20} />
-            {email}
+            <Link href={`mailto:${email}`}>{email}</Link>
           </p>
         )}
       </div>

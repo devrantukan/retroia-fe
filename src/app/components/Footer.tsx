@@ -32,7 +32,7 @@ const cooperatePages = [
 ];
 
 const aboutPages = [
-  { id: 0, page: "Hakkımızda", href: "/" },
+  { id: 0, page: "Biz Kimiz?", href: "/" },
   { id: 1, page: "KVKK ve Aydınlatma Metni", href: "/features/grid" },
   { id: 2, page: "KVKK Bilgi Başvuru Formu", href: "/pricing/tiers" },
   { id: 3, page: "Yasal Uyarı ve Kullanım Koşulları", href: "/team" },
@@ -126,7 +126,7 @@ export default function Footer() {
         </nav>
       </div>
       <p className="mt-4 text-neutral-900 font-normal">
-        &copy; 2025 Retroia All rights reserved.
+        &copy; 2025 Retroia - Her hakkı saklıdır.
       </p>
     </footer>
   );

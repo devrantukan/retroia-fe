@@ -7,7 +7,7 @@ import Link from "next/link";
 import PropertyCard from "./PropertyCard";
 import ShowContactDetailsButton from "./ShowContactDetailsButton";
 import OfficeMap from "./OfficeMap";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Compass, MapPin } from "@phosphor-icons/react/dist/ssr";
 import OfficeWorkerCardLight from "./OfficeWorkerCardLight";
 import OfficeImages from "./OfficeImages";
@@ -29,6 +29,24 @@ const OfficeTabs = ({ office }: Props) => {
   propertiesOfOffice.flat().forEach((property: any) => {
     // console.log(property);
   });
+
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams.toString());
+  const pagenum = params.get("pagenum");
+
+  console.log(typeof pagenum);
+
+  const pathname = usePathname();
+
+  const selectedPage = parseInt(pagenum || "1");
+  const elementsPerPage = 2;
+  const totalPages = Math.ceil(propertiesOfOffice.length / elementsPerPage);
+
+  const indexMin = selectedPage;
+  const indexMax = indexMin + elementsPerPage;
+  const paginatedArray = propertiesOfOffice.filter(
+    (x: any, index: number) => index >= indexMin && index < indexMax
+  );
 
   // find all reviews of office workers
   let reviewsOfOffice: any[] = [];

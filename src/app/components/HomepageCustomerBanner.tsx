@@ -20,7 +20,7 @@ export default function HomepageCustomerBanner() {
             href="/gayrimenkullerinizi-satalim-kiralayalim "
             className="text-blue-950 font-bold flex flex-row"
           >
-            <span className="mr-4">Danışman Ol</span>
+            <span className="mr-4">Hemen Başvur</span>
             <ArrowCircleRight width={20} height={20} />
           </Link>
         </Button>

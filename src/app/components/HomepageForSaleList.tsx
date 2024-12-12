@@ -16,7 +16,7 @@ export default function HomepageForSaleList({
   const [selected, setSelected] = React.useState("konut");
   return (
     <>
-      <div className="flex flex-col lg:w-full items-start mx-6 lg:p-6 p-4 pt-8 rounded-xl h-[500px]rounded-xl bg-gradient-to-r from-blue-950 from-40% via-sky-500 via-70% to-sky-200 to-90%">
+      <div className="flex flex-col lg:w-full items-start lg:mx-6 lg:p-6 p-4 pt-8 lg:rounded-xl rounded-none bg-gradient-to-r from-blue-950 from-40% via-sky-500 via-70% to-sky-200 to-90%">
         <h2 className="absolute lg:text-xl text-lg font-semibold text-white mb-6 mt-2">
           Satılık Gayrimenkuller
         </h2>
@@ -29,11 +29,11 @@ export default function HomepageForSaleList({
           >
             <Tab key="konut" title="Konut">
               <Card>
-                <CardBody className="grid grid-cols-1 lg:h-[720px] h-full gap-x-4">
+                <CardBody className="grid grid-cols-1 lg:h-[900px] h-full gap-x-4">
                   {properties
                     .filter((property) => property.contract.slug === "satilik")
                     .filter((property) => property.type.slug == "konut")
-                    .slice(0, 4)
+                    .slice(0, 5)
                     .map((property, index) => (
                       <PropertyCard property={property} key={index} />
                     ))}
@@ -51,11 +51,11 @@ export default function HomepageForSaleList({
             </Tab>
             <Tab key="ticari" title="Ticari">
               <Card>
-                <CardBody className="grid grid-cols-1 lg:h-[720px] h-full gap-x-4">
+                <CardBody className="grid grid-cols-1 lg:h-[900px] h-full gap-x-4">
                   {properties
                     .filter((property) => property.contract.slug === "satilik")
                     .filter((property) => property.type.slug == "ticari")
-                    .slice(0, 4)
+                    .slice(0, 5)
                     .map((property, index) => (
                       <PropertyCard property={property} key={index} />
                     ))}
@@ -73,11 +73,11 @@ export default function HomepageForSaleList({
             </Tab>
             <Tab key="arsa-arazi" title="Arsa Arazi">
               <Card>
-                <CardBody className="grid grid-cols-1 lg:h-[720px] h-full gap-x-4">
+                <CardBody className="grid grid-cols-1 lg:h-[900px] h-full gap-x-4">
                   {properties
                     .filter((property) => property.contract.slug === "satilik")
                     .filter((property) => property.type.slug == "arsa-arazi")
-                    .slice(0, 4)
+                    .slice(0, 5)
                     .map((property, index) => (
                       <PropertyCard property={property} key={index} />
                     ))}

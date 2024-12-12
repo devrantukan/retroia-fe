@@ -23,6 +23,12 @@ const nextConfig = {images: {
         port: '3001',
 
       },
+      {
+        protocol: 'https',
+        hostname: 'www.retroia.com',
+      
+
+      },
   
     ],
   },};

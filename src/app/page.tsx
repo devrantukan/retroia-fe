@@ -51,6 +51,9 @@ export default async function Home({ searchParams }: Props) {
         select: {
           city: true,
           state: true,
+          country: true,
+          district: true,
+          neighborhood: true,
         },
       },
       type: true,

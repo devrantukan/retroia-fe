@@ -15,7 +15,7 @@ import OfficeWorkerCard from "./OfficeWorkerCard";
 export default function HomepageAgentSlider({ agents }: { agents: any[] }) {
   return (
     <>
-      <div className="flex justify-left  p-6 m-6 items-center bg-gradient-to-r from-blue-950 via-sky-300 to-sky-250 rounded-xl mb-8 ">
+      <div className="flex justify-left  p-6 mt-6 items-center bg-gradient-to-r from-blue-950 via-sky-300 to-sky-250">
         <Carousel
           opts={{
             loop: true,

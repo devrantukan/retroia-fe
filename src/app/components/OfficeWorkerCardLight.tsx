@@ -28,9 +28,9 @@ const OfficeWorkerCardLight = ({ officeWorker, index }: Props) => {
         <Image
           src={`${officeWorker.avatarUrl}`}
           alt={""}
-          width={400}
-          height={540}
-          className="cursor-pointer rounded-lg max-h-[300px] "
+          width={640}
+          height={800}
+          className="cursor-pointer rounded-lg  aspect-square object-contain "
         />
 
         <h2 className="text-lg font-semibold text-left text-blue-950">

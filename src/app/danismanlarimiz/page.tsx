@@ -28,16 +28,26 @@ const OfficeWorkersPage = async () => {
           <span className="font-bold text-xl">SİZE EN UYGUNU BULUN</span>
         </h1>
       </div>
-      <div className="m-4 flex flex-row flex-wrap gap-x-4 gap-y-6">
-        {officeWorkers.map((officeWorker, index) => (
-          <div key={index}>
-            <OfficeWorkerCard
-              officeWorker={officeWorker}
-              index={index}
-              key={index}
-            />
-          </div>
-        ))}
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-x-6 mx-6 gap-y-6 mb-6 grid-">
+        {officeWorkers
+          .filter(
+            (worker: { slug: string; role: { slug: string } }) =>
+              worker.role.slug === "takim-lideri-gayrimenkul-danismani"
+          )
+          .map((worker, index: number) => (
+            <OfficeWorkerCard officeWorker={worker} key={index} index={index} />
+          ))}
+      </div>
+
+      <div className="grid lg:grid-cols-4  md:grid-cols-2  grid-cols-1 gap-x-6 mx-6 gap-y-6 mb-6">
+        {officeWorkers
+          .filter(
+            (worker: { slug: string; role: { slug: string } }) =>
+              worker.role.slug === "gayrimenkul-danismani"
+          )
+          .map((worker, index: number) => (
+            <OfficeWorkerCard officeWorker={worker} key={index} index={index} />
+          ))}
       </div>
     </div>
   );

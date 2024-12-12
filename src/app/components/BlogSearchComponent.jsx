@@ -48,10 +48,10 @@ console.log(filters)
         analytics={false}
   
        filters={filters}
-        hitsPerPage={6}
+        hitsPerPage={8}
       />
 
-      <div style={{ padding: "2%" }} className="bg-white mr-4  flex flex-col gap-y-2 rounded-xl">
+      <div style={{ padding: "2%" }} className="bg-white mr-4   gap-y-2 rounded-xl hidden lg:block  ">
             <h3>Contract</h3>
             <RefinementList attribute="contract" />
             <h3>Type</h3>

@@ -1,8 +1,11 @@
+import BreadCrumb from "@/app/components/BreadCrumb";
 import { ImagesSlider } from "@/app/components/ImageSlider";
 import PageTitle from "@/app/components/pageTitle";
 import ShowOnMapButton from "@/app/components/ShowOnMapButton";
 import prisma from "@/lib/prisma";
 import { Card } from "@nextui-org/react";
+import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
+
 import { notFound } from "next/navigation";
 const images = [1, 2, 3, 4, 5, 6].map((image) => `/images/${image}.jpg`);
 interface Props {
@@ -22,17 +25,31 @@ const PropertyPage = async ({ params }: Props) => {
       location: true,
       agent: true,
       images: true,
+      contract: true,
+      type: true,
     },
   });
+  console.log(property);
   if (!property) return notFound();
   return (
-    <div className="h-screen">
+    <div className="lg:h-screen mb-6">
       <div className="p-4">
+        <BreadCrumb
+          location={{
+            country: property.location?.country || "",
+            city: property.location?.city || "",
+            district: property.location?.district || "",
+            neighborhood: property.location?.neighborhood || "",
+          }}
+          contract={property.contract}
+          propertyType={property.type}
+        />
         <h2 className="text-2xl font-bold text-primary my-5">
           {property.name}
         </h2>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          <div className="col-span-2">
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 h-full">
+          <div className="lg:col-span-2 col-span-1 lg:h-full h-[250px]">
             <ImagesSlider images={images} />
             <h2 className="text-2xl font-bold text-gray-700 mt-7 lining-nums">
               {property.price.toLocaleString("tr-TR", {
@@ -44,8 +61,11 @@ const PropertyPage = async ({ params }: Props) => {
 
             <p className="text-sm text-slate-600 mt-7">
               {property.description}
+              {property.contract.slug}
+              {property.type.slug}
             </p>
           </div>
+
           <Card className="p-5 flex flex-col gap-1">
             <Title title="Features" />
             <Attribute label="Bedrooms" value={property.feature?.bedrooms} />
@@ -84,13 +104,12 @@ const PropertyPage = async ({ params }: Props) => {
     </div>
   );
 };
-
 export default PropertyPage;
 
 const Title = ({ title, className }: { title: string; className?: string }) => (
   <div className={className}>
     <h2 className="text-xl font-bold text-slate-700">{title} </h2>
-    <hr className="boreder border-solid border-slate-300" />
+    <hr className="border border-solid border-slate-300" />
   </div>
 );
 

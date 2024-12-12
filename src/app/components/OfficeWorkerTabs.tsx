@@ -1,17 +1,40 @@
 "use client";
 import React from "react";
 
-import { Tabs, Tab, Card, CardBody } from "@nextui-org/react";
+import { Tabs, Tab, Card, CardBody, Pagination } from "@nextui-org/react";
 import Link from "next/link";
 import PropertyCard from "./PropertyCard";
 import OfficeWorkerReviews from "./OfficeWorkerReviews";
 import ProjectCard from "./ProjectCard";
+import PaginationContainer from "./PaginationContainer";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface Props {
   officeWorker: any;
 }
 
 const OfficeWorkerTabs = ({ officeWorker }: Props) => {
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams.toString());
+  const pagenum = params.get("pagenum");
+
+  console.log(typeof pagenum);
+
+  const pathname = usePathname();
+
+  const selectedPage = parseInt(pagenum || "1");
+  const elementsPerPage = 8;
+  const totalPages = Math.ceil(
+    officeWorker.properties.length / elementsPerPage
+  );
+
+  const indexMin = selectedPage;
+  const indexMax = indexMin + elementsPerPage;
+  const paginatedArray = officeWorker.properties.filter(
+    (x: any, index: number) => index >= indexMin && index < indexMax
+  );
+
+  console.log(paginatedArray);
   return (
     <div className="p-4 flex flex-col justify-between lg:w-3/4">
       <div className="flex w-full flex-col">
@@ -21,17 +44,22 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
               <CardBody>{officeWorker.about}</CardBody>
             </Card>
           </Tab>
-          {officeWorker.properties.length > 0 && (
+          {paginatedArray.length > 0 && (
             <Tab key="properties" title="Portföylerim">
               <Card>
                 <CardBody>
-                  {officeWorker.properties.map((property: any) => (
+                  {paginatedArray.map((property: any, index: number) => (
                     <PropertyCard
                       property={property}
-                      key={property._id}
+                      key={index}
                       showAvatar={false}
                     />
                   ))}
+                  <PaginationContainer
+                    currentPage={selectedPage}
+                    totalPages={totalPages}
+                    route={pathname}
+                  />
                 </CardBody>
               </Card>
             </Tab>
@@ -69,5 +97,4 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
     </div>
   );
 };
-
 export default OfficeWorkerTabs;

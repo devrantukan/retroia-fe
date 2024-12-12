@@ -7,14 +7,18 @@ interface Props {
   currentPage: number;
   route?: string;
 }
-const PaginationContainer = ({ totalPages, currentPage, route = "/" }: Props) => {
+const PaginationContainer = ({
+  totalPages,
+  currentPage,
+  route = "/",
+}: Props) => {
   const router = useRouter();
   if (totalPages <= 1) return null;
 
   return (
     <Pagination
       total={totalPages}
-      initialPage={1}
+      initialPage={currentPage ? currentPage : 1}
       page={currentPage}
       onChange={(page) => router.push(`${route}?pagenum=${page}`)}
     />

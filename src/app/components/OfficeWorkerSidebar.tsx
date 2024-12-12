@@ -23,12 +23,7 @@ interface Props {
 const OfficeWorkerSidebar = ({ officeWorker }: Props) => {
   return (
     <div className="p-4 flex flex-col justify-start w-full lg:w-1/4 ">
-      <Image
-        src="https://dummyimage.com/640x4:3"
-        alt=""
-        width={640}
-        height={450}
-      />
+      <Image src={officeWorker.avatarUrl} alt="" width={640} height={800} />
       <hr />
       <p className="text-xl font-bold text-center mt-2">
         {officeWorker.name} {officeWorker.surname}
