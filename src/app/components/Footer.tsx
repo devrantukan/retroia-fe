@@ -34,8 +34,8 @@ const cooperatePages = [
 const aboutPages = [
   { id: 0, page: "Biz Kimiz?", href: "/" },
   { id: 1, page: "KVKK ve Aydınlatma Metni", href: "/features/grid" },
-  { id: 2, page: "KVKK Bilgi Başvuru Formu", href: "/pricing/tiers" },
-  { id: 3, page: "Yasal Uyarı ve Kullanım Koşulları", href: "/team" },
+  // { id: 2, page: "KVKK Bilgi Başvuru Formu", href: "/pricing/tiers" },
+  // { id: 3, page: "Yasal Uyarı ve Kullanım Koşulları", href: "/team" },
 ];
 
 const socialLinks = [

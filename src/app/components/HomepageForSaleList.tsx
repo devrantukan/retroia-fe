@@ -17,7 +17,7 @@ export default function HomepageForSaleList({
   return (
     <>
       <div className="flex flex-col lg:w-full items-start lg:mx-6 lg:p-6 p-4 pt-8 lg:rounded-xl rounded-none bg-gradient-to-r from-blue-950 from-40% via-sky-500 via-70% to-sky-200 to-90%">
-        <h2 className="absolute lg:text-xl text-lg font-semibold text-white mb-6 mt-2">
+        <h2 className="lg:absolute relative lg:text-xl text-lg font-semibold text-white mb-6 mt-2">
           Satılık Gayrimenkuller
         </h2>
         <div className="flex flex-col w-full">

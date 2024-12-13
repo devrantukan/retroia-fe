@@ -16,6 +16,9 @@ import {
 import typesenseInstantsearchAdapter from "../../lib/typesense"; // adjust the path based on your directory structure
 import PropertySearchCard from "../components/PropertySearchCard";
 import 'instantsearch.css/themes/satellite.css';
+import { SearchDrawer } from "./SearchDrawer";
+import { Button } from "@nextui-org/react";
+
 
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 
@@ -30,8 +33,16 @@ const BlogHitComponent = ({ hit }) => {
   );
 };
 
+
+
 const BlogSearchComponent = ({type, contract, country }) => {
   const postCollection = `posts`;
+
+   const [isOpen, setIsOpen] = React.useState(false);
+
+   const handleClick = () => {
+    setIsOpen(true);
+   };
 
   console.log('parameters1:', contract, type, country)
 
@@ -51,19 +62,19 @@ console.log(filters)
         hitsPerPage={8}
       />
 
-      <div style={{ padding: "2%" }} className="bg-white mr-4   gap-y-2 rounded-xl hidden lg:block  ">
+      <div style={{ padding: "2%" }} className={`bg-white mr-4 gap-y-2 rounded-xl ${isOpen === true ? '' : 'hidden'} lg:block  `}>
             <h3>Contract</h3>
             <RefinementList attribute="contract" />
             <h3>Type</h3>
             <RefinementList attribute="type" />
             <h3>Ülke</h3>
-            <RefinementList attribute="country" searchable={"boolean"}  />
+            <RefinementList attribute="country" searchable={true}  />
             <h3>Şehir</h3>
-            <RefinementList attribute="city" searchable={"boolean"} />
+            <RefinementList attribute="city" searchable={true} />
             <h3>İlçe</h3>
-            <RefinementList attribute="district"  searchable={"boolean"}/>
+            <RefinementList attribute="district"  searchable={true}/>
             <h3>Mahalle</h3>
-            <RefinementList attribute="neighborhood"  searchable={"boolean"}  />
+            <RefinementList attribute="neighborhood"  searchable={true}  />
        
        
             <h3>Oda sayısı</h3>
@@ -85,6 +96,7 @@ console.log(filters)
 
   
           <Stats />
+<Button onClick={handleClick} > show panel </Button>
             <SortBy
               defaultRefinement={postCollection}
               items={[
@@ -102,5 +114,4 @@ console.log(filters)
       </div>
     </InstantSearch>
   );
-};
-export default BlogSearchComponent;
+};export default BlogSearchComponent;

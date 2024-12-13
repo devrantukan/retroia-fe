@@ -3,6 +3,7 @@ import Image from "next/image";
 import PropertyCard from "@/app/components/PropertyCard";
 import PropertyContainer from "@/app/components/PropertyContainer";
 import Search from "@/app/components/Search";
+import { Metadata } from "next";
 const PAGE_SIZE = 8;
 
 interface Props {
@@ -12,6 +13,11 @@ interface Props {
     country: string;
   };
 }
+export const metadata: Metadata = {
+  title: "Retroia Gayrimenkul, Real Estate - Gayrimenkul Satış / Kiralama",
+  description:
+    "Retroia Gayrimenkul, Real Estate - Gayrimenkul Satış / Kiralama",
+};
 
 export default async function Home({ params }: Props) {
   const contract = await prisma.propertyContract.findFirst({
