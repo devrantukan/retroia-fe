@@ -14,6 +14,7 @@ import OfficeImages from "./OfficeImages";
 import OfficeWorkerReviews from "./OfficeWorkerReviews";
 import Image from "next/image";
 import ProjectCard from "./ProjectCard";
+import PaginationContainer from "./PaginationContainer";
 
 interface Props {
   office: any;
@@ -26,9 +27,11 @@ const OfficeTabs = ({ office }: Props) => {
     propertiesOfOffice.push(worker.properties);
   });
 
+  let flatArrayProperties: any[] = [];
   propertiesOfOffice.flat().forEach((property: any) => {
-    // console.log(property);
+    flatArrayProperties.push(property);
   });
+  console.log(flatArrayProperties);
 
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams.toString());
@@ -39,12 +42,12 @@ const OfficeTabs = ({ office }: Props) => {
   const pathname = usePathname();
 
   const selectedPage = parseInt(pagenum || "1");
-  const elementsPerPage = 2;
-  const totalPages = Math.ceil(propertiesOfOffice.length / elementsPerPage);
+  const elementsPerPage = 8;
+  const totalPages = Math.ceil(flatArrayProperties.length / elementsPerPage);
 
   const indexMin = selectedPage;
   const indexMax = indexMin + elementsPerPage;
-  const paginatedArray = propertiesOfOffice.filter(
+  const paginatedArray = flatArrayProperties.filter(
     (x: any, index: number) => index >= indexMin && index < indexMax
   );
 
@@ -86,16 +89,19 @@ const OfficeTabs = ({ office }: Props) => {
           <Tab key="properties" title="Portföylerimiz">
             <Card>
               <CardBody>
-                {propertiesOfOffice
-                  .flat()
-                  .map((property: any, index: number) => (
-                    <PropertyCard
-                      showAvatar={true}
-                      property={property}
-                      key={index}
-                      index={index}
-                    />
-                  ))}
+                {paginatedArray.flat().map((property: any, index: number) => (
+                  <PropertyCard
+                    showAvatar={true}
+                    property={property}
+                    key={index}
+                    index={index}
+                  />
+                ))}
+                <PaginationContainer
+                  currentPage={selectedPage}
+                  totalPages={totalPages}
+                  route={pathname}
+                />
               </CardBody>
             </Card>
           </Tab>
@@ -456,7 +462,9 @@ const OfficeTabs = ({ office }: Props) => {
                     type="button"
                     className="mb-2 me-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
                   >
-                    Daha fazla yorum göster
+                    {reviewsOfOffice.length > 0
+                      ? "Daha fazla yorum göster"
+                      : "Henüz yorum yapılmamış"}
                   </button>
                 </div>
               </CardBody>

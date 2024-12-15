@@ -12,8 +12,17 @@ import React from "react";
 import { ShareSocial } from "react-share-social";
 import { ShareFat } from "@phosphor-icons/react/dist/ssr";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
-export default function Share() {
+export default function Share({
+  title,
+  type,
+  avatarUrl,
+}: {
+  title: string;
+  type: string;
+  avatarUrl: string;
+}) {
   const currentPage = usePathname();
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -41,9 +50,21 @@ export default function Share() {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1  text-blue-950">
-                Paylaş
+                {type} Paylaş
               </ModalHeader>
               <ModalBody>
+                <div className="flex flex-row items-center gap-x-6">
+                  {avatarUrl && (
+                    <Image
+                      src={avatarUrl}
+                      alt={title}
+                      width={640}
+                      height={640}
+                      className="aspect-square max-w-[10rem] rounded-lg"
+                    />
+                  )}
+                  <h2 className="font-bold">{title}</h2>
+                </div>
                 <ShareSocial
                   url={`${baseUrl}${currentPage}`}
                   socialTypes={["facebook", "twitter", "linkedin", "whatsapp"]}

@@ -186,11 +186,11 @@ model OfficeWorker {
 
 model OfficeWorkerReview {
   id                Int      @id @default(autoincrement())
-  text              String
-  reviewerName      String
-  reviewerSurname   String
-  reviewerEmail     String
-  reviewerPhone     String
+  review              String
+  firstName      String
+  lastName   String
+  email     String
+  phone     String
   score1            Int
   score2            Int
   score3            Int
@@ -201,6 +201,8 @@ model OfficeWorkerReview {
   officeWorkerId    Int 
   officeWorker      OfficeWorker   @relation(fields: [officeWorkerId], references: [id]) 
   isApproved        Int
+  kvkkConsent       Int   @default(0)
+  marketingConsent  Int  @default(0)
   createdAt         DateTime        @default(now())
 }
 
@@ -278,5 +280,37 @@ model ProjectImage {
   url        String
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId Int
+}
+
+model ProspectAgent {
+  id               Int          @id @default(autoincrement())
+  firstName        String
+  lastName         String
+  email            String
+  phone            String
+  city             String
+  district         String
+  educationLevel   String
+  occupation       String
+  kvkkConsent      Int   @default(0)
+  marketingConsent Int  @default(0)
+  createdAt        DateTime        @default(now())
+}
+
+model ProspectCustomer {
+  id               Int          @id @default(autoincrement())
+  firstName        String
+  lastName         String
+  email            String
+  phone            String
+  city             String
+  district         String
+  streetAddress    String
+  contractType     String
+  propertyType      String
+  notes            String
+  kvkkConsent      Int   @default(0)
+  marketingConsent Int  @default(0)
+  createdAt        DateTime        @default(now())
 }
 

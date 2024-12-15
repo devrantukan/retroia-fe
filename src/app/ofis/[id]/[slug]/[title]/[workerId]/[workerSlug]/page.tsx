@@ -85,8 +85,12 @@ const OfficeWorkerPage = async ({ params }: Props) => {
         <div className="flex lg:flex-row flex-col">
           <OfficeWorkerSidebar officeWorker={officeWorker} />
           <div className="absolute right-0 mr-10 mt-4 flex gap-x-2">
-            <ReviewModal />
-            <Share />
+            <ReviewModal officeWorkerId={officeWorker.id} />
+            <Share
+              title={`${officeWorker.name} ${officeWorker.surname}`}
+              type={"Danışmanı"}
+              avatarUrl={officeWorker.avatarUrl || ""}
+            />
           </div>
           <OfficeWorkerTabs officeWorker={officeWorker} />
         </div>

@@ -15,6 +15,7 @@ import {
   Globe,
 } from "@phosphor-icons/react/dist/ssr";
 import ShowContactDetailsButton from "./ShowContactDetailsButton";
+import ReviewModalSidebar from "./ReviewModalSidebar";
 
 interface Props {
   officeWorker: any;
@@ -153,9 +154,7 @@ const OfficeWorkerSidebar = ({ officeWorker }: Props) => {
         <p className="font-bold mb-2">Yorum Yaz</p>
         <p>Danışmanın verdiği hizmeti değerlendirin.</p>
 
-        <Button className="mt-4 bg-blue-950 text-white font-bold text-md">
-          Yorum Yaz <ArrowCircleRight width={24} height={24} />
-        </Button>
+        <ReviewModalSidebar officeWorkerId={officeWorker.id} />
       </div>
     </div>
   );

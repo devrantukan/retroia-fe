@@ -19,8 +19,9 @@ export default function HomepageAgentSlider({ agents }: { agents: any[] }) {
         <Carousel
           opts={{
             loop: true,
+            align: "start",
           }}
-          autoplay={false}
+          autoplay={true}
           autoplayInterval={5000}
           className="w-full"
         >

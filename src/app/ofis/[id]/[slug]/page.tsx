@@ -67,7 +67,11 @@ const OfficePage = async ({ params }: Props) => {
           <OfficeSidebar office={office} />
 
           <div className="absolute right-0 mr-10 mt-4 flex gap-x-2">
-            <Share />
+            <Share
+              title={office.name}
+              type={"Ofisi"}
+              avatarUrl={office.avatarUrl || ""}
+            />
           </div>
           <OfficeTabs office={office} />
         </div>

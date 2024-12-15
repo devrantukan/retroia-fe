@@ -13,7 +13,11 @@ import React from "react";
 import AgentReviewForm from "./forms/AgentReviewForm";
 import { ChatCircle } from "@phosphor-icons/react/dist/ssr";
 
-export default function ReviewModal() {
+export default function ReviewModal({
+  officeWorkerId,
+}: {
+  officeWorkerId: number;
+}) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [scrollBehavior, setScrollBehavior] = React.useState<
     "inside" | "normal" | "outside"
@@ -42,7 +46,7 @@ export default function ReviewModal() {
                 Yorum Yap
               </ModalHeader>
               <ModalBody>
-                <AgentReviewForm />
+                <AgentReviewForm officeWorkerId={officeWorkerId} />
               </ModalBody>
             </>
           )}

@@ -42,7 +42,6 @@ const socialLinks = [
   { id: 0, Icon: RiYoutubeLine, href: "/" },
   { id: 1, Icon: RiInstagramLine, href: "/" },
   { id: 2, Icon: RiFacebookBoxLine, href: "/" },
-  { id: 3, Icon: RiGithubLine, href: "/" },
   { id: 4, Icon: RiTwitterXLine, href: "/" },
 ];
 
