@@ -32,8 +32,8 @@ const PropertyPage = async ({ params }: Props) => {
   console.log(property);
   if (!property) return notFound();
   return (
-    <div className="lg:h-screen mb-6">
-      <div className="p-4">
+    <div className="w-full">
+      <div className="p-6 pb-0">
         <BreadCrumb
           location={{
             country: property.location?.country || "",
@@ -47,10 +47,14 @@ const PropertyPage = async ({ params }: Props) => {
         <h2 className="text-2xl font-bold text-primary my-5">
           {property.name}
         </h2>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 h-full">
-          <div className="lg:col-span-2 col-span-1 lg:h-full h-[250px]">
-            <ImagesSlider images={images} />
+      <div className="w-full flex lg:flex-row flex-col ">
+        <div className="p-4 flex flex-col lg:w-2/3 w-full">
+          <div className="flex flex-col">
+            <div className="w-full">
+              <ImagesSlider images={images} className="w-full h-[480px] p-6" />
+            </div>
             <h2 className="text-2xl font-bold text-gray-700 mt-7 lining-nums">
               {property.price.toLocaleString("tr-TR", {
                 minimumFractionDigits: 0,
@@ -58,31 +62,40 @@ const PropertyPage = async ({ params }: Props) => {
               })}
               <span className="text-lg">₺</span> / {property.status.value}
             </h2>
-
+            <h3 className="text-lg font-bold mt-6">İlan Açıklaması</h3>
             <p className="text-sm text-slate-600 mt-7">
               {property.description}
-              {property.contract.slug}
-              {property.type.slug}
             </p>
+            <h3 className="text-lg font-bold mt-6">İlan Özellikleri</h3>
           </div>
-
-          <Card className="p-5 flex flex-col gap-1">
-            <Title title="Features" />
-            <Attribute label="Bedrooms" value={property.feature?.bedrooms} />
-            <Attribute label="Bathrooms" value={property.feature?.bathrooms} />
+        </div>
+        <div className="flex lg:w-1/3 w-full mb-6 mt-4 mr-4 h-[600px]">
+          <Card className="p-5 flex flex-col gap-1 w-full">
+            <Title title="Özellikler" />
+            <Attribute label="Oda Sayısı" value={property.feature?.bedrooms} />
             <Attribute
-              label="Parking Spots"
+              label="Banyo Sayısı"
+              value={property.feature?.bathrooms}
+            />
+            <Attribute
+              label="Bulunduğu kat"
               value={property.feature?.parkingSpots}
             />
-            <Attribute label="Area" value={property.feature?.area} />
+            <Attribute label="Alan" value={property.feature?.area + " m2"} />
 
-            <Title title="Address" className="mt-7" />
-            <Attribute label="City" value={property.location?.city} />
-            <Attribute label="District" value={property.location?.district} />
+            <Title title="Adres Bilgileri" className="mt-7" />
+            <Attribute label="Şehir" value={property.location?.city} />
+            <Attribute label="İlçe" value={property.location?.district} />
             <Attribute
-              label="Neighborhood"
+              label="Mahalle"
               value={property.location?.neighborhood}
             />
+            <div className="mt-6 w-full flex flex-col gap-1">
+              <ShowOnMapButton
+                lat={property.location?.latitude ?? 0}
+                lng={property.location?.longitude ?? 0}
+              />
+            </div>
             {/* <Attribute label="Landmarks" value={property.location?.landmark} />
             <Attribute label="Zip Code" value={property.location?.zip} /> */}
             {/* <Attribute
@@ -90,14 +103,13 @@ const PropertyPage = async ({ params }: Props) => {
               value={property.location?.streetAddress}
             /> */}
 
-            <Title title="Agent Details" className="mt-7" />
+            <Title title="Danışman Detayları" className="mt-6" />
             <Attribute
-              label="Name"
+              label="Adı Soyadı"
               value={property.agent?.name + " " + property.agent?.surname}
             />
-            <Attribute label="Email" value={property.agent?.email} />
-            <Attribute label="Phone" value={property.agent?.phone} />
-            <ShowOnMapButton />
+            <Attribute label="E-posta" value={property.agent?.email} />
+            <Attribute label="Cep telefonu" value={property.agent?.phone} />
           </Card>
         </div>
       </div>

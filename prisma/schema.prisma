@@ -73,6 +73,8 @@ model PropertyLocation {
   landmark      String
   district      String
   neighborhood  String
+  latitude      Float
+  longitude     Float
   propertyId    Int      @unique
   property      Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
 }

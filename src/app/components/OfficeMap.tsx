@@ -16,7 +16,7 @@ const Marker: React.FC = () => {
     />
   );
 };
-export default function SimpleMap({ lat, lng }: { lat: number; lng: number }) {
+export default function OfficeMap({ lat, lng }: { lat: number; lng: number }) {
   const defaultProps = {
     center: {
       lat: lat,
