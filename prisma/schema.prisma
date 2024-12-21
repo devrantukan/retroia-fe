@@ -105,10 +105,11 @@ model City {
   city_name       String
   districts       District[]
   country_id      Int
+  country_name      String
   country         Country @relation(fields: [country_id], references: [country_id])
   offices          Office[]
+  slug            String
 }
-
 model Country {
   country_id         Int      @id @default(autoincrement())
   country_name      String
@@ -224,6 +225,7 @@ model District {
   neighborhoods       Neighborhood[]
   city City @relation(fields: [city_id], references: [city_id])
   offices          Office[]
+  slug            String
 }
 
 model Neighborhood {
@@ -233,8 +235,9 @@ model Neighborhood {
   city_name           String
   district_id         Int      
   district_name       String
-  offices              Office[]
+  offices             Office[]
   district District @relation(fields: [district_id], references: [district_id])
+  slug                String
 }
 
 

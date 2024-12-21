@@ -64,51 +64,53 @@ export default async function Home({ searchParams }: Props) {
     take: 50,
   });
 
-  // const pagenum = searchParams.pagenum ?? 0;
-  // const query = searchParams.query ?? "";
-  // const propertiesPromise = prisma.property.findMany({
-  //   select: {
-  //     id: true,
-  //     name: true,
-  //     price: true,
-  //     images: {
-  //       select: {
-  //         url: true,
-  //       },
-  //     },
-  //     location: {
-  //       select: {
-  //         city: true,
-  //         state: true,
-  //       },
-  //     },
-  //   },
-  //   ...(!!query && {
-  //     where: {
-  //       name: {
-  //         contains: String(query),
-  //       },
-  //     },
-  //   }),
-  //   skip: +pagenum * PAGE_SIZE,
-  //   take: PAGE_SIZE,
-  // });
-  // const totalPropertiesPromise = prisma.property.count({
-  //   ...(!!query && {
-  //     where: {
-  //       name: {
-  //         contains: String(query),
-  //       },
-  //     },
-  //   }),
-  // });
+  const [countries, cities, districts, neighborhoods] = await Promise.all([
+    prisma.country.findMany(),
+    prisma.city.findMany(),
+    prisma.district.findMany(),
+    prisma.neighborhood.findMany(),
+  ]);
 
-  // const [properties, totalProperties] = await Promise.all([
-  //   propertiesPromise,
-  //   totalPropertiesPromise,
-  // ]);
+  let citiesObj: Record<string, string[]> = {};
 
-  // const totalPages = Math.floor(totalProperties / PAGE_SIZE);
+  for (const country of countries) {
+    const citiesData = await prisma.city.findMany({
+      where: {
+        country_name: country.country_name,
+      },
+    });
+    const cityNames = citiesData.map((city) => city.city_name);
+    citiesObj[country.country_name] = cityNames;
+  }
+
+  let districtsObj: Record<string, string[]> = {};
+  for (const city of cities) {
+    const districtData = await prisma.district.findMany({
+      where: {
+        city_name: city.city_name,
+      },
+    });
+    const districtNames = districtData.map(
+      (district) => district.district_name
+    );
+
+    districtsObj[city.city_name] = districtNames;
+  }
+
+  let neighborhoodsObj: Record<string, string[]> = {};
+  for (const district of districts) {
+    const neighborhoodsData = await prisma.neighborhood.findMany({
+      where: {
+        district_name: district.district_name,
+      },
+    });
+    //  console.log(neighborhoodsData);
+    const neighborhoodNames = neighborhoodsData.map(
+      (neighborhood) => neighborhood.neighborhood_name
+    );
+    // console.log(neighborhoodNames);
+    neighborhoodsObj[district.district_name] = neighborhoodNames;
+  }
 
   return (
     <div>

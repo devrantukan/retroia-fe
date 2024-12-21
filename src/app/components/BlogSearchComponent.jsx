@@ -35,7 +35,7 @@ const BlogHitComponent = ({ hit }) => {
 
 
 
-const BlogSearchComponent = ({type, contract, country }) => {
+const BlogSearchComponent = ({type, contract, country, city, district, neighborhood }) => {
   const postCollection = `posts`;
 
    const [isOpen, setIsOpen] = React.useState(false);
@@ -44,10 +44,31 @@ const BlogSearchComponent = ({type, contract, country }) => {
     setIsOpen(true);
    };
 
-  console.log('parameters1:', contract, type, country)
+  console.log('parameters1:', contract, type, country, city , district, neighborhood )
 
-  const filters = country ? `type:=${type}&&contract:=${contract}&&country:=${country}` : `type:=${type}&&contract:=${contract}`
- 
+  let url = `type:=${type}&&contract:=${contract}`
+
+  if(country) {
+
+    url += `&&country:=${country}`;
+    if(city) {
+      url += `&&city:=${city}`;
+      if(district) {
+        url += `&&district:=${district}`;
+        if(neighborhood) {
+          url += `&&neighborhood:=${neighborhood}`;
+        }
+      }
+
+    }
+  }
+
+  console.log('url',url)
+
+
+
+  // const filters = country ? `type:=${type}&&contract:=${contract}&&country:=${country}` : `type:=${type}&&contract:=${contract}`
+ const filters = url
 console.log(filters)
   return (
     <InstantSearch

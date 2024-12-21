@@ -1,3 +1,4 @@
+"use client";
 import BreadCrumb from "@/app/components/BreadCrumb";
 import { ImagesSlider } from "@/app/components/ImageSlider";
 import PageTitle from "@/app/components/pageTitle";
@@ -7,30 +8,65 @@ import { Card } from "@nextui-org/react";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 
 import { notFound } from "next/navigation";
-const images = [1, 2, 3, 4, 5, 6].map((image) => `/images/${image}.jpg`);
+import React from "react";
+import ImageGallery from "react-image-gallery";
+
+import "react-image-gallery/styles/css/image-gallery.css";
+
+// const images = [1, 2, 3, 4, 5, 6].map((image) => `/images/${image}.jpg`);
+
+const images = [
+  {
+    original: "https://picsum.photos/id/1018/1000/600/",
+    thumbnail: "https://picsum.photos/id/1018/250/150/",
+  },
+  {
+    original: "https://picsum.photos/id/1015/1000/600/",
+    thumbnail: "https://picsum.photos/id/1015/250/150/",
+  },
+  {
+    original: "https://picsum.photos/id/1019/1000/600/",
+    thumbnail: "https://picsum.photos/id/1019/250/150/",
+  },
+];
 interface Props {
   params: {
     id: string;
   };
 }
 
-const PropertyPage = async ({ params }: Props) => {
-  const property = await prisma.property.findUnique({
-    where: {
-      id: +params.id,
-    },
-    include: {
-      status: true,
-      feature: true,
-      location: true,
-      agent: true,
-      images: true,
-      contract: true,
-      type: true,
-    },
-  });
-  console.log(property);
-  if (!property) return notFound();
+const PropertyPage = ({ params }: Props) => {
+  const [property, setProperty] = React.useState<any>(null);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const fetchProperty = async () => {
+      try {
+        const response = await fetch(`/api/properties/${params.id}`);
+        if (!response.ok) {
+          throw new Error("Property not found");
+        }
+        const data = await response.json();
+        setProperty(data);
+      } catch (error) {
+        console.error("Error fetching property:", error);
+        notFound();
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProperty();
+  }, [params.id]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!property) {
+    return notFound();
+  }
+
   return (
     <div className="w-full">
       <div className="p-6 pb-0">
@@ -53,7 +89,8 @@ const PropertyPage = async ({ params }: Props) => {
         <div className="p-4 flex flex-col lg:w-2/3 w-full">
           <div className="flex flex-col">
             <div className="w-full">
-              <ImagesSlider images={images} className="w-full h-[480px] p-6" />
+              <ImageGallery items={images} />
+              {/* <ImagesSlider images={images} className="w-full h-[480px] p-6" /> */}
             </div>
             <h2 className="text-2xl font-bold text-gray-700 mt-7 lining-nums">
               {property.price.toLocaleString("tr-TR", {

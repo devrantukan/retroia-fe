@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { any, z } from "zod";
 
 import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
@@ -43,18 +43,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import axios from "axios";
 
-const languages = [
-  { label: "English", value: "en" },
-  { label: "French", value: "fr" },
-  { label: "German", value: "de" },
-  { label: "Spanish", value: "es" },
-  { label: "Portuguese", value: "pt" },
-  { label: "Russian", value: "ru" },
-  { label: "Japanese", value: "ja" },
-  { label: "Korean", value: "ko" },
-  { label: "Chinese", value: "zh" },
-] as const;
+// const cities = [
+//   { value: "nyc", label: "New York City", country_slug: "kktc" },
+//   { value: "la", label: "Los Angeles", country_slug: "kktc" },
+//   { value: "chicago", label: "Chicago", country_slug: "kktc" },
+//   { value: "toronto", label: "Toronto", country_slug: "kktc" },
+//   { value: "vancouver", label: "Vancouver", country_slug: "kktc" },
+//   { value: "london", label: "London", country_slug: "turkiye" },
+//   // Add more cities as needed
+// ];
 
 const FormSchema = z.object({
   contract: z.string({
@@ -101,24 +100,89 @@ const FormSchema = z.object({
 });
 
 export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
+  const [countries, setCountries] = React.useState<any[]>([]);
+  const [cities, setCities] = React.useState<any[]>([]);
+  const [districts, setDistricts] = React.useState<any[]>([]);
+  const [neighborhoods, setNeighborhoods] = React.useState<any[]>([]);
+
+  const [selectedPropertyType, setSelectedPropertyType] = React.useState("");
+  const [cityOpen, setCityOpen] = React.useState(false);
+  const [districtOpen, setDistrictOpen] = React.useState(false);
+  const [neighborhoodOpen, setNeighborhoodOpen] = React.useState(false);
+  const [selectedNeighborhood, setSelectedNeighborhood] = React.useState("");
+  const [selectedDistrict, setSelectedDistrict] = React.useState("");
+  const [selectedCity, setSelectedCity] = React.useState("");
+  const [selectedCountry, setSelectedCountry] = React.useState("");
+
+  useEffect(() => {
+    async function fetchCountries() {
+      try {
+        const response = await axios.get("/api/location/get-countries");
+        setCountries(response.data);
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+      }
+    }
+    fetchCountries();
+  }, []);
+
+  useEffect(() => {
+    async function fetchCities() {
+      try {
+        const response = await axios.get("/api/location/get-cities");
+        setCities(response.data);
+      } catch (error) {
+        console.error("Error fetching cities:", error);
+      }
+    }
+    fetchCities();
+  }, []);
+
+  useEffect(() => {
+    async function fetchDistricts() {
+      try {
+        const response = await axios.get("/api/location/get-districts");
+        setDistricts(response.data);
+      } catch (error) {
+        console.error("Error fetching districts:", error);
+      }
+    }
+    fetchDistricts();
+  }, []);
+
+  async function fetchNeighborhoods(district_slug: string) {
+    try {
+      const response = await axios.get(
+        `/api/location/get-neighborhood/${district_slug}`
+      );
+      setNeighborhoods(response.data);
+    } catch (error) {
+      console.error("Error fetching districts:", error);
+    }
+  }
+
+  console.log(countries);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
-  const [selectedPropertyType, setSelectedPropertyType] = React.useState("");
+  console.log(selectedCountry);
 
   const router = useRouter();
 
   useEffect(() => {
     setSelectedPropertyType(propertyType);
     form.setValue("propertyType", propertyType);
-  }, []);
+  }, [form, propertyType]);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log("data is", JSON.stringify(data, null, 2));
     const url = `${data.propertyType}/${data.contract}${
-      data.country ? `/${data.country}` : ""
-    }`;
+      selectedCountry ? `/${selectedCountry}` : ""
+    }${data.city ? `/${data.city}` : ""}${
+      data.district ? `/${data.district}` : ""
+    }${data.neighborhood ? `/${data.neighborhood}` : ""}`;
     console.log(url);
     router.push(url);
     toast({
@@ -167,7 +231,8 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
               <FormItem>
                 <FormLabel>Ülke</FormLabel>
                 <Select
-                  onValueChange={field.onChange}
+                  value={selectedCountry}
+                  onValueChange={(value) => setSelectedCountry(value)}
                   defaultValue={field.value}
                 >
                   <FormControl className="bg-white">
@@ -193,7 +258,7 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel>İl</FormLabel>
-                <Popover>
+                <Popover open={cityOpen} onOpenChange={setCityOpen}>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
@@ -205,39 +270,45 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
                         )}
                       >
                         {field.value
-                          ? languages.find(
-                              (language) => language.value === field.value
-                            )?.label
+                          ? cities.find((city) => city.value === field.value)
+                              ?.label
                           : "İl Seçiniz"}
                         <ChevronsUpDown className="opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className="lg:w-[320px]  p-0">
+                  <PopoverContent className="w-full p-0">
                     <Command>
-                      <CommandInput placeholder="Arayın..." className="h-9" />
+                      <CommandInput placeholder="Arama..." className="h-9" />
                       <CommandList>
                         <CommandEmpty>Bulunamadı.</CommandEmpty>
                         <CommandGroup>
-                          {languages.map((language) => (
-                            <CommandItem
-                              value={language.label}
-                              key={language.value}
-                              onSelect={() => {
-                                form.setValue("city", language.value);
-                              }}
-                            >
-                              {language.label}
-                              <Check
-                                className={cn(
-                                  "ml-auto",
-                                  language.value === field.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
-                            </CommandItem>
-                          ))}
+                          {cities
+
+                            .filter(
+                              (city) => city.country_slug === selectedCountry
+                            )
+                            .map((city) => (
+                              <CommandItem
+                                value={city.label}
+                                key={city.value}
+                                onSelect={() => {
+                                  setSelectedCity(city.value);
+                                  form.setValue("city", city.value);
+                                  setCityOpen(false);
+                                }}
+                              >
+                                {city.label}
+                                <Check
+                                  className={cn(
+                                    "ml-auto",
+                                    city.value === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                              </CommandItem>
+                            ))}
                         </CommandGroup>
                       </CommandList>
                     </Command>
@@ -254,7 +325,7 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel>İlçe</FormLabel>
-                <Popover>
+                <Popover open={districtOpen} onOpenChange={setDistrictOpen}>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
@@ -266,8 +337,8 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
                         )}
                       >
                         {field.value
-                          ? languages.find(
-                              (language) => language.value === field.value
+                          ? districts.find(
+                              (district) => district.value === field.value
                             )?.label
                           : "İlçe Seçiniz"}
                         <ChevronsUpDown className="opacity-50" />
@@ -280,25 +351,33 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
                       <CommandList>
                         <CommandEmpty>Bulunamadı.</CommandEmpty>
                         <CommandGroup>
-                          {languages.map((language) => (
-                            <CommandItem
-                              value={language.label}
-                              key={language.value}
-                              onSelect={() => {
-                                form.setValue("district", language.value);
-                              }}
-                            >
-                              {language.label}
-                              <Check
-                                className={cn(
-                                  "ml-auto",
-                                  language.value === field.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
-                            </CommandItem>
-                          ))}
+                          {districts
+
+                            .filter(
+                              (district) => district.city_slug === selectedCity
+                            )
+                            .map((district) => (
+                              <CommandItem
+                                value={district.label}
+                                key={district.value}
+                                onSelect={() => {
+                                  setSelectedDistrict(district.value);
+                                  form.setValue("district", district.value);
+                                  fetchNeighborhoods(district.value);
+                                  setDistrictOpen(false);
+                                }}
+                              >
+                                {district.label}
+                                <Check
+                                  className={cn(
+                                    "ml-auto",
+                                    district.value === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                              </CommandItem>
+                            ))}
                         </CommandGroup>
                       </CommandList>
                     </Command>
@@ -315,7 +394,10 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel>Mahalle</FormLabel>
-                <Popover>
+                <Popover
+                  open={neighborhoodOpen}
+                  onOpenChange={setNeighborhoodOpen}
+                >
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
@@ -327,8 +409,9 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
                         )}
                       >
                         {field.value
-                          ? languages.find(
-                              (language) => language.value === field.value
+                          ? neighborhoods.find(
+                              (neighborhood) =>
+                                neighborhood.value === field.value
                             )?.label
                           : "Mahalle Seçiniz"}
                         <ChevronsUpDown className="opacity-50" />
@@ -341,25 +424,35 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
                       <CommandList>
                         <CommandEmpty>Bulunamadı</CommandEmpty>
                         <CommandGroup>
-                          {languages.map((language) => (
-                            <CommandItem
-                              value={language.label}
-                              key={language.value}
-                              onSelect={() => {
-                                form.setValue("neighborhood", language.value);
-                              }}
-                            >
-                              {language.label}
-                              <Check
-                                className={cn(
-                                  "ml-auto",
-                                  language.value === field.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
-                            </CommandItem>
-                          ))}
+                          {neighborhoods
+                            .filter(
+                              (neighborhood) =>
+                                neighborhood.district_slug === selectedDistrict
+                            )
+                            .map((neighborhood) => (
+                              <CommandItem
+                                value={neighborhood.label}
+                                key={neighborhood.value}
+                                onSelect={() => {
+                                  setSelectedNeighborhood(neighborhood.value);
+                                  form.setValue(
+                                    "neighborhood",
+                                    neighborhood.value
+                                  );
+                                  setNeighborhoodOpen(false);
+                                }}
+                              >
+                                {neighborhood.label}
+                                <Check
+                                  className={cn(
+                                    "ml-auto",
+                                    neighborhood.value === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                              </CommandItem>
+                            ))}
                         </CommandGroup>
                       </CommandList>
                     </Command>
@@ -401,18 +494,14 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
               control={form.control}
               name="propertyType"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="hidden">
                   <FormLabel>Type</FormLabel>
                   <FormControl className="bg-white">
                     <Input
                       placeholder="Type"
                       {...field}
                       value={selectedPropertyType}
-                      onChangeCapture={(e) =>
-                        setSelectedPropertyType(
-                          (e.target as HTMLInputElement).value
-                        )
-                      }
+                      onChange={(e) => setSelectedPropertyType(e.target.value)}
                     />
                   </FormControl>
                   <FormMessage />
@@ -423,7 +512,7 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
               control={form.control}
               name="currency"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="hidden">
                   <FormLabel>Para Birimi</FormLabel>
                   <Select
                     onValueChange={field.onChange}

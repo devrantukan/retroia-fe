@@ -44,6 +44,9 @@ export default async function Home({ params }: Props) {
         type={type?.value ?? ""}
         contract={contract?.value ?? ""}
         country={country?.country_name ?? ""}
+        city={""}
+        district={""}
+        neighborhood={""}
       />
     </div>
   );

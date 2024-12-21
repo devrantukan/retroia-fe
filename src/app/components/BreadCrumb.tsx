@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
+import Link from "next/link";
+import slugify from "slugify";
 
 export default function BreadCrumb({
   location,
@@ -29,40 +31,59 @@ export default function BreadCrumb({
       >
         Home
       </BreadcrumbItem>
-      <BreadcrumbItem
-        href={`/${propertyType.slug}/${contract.slug}`}
-        key="contract"
-        isCurrent={currentPage === "contract"}
-      >
-        {contract.value}
+      <BreadcrumbItem key="contract" isCurrent={currentPage === "contract"}>
+        <Link href={`/${propertyType.slug}/${contract.slug}`}>
+          {contract.value}
+        </Link>
       </BreadcrumbItem>
-      <BreadcrumbItem
-        href={`/${propertyType.slug}/${contract.slug}/${location.country}`}
-        key="country"
-        isCurrent={currentPage === "country"}
-      >
-        {location.country} {contract.value}
+      <BreadcrumbItem key="country" isCurrent={currentPage === "country"}>
+        <Link
+          href={`/${propertyType.slug}/${contract.slug}/${slugify(
+            location.country,
+            { lower: true }
+          )}`}
+        >
+          {location.country} {contract.value}
+        </Link>
       </BreadcrumbItem>
-      <BreadcrumbItem
-        href="/docs/components/button"
-        key="city"
-        isCurrent={currentPage === "city"}
-      >
-        {location.city} {contract.value}
+      <BreadcrumbItem key="city" isCurrent={currentPage === "city"}>
+        <Link
+          href={`/${propertyType.slug}/${contract.slug}/${slugify(
+            location.country,
+            { lower: true }
+          )}/${slugify(location.city, { lower: true })}`}
+        >
+          {location.city} {contract.value}
+        </Link>
       </BreadcrumbItem>
-      <BreadcrumbItem
-        href="/docs/components/button"
-        key="district"
-        isCurrent={currentPage === "district"}
-      >
-        {location.district} {contract.value}
+      <BreadcrumbItem key="district" isCurrent={currentPage === "district"}>
+        <Link
+          href={`/${propertyType.slug}/${contract.slug}/${slugify(
+            location.country,
+            { lower: true }
+          )}/${slugify(location.city, { lower: true })}/${slugify(
+            location.district,
+            { lower: true }
+          )}`}
+        >
+          {location.district} {contract.value}
+        </Link>
       </BreadcrumbItem>
       <BreadcrumbItem
         key="neighborhood"
-        href="/docs/components/button"
         isCurrent={currentPage === "neighborhood"}
       >
-        {location.neighborhood}
+        <Link
+          href={`/${propertyType.slug}/${contract.slug}/${slugify(
+            location.country,
+            { lower: true }
+          )}/${slugify(location.city, { lower: true })}/${slugify(
+            location.district,
+            { lower: true }
+          )}/${slugify(location.neighborhood, { lower: true })}`}
+        >
+          {location.neighborhood}
+        </Link>
       </BreadcrumbItem>
     </Breadcrumbs>
   );

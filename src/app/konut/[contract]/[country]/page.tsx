@@ -10,6 +10,7 @@ interface Props {
     type: string;
     contract: string;
     country: string;
+    city: string;
   };
 }
 
@@ -35,7 +36,7 @@ export default async function Home({ params }: Props) {
     },
   });
 
-  console.log(country);
+  console.log("country", country);
 
   return (
     <div>
@@ -43,6 +44,9 @@ export default async function Home({ params }: Props) {
         type={type?.value ?? ""}
         contract={contract?.value ?? ""}
         country={country?.country_name ?? ""}
+        city={""}
+        district={""}
+        neighborhood={""}
       />
     </div>
   );

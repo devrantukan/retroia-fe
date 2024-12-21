@@ -11,10 +11,16 @@ const Search = ({
   type,
   contract,
   country,
+  city,
+  district,
+  neighborhood,
 }: {
   type: string;
   contract: string;
   country: string;
+  city: string;
+  district: string;
+  neighborhood: string;
 }) => {
   // const searchParams = useSearchParams();
   // const pathName = usePathname();
@@ -29,7 +35,14 @@ const Search = ({
 
   return (
     <div className="p-4 flex  bg-gradient-to-br from-sky-400 to-[#102960]">
-      <BlogSearchComponent type={type} contract={contract} country={country} />
+      <BlogSearchComponent
+        type={type}
+        contract={contract}
+        country={country}
+        city={city}
+        district={district}
+        neighborhood={neighborhood}
+      />
       {/* <Input
         onChange={(e) => handleChange(e.target.value)}
         className="w-96 shadow"
