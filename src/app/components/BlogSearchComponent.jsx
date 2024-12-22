@@ -11,7 +11,8 @@ import {
   Pagination,
   Configure,
   RangeInput,
-  RangeSlider
+  RangeSlider, 
+  HierarchicalMenu
 } from "react-instantsearch-dom";
 import typesenseInstantsearchAdapter from "../../lib/typesense"; // adjust the path based on your directory structure
 import PropertySearchCard from "../components/PropertySearchCard";
@@ -27,7 +28,7 @@ const searchClient = typesenseInstantsearchAdapter.searchClient;
 const BlogHitComponent = ({ hit }) => {
   return (
     <div className=" w-full">
-      <PropertySearchCard property={hit} key={hit.id} />
+      <PropertySearchCard property={hit} showAvatar={true} key={hit.id} />
 
     </div>
   );
@@ -76,14 +77,24 @@ console.log(filters)
       searchClient={searchClient}
       
     >
-            <Configure
+      <Configure
         analytics={false}
   
        filters={filters}
         hitsPerPage={8}
       />
+      
 
       <div style={{ padding: "2%" }} className={`bg-white mr-4 gap-y-2 rounded-xl ${isOpen === true ? '' : 'hidden'} lg:block  `}>
+      {/* <HierarchicalMenu
+        attributes={[
+          'categories.lvl0',
+          'categories.lvl1',
+          'categories.lvl2',
+          'categories.lvl3',
+        ]}
+      /> */}
+            
             <h3>Contract</h3>
             <RefinementList attribute="contract" />
             <h3>Type</h3>
@@ -119,11 +130,15 @@ console.log(filters)
           <Stats />
 <Button onClick={handleClick} > show panel </Button>
             <SortBy
+              container = '#sort-by'
               defaultRefinement={postCollection}
               items={[
-                { value: postCollection, label: "Latest" },
-                { value: `${postCollection}_title_asc`, label: "Title A-Z" },
-                { value: `${postCollection}_title_desc`, label: "Title Z-A" },
+                { value: postCollection, label: "Yayınlanma Tarihi En Yeni" },
+                { value: `${postCollection}/sort/published_date:desc`, label: "Yayınlanma Tarihi En Eski" },
+                { value: `${postCollection}/sort/title:asc`, label: "Başlık A-Z" },
+                { value: `${postCollection}/sort/title:desc`, label: "Başlık Z-A" },
+                { value: `${postCollection}/sort/price:desc`, label: "Fiyat Azalan" },
+                { value: `${postCollection}/sort/price:asc`, label: "Fiyat Artan" },
               ]}
             />
           

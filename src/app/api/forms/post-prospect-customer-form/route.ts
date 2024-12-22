@@ -23,8 +23,6 @@ export async function POST(request: NextRequest, response: NextResponse) {
   const kvkkConsent = formData.get("kvkkConsent") as string;
   const marketingConsent = formData.get("marketingConsent") as string;
 
-  console.log(firstName, lastName, email, phone);
-
   const user = await prisma.prospectCustomer.create({
     data: {
       firstName: firstName,

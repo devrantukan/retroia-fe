@@ -22,7 +22,7 @@ export async function GET(
       type: true,
     },
   });
-  console.log(property);
+  // console.log(property);
 
   return NextResponse.json(property);
 }

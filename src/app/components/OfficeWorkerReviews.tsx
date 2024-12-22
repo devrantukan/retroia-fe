@@ -11,17 +11,18 @@ const OfficeWorkerReviews = ({ reviews }: Props) => {
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <div className="mt-6 divide-y divide-gray-200 dark:divide-gray-700">
             {reviews.map(
-              (review: {
-                text: string;
-                reviewerName: string;
-                reviewerSurname: string;
-                createdAt: Date;
-                avg: number;
-              }) => (
-                <div
-                  key={review.text}
-                  className="gap-3 pb-6 sm:flex sm:items-start"
-                >
+              (
+                review: {
+                  review: string;
+                  text: string;
+                  firstName: string;
+                  lastName: string;
+                  createdAt: Date;
+                  avg: number;
+                },
+                index: number
+              ) => (
+                <div key={index} className="gap-3 pb-6 sm:flex sm:items-start">
                   <div className="shrink-0 space-y-2 sm:w-48 md:w-72">
                     <div className="flex items-center gap-0.5">
                       {[...Array(Math.floor(review.avg))].map((_, i) => (
@@ -42,7 +43,7 @@ const OfficeWorkerReviews = ({ reviews }: Props) => {
 
                     <div className="space-y-0.5">
                       <p className="text-base font-semibold text-gray-900 dark:text-white">
-                        {review.reviewerName} {review.reviewerSurname}
+                        {review.firstName} {review.lastName}
                       </p>
                       <p className="text-sm font-normal text-gray-500 dark:text-gray-400">
                         {review.createdAt.toLocaleDateString("tr-TR")}
@@ -70,7 +71,7 @@ const OfficeWorkerReviews = ({ reviews }: Props) => {
 
                   <div className="mt-4 min-w-0 flex-1 space-y-4 sm:mt-0">
                     <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-                      {review.text}
+                      {review.review}
                     </p>
                   </div>
                 </div>

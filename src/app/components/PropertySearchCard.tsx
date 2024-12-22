@@ -3,11 +3,13 @@ import { Prisma } from "@prisma/client";
 import Link from "next/link";
 import { Avatar } from "@nextui-org/react";
 
-const PropertySearchCard = ({ property }: any) => {
+const PropertySearchCard = ({ property, showAvatar }: any) => {
   return (
-    <Card className="w-full flex flex-row  hover:scale-101 my-2" shadow="md">
+    <Card className="w-full flex lg:flex-row mb-4 min-h-[150px]" shadow="md">
       <Link
-        className="hover:text-primary-500 transition-colors w-4/5"
+        className={`hover:text-primary-500 transition-colors justify-between ${
+          showAvatar == true ? "lg:w-4/5" : "lg:w-full"
+        }`}
         href={`/property/${property.id}`}
       >
         <div className="flex lg:flex-row ">
@@ -44,23 +46,25 @@ const PropertySearchCard = ({ property }: any) => {
           </div>
         </div>
       </Link>
-      <div className="w-1/5 flex items-center flex-col my-auto  hover:bg-slate-100 hover:cursor-pointer lg:rounded-xl">
-        <Link
-          href={`/danisman/${property.agentId}/${property.agentSlug}`}
-          className="flex justify-center items-center flex-col "
-        >
-          <Avatar
-            showFallback
-            name={property.agentName + " " + property.agentSurname}
-            src={property.agentAvatarUrl}
-            className="h-16 w-16 mb-2 mt-2"
-          />
-          <p className="font-bold text-center">
-            {property.agentName} {property.agentSurname}
-          </p>
-          <p>{property.agentOffice.name}</p>
-        </Link>
-      </div>
+      {showAvatar == true && (
+        <div className="lg:w-1/5 w-full flex lg:items-center items-start  flex-col my-auto  hover:bg-slate-100 hover:cursor-pointer rounded-xl mr-4">
+          <Link
+            href={`/danisman/${property.agentId}/${property.agentSlug}`}
+            className="flex  w-full lg:justify-center  items-center  flex-row lg:flex-col lg:my-6 gap-x-2 lg:gap-x-0 "
+          >
+            <Avatar
+              showFallback
+              name={property.agentName + " " + property.agentSurname}
+              src={property.agentAvatarUrl}
+              className="h-16 w-16 lg:m-0 m-2  mb-2 lg:mx-auto"
+            />
+            <p className="font-bold ">
+              {property.agentName} {property.agentSurname}
+            </p>
+            <p className="font-light">{property.agentOffice.name}</p>
+          </Link>
+        </div>
+      )}
     </Card>
   );
 };

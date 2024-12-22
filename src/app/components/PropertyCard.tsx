@@ -20,7 +20,7 @@ const PropertyCard = ({ property, showAvatar }: any) => {
                 ? property.images[0].url
                 : `/images/${Math.floor(Math.random() * 9 + 1)}.jpg`
             }
-            className="object-cover w-full lg:w-auto h-auto lg:max-w-[240px] lg:min-h-[150px]"
+            className="object-cover w-full lg:w-auto h-auto lg:max-w-[240px] lg:min-w-[240px] lg:min-h-[160px] lg:max-h-[160px]"
             alt={property.name}
           />
           <div className="flex flex-col w-full">
@@ -56,9 +56,9 @@ const PropertyCard = ({ property, showAvatar }: any) => {
         </p>
         <p>{property.agent?.office.title}</p> */}
       {showAvatar == true && (
-        <div className="lg:w-1/5 w-full flex lg:items-center items-start  flex-col my-auto  hover:bg-slate-100 hover:cursor-pointer rounded-xl mr-4">
+        <div className="lg:w-1/5 w-full flex lg:items-center items-start  flex-col my-auto  hover:cursor-pointer rounded-l-none rounded-xl hover:bg-gradient-to-br hover:from-slate-50 hover:to-slate-200">
           <Link
-            href={`/danisman/${property.agentId}/${property.agent.slug}`}
+            href={`/ofis/${property.agent.office.id}/${property.agent.office.slug}/${property.agent.role.slug}/${property.agentId}/${property.agent.slug}`}
             className="flex  w-full lg:justify-center  items-center  flex-row lg:flex-col lg:my-6 gap-x-2 lg:gap-x-0"
           >
             <Avatar
@@ -68,7 +68,7 @@ const PropertyCard = ({ property, showAvatar }: any) => {
               className="h-16 w-16 lg:m-0 m-2  mb-2 lg:mx-auto"
             />
             <p className="font-bold">
-              {property.agent.name} {property.agent.surname}
+              {property.agent.name} {property.agent.surname}{" "}
             </p>
             <p className="font-light">{property.agent.office.name}</p>
           </Link>

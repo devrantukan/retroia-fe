@@ -38,7 +38,7 @@ const OfficeWorkerPage = async ({ params }: Props) => {
           status: true,
           feature: true,
           location: true,
-          agent: { include: { office: true } },
+          agent: { include: { office: true, role: true } },
           images: true,
         },
       },

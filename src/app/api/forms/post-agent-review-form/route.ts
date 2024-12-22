@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma";
 export async function POST(request: NextRequest, response: NextResponse) {
   const formData = await request.formData();
 
-  console.log(formData);
+  //console.log(formData);
 
   let data: Record<string, number> = {};
   formData.forEach((value, key) => (data[key] = parseInt(value as string)));

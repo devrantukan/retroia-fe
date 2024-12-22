@@ -20,7 +20,7 @@ async function createCollection() {
   const collectionSchema = {
     name: "posts",
     fields: [
-      { name: "title", type: "string" },
+      { name: "title", type: "string", "sort": true },
       { name: "description", type: "string" },
       { facet: true, name: "price", type: "int32" },
       { facet: true, name: "contract", type: "string" },
