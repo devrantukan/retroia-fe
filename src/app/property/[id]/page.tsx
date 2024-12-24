@@ -1,11 +1,13 @@
 "use client";
 import BreadCrumb from "@/app/components/BreadCrumb";
+import DescriptorsAccordion from "@/app/components/DescriptorsAccordion";
 import { ImagesSlider } from "@/app/components/ImageSlider";
 import PageTitle from "@/app/components/pageTitle";
 import ShowOnMapButton from "@/app/components/ShowOnMapButton";
 import prisma from "@/lib/prisma";
 import { Card } from "@nextui-org/react";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
+import { CheckCircle } from "@phosphor-icons/react/dist/ssr";
 
 import { notFound } from "next/navigation";
 import React from "react";
@@ -38,6 +40,9 @@ interface Props {
 const PropertyPage = ({ params }: Props) => {
   const [property, setProperty] = React.useState<any>(null);
   const [loading, setLoading] = React.useState(true);
+  const [descriptorsGrouped, setDescriptorsGrouped] = React.useState<
+    Record<string, any[]>
+  >({});
 
   React.useEffect(() => {
     const fetchProperty = async () => {
@@ -48,6 +53,26 @@ const PropertyPage = ({ params }: Props) => {
         }
         const data = await response.json();
         setProperty(data);
+
+        if (data && data.descriptors) {
+          const descriptors = data.descriptors.map((descriptor: any) => ({
+            category: descriptor.descriptor.category.value,
+            descriptor: descriptor.descriptor.value,
+          }));
+
+          const grouped = descriptors.reduce(
+            (acc: Record<string, any[]>, curr: any) => {
+              if (!acc[curr.category]) {
+                acc[curr.category] = [];
+              }
+              acc[curr.category].push(curr);
+              return acc;
+            },
+            {}
+          );
+
+          setDescriptorsGrouped(grouped);
+        }
       } catch (error) {
         console.error("Error fetching property:", error);
         notFound();
@@ -90,7 +115,6 @@ const PropertyPage = ({ params }: Props) => {
           <div className="flex flex-col">
             <div className="w-full">
               <ImageGallery items={images} />
-              {/* <ImagesSlider images={images} className="w-full h-[480px] p-6" /> */}
             </div>
             <h2 className="text-2xl font-bold text-gray-700 mt-7 lining-nums">
               {property.price.toLocaleString("tr-TR", {
@@ -103,7 +127,6 @@ const PropertyPage = ({ params }: Props) => {
             <p className="text-sm text-slate-600 mt-7">
               {property.description}
             </p>
-            <h3 className="text-lg font-bold mt-6">İlan Özellikleri</h3>
           </div>
         </div>
         <div className="flex lg:w-1/3 w-full mb-6 mt-4 mr-4 h-[600px]">
@@ -133,12 +156,6 @@ const PropertyPage = ({ params }: Props) => {
                 lng={property.location?.longitude ?? 0}
               />
             </div>
-            {/* <Attribute label="Landmarks" value={property.location?.landmark} />
-            <Attribute label="Zip Code" value={property.location?.zip} /> */}
-            {/* <Attribute
-              label="Address"
-              value={property.location?.streetAddress}
-            /> */}
 
             <Title title="Danışman Detayları" className="mt-6" />
             <Attribute
@@ -149,6 +166,10 @@ const PropertyPage = ({ params }: Props) => {
             <Attribute label="Cep telefonu" value={property.agent?.phone} />
           </Card>
         </div>
+      </div>
+      <div className="w-full px-4 mb-12">
+        <h3 className="text-xl font-bold mt-4">İlan Özellikleri</h3>
+        <DescriptorsAccordion descriptorsGrouped={descriptorsGrouped} />
       </div>
     </div>
   );

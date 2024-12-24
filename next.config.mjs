@@ -29,7 +29,13 @@ const nextConfig = {images: {
       
 
       },
-  
+      {
+        protocol: 'https',
+        hostname: 'inegzzkuttzsznxfbsmp.supabase.co',
+      
+
+      },
+      
     ],
   },};
 

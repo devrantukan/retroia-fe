@@ -46,6 +46,7 @@ const Appbar = () => {
               width={128}
               height={96}
               alt="Retroia Logo"
+              className="h-[50px] w-auto"
             />
           </Link>
         </NavbarBrand>

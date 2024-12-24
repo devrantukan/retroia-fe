@@ -12,13 +12,24 @@ import {
   Configure,
   RangeInput,
   RangeSlider, 
-  HierarchicalMenu
+  HierarchicalMenu,
+  ClearRefinements
 } from "react-instantsearch-dom";
 import typesenseInstantsearchAdapter from "../../lib/typesense"; // adjust the path based on your directory structure
 import PropertySearchCard from "../components/PropertySearchCard";
 import 'instantsearch.css/themes/satellite.css';
 import { SearchDrawer } from "./SearchDrawer";
 import { Button } from "@nextui-org/react";
+
+import {
+  GoogleMapsLoader,
+  GeoSearch,
+  Control,
+  Marker,
+} from 'react-instantsearch-dom-maps';
+
+
+
 
 
 const searchClient = typesenseInstantsearchAdapter.searchClient;
@@ -66,6 +77,13 @@ const BlogSearchComponent = ({type, contract, country, city, district, neighborh
 
   console.log('url',url)
 
+  const transformItems = (items) => {
+    return items.map((item) => ({
+      ...item,
+    
+    })).sort((a, b) => a.label < b.label ? -1 : 1);
+  };
+
 
 
   // const filters = country ? `type:=${type}&&contract:=${contract}&&country:=${country}` : `type:=${type}&&contract:=${contract}`
@@ -85,36 +103,88 @@ console.log(filters)
       />
       
 
-      <div style={{ padding: "2%" }} className={`bg-white mr-4 gap-y-2 rounded-xl ${isOpen === true ? '' : 'hidden'} lg:block  `}>
-      {/* <HierarchicalMenu
-        attributes={[
-          'categories.lvl0',
-          'categories.lvl1',
-          'categories.lvl2',
-          'categories.lvl3',
-        ]}
-      /> */}
-            
+      <div  className={`bg-white mr-4 gap-y-2 p-4 rounded-xl ${isOpen === true ? '' : 'hidden'} lg:block  `}>
+
+            <ClearRefinements
+              translations={{
+                reset: 'Tüm Filtreleri Temizle',
+              }}
+            />
             <h3>Contract</h3>
-            <RefinementList attribute="contract" />
+            <RefinementList attribute="contract" className="mb-4"/> 
             <h3>Type</h3>
-            <RefinementList attribute="type" />
-            <h3>Ülke</h3>
-            <RefinementList attribute="country" searchable={true}  />
+            <RefinementList attribute="type" className="mb-4"/>
+            <h3>Ülke</h3> 
+            <RefinementList 
+              attribute="country" 
+              className="mb-4" 
+              searchable={true}   
+              translations={{
+                showMore(expanded) {
+                  return expanded ? 'Show less' : 'Show more';
+                },
+                noResults: 'No results',
+                submitTitle: 'Submit your search query.',
+                resetTitle: 'Clear your search query.',
+                placeholder: 'Arama...',
+              }}
+            transformItems={transformItems} />
             <h3>Şehir</h3>
-            <RefinementList attribute="city" searchable={true} />
+            <RefinementList 
+              attribute="city" 
+              className="mb-4" 
+              searchable={true} 
+              transformItems={transformItems}
+              translations={{
+                showMore(expanded) {
+                  return expanded ? 'Show less' : 'Show more';
+                },
+                noResults: 'No results',
+                submitTitle: 'Submit your search query.',
+                resetTitle: 'Clear your search query.',
+                placeholder: 'Arama...',
+              }}
+               />
             <h3>İlçe</h3>
-            <RefinementList attribute="district"  searchable={true}/>
+            <RefinementList 
+              attribute="district" 
+              className="mb-4"  
+              searchable={true} 
+              transformItems={transformItems}
+              translations={{
+                showMore(expanded) {
+                  return expanded ? 'Show less' : 'Show more';
+                },
+                noResults: 'No results',
+                submitTitle: 'Submit your search query.',
+                resetTitle: 'Clear your search query.',
+                placeholder: 'Arama...',
+              }}
+              />
             <h3>Mahalle</h3>
-            <RefinementList attribute="neighborhood"  searchable={true}  />
+            <RefinementList 
+              attribute="neighborhood"  
+              className="mb-4"
+              searchable={true}  
+              transformItems={transformItems}
+              translations={{
+                showMore(expanded) {
+                  return expanded ? 'Show less' : 'Show more';
+                },
+                noResults: 'No results',
+                submitTitle: 'Submit your search query.',
+                resetTitle: 'Clear your search query.',
+                placeholder: 'Arama...',
+              }}
+              /> 
        
        
             <h3>Oda sayısı</h3>
-            <RefinementList attribute="bedrooms"  />
+            <RefinementList attribute="bedrooms" className="mb-4" transformItems={transformItems}  />
             <h3>Banyo sayısı</h3>
-            <RefinementList attribute="bathrooms" />
-            <h3>Yüzme Havuzu</h3>
-            <RefinementList attribute="hasSwimmingPool" />
+            <RefinementList attribute="bathrooms" className="mb-4" transformItems={transformItems}/>
+            {/* <h3>Yüzme Havuzu</h3>
+            <RefinementList attribute="hasSwimmingPool" className="mb-4" transformItems={transformItems}/> */}
             <h3>Fiyat</h3>
            
             <RangeInput attribute="price" />
@@ -144,6 +214,31 @@ console.log(filters)
           
 
           </div>
+          {/* <div className="h-[500px]" style={{ height: 500 }}>
+  <GoogleMapsLoader 
+    apiKey="AIzaSyDMTvXdDIxkmlxtPmBRBEUvpwX1PtWQTr4"
+    endpoint="https://maps.googleapis.com/maps/api/js?v=weeklyloading=async"
+    >
+    {google => (
+      <GeoSearch 
+      mapTypeId={google.maps.MapTypeId.SATELLITE}
+      google={google} 
+      initialPosition={{
+        lat: 48.88038,
+        lng: 2.32695,
+      }}>
+        {({ hits }) => (
+          <div>
+            <Control />
+            {hits.map(hit => (
+              <Marker key={hit.objectID} hit={hit} />
+            ))}
+          </div>
+        )}
+      </GeoSearch>
+    )}
+  </GoogleMapsLoader>
+</div> */}
           <Hits hitComponent={BlogHitComponent} />
           <Pagination  />
         </main>

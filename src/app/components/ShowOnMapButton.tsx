@@ -34,7 +34,8 @@ export default function ShowOnMapButton({
         isKeyboardDismissDisabled={true}
         size="full"
         scrollBehavior={scrollBehavior}
-        className="w-full"
+        className="w-full p-4"
+        closeButton={<div className="  mt-2 mr-2" />}
       >
         <ModalContent>
           {(onClose) => (

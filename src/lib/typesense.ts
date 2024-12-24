@@ -14,6 +14,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   additionalSearchParameters: {
     query_by: "title",
   },
+  geoLocationField: "_geoloc",
 });
 
 export default typesenseInstantsearchAdapter;

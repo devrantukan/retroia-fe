@@ -18,6 +18,7 @@ model User {
   avatarUrl     String?
   createdAt     DateTime        @default(now())
   Property      Property[]
+  officeWorker  OfficeWorker?
   
 }
 
@@ -30,6 +31,9 @@ model Property {
   user        User              @relation(fields: [userId], references: [id])
   typeId      Int
   type        PropertyType      @relation(fields: [typeId], references: [id])
+  subTypeId      Int
+  subType        PropertySubType      @relation(fields: [subTypeId], references: [id])
+  descriptors DescriptorsOnProperties[]
   statusId    Int
   status      PropertyStatus    @relation(fields: [statusId], references: [id])
   location    PropertyLocation?
@@ -54,7 +58,8 @@ model PropertyFeature {
   id              Int      @id @default(autoincrement())
   bedrooms        Int
   bathrooms       Int
-  parkingSpots    Int
+  floor           Int
+  totalFloor      Int
   area            Int
   hasSwimmingPool Boolean
   hasGardenYard   Boolean
@@ -73,6 +78,7 @@ model PropertyLocation {
   landmark      String
   district      String
   neighborhood  String
+  region        String
   latitude      Float
   longitude     Float
   propertyId    Int      @unique
@@ -84,6 +90,43 @@ model PropertyType {
   value    String
   slug     String
   Property Property[]
+  subTypes PropertySubType[]
+  descriptorCategories PropertyDescriptorCategory[]
+}
+
+model PropertySubType {
+  id       Int        @id @default(autoincrement())
+  typeId   Int
+  type     PropertyType      @relation(fields: [typeId], references: [id]) 
+  value    String
+  slug     String
+  Property Property[]
+}
+
+model PropertyDescriptorCategory {
+  id       Int        @id @default(autoincrement())
+  value    String
+  slug     String
+  typeId   Int
+  type     PropertyType      @relation(fields: [typeId], references: [id]) 
+  descriptors PropertyDescriptor[]
+}
+
+model PropertyDescriptor {
+  id       Int        @id @default(autoincrement())
+  categoryId   Int
+  category     PropertyDescriptorCategory      @relation(fields: [categoryId], references: [id]) 
+  value    String
+  slug     String
+  Properties DescriptorsOnProperties[]
+}
+
+model DescriptorsOnProperties {
+  propertyId    Int      @unique
+  property      Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  descriptorId   Int
+  descriptor     PropertyDescriptor     @relation(fields: [descriptorId], references: [id])
+  @@id([propertyId, descriptorId])
 }
 
 model PropertyStatus {
@@ -110,6 +153,7 @@ model City {
   offices          Office[]
   slug            String
 }
+
 model Country {
   country_id         Int      @id @default(autoincrement())
   country_name      String
@@ -182,9 +226,12 @@ model OfficeWorker {
   officeId    Int 
   office      Office   @relation(fields: [officeId], references: [id])
   properties  Property[]
-
   slug        String
   reviews     OfficeWorkerReview[]
+
+
+  userId String?  @unique // relation scalar field (used in the `@relation` attribute above)
+  user   User? @relation(fields: [userId], references: [id])
 }
 
 model OfficeWorkerReview {
@@ -235,9 +282,9 @@ model Neighborhood {
   city_name           String
   district_id         Int      
   district_name       String
-  offices             Office[]
+  offices              Office[]
   district District @relation(fields: [district_id], references: [district_id])
-  slug                String
+   slug                String
 }
 
 
@@ -271,7 +318,8 @@ model ProjectFeature {
   id              Int      @id @default(autoincrement())
   bedrooms        Int
   bathrooms       Int
-  parkingSpots    Int
+  floor           Int
+  totalFloor      Int
   area            Int
   hasSwimmingPool Boolean
   hasGardenYard   Boolean

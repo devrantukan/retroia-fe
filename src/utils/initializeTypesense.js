@@ -36,7 +36,8 @@ async function createCollection() {
       { facet: true, name: "hasBalcony", type: "bool" },
       { facet: true, name: "hasSwimmingPool", type: "bool" },
       { facet: true, name: "hasGardenYard", type: "bool" },
-      { facet: true, name: "parkingSpots", type: "int32" },
+      { facet: true, name: "floor", type: "int32" },
+      
      
       { name: "published_date", type: "int32" }
     ],
@@ -65,21 +66,28 @@ async function insertData(item) {
     hasBalcony: item.feature.hasBalcony,
     hasSwimmingPool: item.feature.hasSwimmingPool,
     hasGardenYard: item.feature.hasGardenYard,
-    parkingSpots: item.feature.parkingSpots,
+    floor: item.feature.floor,
     agentId: item.agent.id,
     agentName: item.agent.name, 
     agentSurname: item.agent.surname,
     agentAvatarUrl: item.agent.avatarUrl,
     agentSlug: item.agent.slug,
     agentOffice: item.agent.office,
-    published_date: Math.floor(new Date("2023-08-24").getTime() / 1000)  // Convert to Unix timestamp. In Typesense, only integer or float fields can be used as sorting fields.
+    published_date: Math.floor(new Date("2023-08-24").getTime() / 1000),  // Convert to Unix timestamp. In Typesense, only integer or float fields can be used as sorting fields.
+    "category1": [item.contract.value],
+    
+      "_geoloc": {
+        "lat": 40.639751,
+        "lng": -73.778925
+      },
+      'location': [48.86093481609114, 2.33698396872901]
+    // "categories.lvl1": `${item.contract.value} > ${item.type.value}`,
+    // "categories.lvl2": `${item.contract.value} > ${item.type.value} > ${item.country}`,
+    // "categories.lvl3": `${item.contract.value} > ${item.type.value} > ${item.country} > ${item.city}`
   };
-
-
 
   return await client.collections("posts").documents().create(samplePost);
 }
-
 async function main() {
   await createCollection();
 
@@ -90,6 +98,7 @@ async function main() {
       price: true,
       type: true,
       contract: true,
+
       images: {
         select: {
           url: true,
@@ -111,7 +120,7 @@ async function main() {
           hasBalcony: true,
           hasSwimmingPool: true,
           hasGardenYard: true,
-          parkingSpots: true,
+          floor: true,
         },
       },
       agent: {

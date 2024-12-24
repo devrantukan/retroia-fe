@@ -66,7 +66,7 @@ export default function Footer() {
             width={128}
             height={96}
             alt="Retroia Logo"
-            className="mx-auto lg:mx-0"
+            className="mx-auto lg:mx-0 h-[50px] w-auto"
           />
           <ul className="flex flex-row flex-nowrap gap-x-4  items-end w-full justify-center lg:justify-normal invisible lg:visible">
             {socialLinks.map(({ id, Icon, href }) => (

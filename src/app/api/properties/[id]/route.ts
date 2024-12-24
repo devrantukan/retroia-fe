@@ -20,9 +20,18 @@ export async function GET(
       images: true,
       contract: true,
       type: true,
+      descriptors: {
+        include: {
+          descriptor: {
+            include: {
+              category: true,
+            },
+          },
+        },
+      },
     },
   });
-  // console.log(property);
+  console.log(property);
 
   return NextResponse.json(property);
 }

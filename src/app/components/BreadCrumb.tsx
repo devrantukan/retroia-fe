@@ -3,6 +3,7 @@ import React from "react";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import Link from "next/link";
 import slugify from "slugify";
+import { House } from "@phosphor-icons/react/dist/ssr";
 
 export default function BreadCrumb({
   location,
@@ -18,18 +19,13 @@ export default function BreadCrumb({
   contract: { slug: string; value: string };
   propertyType: { slug: string };
 }) {
-  console.log(contract);
   const [currentPage, setCurrentPage] =
     React.useState<React.Key>("neighborhood");
 
   return (
     <Breadcrumbs underline="active" onAction={(key) => setCurrentPage(key)}>
-      <BreadcrumbItem
-        href="/docs/components/button"
-        key="home"
-        isCurrent={currentPage === "home"}
-      >
-        Home
+      <BreadcrumbItem href="/" key="home" isCurrent={currentPage === "home"}>
+        <House size={16} />
       </BreadcrumbItem>
       <BreadcrumbItem key="contract" isCurrent={currentPage === "contract"}>
         <Link href={`/${propertyType.slug}/${contract.slug}`}>
