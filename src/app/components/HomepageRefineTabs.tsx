@@ -7,7 +7,7 @@ import { HomepageRefineForm } from "./forms/HomepageRefineForm";
 
 const HomepageRefineTabs = () => {
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full z-40">
       <h1 className="text-3xl font-medium text-left text-slate-600  mb-2">
         Doğru Gayrimenkulün Olduğu Yerde
       </h1>

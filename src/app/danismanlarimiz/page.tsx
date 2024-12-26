@@ -28,11 +28,19 @@ const OfficeWorkersPage = async () => {
   if (!officeWorkers) return notFound();
   return (
     <div>
-      <div className="h-[480px] bg-slate-300 lg:m-6 p-4 lg:rounded-xl mb-12">
-        <h1 className="mt-24 ml-12 text-3xl font-extralight">
-          {officeWorkers.length} DANIŞMAN İÇİNDEN <br />
-          <span className="font-bold text-xl">SİZE EN UYGUNU BULUN</span>
-        </h1>
+      <div className="h-[480px] bg-slate-300 lg:m-6 p-4 lg:rounded-xl mb-12 relative">
+        <Image
+          alt="Retroia Gayrimenkul "
+          src="https://inegzzkuttzsznxfbsmp.supabase.co/storage/v1/object/public/siteImages/ofisimiz.jpg?t=2024-12-26T00%3A15%3A38.890Z"
+          className="object-cover opacity-100 rounded-xl"
+          layout="fill"
+        />
+        <div className="absolute z-40">
+          <h1 className="mt-24 ml-12 text-3xl font-extralight">
+            {officeWorkers.length} DANIŞMAN İÇİNDEN <br />
+            <span className="font-bold text-xl">SİZE EN UYGUNU BULUN</span>
+          </h1>
+        </div>
       </div>
       <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-x-6 mx-6 gap-y-6 mb-6  place-items-center">
         {officeWorkers

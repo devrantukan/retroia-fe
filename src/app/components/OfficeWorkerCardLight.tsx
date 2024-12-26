@@ -25,20 +25,23 @@ const OfficeWorkerCardLight = ({ officeWorker, index }: Props) => {
         }
         className="flex flex-col"
       >
-        <Image
-          src={`${officeWorker.avatarUrl}`}
-          alt={""}
-          width={640}
-          height={800}
-          className="cursor-pointer rounded-lg  aspect-square object-contain "
-        />
+        <div className="h-3/4 overflow-hidden">
+          <Image
+            src={`${officeWorker.avatarUrl}`}
+            alt={""}
+            width={640}
+            height={800}
+            className="cursor-pointer rounded-lg   object-fill "
+          />
+        </div>
+        <div className="pl-4">
+          <h2 className="text-lg font-semibold text-left text-blue-950">
+            {officeWorker.name} {officeWorker.surname}
+          </h2>
+          <p>{officeWorker.role?.title}</p>
 
-        <h2 className="text-lg font-semibold text-left text-blue-950">
-          {officeWorker.name} {officeWorker.surname}
-        </h2>
-        <p>{officeWorker.role?.title}</p>
-
-        <p>{officeWorker.office?.name}</p>
+          <p>{officeWorker.office?.name}</p>
+        </div>
       </Link>
     </Card>
   );
