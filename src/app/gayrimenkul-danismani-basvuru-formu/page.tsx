@@ -4,8 +4,6 @@ import { Metadata } from "next";
 import GoogleReCaptchaWrapper from "../components/GoogleReCaptchaWrapper";
 import prisma from "@/lib/prisma";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
 export const metadata: Metadata = {
   title:
     "Retroia Gayrimenkul, Real Estate - Gayrimenkul Danışmanı Başvuru Formu",
@@ -28,27 +26,12 @@ const ProspectAgentPage = async () => {
     cities[country.country_id] = cityNames;
   }
 
-  async function fetchDistricts(): Promise<Record<string, string[]>> {
-    try {
-      const response = await fetch(`${baseUrl}/api/data/districts`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch districts");
-      }
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching districts:", error);
-      return {};
-    }
-  }
-
-  const districts = await fetchDistricts();
-
   //console.log(districts);
 
   return (
     <div>
       <GoogleReCaptchaWrapper>
-        <ProspectAgentForm cities={cities} districts={districts} />
+        <ProspectAgentForm cities={cities} />
       </GoogleReCaptchaWrapper>
     </div>
   );

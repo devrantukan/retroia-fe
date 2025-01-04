@@ -38,10 +38,10 @@ function validatePhoneNumber(phoneNumber: string) {
 
 export default function ProspectAgentForm({
   cities,
-  districts,
-}: {
+}: // districts,
+{
   cities: Record<any, any[]>;
-  districts: Record<any, any[]>;
+  // districts: Record<any, any[]>;
 }) {
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
@@ -140,10 +140,26 @@ export default function ProspectAgentForm({
     }
   }, [country, cities]);
 
+  // useEffect(() => {
+  //   if (city) {
+  //     const districtOptions = await fetch("api/data/districts");
+  //     setDistrictOptions(districtOptions);
+  //     setDistrict("");
+  //   }
+  // }, [city]);
+
   useEffect(() => {
+    async function fetchDistricts(city: string) {
+      try {
+        const response = await axios.get(`/api/data/districts/${city}`);
+        setDistrictOptions(response.data);
+        setDistrict("");
+      } catch (error) {
+        console.error("Error fetching districts:", error);
+      }
+    }
     if (city) {
-      setDistrictOptions(districts[city as keyof typeof districts] || []);
-      setDistrict("");
+      fetchDistricts(city);
     }
   }, [city]);
 
@@ -174,9 +190,12 @@ export default function ProspectAgentForm({
     city: z.enum(Object.values(cities).flat() as [string, ...string[]], {
       errorMap: (issue, ctx) => ({ message: "Lütfen şehir seçiniz" }),
     }),
-    district: z.enum(Object.values(districts).flat() as [string, ...string[]], {
-      errorMap: (issue, ctx) => ({ message: "Lütfen ilçe seçiniz" }),
-    }),
+    district: z.enum(
+      Object.values(districtOptions).flat() as [string, ...string[]],
+      {
+        errorMap: (issue, ctx) => ({ message: "Lütfen ilçe seçiniz" }),
+      }
+    ),
 
     // educationLevel: z.enum(
     //   Object.values(educationLevelList) as [any, ...any[]],

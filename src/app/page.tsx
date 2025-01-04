@@ -67,46 +67,6 @@ export default async function Home({ searchParams }: Props) {
     take: 50,
   });
 
-  const [countries, cities] = await Promise.all([
-    prisma.country.findMany(),
-    prisma.city.findMany(),
-    // prisma.district.findMany(),
-    // prisma.neighborhood.findMany(),
-  ]);
-
-  async function fetchDistricts() {
-    try {
-      const response = await fetch(`${baseUrl}/api/data/districts`);
-    } catch (error) {
-      console.error("Error fetching districts:", error);
-    }
-  }
-
-  async function fetchNeighborhoods() {
-    try {
-      const response = await fetch(`${baseUrl}/api/data/neighborhoods`);
-    } catch (error) {
-      console.error("Error fetching neighborhoods:", error);
-    }
-  }
-
-  const districts = await fetchDistricts();
-
-  const neighborhoods = await fetchNeighborhoods();
-
-  console.log("neighborhoods", neighborhoods);
-  let citiesObj: Record<string, string[]> = {};
-
-  for (const country of countries) {
-    const citiesData = await prisma.city.findMany({
-      where: {
-        country_name: country.country_name,
-      },
-    });
-    const cityNames = citiesData.map((city) => city.city_name);
-    citiesObj[country.country_name] = cityNames;
-  }
-
   return (
     <div>
       <HomepageHero />

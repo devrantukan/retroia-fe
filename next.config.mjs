@@ -37,7 +37,10 @@ const nextConfig = {images: {
       },
       
     ],
-  },};
+    
+  },
+  staticPageGenerationTimeout: 1000,
+};
 
 
   

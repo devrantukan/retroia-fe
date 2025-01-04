@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma";
 export async function POST(request: NextRequest, response: NextResponse) {
   const formData = await request.formData();
 
-  console.log(formData);
+  //console.log(formData);
 
   let data: Record<string, number> = {};
   formData.forEach((value, key) => (data[key] = parseInt(value as string)));
@@ -21,7 +21,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
   const kvkkConsent = formData.get("kvkkConsent") as string;
   const marketingConsent = formData.get("marketingConsent") as string;
 
-  console.log(firstName, lastName, email, phone);
+  // console.log(firstName, lastName, email, phone);
 
   const user = await prisma.prospectAgent.create({
     data: {

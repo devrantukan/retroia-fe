@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Avatar } from "@nextui-org/react";
 
 const PropertyCard = ({ property, showAvatar }: any) => {
-  console.log(property);
+  // console.log(property);
   return (
     <Card className="w-full flex lg:flex-row mb-4 min-h-[150px]" shadow="md">
       <Link
