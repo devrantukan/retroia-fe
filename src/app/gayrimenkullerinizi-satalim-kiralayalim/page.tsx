@@ -4,6 +4,8 @@ import ProspectCustomerForm from "../components/forms/ProspectCustomerForm";
 import GoogleReCaptchaWrapper from "../components/GoogleReCaptchaWrapper";
 import prisma from "@/lib/prisma";
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
 export const metadata: Metadata = {
   title: "Retroia Gayrimenkul, Real Estate - Gayrimenkul Satış / Kiralama",
   description:
@@ -26,7 +28,7 @@ const ProspectCustomerPage = async () => {
 
   async function fetchDistricts(): Promise<Record<string, string[]>> {
     try {
-      const response = await fetch(`http://localhost:3000/api/data/districts`);
+      const response = await fetch(`${baseUrl}/api/data/districts`);
       if (!response.ok) {
         throw new Error("Failed to fetch districts");
       }

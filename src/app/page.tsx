@@ -12,6 +12,8 @@ import HomepageForSaleList from "./components/HomepageForSaleList";
 import axios from "axios";
 const PAGE_SIZE = 8;
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
 interface Props {
   searchParams: { [key: string]: string | string[] | undefined };
 }
@@ -74,7 +76,7 @@ export default async function Home({ searchParams }: Props) {
 
   async function fetchDistricts() {
     try {
-      const response = await fetch(`http://localhost:3000/api/data/districts`);
+      const response = await fetch(`${baseUrl}/api/data/districts`);
     } catch (error) {
       console.error("Error fetching districts:", error);
     }
@@ -82,9 +84,7 @@ export default async function Home({ searchParams }: Props) {
 
   async function fetchNeighborhoods() {
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/data/neighborhoods`
-      );
+      const response = await fetch(`${baseUrl}/api/data/neighborhoods`);
     } catch (error) {
       console.error("Error fetching neighborhoods:", error);
     }
