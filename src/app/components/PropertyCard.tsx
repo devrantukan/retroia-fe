@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Avatar } from "@nextui-org/react";
 
 const PropertyCard = ({ property, showAvatar }: any) => {
+  console.log(property);
   return (
     <Card className="w-full flex lg:flex-row mb-4 min-h-[150px]" shadow="md">
       <Link
@@ -15,11 +16,7 @@ const PropertyCard = ({ property, showAvatar }: any) => {
         <div className="flex lg:flex-row flex-col w-full m-0">
           <Image
             radius="none"
-            src={
-              property.id === 1
-                ? property.images[0].url
-                : `/images/${Math.floor(Math.random() * 9 + 1)}.jpg`
-            }
+            src={`/images/${Math.floor(Math.random() * 9 + 1)}.jpg`}
             className="object-cover w-full lg:w-auto h-auto lg:max-w-[240px] lg:min-w-[240px] lg:min-h-[160px] lg:max-h-[160px]"
             alt={property.name}
           />

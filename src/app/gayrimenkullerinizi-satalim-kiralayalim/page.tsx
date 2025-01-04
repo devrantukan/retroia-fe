@@ -24,19 +24,20 @@ const ProspectCustomerPage = async () => {
     cities[country.country_id] = cityNames;
   }
 
-  let districts: Record<string, string[]> = {};
-  for (const city of Object.values(cities).flat()) {
-    const districtData = await prisma.district.findMany({
-      where: {
-        city_name: city,
-      },
-    });
-    const districtNames = districtData.map(
-      (district) => district.district_name
-    );
-
-    districts[city] = districtNames;
+  async function fetchDistricts(): Promise<Record<string, string[]>> {
+    try {
+      const response = await fetch(`http://localhost:3000/api/data/districts`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch districts");
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Error fetching districts:", error);
+      return {};
+    }
   }
+
+  const districts = await fetchDistricts();
   return (
     <div>
       <GoogleReCaptchaWrapper>

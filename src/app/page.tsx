@@ -9,6 +9,7 @@ import HomepageAgentBanner from "./components/HomepageAgentBanner";
 import HomepageAgentSlider from "./components/HomepageAgentSlider";
 import HomepageRentalList from "./components/HomepageRentalList";
 import HomepageForSaleList from "./components/HomepageForSaleList";
+import axios from "axios";
 const PAGE_SIZE = 8;
 
 interface Props {
@@ -64,13 +65,36 @@ export default async function Home({ searchParams }: Props) {
     take: 50,
   });
 
-  const [countries, cities, districts, neighborhoods] = await Promise.all([
+  const [countries, cities] = await Promise.all([
     prisma.country.findMany(),
     prisma.city.findMany(),
-    prisma.district.findMany(),
-    prisma.neighborhood.findMany(),
+    // prisma.district.findMany(),
+    // prisma.neighborhood.findMany(),
   ]);
 
+  async function fetchDistricts() {
+    try {
+      const response = await fetch(`http://localhost:3000/api/data/districts`);
+    } catch (error) {
+      console.error("Error fetching districts:", error);
+    }
+  }
+
+  async function fetchNeighborhoods() {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/data/neighborhoods`
+      );
+    } catch (error) {
+      console.error("Error fetching neighborhoods:", error);
+    }
+  }
+
+  const districts = await fetchDistricts();
+
+  const neighborhoods = await fetchNeighborhoods();
+
+  console.log("neighborhoods", neighborhoods);
   let citiesObj: Record<string, string[]> = {};
 
   for (const country of countries) {
@@ -81,35 +105,6 @@ export default async function Home({ searchParams }: Props) {
     });
     const cityNames = citiesData.map((city) => city.city_name);
     citiesObj[country.country_name] = cityNames;
-  }
-
-  let districtsObj: Record<string, string[]> = {};
-  for (const city of cities) {
-    const districtData = await prisma.district.findMany({
-      where: {
-        city_name: city.city_name,
-      },
-    });
-    const districtNames = districtData.map(
-      (district) => district.district_name
-    );
-
-    districtsObj[city.city_name] = districtNames;
-  }
-
-  let neighborhoodsObj: Record<string, string[]> = {};
-  for (const district of districts) {
-    const neighborhoodsData = await prisma.neighborhood.findMany({
-      where: {
-        district_name: district.district_name,
-      },
-    });
-    //  console.log(neighborhoodsData);
-    const neighborhoodNames = neighborhoodsData.map(
-      (neighborhood) => neighborhood.neighborhood_name
-    );
-    // console.log(neighborhoodNames);
-    neighborhoodsObj[district.district_name] = neighborhoodNames;
   }
 
   return (
