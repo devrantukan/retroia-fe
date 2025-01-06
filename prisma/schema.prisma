@@ -33,6 +33,7 @@ model Property {
   name        String
   description String
   price       Int
+  discountedPrice       Int
   userId      String
   user        User              @relation(fields: [userId], references: [id])
   typeId      Int
@@ -49,6 +50,8 @@ model Property {
   agent       OfficeWorker @relation(fields: [agentId], references: [id])
   contractId    Int
   contract     PropertyContract    @relation(fields: [contractId], references: [id])
+  videoSource  String
+  threeDSource     String
   
 }
 

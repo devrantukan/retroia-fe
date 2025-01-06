@@ -7,30 +7,29 @@ import ShowOnMapButton from "@/app/components/ShowOnMapButton";
 import prisma from "@/lib/prisma";
 import { Card } from "@nextui-org/react";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
-import { CheckCircle } from "@phosphor-icons/react/dist/ssr";
+import { CheckCircle, Spinner } from "@phosphor-icons/react/dist/ssr";
 
 import { notFound } from "next/navigation";
 import React from "react";
 import ImageGallery from "react-image-gallery";
 
 import "react-image-gallery/styles/css/image-gallery.css";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+} from "@nextui-org/react";
 
-// const images = [1, 2, 3, 4, 5, 6].map((image) => `/images/${image}.jpg`);
+interface PropertyImage {
+  id: string;
+  fullSize: string;
+  thumbnailUrl: string;
+}
 
-const images = [
-  {
-    original: "https://picsum.photos/id/1018/1000/600/",
-    thumbnail: "https://picsum.photos/id/1018/250/150/",
-  },
-  {
-    original: "https://picsum.photos/id/1015/1000/600/",
-    thumbnail: "https://picsum.photos/id/1015/250/150/",
-  },
-  {
-    original: "https://picsum.photos/id/1019/1000/600/",
-    thumbnail: "https://picsum.photos/id/1019/250/150/",
-  },
-];
 interface Props {
   params: {
     id: string;
@@ -38,11 +37,82 @@ interface Props {
 }
 
 const PropertyPage = ({ params }: Props) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [property, setProperty] = React.useState<any>(null);
   const [loading, setLoading] = React.useState(true);
   const [descriptorsGrouped, setDescriptorsGrouped] = React.useState<
     Record<string, any[]>
   >({});
+
+  const defaultImage = {
+    original: "https://picsum.photos/id/1018/1000/600",
+    thumbnail: "https://picsum.photos/id/1018/250/150",
+  };
+
+  console.log(property);
+  const getGalleryImages = (propertyImages: any[]) => {
+    let galleryItems = [];
+
+    // Add video if it exists
+    if (property?.videoSource) {
+      // Check if it's a YouTube URL
+      if (
+        property.videoSource.includes("youtube.com") ||
+        property.videoSource.includes("youtu.be")
+      ) {
+        // Convert URL to embed format
+        const videoId = property.videoSource.includes("youtube.com")
+          ? property.videoSource.split("v=")[1]
+          : property.videoSource.split("youtu.be/")[1];
+
+        const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+
+        galleryItems.push({
+          original: property.videoSource,
+          thumbnail: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+          renderItem: () => (
+            <div className="w-full h-full" style={{ aspectRatio: "16/9" }}>
+              <iframe
+                width="100%"
+                height="100%"
+                src={embedUrl}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="image-gallery-image"
+              />
+            </div>
+          ),
+        });
+      } else {
+        // Handle regular video files
+        galleryItems.push({
+          original: property.videoSource,
+          thumbnail: property.videoSource,
+          renderItem: () => (
+            <video
+              controls
+              className="image-gallery-image"
+              style={{ width: "100%", height: "100%", objectFit: "contain" }}
+            >
+              <source src={property.videoSource} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          ),
+        });
+      }
+    }
+
+    // Add images if they exist
+    if (propertyImages && propertyImages.length > 0) {
+      const imageItems = propertyImages.map((image) => ({
+        original: image.url,
+        thumbnail: image.url,
+      }));
+      galleryItems = [...galleryItems, ...imageItems];
+    }
+
+    return galleryItems.length > 0 ? galleryItems : [defaultImage];
+  };
 
   React.useEffect(() => {
     const fetchProperty = async () => {
@@ -85,7 +155,15 @@ const PropertyPage = ({ params }: Props) => {
   }, [params.id]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="fixed inset-0 bg-white flex items-center justify-center">
+        <Spinner
+          size={48}
+          className="text-primary animate-spin"
+          weight="bold"
+        />
+      </div>
+    );
   }
 
   if (!property) {
@@ -105,31 +183,93 @@ const PropertyPage = ({ params }: Props) => {
           contract={property.contract}
           propertyType={property.type}
         />
-        <h2 className="text-2xl font-bold text-primary my-5">
-          {property.name}
-        </h2>
+        <div>
+          <div className="flex items-center gap-2 justify-between">
+            <div className="lg:w-3/4 w-full">
+              <h2 className="text-2xl font-bold text-primary my-5">
+                {property.name}
+              </h2>
+            </div>
+            <div className="lg:w-1/4 w-full">
+              {property.discountedPrice > 0 ? (
+                <>
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl font-bold text-primary">
+                      {property.discountedPrice.toLocaleString("tr-TR", {
+                        style: "currency",
+                        currency: "TRY",
+                        maximumFractionDigits: 0,
+                      })}
+                    </span>
+                    <span className="text-lg line-through text-gray-400">
+                      {property.price.toLocaleString("tr-TR", {
+                        style: "currency",
+                        currency: "TRY",
+                        maximumFractionDigits: 0,
+                      })}
+                    </span>
+                    <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                      İNDİRİMLİ
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <span className="text-2xl font-bold text-primary">
+                  {property.price.toLocaleString("tr-TR", {
+                    style: "currency",
+                    currency: "TRY",
+                    maximumFractionDigits: 0,
+                  })}
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="w-full flex lg:flex-row flex-col ">
         <div className="p-4 flex flex-col lg:w-2/3 w-full">
           <div className="flex flex-col">
             <div className="w-full">
-              <ImageGallery items={images} />
+              <ImageGallery
+                items={getGalleryImages(property.images)}
+                additionalClass="aspect-ratio-gallery"
+              />
+              <style jsx global>{`
+                .image-gallery-image {
+                  aspect-ratio: 16/9 !important;
+                  object-fit: cover;
+                  border-radius: 0.75rem !important;
+                }
+                .image-gallery-thumbnail-image {
+                  aspect-ratio: 16/9 !important;
+                  object-fit: cover;
+                }
+                .image-gallery-slide {
+                  aspect-ratio: 16/9 !important;
+                }
+                .image-gallery-content
+                  .image-gallery-slide
+                  .image-gallery-image {
+                  border-radius: 0.75rem !important;
+                }
+                iframe.image-gallery-image {
+                  border-radius: 0.75rem !important;
+                }
+                video.image-gallery-image {
+                  border-radius: 0.75rem !important;
+                }
+              `}</style>
             </div>
-            <h2 className="text-2xl font-bold text-gray-700 mt-7 lining-nums">
-              {property.price.toLocaleString("tr-TR", {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0,
-              })}
-              <span className="text-lg">₺</span> / {property.status.value}
-            </h2>
-            <h3 className="text-lg font-bold mt-6">İlan Açıklaması</h3>
-            <p className="text-sm text-slate-600 mt-7">
-              {property.description}
-            </p>
+
+            <h3 className="text-xl font-bold mt-6">İlan Açıklaması</h3>
+            <p
+              className="text-sm text-slate-600 mt-7"
+              dangerouslySetInnerHTML={{ __html: property.description }}
+            />
           </div>
         </div>
-        <div className="flex lg:w-1/3 w-full mb-6 mt-4 mr-4 h-[600px]">
+        <div className="flex lg:w-1/3 w-full mb-6 mt-4 mr-4 h-[560px]">
           <Card className="p-5 flex flex-col gap-1 w-full">
             <Title title="Özellikler" />
             <Attribute label="Oda Sayısı" value={property.feature?.bedrooms} />
@@ -151,10 +291,26 @@ const PropertyPage = ({ params }: Props) => {
               value={property.location?.neighborhood}
             />
             <div className="mt-6 w-full flex flex-col gap-1">
-              <ShowOnMapButton
-                lat={property.location?.latitude ?? 0}
-                lng={property.location?.longitude ?? 0}
-              />
+              {property.location?.latitude !== 0 &&
+                property.location?.longitude !== 0 && (
+                  <ShowOnMapButton
+                    lat={property.location.latitude}
+                    lng={property.location.longitude}
+                  />
+                )}
+
+              {property.threeDSource && (
+                <div className="mt-6 w-full flex flex-col gap-1">
+                  <Button
+                    onPress={onOpen}
+                    className="w-full bg-blue-950 text-white py-2 rounded-lg 
+                    hover:bg-blue-900 hover:scale-[1.01] transition-all duration-300 
+                    flex items-center justify-center gap-2 group"
+                  >
+                    <span>3D Sanal Tur</span>
+                  </Button>
+                </div>
+              )}
             </div>
 
             <Title title="Danışman Detayları" className="mt-6" />
@@ -171,6 +327,44 @@ const PropertyPage = ({ params }: Props) => {
         <h3 className="text-xl font-bold mt-4">İlan Özellikleri</h3>
         <DescriptorsAccordion descriptorsGrouped={descriptorsGrouped} />
       </div>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size="5xl"
+        scrollBehavior="inside"
+        hideCloseButton={false}
+        classNames={{
+          base: "rounded-b-xl",
+          body: "rounded-b-xl overflow-hidden",
+        }}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex justify-between items-center">
+                3D Virtual Tour
+                <button
+                  onClick={onClose}
+                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <span className="material-icons">close</span>
+                </button>
+              </ModalHeader>
+              <ModalBody className="p-0 rounded-b-xl overflow-hidden">
+                <div className="w-full aspect-[16/9]">
+                  <iframe
+                    src={property.threeDSource}
+                    className="w-full h-full"
+                    allowFullScreen
+                    loading="lazy"
+                  />
+                </div>
+              </ModalBody>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 };

@@ -11,7 +11,11 @@ export const metadata: Metadata = {
 };
 
 const OfficesPage = async () => {
-  const offices = await prisma.office.findMany({});
+  const offices = await prisma.office.findMany({
+    include: {
+      workers: true,
+    },
+  });
   if (!offices) return notFound();
   return (
     <div>
