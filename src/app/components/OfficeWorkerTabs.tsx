@@ -18,8 +18,6 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
   const params = new URLSearchParams(searchParams.toString());
   const pagenum = params.get("pagenum");
 
-  console.log(typeof pagenum);
-
   const pathname = usePathname();
 
   const selectedPage = parseInt(pagenum || "1");
@@ -34,14 +32,15 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
     (x: any, index: number) => index >= indexMin && index < indexMax
   );
 
-  console.log(paginatedArray);
   return (
     <div className="p-4 flex flex-col justify-between lg:w-3/4">
       <div className="flex w-full flex-col">
         <Tabs aria-label="Options">
           <Tab key="about-us" title="Hakkımda">
             <Card>
-              <CardBody>{officeWorker.about}</CardBody>
+              <CardBody>
+                <div dangerouslySetInnerHTML={{ __html: officeWorker.about }} />
+              </CardBody>
             </Card>
           </Tab>
           {paginatedArray.length > 0 && (

@@ -5,7 +5,7 @@ const AnyReactComponent: React.FC<{ text: string }> = ({ text }) => (
   <div>{text}</div>
 );
 
-const Marker: React.FC = () => {
+const Marker: React.FC<{ lat: number; lng: number }> = () => {
   return (
     <Image
       className="flex justify-center items-center"
@@ -33,11 +33,11 @@ export default function OfficeMap({ lat, lng }: { lat: number; lng: number }) {
     >
       <GoogleMapReact
         bootstrapURLKeys={{ key: "AIzaSyDMTvXdDIxkmlxtPmBRBEUvpwX1PtWQTr4" }}
-        defaultCenter={defaultProps.center}
-        defaultZoom={defaultProps.zoom}
+        center={defaultProps.center}
+        zoom={defaultProps.zoom}
         yesIWantToUseGoogleMapApiInternals
       >
-        <Marker />
+        <Marker lat={lat} lng={lng} />
       </GoogleMapReact>
     </div>
   );

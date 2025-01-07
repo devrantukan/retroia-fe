@@ -53,8 +53,8 @@ const PropertyPage = ({ params }: Props) => {
   const getGalleryImages = (propertyImages: any[]) => {
     let galleryItems = [];
 
-    // Add video if it exists
-    if (property?.videoSource) {
+    // Add video if it exists and is a valid URL
+    if (property?.videoSource && property.videoSource.startsWith("http")) {
       // Check if it's a YouTube URL
       if (
         property.videoSource.includes("youtube.com") ||
@@ -184,13 +184,13 @@ const PropertyPage = ({ params }: Props) => {
           propertyType={property.type}
         />
         <div>
-          <div className="flex items-center gap-2 justify-between">
-            <div className="lg:w-3/4 w-full">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center gap-2 justify-between">
+            <div className="w-full lg:w-3/4">
               <h2 className="text-2xl font-bold text-primary my-5">
                 {property.name}
               </h2>
             </div>
-            <div className="lg:w-1/4 w-full">
+            <div className="w-full lg:w-1/4">
               {property.discountedPrice > 0 ? (
                 <>
                   <div className="flex items-center gap-2">
@@ -299,18 +299,19 @@ const PropertyPage = ({ params }: Props) => {
                   />
                 )}
 
-              {property.threeDSource && (
-                <div className="mt-6 w-full flex flex-col gap-1">
-                  <Button
-                    onPress={onOpen}
-                    className="w-full bg-blue-950 text-white py-2 rounded-lg 
+              {property.threeDSource &&
+                property.threeDSource.startsWith("http") && (
+                  <div className="mt-6 w-full flex flex-col gap-1">
+                    <Button
+                      onPress={onOpen}
+                      className="w-full bg-blue-950 text-white py-2 rounded-xl 
                     hover:bg-blue-900 hover:scale-[1.01] transition-all duration-300 
                     flex items-center justify-center gap-2 group"
-                  >
-                    <span>3D Sanal Tur</span>
-                  </Button>
-                </div>
-              )}
+                    >
+                      <span>3D Sanal Tur</span>
+                    </Button>
+                  </div>
+                )}
             </div>
 
             <Title title="Danışman Detayları" className="mt-6" />

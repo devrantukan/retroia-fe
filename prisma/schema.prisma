@@ -376,3 +376,15 @@ model ProspectCustomer {
   createdAt        DateTime        @default(now())
 }
 
+model ContactRequest {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  phone     String
+  officeId  String
+  status    String   @default("PENDING")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
+

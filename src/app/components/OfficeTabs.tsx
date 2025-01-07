@@ -15,6 +15,7 @@ import OfficeWorkerReviews from "./OfficeWorkerReviews";
 import Image from "next/image";
 import ProjectCard from "./ProjectCard";
 import PaginationContainer from "./PaginationContainer";
+import ContactForm from "./ContactForm";
 
 interface Props {
   office: any;
@@ -31,13 +32,13 @@ const OfficeTabs = ({ office }: Props) => {
   propertiesOfOffice.flat().forEach((property: any) => {
     flatArrayProperties.push(property);
   });
-  console.log(flatArrayProperties);
+  //console.log(flatArrayProperties);
 
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams.toString());
   const pagenum = params.get("pagenum");
 
-  console.log(typeof pagenum);
+  //console.log(typeof pagenum);
 
   const pathname = usePathname();
 
@@ -404,6 +405,27 @@ const OfficeTabs = ({ office }: Props) => {
                       )}
                   </div>
                 </div>
+                <div className="w-full flex lg:flex-row flex-col">
+                  <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
+                    {office.workers
+                      .filter(
+                        (worker: { slug: string; role: { slug: string } }) =>
+                          worker.role.slug === "karsilama-ve-servis-sorumlusu"
+                      )
+                      .map(
+                        (
+                          worker: { id: string; slug: string; name: string },
+                          index: number
+                        ) => (
+                          <OfficeWorkerCardLight
+                            officeWorker={worker}
+                            key={index}
+                            index={index}
+                          />
+                        )
+                      )}
+                  </div>
+                </div>
               </CardBody>
             </Card>
           </Tab>
@@ -413,40 +435,8 @@ const OfficeTabs = ({ office }: Props) => {
                 <div className="lg:w-2/3 h-full  w-full lg:mb-0 mb-4">
                   <OfficeMap lat={office.latitude} lng={office.longitude} />
                 </div>
-                <div className="lg:w-1/3  w-full lg:ml-4 flex flex-col">
-                  <ShowContactDetailsButton
-                    phone={office.phone}
-                    fax={office.fax}
-                    email={office.email}
-                  />
-                  <p className="text-lg font-medium mx-4 text-slate-600 text-center capitalize my-2">
-                    {office.streetAddress}
-                  </p>
-                  <p className="text-sm text-center font-medium capitalize">
-                    {office.neighborhood.neighborhood_name.toLocaleLowerCase(
-                      "tr"
-                    )}{" "}
-                    / {office.district.district_name.toLocaleLowerCase("tr")} /{" "}
-                    {office.city.city_name.toLocaleLowerCase("tr")} /{" "}
-                    {office.country.country_name}
-                  </p>
-                  <Button
-                    className="mt-4 bg-blue-950 text-white font-bold text-md"
-                    onClick={() => window.location.assign("?tab=contact-us")}
-                  >
-                    <MapPin width={20} height={20} />
-                    Ofis Konumu
-                  </Button>
-                  <Button className="mt-4 bg-blue-950 text-white font-bold text-md">
-                    <Link
-                      target="_blank"
-                      href={`https://www.google.com/maps?daddr=${office.latitude},${office.longitude}`}
-                      className="flex flex-row gap-x-1 justify-center items-center"
-                    >
-                      <Compass width={20} height={20} />
-                      Yol Tarifi Al
-                    </Link>
-                  </Button>
+                <div className="lg:w-1/3 h-full w-full lg:mb-0 mb-4">
+                  <ContactForm officeId={office.id} />
                 </div>
               </CardBody>
             </Card>

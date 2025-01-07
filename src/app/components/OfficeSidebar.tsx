@@ -30,8 +30,8 @@ const OfficeSidebar = ({ office }: Props) => {
   return (
     <div className="p-4 flex flex-col justify-start w-full lg:w-1/4 ">
       <Image
-        src="https://dummyimage.com/640x4:3"
-        alt=""
+        src={office.avatarUrl || "/placeholder.svg?height=300&width=400"}
+        alt={office.name}
         width={640}
         height={450}
         className="mb-4"
