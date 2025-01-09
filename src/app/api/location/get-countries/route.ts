@@ -4,6 +4,18 @@ import prisma from "@/lib/prisma";
 
 export async function GET(request: NextRequest, response: NextResponse) {
   const projectLocations = await prisma.propertyLocation.findMany({
+    include: {
+      property: {
+        select: {
+          publishingStatus: true,
+        },
+      },
+    },
+    where: {
+      property: {
+        publishingStatus: "PUBLISHED",
+      },
+    },
     distinct: ["country"],
   });
 

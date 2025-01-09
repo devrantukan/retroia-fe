@@ -52,6 +52,7 @@ model Property {
   contract     PropertyContract    @relation(fields: [contractId], references: [id])
   videoSource  String
   threeDSource     String
+  publishingStatus    String   @default("PENDING")
   
 }
 

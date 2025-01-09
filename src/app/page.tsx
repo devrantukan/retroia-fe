@@ -41,6 +41,10 @@ export default async function Home({ searchParams }: Props) {
   shuffleArray(agents);
 
   const properties = await prisma.property.findMany({
+    where: {
+      publishingStatus: "PUBLISHED",
+    },
+
     select: {
       id: true,
       name: true,

@@ -9,6 +9,18 @@ export async function GET(
   response: NextResponse
 ) {
   const projectLocations = await prisma.propertyLocation.findMany({
+    include: {
+      property: {
+        select: {
+          publishingStatus: true,
+        },
+      },
+    },
+    where: {
+      property: {
+        publishingStatus: "PUBLISHED",
+      },
+    },
     distinct: ["neighborhood"],
   });
 

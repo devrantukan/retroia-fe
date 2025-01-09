@@ -11,7 +11,9 @@ export async function GET(
   const property = await prisma.property.findUnique({
     where: {
       id: +params.id,
+      publishingStatus: "PUBLISHED",
     },
+
     include: {
       status: true,
       feature: true,

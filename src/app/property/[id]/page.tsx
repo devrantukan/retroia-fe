@@ -7,7 +7,13 @@ import ShowOnMapButton from "@/app/components/ShowOnMapButton";
 import prisma from "@/lib/prisma";
 import { Card } from "@nextui-org/react";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
-import { CheckCircle, Spinner } from "@phosphor-icons/react/dist/ssr";
+import {
+  CheckCircle,
+  EnvelopeSimple,
+  Phone,
+  Spinner,
+  User,
+} from "@phosphor-icons/react/dist/ssr";
 
 import { notFound } from "next/navigation";
 import React from "react";
@@ -23,6 +29,8 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
+
+import Image from "next/image";
 
 interface PropertyImage {
   id: string;
@@ -277,9 +285,10 @@ const PropertyPage = ({ params }: Props) => {
               label="Banyo Sayısı"
               value={property.feature?.bathrooms}
             />
+            <Attribute label="Bulunduğu kat" value={property.feature?.floor} />
             <Attribute
-              label="Bulunduğu kat"
-              value={property.feature?.parkingSpots}
+              label="Binadaki kat sayısı"
+              value={property.feature?.totalFloor}
             />
             <Attribute label="Alan" value={property.feature?.area + " m2"} />
 
@@ -290,18 +299,19 @@ const PropertyPage = ({ params }: Props) => {
               label="Mahalle"
               value={property.location?.neighborhood}
             />
-            <div className="mt-6 w-full flex flex-col gap-1">
-              {property.location?.latitude !== 0 &&
-                property.location?.longitude !== 0 && (
-                  <ShowOnMapButton
-                    lat={property.location.latitude}
-                    lng={property.location.longitude}
-                  />
-                )}
-
+            <div className="mt-6 w-full flex flex-row  gap-1 justify-between items-center">
+              <div className="lg:w-1/2">
+                {property.location?.latitude !== 0 &&
+                  property.location?.longitude !== 0 && (
+                    <ShowOnMapButton
+                      lat={property.location.latitude}
+                      lng={property.location.longitude}
+                    />
+                  )}
+              </div>
               {property.threeDSource &&
                 property.threeDSource.startsWith("http") && (
-                  <div className="mt-6 w-full flex flex-col gap-1">
+                  <div className="lg:w-1/2">
                     <Button
                       onPress={onOpen}
                       className="w-full bg-blue-950 text-white py-2 rounded-xl 
@@ -315,12 +325,49 @@ const PropertyPage = ({ params }: Props) => {
             </div>
 
             <Title title="Danışman Detayları" className="mt-6" />
-            <Attribute
-              label="Adı Soyadı"
-              value={property.agent?.name + " " + property.agent?.surname}
-            />
-            <Attribute label="E-posta" value={property.agent?.email} />
-            <Attribute label="Cep telefonu" value={property.agent?.phone} />
+            <div className="flex items-start space-x-3 p-2 justify-between ">
+              {/* Agent Avatar */}
+              <div className="flex-shrink-0 w-24 h-24 ">
+                {property.agent?.avatarUrl ? (
+                  <Image
+                    src={property.agent.avatarUrl}
+                    alt={property.agent.name}
+                    width={64}
+                    height={64}
+                    className="rounded-full object-cover border border-gray-300"
+                  />
+                ) : (
+                  <User size={48} weight="light" className="text-gray-400" />
+                )}
+              </div>
+
+              {/* Agent Details */}
+              <div className="flex-grow">
+                <h3 className="text-base font-semibold mb-2  text-right">
+                  {property.agent?.name} {property.agent?.surname}
+                </h3>
+
+                <div className="space-y-1 text-right">
+                  {/* Email with icon */}
+                  <a
+                    href={`mailto:${property.agent?.email}`}
+                    className="flex items-center text-blue-600 hover:text-blue-800 justify-end text-sm"
+                  >
+                    <EnvelopeSimple size={20} weight="light" className="mr-2" />
+                    {property.agent?.email}
+                  </a>
+
+                  {/* Phone with icon */}
+                  <a
+                    href={`tel:${property.agent?.phone}`}
+                    className="flex items-center text-blue-600 hover:text-blue-800 justify-end text-sm"
+                  >
+                    <Phone size={20} weight="light" className="mr-2" />
+                    {property.agent?.phone}
+                  </a>
+                </div>
+              </div>
+            </div>
           </Card>
         </div>
       </div>

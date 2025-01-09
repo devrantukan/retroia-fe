@@ -92,6 +92,9 @@ async function main() {
   await createCollection();
 
   const properties = await prisma.property.findMany({
+    where: {
+      publishingStatus: "PUBLISHED",
+    },
     select: {
       id: true,
       name: true,
