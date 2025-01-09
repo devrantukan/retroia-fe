@@ -22,6 +22,9 @@ const OfficePage = async ({ params }: Props) => {
       workers: {
         include: {
           properties: {
+            where: {
+              publishingStatus: "PUBLISHED",
+            },
             include: {
               status: true,
               feature: true,

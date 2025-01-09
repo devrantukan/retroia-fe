@@ -34,6 +34,9 @@ const OfficeWorkerPage = async ({ params }: Props) => {
         },
       },
       properties: {
+        where: {
+          publishingStatus: "PUBLISHED",
+        },
         include: {
           status: true,
           feature: true,
@@ -51,6 +54,7 @@ const OfficeWorkerPage = async ({ params }: Props) => {
     },
   });
 
+  console.log(officeWorker);
   // find the office worker's projects
   const projects = await prisma.project.findMany({
     where: {

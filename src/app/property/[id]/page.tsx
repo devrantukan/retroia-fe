@@ -198,7 +198,7 @@ const PropertyPage = ({ params }: Props) => {
                 {property.name}
               </h2>
             </div>
-            <div className="w-full lg:w-1/4">
+            <div className="w-full lg:w-1/4 text-right">
               {property.discountedPrice > 0 ? (
                 <>
                   <div className="flex items-center gap-2">

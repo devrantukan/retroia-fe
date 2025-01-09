@@ -25,12 +25,18 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
   const totalPages = Math.ceil(
     officeWorker.properties.length / elementsPerPage
   );
+  console.log(officeWorker.properties.length);
 
-  const indexMin = selectedPage;
-  const indexMax = indexMin + elementsPerPage;
-  const paginatedArray = officeWorker.properties.filter(
-    (x: any, index: number) => index >= indexMin && index < indexMax
-  );
+  let paginatedArray: any[] = [];
+  if (officeWorker.properties.length === 1) {
+    paginatedArray = [officeWorker.properties[0]];
+    console.log("pga", paginatedArray);
+  } else {
+    const indexMin = (selectedPage - 1) * elementsPerPage;
+    const indexMax = indexMin + elementsPerPage;
+    paginatedArray = officeWorker.properties.slice(indexMin, indexMax);
+    console.log(paginatedArray);
+  }
 
   return (
     <div className="p-4 flex flex-col justify-between lg:w-3/4">
