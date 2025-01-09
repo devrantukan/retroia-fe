@@ -1,5 +1,5 @@
 "use client"
-import React from "react";
+import React, { useState } from "react";
 import {
   InstantSearch,
   SearchBox,
@@ -20,6 +20,7 @@ import PropertySearchCard from "../components/PropertySearchCard";
 import 'instantsearch.css/themes/satellite.css';
 import { SearchDrawer } from "./SearchDrawer";
 import { Button } from "@nextui-org/react";
+import { CaretUp, CaretDown } from "@phosphor-icons/react";
 
 import {
   GoogleMapsLoader,
@@ -50,10 +51,10 @@ const BlogHitComponent = ({ hit }) => {
 const BlogSearchComponent = ({type, contract, country, city, district, neighborhood }) => {
   const postCollection = `posts`;
 
-   const [isOpen, setIsOpen] = React.useState(false);
+   const [isOpen, setIsOpen] = useState(false);
 
    const handleClick = () => {
-    setIsOpen(true);
+    setIsOpen(!isOpen);
    };
 
   console.log('parameters1:', contract, type, country, city , district, neighborhood )
@@ -103,7 +104,7 @@ console.log(filters)
       />
       
 
-      <div  className={`bg-white mr-4 gap-y-2 p-4 rounded-xl ${isOpen === true ? '' : 'hidden'} lg:block  `}>
+      <div  className={`bg-white mr-4 gap-y-2 p-4 rounded-xl ${isOpen ? '' : 'hidden'} lg:block  `}>
 
             <ClearRefinements
               translations={{
@@ -198,7 +199,13 @@ console.log(filters)
 
   
           <Stats />
-<Button onClick={handleClick} > show panel </Button>
+<Button 
+  onClick={handleClick} 
+  className="lg:hidden flex items-center gap-2 mb-2"
+>
+  {isOpen ? 'Filtreleri Gizle' : 'Sonuçları Filtrele'}
+  {isOpen ? <CaretUp size={20} /> : <CaretDown size={20} />}
+</Button>
             <SortBy
               container = '#sort-by'
               defaultRefinement={postCollection}

@@ -69,9 +69,11 @@ async function insertData(item) {
     floor: item.feature.floor,
     agentId: item.agent.id,
     agentName: item.agent.name, 
+    images: item.images,
     agentSurname: item.agent.surname,
     agentAvatarUrl: item.agent.avatarUrl,
     agentSlug: item.agent.slug,
+    agentRoleSlug: item.agent.role.slug,
     agentOffice: item.agent.office,
     published_date: Math.floor(new Date("2023-08-24").getTime() / 1000),  // Convert to Unix timestamp. In Typesense, only integer or float fields can be used as sorting fields.
     "category1": [item.contract.value],
@@ -101,6 +103,7 @@ async function main() {
       price: true,
       type: true,
       contract: true,
+      
 
       images: {
         select: {
@@ -134,6 +137,11 @@ async function main() {
           office: true,
           avatarUrl: true,
           slug: true,
+          role: {
+            select: {
+              slug: true,
+            },
+          },
         }
       }
       

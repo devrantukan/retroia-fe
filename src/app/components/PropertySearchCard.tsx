@@ -14,14 +14,11 @@ const PropertySearchCard = ({ property, showAvatar }: any) => {
       >
         <div className="flex lg:flex-row ">
           <Image
-            radius="none"
-            src={
-              property.id === 1
-                ? property.images[0].url
-                : `/images/${Math.floor(Math.random() * 9 + 1)}.jpg`
-            }
-            className="object-cover w-full lg:w-auto h-auto lg:max-w-[240px] lg:min-h-[150px]"
-            alt={property.title}
+            src={property.images?.[0]?.url || "/no-image.png"}
+            className="object-cover w-full lg:w-auto h-auto lg:max-w-[240px] lg:min-w-[240px] lg:min-h-[160px] lg:max-h-[160px]"
+            alt={property.images?.[0]?.name || "No Image"}
+            width={240}
+            height={160}
           />
           <div className="flex flex-col w-full">
             <div className="p-4 h-2/3">
@@ -47,16 +44,16 @@ const PropertySearchCard = ({ property, showAvatar }: any) => {
         </div>
       </Link>
       {showAvatar == true && (
-        <div className="lg:w-1/5 w-full flex lg:items-center items-start  flex-col my-auto  hover:bg-slate-100 hover:cursor-pointer rounded-xl mr-4">
+        <div className="lg:w-1/5 w-full flex lg:items-center items-start  flex-col  hover:bg-slate-100 hover:cursor-pointer rounded-r-xl ">
           <Link
-            href={`/danisman/${property.agentId}/${property.agentSlug}`}
+            href={`/ofis/${property.agentOffice.id}/${property.agentOffice.slug}/${property.agentRoleSlug}/${property.agentId}/${property.agentSlug}`}
             className="flex  w-full lg:justify-center  items-center  flex-row lg:flex-col lg:my-6 gap-x-2 lg:gap-x-0 "
           >
             <Avatar
               showFallback
               name={property.agentName + " " + property.agentSurname}
               src={property.agentAvatarUrl}
-              className="h-16 w-16 lg:m-0 m-2  mb-2 lg:mx-auto"
+              className="h-16 w-16 lg:m-0 m-2  mb-2 lg:mx-auto border border-slate-300"
             />
             <p className="font-bold ">
               {property.agentName} {property.agentSurname}

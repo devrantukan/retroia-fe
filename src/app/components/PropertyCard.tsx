@@ -1,7 +1,8 @@
-import { Card, Image } from "@nextui-org/react";
+import { Card } from "@nextui-org/react";
 import { Prisma } from "@prisma/client";
 import Link from "next/link";
 import { Avatar } from "@nextui-org/react";
+import Image from "next/image";
 
 const PropertyCard = ({ property, showAvatar }: any) => {
   // console.log(property);
@@ -15,10 +16,11 @@ const PropertyCard = ({ property, showAvatar }: any) => {
       >
         <div className="flex lg:flex-row flex-col w-full m-0">
           <Image
-            radius="none"
-            src={`/images/${Math.floor(Math.random() * 9 + 1)}.jpg`}
+            src={property.images?.[0]?.url || "/no-image.png"}
             className="object-cover w-full lg:w-auto h-auto lg:max-w-[240px] lg:min-w-[240px] lg:min-h-[160px] lg:max-h-[160px]"
             alt={property.name}
+            width={240}
+            height={160}
           />
           <div className="flex flex-col w-full">
             <div className="p-4 h-2/3 ">
