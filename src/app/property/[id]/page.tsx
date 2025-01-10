@@ -371,11 +371,12 @@ const PropertyPage = ({ params }: Props) => {
           </Card>
         </div>
       </div>
-      <div className="w-full px-4 mb-12">
-        <h3 className="text-xl font-bold mt-4">İlan Özellikleri</h3>
-        <DescriptorsAccordion descriptorsGrouped={descriptorsGrouped} />
-      </div>
-
+      {descriptorsGrouped && Object.keys(descriptorsGrouped).length > 0 && (
+        <div className="w-full px-4 mb-12">
+          <h3 className="text-xl font-bold mt-4">İlan Özellikleri</h3>
+          <DescriptorsAccordion descriptorsGrouped={descriptorsGrouped} />
+        </div>
+      )}
       <Modal
         isOpen={isOpen}
         onClose={onClose}

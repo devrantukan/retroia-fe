@@ -1,4 +1,5 @@
-import { Card, Image } from "@nextui-org/react";
+import { Card } from "@nextui-org/react";
+import Image from "next/image";
 import { Prisma } from "@prisma/client";
 import Link from "next/link";
 import { Avatar } from "@nextui-org/react";
@@ -14,8 +15,11 @@ const PropertySearchCard = ({ property, showAvatar }: any) => {
       >
         <div className="flex lg:flex-row ">
           <Image
-            src={property.images?.[0]?.url || "/no-image.png"}
-            className="object-cover w-full lg:w-auto h-auto lg:max-w-[240px] lg:min-w-[240px] lg:min-h-[160px] lg:max-h-[160px]"
+            src={
+              property.images?.[0]?.url ||
+              "https://inegzzkuttzsznxfbsmp.supabase.co/storage/v1/object/public/siteImages/no-image.jpg"
+            }
+            className="object-cover w-full lg:w-auto h-auto lg:max-w-[240px] lg:min-w-[240px] lg:min-h-[160px] lg:max-h-[160px] "
             alt={property.images?.[0]?.name || "No Image"}
             width={240}
             height={160}

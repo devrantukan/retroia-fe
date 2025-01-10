@@ -10,6 +10,7 @@ import {
 } from "@nextui-org/react";
 import React from "react";
 import PropertyMap from "./PropertyMap";
+import { X } from "@phosphor-icons/react";
 
 export default function ShowOnMapButton({
   lat,
@@ -40,18 +41,26 @@ export default function ShowOnMapButton({
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Konum</ModalHeader>
+              <ModalHeader className="flex justify-between items-center">
+                <span>Konum</span>
+                <button
+                  onClick={onClose}
+                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <X size={24} />
+                </button>
+              </ModalHeader>
               <ModalBody>
                 <PropertyMap lat={lat} lng={lng} />
               </ModalBody>
-              <ModalFooter>
+              {/* <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
                 <Button color="primary" onPress={onClose}>
                   Action
                 </Button>
-              </ModalFooter>
+              </ModalFooter> */}
             </>
           )}
         </ModalContent>

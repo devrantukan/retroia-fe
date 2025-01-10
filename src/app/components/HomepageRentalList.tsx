@@ -37,15 +37,17 @@ export default function HomepageRentalList({
                     .map((property, index) => (
                       <PropertyCard property={property} key={index} />
                     ))}
-                  <Button className="bg-blue-950">
-                    <Link
-                      href={`/konut/kiralik`}
-                      className="text-white font-bold flex flex-row"
-                    >
-                      <span className="mr-4">Daha Fazla Görüntüle</span>
-                      <ArrowCircleRight width={20} height={20} />
-                    </Link>
-                  </Button>
+                  <div className="flex items-end">
+                    <Button className="bg-blue-950 w-full">
+                      <Link
+                        href={`/konut/kiralik`}
+                        className="text-white font-bold flex flex-row"
+                      >
+                        <span className="mr-4">Daha Fazla Görüntüle</span>
+                        <ArrowCircleRight width={20} height={20} />
+                      </Link>
+                    </Button>
+                  </div>
                 </CardBody>
               </Card>
             </Tab>

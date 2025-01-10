@@ -33,7 +33,7 @@ export async function GET(
       },
     },
   });
-  console.log(property);
+  //console.log(property);
 
   return NextResponse.json(property);
 }

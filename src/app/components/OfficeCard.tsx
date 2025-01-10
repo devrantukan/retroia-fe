@@ -12,7 +12,7 @@ interface Props {
 }
 
 const OfficeCard = ({ office, key }: Props) => {
-  console.log(office);
+  // console.log(office);
   return (
     <Card className="p-2 pb-4 mx-2 ">
       <Link href={`/ofis/${office.id}/${office.slug}`}>

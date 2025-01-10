@@ -4,10 +4,10 @@ import prisma from "@/lib/prisma";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { firstName, lastName, phone, officeId } = body;
+    const { firstName, lastName, phone, officeId, message } = body;
 
     // Validate inputs
-    if (!firstName || !lastName || !phone || !officeId) {
+    if (!firstName || !lastName || !phone || !officeId || !message) {
       return NextResponse.json(
         { error: "Tüm alanlar zorunludur" },
         { status: 400 }
@@ -20,6 +20,7 @@ export async function POST(request: Request) {
         firstName,
         lastName,
         phone,
+        message,
         officeId: officeId.toString(),
         status: "PENDING",
       },

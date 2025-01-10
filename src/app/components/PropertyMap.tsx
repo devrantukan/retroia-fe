@@ -1,21 +1,5 @@
-import React from "react";
-import GoogleMapReact from "google-map-react";
-import Image from "next/image";
-const AnyReactComponent: React.FC<{ text: string }> = ({ text }) => (
-  <div>{text}</div>
-);
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 
-const Marker: React.FC = () => {
-  return (
-    <Image
-      className="flex justify-center items-center"
-      src="/pin.svg"
-      alt="Map marker"
-      width={24}
-      height={24}
-    />
-  );
-};
 export default function PropertyMap({
   lat,
   lng,
@@ -23,25 +7,19 @@ export default function PropertyMap({
   lat: number;
   lng: number;
 }) {
-  const defaultProps = {
-    center: {
-      lat: lat,
-      lng: lng,
-    },
-    zoom: 16,
-  };
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey:
+      process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY ||
+      "AIzaSyDMTvXdDIxkmlxtPmBRBEUvpwX1PtWQTr4",
+  });
+
+  const center = { lat, lng };
+
+  if (!isLoaded) return <div>Loading...</div>;
 
   return (
-    // Important! Always set the container height explicitly
-    <div style={{ height: "100%", width: "100%" }} className=" w-full h-full ">
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: "AIzaSyDMTvXdDIxkmlxtPmBRBEUvpwX1PtWQTr4" }}
-        defaultCenter={defaultProps.center}
-        defaultZoom={defaultProps.zoom}
-        yesIWantToUseGoogleMapApiInternals
-      >
-        <Marker />
-      </GoogleMapReact>
-    </div>
+    <GoogleMap zoom={15} center={center} mapContainerClassName="w-full h-full">
+      <Marker position={center} />
+    </GoogleMap>
   );
 }

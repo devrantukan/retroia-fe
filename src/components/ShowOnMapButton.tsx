@@ -1,3 +1,5 @@
+import { MapPin } from "@phosphor-icons/react/dist/ssr";
+
 interface ShowOnMapButtonProps {
   lat: number;
   lng: number;
@@ -12,7 +14,7 @@ const ShowOnMapButton = ({ lat, lng, className }: ShowOnMapButtonProps) => {
       }
       className={className}
     >
-      <span className="material-icons">location_on</span>
+      <MapPin className="w-4 h-4" />
       <span>Haritada Göster</span>
     </button>
   );

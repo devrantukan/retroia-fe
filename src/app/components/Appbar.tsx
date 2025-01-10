@@ -9,6 +9,10 @@ import {
   Button,
   NavbarMenu,
   NavbarMenuItem,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
 } from "@nextui-org/react";
 import Link from "next/link";
 import React, { ReactNode } from "react";
@@ -53,15 +57,35 @@ const Appbar = () => {
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4 text-white" justify="end">
-        <NavbarItem isActive={pathname === "/ofislerimiz"}>
-          <Link
-            href="/ofislerimiz"
-            {...(pathname === "/ofislerimiz"
-              ? { "aria-current": "page" }
-              : { color: "foreground" })}
+        <Dropdown>
+          <NavbarItem>
+            <DropdownTrigger>
+              <Button
+                className="bg-transparent text-md text-white p-0 data-[hover=true]:bg-transparent"
+                variant="light"
+              >
+                Portföylerimiz
+              </Button>
+            </DropdownTrigger>
+          </NavbarItem>
+          <DropdownMenu
+            aria-label="Portföy seçenekleri"
+            className="text-primary"
           >
-            Ofislerimiz
-          </Link>
+            <DropdownItem key="konut" href="/konut/satilik">
+              Satılık Konutlar
+            </DropdownItem>
+            <DropdownItem key="ticari" href="/ticari/satilik">
+              Satılık Ticari Gayrimenkuller
+            </DropdownItem>
+            <DropdownItem key="arsa" href="/arsa-arazi/satilik">
+              Satılık Arsalar
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+
+        <NavbarItem isActive={pathname === "/ofislerimiz"}>
+          <Link href="/ofislerimiz">Ofislerimiz</Link>
         </NavbarItem>
         <NavbarItem isActive={pathname === "/danismanlarimiz"}>
           <Link
@@ -100,6 +124,29 @@ const Appbar = () => {
       </NavbarContent>
 
       <NavbarMenu className="text-center py-24">
+        <NavbarMenuItem className="h-1/4">
+          <Dropdown>
+            <DropdownTrigger>
+              <Button
+                className="text-3xl text-blue-950 bg-transparent w-full"
+                variant="light"
+              >
+                Portföylerimiz
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Portföy seçenekleri">
+              <DropdownItem key="konut" href="/konut/satilik">
+                Satılık Konutlar
+              </DropdownItem>
+              <DropdownItem key="ticari" href="/ticari/satilik">
+                Satılık Ticari Gayrimenkuller
+              </DropdownItem>
+              <DropdownItem key="arsa" href="/arsa-arazi/satilik">
+                Satılık Arsalar
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </NavbarMenuItem>
         <NavbarItem isActive={pathname === "/ofislerimiz"} className="h-1/4">
           <Link
             href="/ofislerimiz"

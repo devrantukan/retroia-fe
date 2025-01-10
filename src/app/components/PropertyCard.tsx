@@ -7,7 +7,10 @@ import Image from "next/image";
 const PropertyCard = ({ property, showAvatar }: any) => {
   // console.log(property);
   return (
-    <Card className="w-full flex lg:flex-row mb-4 min-h-[150px]" shadow="md">
+    <Card
+      className="w-full flex lg:flex-row mb-4 min-h-[150px] lg:max-h-[150px]"
+      shadow="md"
+    >
       <Link
         className={`hover:text-primary-500 transition-colors justify-between ${
           showAvatar == true ? "lg:w-4/5" : "lg:w-full"
@@ -16,8 +19,11 @@ const PropertyCard = ({ property, showAvatar }: any) => {
       >
         <div className="flex lg:flex-row flex-col w-full m-0">
           <Image
-            src={property.images?.[0]?.url || "/no-image.png"}
-            className="object-cover w-full lg:w-auto h-auto lg:max-w-[240px] lg:min-w-[240px] lg:min-h-[160px] lg:max-h-[160px]"
+            src={
+              property.images?.[0]?.url ||
+              "https://inegzzkuttzsznxfbsmp.supabase.co/storage/v1/object/public/siteImages/no-image.jpg"
+            }
+            className="object-cover w-full lg:w-auto h-auto lg:max-w-[240px] lg:min-w-[240px] lg:min-h-[160px] lg:max-h-[160px] bg-gray-200"
             alt={property.name}
             width={240}
             height={160}
