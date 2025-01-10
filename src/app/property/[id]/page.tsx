@@ -13,6 +13,7 @@ import {
   Phone,
   Spinner,
   User,
+  X,
 } from "@phosphor-icons/react/dist/ssr";
 
 import { notFound } from "next/navigation";
@@ -31,6 +32,7 @@ import {
 } from "@nextui-org/react";
 
 import Image from "next/image";
+import Link from "next/link";
 
 interface PropertyImage {
   id: string;
@@ -187,6 +189,7 @@ const PropertyPage = ({ params }: Props) => {
             city: property.location?.city || "",
             district: property.location?.district || "",
             neighborhood: property.location?.neighborhood || "",
+            subType: property.subType.value || "",
           }}
           contract={property.contract}
           propertyType={property.type}
@@ -344,7 +347,11 @@ const PropertyPage = ({ params }: Props) => {
               {/* Agent Details */}
               <div className="flex-grow">
                 <h3 className="text-base font-semibold mb-2  text-right">
-                  {property.agent?.name} {property.agent?.surname}
+                  <Link
+                    href={`/ofis/${property.agent?.officeId}/${property.agent?.office.slug}/${property.agent?.role.slug}/${property.agent?.id}/${property.agent?.slug}`}
+                  >
+                    {property.agent?.name} {property.agent?.surname}
+                  </Link>
                 </h3>
 
                 <div className="space-y-1 text-right">
@@ -383,21 +390,44 @@ const PropertyPage = ({ params }: Props) => {
         size="5xl"
         scrollBehavior="inside"
         hideCloseButton={false}
+        placement="top-center"
+        closeButton={<div className="  mt-2 mr-2" />}
+        motionProps={{
+          variants: {
+            enter: {
+              y: 0,
+              opacity: 1,
+              transition: {
+                duration: 0.3,
+                ease: "easeOut",
+              },
+            },
+            exit: {
+              y: -20,
+              opacity: 0,
+              transition: {
+                duration: 0.2,
+                ease: "easeIn",
+              },
+            },
+          },
+        }}
         classNames={{
-          base: "rounded-b-xl",
-          body: "rounded-b-xl overflow-hidden",
+          base: "mt-0 !rounded-b-xl",
+          wrapper: "mt-0",
+          body: "!rounded-b-xl overflow-hidden ",
         }}
       >
-        <ModalContent>
+        <ModalContent className="lg:h-[90vh] h-auto mt-0">
           {(onClose) => (
             <>
               <ModalHeader className="flex justify-between items-center">
-                3D Virtual Tour
+                3D Sanal Tur
                 <button
                   onClick={onClose}
                   className="p-2 hover:bg-gray-100 rounded-full transition-colors"
                 >
-                  <span className="material-icons">close</span>
+                  <X size={24} />
                 </button>
               </ModalHeader>
               <ModalBody className="p-0 rounded-b-xl overflow-hidden">

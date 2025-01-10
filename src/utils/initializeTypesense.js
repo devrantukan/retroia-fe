@@ -1,4 +1,3 @@
-
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
@@ -75,14 +74,14 @@ async function insertData(item) {
     agentSlug: item.agent.slug,
     agentRoleSlug: item.agent.role.slug,
     agentOffice: item.agent.office,
-    published_date: Math.floor(new Date("2023-08-24").getTime() / 1000),  // Convert to Unix timestamp. In Typesense, only integer or float fields can be used as sorting fields.
+    published_date: Math.floor(new Date(item.updatedAt).getTime() / 1000),
     "category1": [item.contract.value],
     
       "_geoloc": {
-        "lat": 40.639751,
-        "lng": -73.778925
+        "lat": item.location.latitude,
+        "lng": item.location.longitude
       },
-      'location': [48.86093481609114, 2.33698396872901]
+      'location': [item.location.latitude, item.location.longitude]
     // "categories.lvl1": `${item.contract.value} > ${item.type.value}`,
     // "categories.lvl2": `${item.contract.value} > ${item.type.value} > ${item.country}`,
     // "categories.lvl3": `${item.contract.value} > ${item.type.value} > ${item.country} > ${item.city}`
@@ -103,7 +102,7 @@ async function main() {
       price: true,
       type: true,
       contract: true,
-      
+      updatedAt: true,
 
       images: {
         select: {

@@ -28,17 +28,40 @@ export default function ShowOnMapButton({
     <>
       <Button onPress={onOpen}>Haritada göster</Button>
       <Modal
-        placement="top"
         isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        isDismissable={false}
-        isKeyboardDismissDisabled={true}
-        size="full"
-        scrollBehavior={scrollBehavior}
-        className="w-full p-4"
+        onClose={onOpenChange}
+        size="5xl"
+        scrollBehavior="inside"
+        hideCloseButton={false}
+        placement="top-center"
         closeButton={<div className="  mt-2 mr-2" />}
+        motionProps={{
+          variants: {
+            enter: {
+              y: 0,
+              opacity: 1,
+              transition: {
+                duration: 0.3,
+                ease: "easeOut",
+              },
+            },
+            exit: {
+              y: -20,
+              opacity: 0,
+              transition: {
+                duration: 0.2,
+                ease: "easeIn",
+              },
+            },
+          },
+        }}
+        classNames={{
+          base: "mt-0 !rounded-b-xl",
+          wrapper: "mt-0",
+          body: "!rounded-b-xl overflow-hidden ",
+        }}
       >
-        <ModalContent>
+        <ModalContent className="lg:h-[90vh] h-auto mt-0">
           {(onClose) => (
             <>
               <ModalHeader className="flex justify-between items-center">
