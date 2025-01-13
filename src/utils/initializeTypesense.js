@@ -36,6 +36,7 @@ async function createCollection() {
       { facet: true, name: "hasSwimmingPool", type: "bool" },
       { facet: true, name: "hasGardenYard", type: "bool" },
       { facet: true, name: "floor", type: "int32" },
+      { name: "_geoloc", type: "geopoint" },
       
      
       { name: "published_date", type: "int32" }
@@ -75,18 +76,23 @@ async function insertData(item) {
     agentRoleSlug: item.agent.role.slug,
     agentOffice: item.agent.office,
     published_date: Math.floor(new Date(item.updatedAt).getTime() / 1000),
+    
     "category1": [item.contract.value],
     
-      "_geoloc": {
-        "lat": item.location.latitude,
-        "lng": item.location.longitude
-      },
-      'location': [item.location.latitude, item.location.longitude]
+    _geoloc: [
+      parseFloat(item.location.latitude) || 0,
+      parseFloat(item.location.longitude) || 0
+    ],
+    'location': {
+      latitude: parseFloat(item.location.latitude),
+      longitude: parseFloat(item.location.longitude)
+    },
     // "categories.lvl1": `${item.contract.value} > ${item.type.value}`,
     // "categories.lvl2": `${item.contract.value} > ${item.type.value} > ${item.country}`,
     // "categories.lvl3": `${item.contract.value} > ${item.type.value} > ${item.country} > ${item.city}`
   };
 
+  console.log('Location data being inserted:', samplePost.location); // Debug log
   return await client.collections("posts").documents().create(samplePost);
 }
 async function main() {
@@ -115,6 +121,8 @@ async function main() {
           district: true,
           city: true,
           country: true,
+          latitude: true,
+          longitude: true,
         },
       },
       feature: {

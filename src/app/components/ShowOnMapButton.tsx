@@ -34,7 +34,9 @@ export default function ShowOnMapButton({
         scrollBehavior="inside"
         hideCloseButton={false}
         placement="top-center"
-        closeButton={<div className="  mt-2 mr-2" />}
+        isDismissable={false}
+        isKeyboardDismissDisabled={true}
+        closeButton={<div className="mt-2 mr-2" />}
         motionProps={{
           variants: {
             enter: {
@@ -58,7 +60,7 @@ export default function ShowOnMapButton({
         classNames={{
           base: "mt-0 !rounded-b-xl",
           wrapper: "mt-0",
-          body: "!rounded-b-xl overflow-hidden ",
+          body: "!rounded-b-xl overflow-hidden",
         }}
       >
         <ModalContent className="lg:h-[90vh] h-auto mt-0">

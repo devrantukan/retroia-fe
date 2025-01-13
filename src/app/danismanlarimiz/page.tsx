@@ -23,6 +23,9 @@ const OfficeWorkersPage = async () => {
       office: true,
       role: true,
     },
+    orderBy: {
+      name: "asc",
+    },
   });
 
   if (!officeWorkers) return notFound();

@@ -21,6 +21,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function validatePhoneNumber(phoneNumber: string) {
   // Regular expression to match most international phone number formats
@@ -176,19 +177,47 @@ export default function ProspectCustomerForm({
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("data is", JSON.stringify(data, null, 2));
-    const { data: responseData } = await axios.post(
-      "/api/forms/post-prospect-customer-form",
-      data,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
+    try {
+      const { data: responseData } = await axios.post(
+        "/api/forms/post-prospect-customer-form",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
 
-    if (responseData.message === "success") {
-      console.log("all success toast time");
+      if (responseData.message === "success") {
+        toast.success(
+          "Talebiniz alındı. En kısa sürede sizinle iletişime geçeceğiz.",
+          {
+            position: "top-right",
+            autoClose: 5000,
+          }
+        );
+
+        // Reset form fields
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPhone("");
+        setCity("");
+        setDistrict("");
+        setPropertyType("");
+        setContractType("");
+        setStreetAddress("");
+        setNotes("");
+        form.reset();
+      }
+    } catch (error) {
+      toast.error(
+        "Form gönderilemedi. Lütfen bilgilerinizi kontrol edip tekrar deneyiniz.",
+        {
+          position: "top-right",
+          autoClose: 5000,
+        }
+      );
     }
   }
   return (

@@ -34,7 +34,7 @@ const Search = ({
   // }, 1000);
 
   return (
-    <div className="p-4 flex  bg-gradient-to-br from-sky-400 to-[#102960]">
+    <div className="p-4   bg-gradient-to-br from-sky-400 to-[#102960] w-full">
       <BlogSearchComponent
         type={type}
         contract={contract}

@@ -173,12 +173,13 @@ const OfficeTabs = ({ office }: Props) => {
             <Card>
               <CardBody>
                 <div className="w-full flex lg:flex-row flex-col">
-                  <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
+                  <div className="grid lg:grid-cols-3 grid-cols-1 gap-x-6 mr-4">
                     {office.workers
                       .filter(
                         (worker: { slug: string; role: { slug: string } }) =>
                           worker.role.slug === "broker"
                       )
+                      .sort((a: any, b: any) => a.name.localeCompare(b.name))
                       .map(
                         (
                           worker: { id: string; slug: string; name: string },
@@ -201,6 +202,7 @@ const OfficeTabs = ({ office }: Props) => {
                           worker.role.slug ===
                           "takim-lideri-gayrimenkul-danismani"
                       )
+                      .sort((a: any, b: any) => a.name.localeCompare(b.name))
                       .map(
                         (
                           worker: { id: string; slug: string; name: string },
@@ -222,6 +224,7 @@ const OfficeTabs = ({ office }: Props) => {
                         (worker: { slug: string; role: { slug: string } }) =>
                           worker.role.slug === "broker-manager"
                       )
+                      .sort((a: any, b: any) => a.name.localeCompare(b.name))
                       .map(
                         (
                           worker: { id: string; slug: string; name: string },
@@ -244,6 +247,7 @@ const OfficeTabs = ({ office }: Props) => {
                         (worker: { slug: string; role: { slug: string } }) =>
                           worker.role.slug === "is-gelistirme"
                       )
+                      .sort((a: any, b: any) => a.name.localeCompare(b.name))
                       .map(
                         (
                           worker: { id: string; slug: string; name: string },
@@ -286,6 +290,7 @@ const OfficeTabs = ({ office }: Props) => {
                         (worker: { slug: string; role: { slug: string } }) =>
                           worker.role.slug === "ofisler-muduru"
                       )
+                      .sort((a: any, b: any) => a.name.localeCompare(b.name))
                       .map(
                         (
                           worker: { id: string; slug: string; name: string },
@@ -307,6 +312,7 @@ const OfficeTabs = ({ office }: Props) => {
                         (worker: { slug: string; role: { slug: string } }) =>
                           worker.role.slug === "pazarlama-muduru"
                       )
+                      .sort((a: any, b: any) => a.name.localeCompare(b.name))
                       .map(
                         (
                           worker: { id: string; slug: string; name: string },
@@ -328,6 +334,7 @@ const OfficeTabs = ({ office }: Props) => {
                         (worker: { slug: string; role: { slug: string } }) =>
                           worker.role.slug === "proje-satis-temsilcisi"
                       )
+                      .sort((a: any, b: any) => a.name.localeCompare(b.name))
                       .map(
                         (
                           worker: { id: string; slug: string; name: string },
@@ -349,6 +356,7 @@ const OfficeTabs = ({ office }: Props) => {
                         (worker: { slug: string; role: { slug: string } }) =>
                           worker.role.slug === "gayrimenkul-danismani"
                       )
+                      .sort((a: any, b: any) => a.name.localeCompare(b.name))
                       .map(
                         (
                           worker: { id: string; slug: string; name: string },
@@ -370,6 +378,7 @@ const OfficeTabs = ({ office }: Props) => {
                         (worker: { slug: string; role: { slug: string } }) =>
                           worker.role.slug === "gd-asistani"
                       )
+                      .sort((a: any, b: any) => a.name.localeCompare(b.name))
                       .map(
                         (
                           worker: { id: string; slug: string; name: string },
@@ -391,6 +400,7 @@ const OfficeTabs = ({ office }: Props) => {
                         (worker: { slug: string; role: { slug: string } }) =>
                           worker.role.slug === "ofis-asistani"
                       )
+                      .sort((a: any, b: any) => a.name.localeCompare(b.name))
                       .map(
                         (
                           worker: { id: string; slug: string; name: string },
@@ -412,6 +422,7 @@ const OfficeTabs = ({ office }: Props) => {
                         (worker: { slug: string; role: { slug: string } }) =>
                           worker.role.slug === "karsilama-ve-servis-sorumlusu"
                       )
+                      .sort((a: any, b: any) => a.name.localeCompare(b.name))
                       .map(
                         (
                           worker: { id: string; slug: string; name: string },

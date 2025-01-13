@@ -1,6 +1,9 @@
 "use client";
 import { useState } from "react";
 import { Button, Input, Textarea } from "@nextui-org/react";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { z } from "zod";
 
 export default function ContactForm({ officeId }: { officeId: string }) {
   const [formData, setFormData] = useState({
@@ -15,24 +18,36 @@ export default function ContactForm({ officeId }: { officeId: string }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
-
     try {
-      const response = await fetch("/api/contact-requests", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, officeId }),
-      });
+      const response = await axios.post("/api/contact-requests", formData);
 
-      if (!response.ok) throw new Error("Gönderim başarısız");
+      if (response.status === 200) {
+        toast.success(
+          "Talebiniz alındı. En kısa sürede sizinle iletişime geçeceğiz.",
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          }
+        );
 
-      setSuccess(true);
-      setFormData({ firstName: "", lastName: "", phone: "", message: "" });
-    } catch (err) {
-      setError("Bir hata oluştu. Lütfen tekrar deneyin.");
-    } finally {
-      setLoading(false);
+        setFormData({ firstName: "", lastName: "", phone: "", message: "" });
+      }
+    } catch (error) {
+      toast.error(
+        "Form gönderilemedi. Lütfen bilgilerinizi kontrol edip tekrar deneyiniz.",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        }
+      );
     }
   };
 

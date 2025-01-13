@@ -228,24 +228,36 @@ export default function ProspectAgentForm({
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("data is", JSON.stringify(data, null, 2));
-    const { data: responseData } = await axios.post(
-      "/api/forms/post-prospect-agent-form",
-      data,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
+    try {
+      const { data: responseData } = await axios.post(
+        "/api/forms/post-prospect-agent-form",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
 
-    if (responseData.message === "success") {
-      toast.success(responseData.message);
-    } else {
+      if (responseData.message === "success") {
+        toast.success(
+          "Başvurunuz alındı. Ekibimiz en kısa sürede sizinle iletişime geçecektir.",
+          {
+            position: "top-right",
+            autoClose: 5000,
+          }
+        );
+
+        // Reset form
+        form.reset();
+      }
+    } catch (error) {
       toast.error(
-        responseData.errors
-          ? responseData.errors[0]?.message
-          : "An error occurred"
+        "Başvuru gönderilemedi. Lütfen bilgilerinizi kontrol edip tekrar deneyiniz.",
+        {
+          position: "top-right",
+          autoClose: 5000,
+        }
       );
     }
   }
