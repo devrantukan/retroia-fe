@@ -141,14 +141,17 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
   useEffect(() => {
     async function fetchDistricts() {
       try {
-        const response = await axios.get("/api/location/get-districts");
+        const response = await axios.get(
+          `/api/location/get-districts/${selectedCity}`
+        );
         setDistricts(response.data);
+        console.log("rd", response.data);
       } catch (error) {
         console.error("Error fetching districts:", error);
       }
     }
     fetchDistricts();
-  }, []);
+  }, [selectedCity]);
 
   async function fetchNeighborhoods(district_slug: string) {
     try {
@@ -240,9 +243,14 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="turkiye">Türkiye</SelectItem>
-                    <SelectItem value="kktc">KKTC</SelectItem>
-                    <SelectItem value="ispanya">İspanya</SelectItem>
+                    {countries.map((country) => (
+                      <SelectItem
+                        key={country.country_slug}
+                        value={country.country_slug}
+                      >
+                        {country.country_name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
 

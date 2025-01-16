@@ -3,7 +3,20 @@ import axios from "axios";
 import prisma from "@/lib/prisma";
 import slugify from "slugify";
 
-export async function GET(request: NextRequest, response: NextResponse) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { city: string } }
+) {
+  // console.log("params", params.city);
+
+  const city = await prisma.city.findFirst({
+    where: {
+      slug: params.city,
+    },
+  });
+
+  //console.log("city is", city?.city_name);
+
   const projectLocations = await prisma.propertyLocation.findMany({
     include: {
       property: {
@@ -13,6 +26,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
       },
     },
     where: {
+      city: city?.city_name,
       property: {
         publishingStatus: "PUBLISHED",
       },
@@ -20,13 +34,15 @@ export async function GET(request: NextRequest, response: NextResponse) {
     distinct: ["district"],
   });
 
+  //  console.log("projectLocations", projectLocations);
+
   let districts: string[] = [];
 
   projectLocations.forEach((location) => {
     districts.push(location.district);
   });
 
-  console.log(districts);
+  //console.log("districts", districts);
 
   function capitalize(s: string): string {
     return String(s[0]).toLocaleUpperCase("tr") + String(s).slice(1);
@@ -35,9 +51,14 @@ export async function GET(request: NextRequest, response: NextResponse) {
   await Promise.all(
     districts.map(async (district) => {
       const districtData = await prisma.district.findFirst({
-        where: { district_name: district.toLocaleUpperCase("tr") },
+        where: {
+          district_name: district.toLocaleUpperCase("tr"),
+          city: {
+            slug: slugify(params.city, { lower: true }),
+          },
+        },
       });
-      console.log(districtData);
+      // console.log(districtData);
 
       if (districtData) {
         data.push({

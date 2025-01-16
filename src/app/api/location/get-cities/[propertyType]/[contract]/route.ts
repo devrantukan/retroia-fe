@@ -8,7 +8,7 @@ export async function GET(
   { params }: { params: { propertyType: string; contract: string } },
   response: NextResponse
 ) {
-  console.log(params.propertyType);
+  // console.log(params.propertyType);
   const projectLocations = await prisma.propertyLocation.findMany({
     include: {
       property: {
