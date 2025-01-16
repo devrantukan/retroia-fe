@@ -20,7 +20,7 @@ export default function HomepageForSaleList({
         <h2 className="lg:absolute relative lg:text-xl text-lg font-semibold text-white mb-6 mt-2">
           Satılık Gayrimenkuller
         </h2>
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full ">
           <Tabs
             aria-label="Options"
             selectedKey={selected}
@@ -29,67 +29,85 @@ export default function HomepageForSaleList({
           >
             <Tab key="konut" title="Konut">
               <Card>
-                <CardBody className="grid grid-cols-1 lg:h-[900px] h-full gap-x-4">
-                  {properties
-                    .filter((property) => property.contract.slug === "satilik")
-                    .filter((property) => property.type.slug == "konut")
-                    .slice(0, 5)
-                    .map((property, index) => (
-                      <PropertyCard property={property} key={index} />
-                    ))}
-                  <Button className="bg-blue-950">
-                    <Link
-                      href={`/konut/satilik`}
-                      className="text-white font-bold flex flex-row"
-                    >
-                      <span className="mr-4">Daha Fazla Görüntüle</span>
-                      <ArrowCircleRight width={20} height={20} />
-                    </Link>
-                  </Button>
+                <CardBody className="grid grid-cols-1 lg:h-[900px] h-full gap-x-4 justify-start ">
+                  <div className="flex flex-col justify-start">
+                    {properties
+                      .filter(
+                        (property) => property.contract.slug === "satilik"
+                      )
+                      .filter((property) => property.type.slug == "konut")
+                      .slice(0, 5)
+                      .map((property, index) => (
+                        <PropertyCard property={property} key={index} />
+                      ))}
+                  </div>
+                  <div className="flex items-end ">
+                    <Button className="bg-blue-950 w-full">
+                      <Link
+                        href={`/konut/satilik`}
+                        className="text-white font-bold flex flex-row"
+                      >
+                        <span className="mr-4">Daha Fazla Görüntüle</span>
+                        <ArrowCircleRight width={20} height={20} />
+                      </Link>
+                    </Button>
+                  </div>
                 </CardBody>
               </Card>
             </Tab>
             <Tab key="ticari" title="Ticari">
               <Card>
                 <CardBody className="grid grid-cols-1 lg:h-[900px] h-full gap-x-4">
-                  {properties
-                    .filter((property) => property.contract.slug === "satilik")
-                    .filter((property) => property.type.slug == "ticari")
-                    .slice(0, 5)
-                    .map((property, index) => (
-                      <PropertyCard property={property} key={index} />
-                    ))}
-                  <Button className="bg-blue-950">
-                    <Link
-                      href={`/ticari/satilik`}
-                      className="text-white font-bold flex flex-row"
-                    >
-                      <span className="mr-4">Daha Fazla Görüntüle</span>
-                      <ArrowCircleRight width={20} height={20} />
-                    </Link>
-                  </Button>
+                  <div className="flex flex-col justify-start">
+                    {properties
+                      .filter(
+                        (property) => property.contract.slug === "satilik"
+                      )
+                      .filter((property) => property.type.slug == "ticari")
+                      .slice(0, 5)
+                      .map((property, index) => (
+                        <PropertyCard property={property} key={index} />
+                      ))}
+                  </div>
+                  <div className="flex items-end ">
+                    <Button className="bg-blue-950 w-full">
+                      <Link
+                        href={`/ticari/satilik`}
+                        className="text-white font-bold flex flex-row"
+                      >
+                        <span className="mr-4">Daha Fazla Görüntüle</span>
+                        <ArrowCircleRight width={20} height={20} />
+                      </Link>
+                    </Button>
+                  </div>
                 </CardBody>
               </Card>
             </Tab>
             <Tab key="arsa-arazi" title="Arsa Arazi">
               <Card>
                 <CardBody className="grid grid-cols-1 lg:h-[900px] h-full gap-x-4">
-                  {properties
-                    .filter((property) => property.contract.slug === "satilik")
-                    .filter((property) => property.type.slug == "arsa-arazi")
-                    .slice(0, 5)
-                    .map((property, index) => (
-                      <PropertyCard property={property} key={index} />
-                    ))}
-                  <Button className="bg-blue-950">
-                    <Link
-                      href={`/arsa-arazi/satilik`}
-                      className="text-white font-bold flex flex-row"
-                    >
-                      <span className="mr-4">Daha Fazla Görüntüle</span>
-                      <ArrowCircleRight width={20} height={20} />
-                    </Link>
-                  </Button>
+                  <div className="flex flex-col justify-start">
+                    {properties
+                      .filter(
+                        (property) => property.contract.slug === "satilik"
+                      )
+                      .filter((property) => property.type.slug == "arsa-arazi")
+                      .slice(0, 5)
+                      .map((property, index) => (
+                        <PropertyCard property={property} key={index} />
+                      ))}
+                  </div>
+                  <div className="flex items-end ">
+                    <Button className="bg-blue-950 w-full">
+                      <Link
+                        href={`/arsa-arazi/satilik`}
+                        className="text-white font-bold flex flex-row"
+                      >
+                        <span className="mr-4">Daha Fazla Görüntüle</span>
+                        <ArrowCircleRight width={20} height={20} />
+                      </Link>
+                    </Button>
+                  </div>
                 </CardBody>
               </Card>
             </Tab>

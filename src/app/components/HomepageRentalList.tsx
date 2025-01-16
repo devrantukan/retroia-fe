@@ -30,13 +30,17 @@ export default function HomepageRentalList({
             <Tab key="konut" title="Konut">
               <Card>
                 <CardBody className="grid grid-cols-1 lg:h-[900px] h-full gap-x-4">
-                  {properties
-                    .filter((property) => property.contract.slug === "kiralik")
-                    .filter((property) => property.type.slug == "konut")
-                    .slice(0, 5)
-                    .map((property, index) => (
-                      <PropertyCard property={property} key={index} />
-                    ))}
+                  <div className="flex flex-col justify-start">
+                    {properties
+                      .filter(
+                        (property) => property.contract.slug === "kiralik"
+                      )
+                      .filter((property) => property.type.slug == "konut")
+                      .slice(0, 5)
+                      .map((property, index) => (
+                        <PropertyCard property={property} key={index} />
+                      ))}
+                  </div>
                   <div className="flex items-end">
                     <Button className="bg-blue-950 w-full">
                       <Link
@@ -54,44 +58,56 @@ export default function HomepageRentalList({
             <Tab key="ticari" title="Ticari">
               <Card>
                 <CardBody className="grid grid-cols-1 lg:h-[900px] h-full gap-x-4">
-                  {properties
-                    .filter((property) => property.contract.slug === "kiralik")
-                    .filter((property) => property.type.slug == "ticari")
-                    .slice(0, 5)
-                    .map((property, index) => (
-                      <PropertyCard property={property} key={index} />
-                    ))}
-                  <Button className="bg-blue-950">
-                    <Link
-                      href={`/ticari/kiralik`}
-                      className="text-white font-bold flex flex-row"
-                    >
-                      <span className="mr-4">Daha Fazla Görüntüle</span>
-                      <ArrowCircleRight width={20} height={20} />
-                    </Link>
-                  </Button>
+                  <div className="flex flex-col justify-start">
+                    {properties
+                      .filter(
+                        (property) => property.contract.slug === "kiralik"
+                      )
+                      .filter((property) => property.type.slug == "ticari")
+                      .slice(0, 5)
+                      .map((property, index) => (
+                        <PropertyCard property={property} key={index} />
+                      ))}
+                  </div>
+                  <div className="flex items-end ">
+                    <Button className="bg-blue-950 w-full">
+                      <Link
+                        href={`/ticari/kiralik`}
+                        className="text-white font-bold flex flex-row"
+                      >
+                        <span className="mr-4">Daha Fazla Görüntüle</span>
+                        <ArrowCircleRight width={20} height={20} />
+                      </Link>
+                    </Button>
+                  </div>
                 </CardBody>
               </Card>
             </Tab>
             <Tab key="arsa-arazi" title="Arsa Arazi">
               <Card>
                 <CardBody className="grid grid-cols-1 lg:h-[900px] h-full gap-x-4">
-                  {properties
-                    .filter((property) => property.contract.slug === "kiralik")
-                    .filter((property) => property.type.slug == "arsa-arazi")
-                    .slice(0, 5)
-                    .map((property, index) => (
-                      <PropertyCard property={property} key={index} />
-                    ))}
-                  <Button className="bg-blue-950">
-                    <Link
-                      href={`/arsa-arazi/kiralik`}
-                      className="text-white font-bold flex flex-row"
-                    >
-                      <span className="mr-4">Daha Fazla Görüntüle</span>
-                      <ArrowCircleRight width={20} height={20} />
-                    </Link>
-                  </Button>
+                  <div className="flex flex-col justify-start">
+                    {properties
+                      .filter(
+                        (property) => property.contract.slug === "kiralik"
+                      )
+                      .filter((property) => property.type.slug == "arsa-arazi")
+                      .slice(0, 5)
+                      .map((property, index) => (
+                        <PropertyCard property={property} key={index} />
+                      ))}
+                  </div>
+                  <div className="flex items-end ">
+                    <Button className="bg-blue-950 w-full">
+                      <Link
+                        href={`/arsa-arazi/kiralik`}
+                        className="text-white font-bold flex flex-row"
+                      >
+                        <span className="mr-4">Daha Fazla Görüntüle</span>
+                        <ArrowCircleRight width={20} height={20} />
+                      </Link>
+                    </Button>
+                  </div>
                 </CardBody>
               </Card>
             </Tab>

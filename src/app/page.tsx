@@ -1,15 +1,12 @@
 import prisma from "@/lib/prisma";
-import Image from "next/image";
-import PropertyCard from "./components/PropertyCard";
-import PropertyContainer from "./components/PropertyContainer";
-import Search from "./components/Search";
+
 import HomepageHero from "./components/HomepageHero";
 import HomepageCustomerBanner from "./components/HomepageCustomerBanner";
 import HomepageAgentBanner from "./components/HomepageAgentBanner";
 import HomepageAgentSlider from "./components/HomepageAgentSlider";
 import HomepageRentalList from "./components/HomepageRentalList";
 import HomepageForSaleList from "./components/HomepageForSaleList";
-import axios from "axios";
+
 const PAGE_SIZE = 8;
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;

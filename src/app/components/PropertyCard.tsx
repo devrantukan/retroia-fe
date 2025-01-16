@@ -34,7 +34,7 @@ const PropertyCard = ({ property, showAvatar }: any) => {
                 {property.location.country} / {property.location.city} /{" "}
                 {property.location.district} / {property.location.neighborhood}
               </p>
-              <p className="text-primary-600 text-[1rem] font-bold ">
+              <p className="text-primary-600 text-[0.9rem] font-bold ">
                 {property.name}
               </p>
             </div>

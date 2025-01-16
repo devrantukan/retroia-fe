@@ -217,28 +217,6 @@ const OfficeTabs = ({ office }: Props) => {
                       )}
                   </div>
                 </div>
-                <div className="w-full flex lg:flex-row flex-col">
-                  <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
-                    {office.workers
-                      .filter(
-                        (worker: { slug: string; role: { slug: string } }) =>
-                          worker.role.slug === "broker-manager"
-                      )
-                      .sort((a: any, b: any) => a.name.localeCompare(b.name))
-                      .map(
-                        (
-                          worker: { id: string; slug: string; name: string },
-                          index: number
-                        ) => (
-                          <OfficeWorkerCardLight
-                            officeWorker={worker}
-                            key={index}
-                            index={index}
-                          />
-                        )
-                      )}
-                  </div>
-                </div>
 
                 <div className="w-full flex lg:flex-row flex-col">
                   <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
@@ -260,10 +238,6 @@ const OfficeTabs = ({ office }: Props) => {
                           />
                         )
                       )}
-                  </div>
-                </div>
-                <div className="w-full flex lg:flex-row flex-col">
-                  <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
                     {office.workers
                       .filter(
                         (worker: { slug: string; role: { slug: string } }) =>
@@ -283,8 +257,27 @@ const OfficeTabs = ({ office }: Props) => {
                       )}
                   </div>
                 </div>
+
                 <div className="w-full flex lg:flex-row flex-col">
                   <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
+                    {office.workers
+                      .filter(
+                        (worker: { slug: string; role: { slug: string } }) =>
+                          worker.role.slug === "broker-manager"
+                      )
+                      .sort((a: any, b: any) => a.name.localeCompare(b.name))
+                      .map(
+                        (
+                          worker: { id: string; slug: string; name: string },
+                          index: number
+                        ) => (
+                          <OfficeWorkerCardLight
+                            officeWorker={worker}
+                            key={index}
+                            index={index}
+                          />
+                        )
+                      )}
                     {office.workers
                       .filter(
                         (worker: { slug: string; role: { slug: string } }) =>
@@ -303,10 +296,6 @@ const OfficeTabs = ({ office }: Props) => {
                           />
                         )
                       )}
-                  </div>
-                </div>
-                <div className="w-full flex lg:flex-row flex-col">
-                  <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
                     {office.workers
                       .filter(
                         (worker: { slug: string; role: { slug: string } }) =>
@@ -327,6 +316,7 @@ const OfficeTabs = ({ office }: Props) => {
                       )}
                   </div>
                 </div>
+
                 <div className="w-full flex lg:flex-row flex-col">
                   <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
                     {office.workers

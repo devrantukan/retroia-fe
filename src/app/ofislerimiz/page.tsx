@@ -28,7 +28,7 @@ const OfficesPage = async () => {
         />
         <div className="absolute z-40">
           <h1 className="mt-24 text-3xl font-extralight lg:ml-12 ml-6 ">
-            xx İLDE {offices.length} RETROİA OFİSİ
+            {offices.length} RETROİA OFİSİ
             <br />
             <span className="font-bold text-xl">
               İÇİNDEN SİZE EN YAKININI BULUN

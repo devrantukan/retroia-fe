@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 const OfficeWorkersPage = async () => {
   const officeWorkers = await prisma.officeWorker.findMany({
     where: {
-      roleId: { in: [7, 6] },
+      roleId: { in: [7, 6, 3, 2] },
     },
     include: {
       properties: true,
@@ -44,6 +44,27 @@ const OfficeWorkersPage = async () => {
             <span className="font-bold text-xl">SİZE EN UYGUNU BULUN</span>
           </h1>
         </div>
+      </div>
+
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-x-6 mx-6 gap-y-6 mb-6  place-items-center">
+        {officeWorkers
+          .filter(
+            (worker: { slug: string; role: { slug: string } }) =>
+              worker.role.slug === "broker-manager"
+          )
+          .map((worker, index: number) => (
+            <OfficeWorkerCard officeWorker={worker} key={index} index={index} />
+          ))}
+      </div>
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-x-6 mx-6 gap-y-6 mb-6  place-items-center">
+        {officeWorkers
+          .filter(
+            (worker: { slug: string; role: { slug: string } }) =>
+              worker.role.slug === "ofisler-muduru"
+          )
+          .map((worker, index: number) => (
+            <OfficeWorkerCard officeWorker={worker} key={index} index={index} />
+          ))}
       </div>
       <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-x-6 mx-6 gap-y-6 mb-6  place-items-center">
         {officeWorkers
