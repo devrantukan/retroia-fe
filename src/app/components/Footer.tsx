@@ -18,6 +18,9 @@ const propertyPages = [
   { id: 0, page: "Satılık Konutlar", href: "/konut/satilik" },
   { id: 1, page: "Satılık Ticari Gayrimenkuller", href: "/ticari/satilik" },
   { id: 2, page: "Satılık Arsalar", href: "/arsa-arazi/satilik" },
+  { id: 3, page: "Kiralık Konutlar", href: "/konut/kiralik" },
+  { id: 4, page: "Kiralık Ticari Gayrimenkuller", href: "/ticari/kiralik" },
+  { id: 2, page: "Kiralık Arsalar", href: "/arsa-arazi/kiralik" },
 ];
 
 const cooperatePages = [
@@ -33,7 +36,11 @@ const cooperatePages = [
 
 const aboutPages = [
   { id: 0, page: "Biz Kimiz?", href: "/biz-kimiz" },
-  { id: 1, page: "KVKK ve Aydınlatma Metni", href: "/features/grid" },
+  {
+    id: 1,
+    page: "KVKK ve Aydınlatma Metni",
+    href: "/kvkk-ve-aydinlatma-metni",
+  },
   // { id: 2, page: "KVKK Bilgi Başvuru Formu", href: "/pricing/tiers" },
   // { id: 3, page: "Yasal Uyarı ve Kullanım Koşulları", href: "/team" },
 ];

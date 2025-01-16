@@ -26,7 +26,7 @@ const OfficesPage = async () => {
           className="object-cover opacity-100 rounded-xl"
           layout="fill"
         />
-        <div className="absolute z-40">
+        <div className="absolute z-30">
           <h1 className="mt-24 text-3xl font-extralight lg:ml-12 ml-6 ">
             {offices.length} RETROİA OFİSİ
             <br />

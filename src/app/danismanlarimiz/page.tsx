@@ -38,7 +38,7 @@ const OfficeWorkersPage = async () => {
           className="object-cover opacity-100 rounded-xl"
           layout="fill"
         />
-        <div className="absolute z-40">
+        <div className="absolute z-30">
           <h1 className="mt-24 ml-12 text-3xl font-extralight">
             {officeWorkers.length} DANIŞMAN İÇİNDEN <br />
             <span className="font-bold text-xl">SİZE EN UYGUNU BULUN</span>

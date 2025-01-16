@@ -81,6 +81,15 @@ const Appbar = () => {
             <DropdownItem key="arsa" href="/arsa-arazi/satilik">
               Satılık Arsalar
             </DropdownItem>
+            <DropdownItem key="konut" href="/konut/kiralik">
+              Kiralık Konutlar
+            </DropdownItem>
+            <DropdownItem key="ticari" href="/ticari/kiralik">
+              Kiralık Ticari Gayrimenkuller
+            </DropdownItem>
+            <DropdownItem key="arsa" href="/arsa-arazi/kiralik">
+              Kiralık Arsalar
+            </DropdownItem>
           </DropdownMenu>
         </Dropdown>
 
@@ -143,6 +152,15 @@ const Appbar = () => {
               </DropdownItem>
               <DropdownItem key="arsa" href="/arsa-arazi/satilik">
                 Satılık Arsalar
+              </DropdownItem>
+              <DropdownItem key="konut" href="/konut/kiralik">
+                Kiralık Konutlar
+              </DropdownItem>
+              <DropdownItem key="ticari" href="/ticari/kiralik">
+                Kiralık Ticari Gayrimenkuller
+              </DropdownItem>
+              <DropdownItem key="arsa" href="/arsa-arazi/kiralik">
+                Kiralık Arsalar
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>

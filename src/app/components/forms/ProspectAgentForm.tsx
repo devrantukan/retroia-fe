@@ -21,6 +21,7 @@ import React, { useEffect } from "react";
 
 import axios from "axios";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 function validatePhoneNumber(phoneNumber: string) {
   // Regular expression to match most international phone number formats
@@ -465,7 +466,16 @@ export default function ProspectAgentForm({
                       className=" font-semibold text-blue-950 mt-8"
                     >
                       {" "}
-                      KVKK metnini okudum onaylıyorum.
+                      <Link
+                        onClick={() => {
+                          window.open("/kvkk-ve-aydinlatma-metni", "_blank");
+                        }}
+                        href="/kvkk-ve-aydinlatma-metni"
+                        target="_blank"
+                      >
+                        KVKK metnini{" "}
+                      </Link>
+                      okudum onaylıyorum.
                     </Checkbox>
                   </FormControl>
                   <FormMessage />

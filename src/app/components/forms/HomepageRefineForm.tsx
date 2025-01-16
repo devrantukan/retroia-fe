@@ -177,13 +177,12 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
   }, [form, propertyType]);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("data is", JSON.stringify(data, null, 2));
     const url = `${data.propertyType}/${data.contract}${
       selectedCountry ? `/${selectedCountry}` : ""
     }${data.city ? `/${data.city}` : ""}${
       data.district ? `/${data.district}` : ""
     }${data.neighborhood ? `/${data.neighborhood}` : ""}`;
-    console.log(url);
+    //  console.log(url);
     router.push(url);
     toast({
       title: "You submitted the following values:",
