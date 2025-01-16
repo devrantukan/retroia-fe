@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
     const { path, token } = await request.json();
 
     // Verify the secret token
-    if (token !== process.env.REVALIDATION_TOKEN) {
+    if (token !== process.env.NEXT_PUBLIC_REVALIDATION_TOKEN) {
       return NextResponse.json({ message: "Invalid token" }, { status: 401 });
     }
 
