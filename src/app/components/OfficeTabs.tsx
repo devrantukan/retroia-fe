@@ -67,7 +67,13 @@ const OfficeTabs = ({ office }: Props) => {
     //update the state
     setActiveTab(value.toString());
     // update the URL query parameter
-    router.push(`?tab=${value}`);
+    router.replace(`?tab=${value}`, { scroll: false });
+
+    // Smooth scroll to tab
+    const selectedTab = document.getElementById(`tab-${value}`);
+    if (selectedTab) {
+      selectedTab.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
   };
 
   // if the query parameter changes, update the state
@@ -87,7 +93,7 @@ const OfficeTabs = ({ office }: Props) => {
           selectedKey={activeTab}
           onSelectionChange={handleTabChange}
         >
-          <Tab key="properties" title="Portföylerimiz">
+          <Tab id="tab-properties" key="properties" title="Portföylerimiz">
             <Card>
               <CardBody>
                 {paginatedArray.flat().map((property: any, index: number) => (
@@ -106,7 +112,7 @@ const OfficeTabs = ({ office }: Props) => {
               </CardBody>
             </Card>
           </Tab>
-          <Tab key="projects" title="Projelerimiz">
+          <Tab id="tab-projects" key="projects" title="Projelerimiz">
             <Card>
               <CardBody>
                 {office.projects.map((project: any, index: number) => (
