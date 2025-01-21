@@ -38,7 +38,7 @@ const OfficesPage = async () => {
       </div>
       <div className="m-6 grid lg:grid-cols-3 grid-rows-1 gap-y-6">
         {offices.map((office, index) => (
-          <OfficeCard office={office} key={index} />
+          <OfficeCard key={index} office={office} officeId={office.id} />
         ))}
       </div>
     </div>
