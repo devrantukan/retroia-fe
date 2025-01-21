@@ -145,7 +145,7 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
           `/api/location/get-districts/${selectedCity}`
         );
         setDistricts(response.data);
-        console.log("rd", response.data);
+        // console.log("rd", response.data);
       } catch (error) {
         console.error("Error fetching districts:", error);
       }
@@ -164,13 +164,13 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
     }
   }
 
-  console.log(countries);
+  // console.log(countries);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
-  console.log(selectedCountry);
+  // console.log(selectedCountry);
 
   const router = useRouter();
 

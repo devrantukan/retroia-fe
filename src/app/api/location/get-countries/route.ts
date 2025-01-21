@@ -19,7 +19,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
     distinct: ["country"],
   });
 
-  console.log("projectLocationssss", projectLocations);
+  //console.log("projectLocationssss", projectLocations);
 
   let countries: string[] = [];
 
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
     countries.push(location.country);
   });
 
-  console.log("countries", countries);
+  //console.log("countries", countries);
   function capitalize(s: string): string {
     return String(s[0]).toLocaleUpperCase("tr") + String(s).slice(1);
   }
@@ -38,7 +38,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
       const countryData = await prisma.country.findFirst({
         where: { country_name: country },
       });
-      console.log("countryData", countryData);
+      //  console.log("countryData", countryData);
 
       if (countryData) {
         data.push({
@@ -50,7 +50,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
     })
   );
 
-  console.log("data", data);
+  // console.log("data", data);
 
   return NextResponse.json(data);
 }

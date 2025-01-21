@@ -3,10 +3,45 @@ import Image from "next/image";
 import { Prisma } from "@prisma/client";
 import Link from "next/link";
 import { Avatar } from "@nextui-org/react";
+import { useEffect, useState, useRef } from "react";
 
 const PropertySearchCard = ({ property, showAvatar }: any) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [cardWidth, setCardWidth] = useState(0);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (cardRef.current) {
+        const width = cardRef.current.getBoundingClientRect().width;
+        console.log("Current width:", width);
+        setCardWidth(width);
+      }
+    };
+
+    // Initial measurement
+    updateWidth();
+
+    // Setup resize observer
+    const observer = new ResizeObserver(updateWidth);
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    // Cleanup
+    return () => observer.disconnect();
+  }, []);
+
+  const imageClassName =
+    cardWidth < 700
+      ? "object-cover w-full lg:w-auto h-auto lg:max-w-[220px] lg:min-w-[220px] lg:min-h-[150px] lg:max-h-[150px] bg-gray-200"
+      : "object-cover w-full lg:w-auto h-auto lg:max-w-[240px] lg:min-w-[240px] lg:min-h-[160px] lg:max-h-[160px] bg-gray-200";
+  cardWidth < 400
+    ? "object-cover w-full lg:w-auto h-auto lg:max-w-[200px] lg:min-w-[200px] lg:min-h-[130px] lg:max-h-[150px] bg-gray-200"
+    : "object-cover w-full lg:w-auto h-auto lg:max-w-[220px] lg:min-w-[220px] lg:min-h-[150px] lg:max-h-[160px] bg-gray-200";
+
   return (
     <Card
+      ref={cardRef}
       className="w-full flex lg:flex-row mb-4 min-h-[150px] lg:max-h-[150px]"
       shadow="md"
     >
@@ -22,7 +57,7 @@ const PropertySearchCard = ({ property, showAvatar }: any) => {
               property.images?.[0]?.url ||
               "https://inegzzkuttzsznxfbsmp.supabase.co/storage/v1/object/public/siteImages/no-image.jpg"
             }
-            className="object-cover w-full lg:w-auto h-auto lg:max-w-[240px] lg:min-w-[240px] lg:min-h-[160px] lg:max-h-[160px] bg-gray-200"
+            className={imageClassName}
             alt={property.images?.[0]?.name || "No Image"}
             width={240}
             height={160}

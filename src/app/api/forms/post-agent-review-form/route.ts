@@ -62,7 +62,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
     const avg = sum / (total - countZero);
     return avg;
   }
-  console.log(firstName, lastName, email, phone);
+  //console.log(firstName, lastName, email, phone);
 
   const reviewData = await prisma.officeWorkerReview.create({
     data: {

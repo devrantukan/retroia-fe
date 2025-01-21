@@ -25,6 +25,7 @@ const OfficeTabs = ({ office }: Props) => {
   // find all properties of office workers
   let propertiesOfOffice: any[] = [];
   office.workers.forEach((worker: any) => {
+    //    console.log(worker);
     propertiesOfOffice.push(worker.properties);
   });
 
@@ -84,6 +85,124 @@ const OfficeTabs = ({ office }: Props) => {
       setActiveTab(tabParam);
     }
   }, []);
+
+  const aytekTopuzoglu = {
+    id: 1,
+    name: "Aytek Topuzoğlu",
+    slug: "aytek-topuzoglu",
+    role: {
+      id: 1,
+      title: "Broker",
+      slug: "broker",
+    },
+    office: {
+      id: 1,
+      name: "Retroia",
+      slug: "retroia",
+    },
+    title: "Broker",
+    avatarUrl:
+      "https://inegzzkuttzsznxfbsmp.supabase.co/storage/v1/object/public/avatars/aytek-topuzoglu.jpg",
+    phone: "+90 541 214 14 33",
+    email: "aytek@retroia.com",
+    properties: [],
+    reviews: [],
+  };
+
+  const tubaTopuzoglu = {
+    id: 2,
+    name: "Tuba Ezer Topuzoğlu",
+    slug: "tuba-ezer-topuzoglu",
+    role: {
+      id: 1,
+      title: "Broker",
+      slug: "broker",
+    },
+    office: {
+      id: 1,
+      name: "Retroia",
+      slug: "retroia",
+    },
+    title: "Broker",
+    avatarUrl:
+      "https://inegzzkuttzsznxfbsmp.supabase.co/storage/v1/object/public/avatars/tuba-ezer-topuzoglu.jpg",
+    phone: "+90 541 711 2626",
+    email: "tuba@retroia.com",
+    properties: [],
+    reviews: [],
+  };
+
+  const candanDoganoglu = {
+    id: 3,
+    name: "Candan Doğanoğlu",
+    slug: "candan-doganoglu",
+    role: {
+      id: 2,
+      title: "Broker / Manager",
+      slug: "broker-manager",
+    },
+    office: {
+      id: 1,
+      name: "Retroia",
+      slug: "retroia",
+    },
+    title: "Broker / Manager",
+    avatarUrl:
+      "https://inegzzkuttzsznxfbsmp.supabase.co/storage/v1/object/public/avatars/candan-doganoglu.jpg",
+    phone: "+90 533 667 0091",
+    email: "candan@retroia.com",
+    properties: [],
+    reviews: [],
+  };
+
+  const sedaGulec = {
+    id: 4,
+    name: "Seda Güleç",
+    slug: "seda-gulec",
+    role: {
+      id: 3,
+      title: "Ofisler Müdürü",
+      slug: "ofisler-muduru",
+    },
+    office: {
+      id: 1,
+      name: "Retroia",
+      slug: "retroia",
+    },
+    title: "Ofisler Müdürü",
+    avatarUrl:
+      "https://inegzzkuttzsznxfbsmp.supabase.co/storage/v1/object/public/avatars/seda-gulec.jpg",
+    phone: "+90 543 213 9998",
+    email: "seda@retroia.com",
+    properties: [],
+    reviews: [],
+  };
+
+  const cihanEr = {
+    id: 5,
+    name: "Cihan Er",
+    slug: "cihan-er",
+    role: {
+      id: 4,
+      title: "Pazarlama Müdürü",
+      slug: "pazarlama-muduru",
+    },
+    office: {
+      id: 1,
+      name: "Retroia",
+      slug: "retroia",
+    },
+    title: "Pazarlama Müdürü",
+    avatarUrl:
+      "https://inegzzkuttzsznxfbsmp.supabase.co/storage/v1/object/public/avatars/cihan-er.jpg",
+    phone: "+90 544 464 99 44",
+    email: "cihan@retroia.com",
+    properties: [],
+    reviews: [],
+  };
+
+  // First, check if we're NOT on office one
+  const isNotOfficeOne = office.id !== 1;
 
   return (
     <div className="p-4 flex flex-col justify-between lg:w-3/4">
@@ -178,8 +297,46 @@ const OfficeTabs = ({ office }: Props) => {
           <Tab key="our-staff" title="Ekibimiz">
             <Card>
               <CardBody>
+                {isNotOfficeOne && (
+                  <>
+                    <div className="w-full flex lg:flex-row flex-col">
+                      <div className="grid lg:grid-cols-3 grid-cols-1 gap-x-6 mr-4">
+                        <OfficeWorkerCardLight
+                          officeWorker={aytekTopuzoglu}
+                          key={aytekTopuzoglu.id}
+                          index={0}
+                        />
+                        <OfficeWorkerCardLight
+                          officeWorker={tubaTopuzoglu}
+                          key={tubaTopuzoglu.id}
+                          index={1}
+                        />
+                      </div>
+                    </div>
+                    <div className="w-full flex lg:flex-row flex-col">
+                      <div className="grid lg:grid-cols-3 grid-cols-1 gap-x-6 mr-4">
+                        <OfficeWorkerCardLight
+                          officeWorker={candanDoganoglu}
+                          key={candanDoganoglu.id}
+                          index={2}
+                        />
+                        <OfficeWorkerCardLight
+                          officeWorker={sedaGulec}
+                          key={sedaGulec.id}
+                          index={3}
+                        />
+                        <OfficeWorkerCardLight
+                          officeWorker={cihanEr}
+                          key={cihanEr.id}
+                          index={4}
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
+
                 <div className="w-full flex lg:flex-row flex-col">
-                  <div className="grid lg:grid-cols-3 grid-cols-1 gap-x-6 mr-4">
+                  <div className="grid lg:grid-cols-3  grid-cols-1 gap-x-6 mr-4">
                     {office.workers
                       .filter(
                         (worker: { slug: string; role: { slug: string } }) =>

@@ -103,7 +103,7 @@ const MapResults = connectStateResults(({ searchResults }) => {
   if (!searchResults) return null;
 
   // Debug log
-  console.log('Search results locations:', searchResults.hits.map(hit => hit.location));
+  //console.log('Search results locations:', searchResults.hits.map(hit => hit.location));
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -123,7 +123,7 @@ const MapResults = connectStateResults(({ searchResults }) => {
     typeof hit.location.longitude === 'number'
   );
 
-  console.log('Valid locations:', validLocations.map(hit => hit.location)); // Debug log
+  //console.log('Valid locations:', validLocations.map(hit => hit.location)); // Debug log
 
   const center = validLocations.length > 0 ? {
     lat: validLocations[0].location.latitude,
@@ -168,7 +168,7 @@ const BlogSearchComponent = ({ type, contract, country, city, district, neighbor
     setIsOpen(!isOpen);
    };
 
-  console.log('parameters1:', contract, type, country, city , district, neighborhood )
+  //console.log('parameters1:', contract, type, country, city , district, neighborhood )
 
   let url = `type:=${type}&&contract:=${contract}`
 
@@ -187,7 +187,7 @@ const BlogSearchComponent = ({ type, contract, country, city, district, neighbor
     }
   }
 
-  console.log('url',url)
+  //console.log('url',url)
 
   const transformItems = (items) => {
     return items.map((item) => ({
@@ -200,7 +200,7 @@ const BlogSearchComponent = ({ type, contract, country, city, district, neighbor
 
   // const filters = country ? `type:=${type}&&contract:=${contract}&&country:=${country}` : `type:=${type}&&contract:=${contract}`
  const filters = url
-console.log(filters)
+//console.log(filters)
   return (
     <InstantSearch
       indexName={postCollection}

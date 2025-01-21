@@ -7,6 +7,7 @@ import {
   RiTwitterXLine,
 } from "@remixicon/react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface propertyPages {
   id: number;
@@ -54,7 +55,7 @@ const socialLinks = [
 
 const classes = {
   pageLink:
-    "text-neutral-600 inline-flex hover:text-neutral-900 focus:outline-none focus:rounded focus:ring focus:ring-indigo-200",
+    "text-neutral-600 inline-flex hover:text-neutral-900 focus:outline-none focus:rounded focus:ring focus:ring-indigo-200 mb-2",
   socialIcon: "link--md link--secondary",
   socialLink:
     "inline-flex focus:outline-none focus:rounded focus:ring focus:ring-indigo-200",
@@ -77,7 +78,7 @@ export default function Footer() {
           />
           <ul className="flex flex-row flex-nowrap gap-x-4  items-end w-full justify-center lg:justify-normal invisible lg:visible">
             {socialLinks.map(({ id, Icon, href }) => (
-              <li key={id}>
+              <li key={`${id}-social`}>
                 <a href={href} className={classes.socialLink}>
                   <Icon className={classes.socialIcon} />
                 </a>
@@ -93,7 +94,7 @@ export default function Footer() {
             <p className="mb-4  text-blue-950">GAYRİMENKULLER</p>
             <ul className="flex flex-col flex-nowrap gap-x-4 md:gap-x-6 font-light">
               {propertyPages.map(({ id, page, href }) => (
-                <li key={id} className="mb-2">
+                <li key={`${id}-${page}`}>
                   <Button classes={classes.pageLink} href={href} text={page} />
                 </li>
               ))}
@@ -104,7 +105,7 @@ export default function Footer() {
             <p className="mb-4 text-blue-950">BİRLİKTE ÇALIŞALIM</p>
             <ul className="flex flex-col flex-nowrap gap-x-4 md:gap-x-6 font-light">
               {cooperatePages.map(({ id, page, href }) => (
-                <li key={id} className="mb-2">
+                <li key={`${id}-${page}`}>
                   <Button classes={classes.pageLink} href={href} text={page} />
                 </li>
               ))}
@@ -114,7 +115,7 @@ export default function Footer() {
             <p className="mb-4 text-blue-950">HAKKIMIZDA</p>
             <ul className="flex flex-col flex-nowrap gap-x-4 md:gap-x-6 font-light">
               {aboutPages.map(({ id, page, href }) => (
-                <li key={id} className="mb-2">
+                <li key={`${id}-${page}`}>
                   <Button classes={classes.pageLink} href={href} text={page} />
                 </li>
               ))}
@@ -122,7 +123,7 @@ export default function Footer() {
           </div>
           <ul className="flex flex-row flex-nowrap gap-x-4  items-end w-full justify-center  lg:hidden">
             {socialLinks.map(({ id, Icon, href }) => (
-              <li key={id}>
+              <li key={`${id}-mobile`}>
                 <a href={href} className={classes.socialLink}>
                   <Icon className={classes.socialIcon} />
                 </a>
@@ -131,9 +132,28 @@ export default function Footer() {
           </ul>
         </nav>
       </div>
-      <p className="mt-4 text-neutral-900 font-normal">
-        &copy; 2025 Retroia - Her hakkı saklıdır.
-      </p>
+      <div className="flex flex-row justify-between items-center mt-4">
+        <p className=" text-neutral-900 font-normal">
+          &copy; 2025 Retroia - Her hakkı saklıdır.
+        </p>
+        <div className="flex flex-row justify-center items-center">
+          <p className=" text-neutral-900 font-normal mr-2">
+            Technology by{" "}
+            <Link href="https://tukanft.com/tr" target="_blank">
+              TukanFT
+            </Link>
+          </p>
+          <Link href="https://tukanft.com/tr" target="_blank">
+            <Image
+              src={"https://tukanft.com/toucan.svg"}
+              width={40}
+              height={40}
+              alt="TukanFT Logo"
+              className="mx-auto lg:mx-0 h-[25px] w-auto"
+            />
+          </Link>
+        </div>
+      </div>
     </footer>
   );
 }

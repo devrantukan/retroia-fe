@@ -55,8 +55,6 @@ const OfficeWorkersPage = async () => {
           .map((worker, index: number) => (
             <OfficeWorkerCard officeWorker={worker} key={index} index={index} />
           ))}
-      </div>
-      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-x-6 mx-6 gap-y-6 mb-6  place-items-center">
         {officeWorkers
           .filter(
             (worker: { slug: string; role: { slug: string } }) =>
@@ -66,6 +64,7 @@ const OfficeWorkersPage = async () => {
             <OfficeWorkerCard officeWorker={worker} key={index} index={index} />
           ))}
       </div>
+
       <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-x-6 mx-6 gap-y-6 mb-6  place-items-center">
         {officeWorkers
           .filter(

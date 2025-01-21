@@ -3,14 +3,64 @@ import { Prisma } from "@prisma/client";
 import Link from "next/link";
 import { Avatar } from "@nextui-org/react";
 import Image from "next/image";
+import { useRef, useState, useEffect } from "react";
 
 const PropertyCard = ({ property, showAvatar }: any) => {
-  // console.log(property);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [cardWidth, setCardWidth] = useState(0);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (cardRef.current) {
+        const width = cardRef.current.getBoundingClientRect().width;
+        console.log("Property Card width:", width);
+        setCardWidth(width);
+      }
+    };
+
+    // Initial measurement
+    updateWidth();
+
+    // Setup resize observer
+    const observer = new ResizeObserver(updateWidth);
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    // Cleanup
+    return () => observer.disconnect();
+  }, []);
+
+  const imageClassName =
+    cardWidth < 500
+      ? "object-cover w-full lg:w-auto h-auto lg:max-w-[190px] lg:min-w-[190px] lg:min-h-[130px] lg:max-h-[130px] bg-gray-200"
+      : cardWidth < 700 && cardWidth > 500
+      ? "object-cover w-full lg:w-auto h-auto lg:max-w-[220px] lg:min-w-[220px] lg:min-h-[150px] lg:max-h-[150px] bg-gray-200"
+      : "object-cover w-full lg:w-auto h-auto lg:max-w-[240px] lg:min-w-[240px] lg:min-h-[160px] lg:max-h-[160px] bg-gray-200";
+
+  const titleClassName =
+    cardWidth < 500
+      ? "text-xs"
+      : cardWidth < 700 && cardWidth > 500
+      ? "text-sm"
+      : "text-base";
+
+  const breadcrumbClassName =
+    cardWidth < 500
+      ? "text-[0.6rem]"
+      : cardWidth < 700 && cardWidth > 500
+      ? "text-xs"
+      : "text-xs";
+
+  const cardClassName =
+    cardWidth < 500
+      ? "w-full flex lg:flex-row mb-4 min-h-[130px] lg:max-h-[130px]"
+      : cardWidth < 700 && cardWidth > 500
+      ? "w-full flex lg:flex-row mb-4 min-h-[150px] lg:max-h-[150px]"
+      : "w-full flex lg:flex-row mb-4 min-h-[150px] lg:max-h-[150px]";
+
   return (
-    <Card
-      className="w-full flex lg:flex-row mb-4 min-h-[150px] lg:max-h-[150px]"
-      shadow="md"
-    >
+    <Card ref={cardRef} className={cardClassName} shadow="md">
       <Link
         className={`hover:text-primary-500 transition-colors justify-between ${
           showAvatar == true ? "lg:w-4/5" : "lg:w-full"
@@ -23,18 +73,20 @@ const PropertyCard = ({ property, showAvatar }: any) => {
               property.images?.[0]?.url ||
               "https://inegzzkuttzsznxfbsmp.supabase.co/storage/v1/object/public/siteImages/no-image.jpg"
             }
-            className="object-cover w-full lg:w-auto h-auto lg:max-w-[240px] lg:min-w-[240px] lg:min-h-[160px] lg:max-h-[160px] bg-gray-200"
+            className={imageClassName}
             alt={property.name}
-            width={240}
-            height={160}
+            width={400}
+            height={240}
           />
           <div className="flex flex-col w-full">
             <div className="p-4 h-2/3 ">
-              <p className="text-slate-600 mb-1 text-xs w-full">
+              <p
+                className={`text-slate-600 mb-1 ${breadcrumbClassName} w-full `}
+              >
                 {property.location.country} / {property.location.city} /{" "}
                 {property.location.district} / {property.location.neighborhood}
               </p>
-              <p className="text-primary-600 text-[0.9rem] font-bold ">
+              <p className={`text-primary-600 ${titleClassName} font-bold `}>
                 {property.name}
               </p>
             </div>

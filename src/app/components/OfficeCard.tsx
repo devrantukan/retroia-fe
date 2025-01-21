@@ -9,9 +9,10 @@ import OfficeWorkerAvatars from "./OfficeWorkerAvatars";
 interface Props {
   office: any;
   key: number;
+  officeId: number;
 }
 
-const OfficeCard = ({ office, key }: Props) => {
+const OfficeCard = ({ office, key, officeId }: Props) => {
   // console.log(office);
   return (
     <Card className="p-2 pb-4 mx-2 ">

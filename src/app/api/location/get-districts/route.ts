@@ -26,7 +26,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
     districts.push(location.district);
   });
 
-  console.log(districts);
+  //console.log(districts);
 
   function capitalize(s: string): string {
     return String(s[0]).toLocaleUpperCase("tr") + String(s).slice(1);
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
       const districtData = await prisma.district.findFirst({
         where: { district_name: district.toLocaleUpperCase("tr") },
       });
-      console.log(districtData);
+      // console.log(districtData);
 
       if (districtData) {
         data.push({
@@ -55,7 +55,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
     })
   );
 
-  console.log(data);
+  // console.log(data);
 
   return NextResponse.json(data);
 }
