@@ -59,7 +59,7 @@ const PropertyPage = ({ params }: Props) => {
     thumbnail: "https://picsum.photos/id/1018/250/150",
   };
 
-  console.log(property);
+  //console.log(property);
   const getGalleryImages = (propertyImages: any[]) => {
     let galleryItems = [];
 

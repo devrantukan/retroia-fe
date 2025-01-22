@@ -26,6 +26,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function validatePhoneNumber(phoneNumber: string) {
   // Regular expression to match most international phone number formats
@@ -41,11 +42,79 @@ function validatePhoneNumber(phoneNumber: string) {
   }
 }
 
-export default function ReviewForm({
-  officeWorkerId,
-}: {
+interface Props {
   officeWorkerId: number;
-}) {
+  onClose?: () => void;
+}
+
+const FormSchema = z.object({
+  firstName: z.string({
+    required_error: "Lütfen Adınızı Giriniz",
+  }),
+  lastName: z.string({
+    required_error: "Lütfen Soyadınızı Giriniz",
+  }),
+  officeWorkerId: z.string({
+    required_error: "Lütfen Soyadınızı Giriniz",
+  }),
+  score1: z.string({
+    required_error: "Lütfen Soyadınızı Giriniz",
+  }),
+  score2: z.string({
+    required_error: "Lütfen Soyadınızı Giriniz",
+  }),
+  score3: z.string({
+    required_error: "Lütfen Soyadınızı Giriniz",
+  }),
+  score4: z.string({
+    required_error: "Lütfen Soyadınızı Giriniz",
+  }),
+  score5: z.string({
+    required_error: "Lütfen Soyadınızı Giriniz",
+  }),
+  score6: z.string({
+    required_error: "Lütfen Soyadınızı Giriniz",
+  }),
+  email: z
+    .string()
+    .min(1, { message: "Lütfen E-postanızı giriniz." })
+    .email("Geçerli E-posta gereklidir."),
+
+  phone: z
+    .string()
+    .transform((val) => val)
+    .pipe(
+      z.string().refine((val) => validatePhoneNumber(val.replace(/\s+/g, "")), {
+        message: "Geçerli bir tel no giriniz",
+      })
+    ),
+  review: z
+    .string()
+    .min(10, `Text must be at least ${10} characters`)
+    .max(1000, `Text must not exceed ${1000} characters`)
+    .optional(),
+
+  kvkkConsent: z.literal<boolean>(true, {
+    errorMap: () => ({
+      message: "Kvkk metnini kabul etmelisiniz",
+    }),
+  }),
+  marketingConsent: z
+    .literal<boolean>(true, {
+      errorMap: () => ({
+        message:
+          "Ön Bilgilendirme Koşulları'nı ve Mesafeli Satış Sözleşmesi'ni kabul etmelisiniz",
+      }),
+    })
+    .optional(),
+  nameConsent: z.literal<boolean>(true, {
+    errorMap: () => ({
+      message: "İsminizin görünmesine izin vermelisiniz",
+    }),
+  }),
+});
+
+export default function ReviewForm({ officeWorkerId, onClose }: Props) {
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -60,104 +129,43 @@ export default function ReviewForm({
   const [score5, setScore5] = useState(0);
   const [score6, setScore6] = useState(0);
 
-  useEffect(() => {
-    setSelectedOfficeWorkerId(officeWorkerId);
-    form.setValue("officeWorkerId", officeWorkerId.toString());
-  }, [officeWorkerId]);
-
-  // const handleSubmit = async (state: void, formData: FormData) => {
-  //   const result = await submitReview(null, formData);
-  //   if (result.success) {
-  //     toast.success(result.message);
-  //   } else {
-  //     toast.error(
-  //       result.errors ? result.errors[0]?.message : "An error occurred"
-  //     );
-  //   }
-  // };
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("data is", JSON.stringify(data, null, 2));
-    const { data: responseData } = await axios.post(
-      "/api/forms/post-agent-review-form",
-      data,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
-
-    if (responseData.message === "success") {
-      console.log("all success toast time");
-    }
-  }
-  const FormSchema = z.object({
-    firstName: z.string({
-      required_error: "Lütfen Adınızı Giriniz",
-    }),
-    lastName: z.string({
-      required_error: "Lütfen Soyadınızı Giriniz",
-    }),
-    officeWorkerId: z.string({
-      required_error: "Lütfen Soyadınızı Giriniz",
-    }),
-    score1: z.string({
-      required_error: "Lütfen Soyadınızı Giriniz",
-    }),
-    score2: z.string({
-      required_error: "Lütfen Soyadınızı Giriniz",
-    }),
-    score3: z.string({
-      required_error: "Lütfen Soyadınızı Giriniz",
-    }),
-    score4: z.string({
-      required_error: "Lütfen Soyadınızı Giriniz",
-    }),
-    score5: z.string({
-      required_error: "Lütfen Soyadınızı Giriniz",
-    }),
-    score6: z.string({
-      required_error: "Lütfen Soyadınızı Giriniz",
-    }),
-    email: z
-      .string()
-      .min(1, { message: "Lütfen E-postanızı giriniz." })
-      .email("Geçerli E-posta gereklidir."),
-
-    phone: z
-      .string()
-      .transform((val) => val)
-      .pipe(
-        z
-          .string()
-          .refine((val) => validatePhoneNumber(val.replace(/\s+/g, "")), {
-            message: "Geçerli bir tel no giriniz",
-          })
-      ),
-    review: z
-      .string()
-      .min(10, `Text must be at least ${10} characters`)
-      .max(1000, `Text must not exceed ${1000} characters`)
-      .optional(),
-
-    kvkkConsent: z.literal<boolean>(true, {
-      errorMap: () => ({
-        message: "Kvkk metnini kabul etmelisiniz",
-      }),
-    }),
-    marketingConsent: z
-      .literal<boolean>(true, {
-        errorMap: () => ({
-          message:
-            "Ön Bilgilendirme Koşulları'nı ve Mesafeli Satış Sözleşmesi'ni kabul etmelisiniz",
-        }),
-      })
-      .optional(),
-  });
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
+
+  useEffect(() => {
+    setSelectedOfficeWorkerId(officeWorkerId);
+    form.setValue("officeWorkerId", officeWorkerId.toString());
+  }, [officeWorkerId, form]);
+
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    try {
+      const { data: responseData } = await axios.post(
+        "/api/forms/post-agent-review-form",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+
+      if (responseData.message === "success") {
+        toast.success("Yorumunuz başarıyla gönderildi");
+        router.refresh();
+        if (onClose) {
+          onClose();
+          console.log("Closing modal");
+        }
+      } else {
+        toast.error("Bir hata oluştu. Lütfen tekrar deneyiniz.");
+      }
+    } catch (error) {
+      toast.error("Bir hata oluştu. Lütfen tekrar deneyiniz.");
+    }
+  }
 
   return (
     <Form {...form}>
@@ -228,6 +236,20 @@ export default function ReviewForm({
                       value={phone}
                       onValueChange={(value) => setPhone(value)}
                     />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="nameConsent"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl className="bg-white">
+                    <Checkbox checked={field.value} onChange={field.onChange}>
+                      İsmimin görünmesine izin veriyorum.
+                    </Checkbox>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -512,7 +534,7 @@ export default function ReviewForm({
             name="kvkkConsent"
             render={({ field }) => (
               <FormItem>
-                <FormControl className="bg-white" id="kvkkConsent">
+                <FormControl className="bg-white h-16" id="kvkkConsent">
                   <Checkbox
                     checked={field.value}
                     onChange={field.onChange}

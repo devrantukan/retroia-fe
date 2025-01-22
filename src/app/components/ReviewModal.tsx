@@ -4,24 +4,18 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   Button,
   useDisclosure,
 } from "@nextui-org/react";
-import React from "react";
-
-import AgentReviewForm from "./forms/AgentReviewForm";
 import { ChatCircle } from "@phosphor-icons/react/dist/ssr";
+import AgentReviewForm from "./forms/AgentReviewForm";
 
 export default function ReviewModal({
   officeWorkerId,
 }: {
   officeWorkerId: number;
 }) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [scrollBehavior, setScrollBehavior] = React.useState<
-    "inside" | "normal" | "outside"
-  >("inside");
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
   return (
     <>
@@ -35,7 +29,6 @@ export default function ReviewModal({
         onOpenChange={onOpenChange}
         isDismissable={false}
         isKeyboardDismissDisabled={true}
-        scrollBehavior={scrollBehavior}
         backdrop="blur"
         size="3xl"
       >
@@ -46,7 +39,10 @@ export default function ReviewModal({
                 Yorum Yap
               </ModalHeader>
               <ModalBody>
-                <AgentReviewForm officeWorkerId={officeWorkerId} />
+                <AgentReviewForm
+                  officeWorkerId={officeWorkerId}
+                  onClose={onClose}
+                />
               </ModalBody>
             </>
           )}

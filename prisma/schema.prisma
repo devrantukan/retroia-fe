@@ -263,6 +263,7 @@ model OfficeWorkerReview {
   officeWorkerId    Int 
   officeWorker      OfficeWorker   @relation(fields: [officeWorkerId], references: [id]) 
   isApproved        Int
+  nameConsent       Int   @default(0)
   kvkkConsent       Int   @default(0)
   marketingConsent  Int  @default(0)
   createdAt         DateTime        @default(now())

@@ -24,9 +24,8 @@ export async function POST(request: NextRequest, response: NextResponse) {
   const score6 = Number(formData.get("score6"));
   const kvkkConsent = formData.get("kvkkConsent") as string;
   const marketingConsent = formData.get("marketingConsent") as string;
+  const nameConsent = formData.get("nameConsent") as string;
   const officeWorkerId = Number(formData.get("officeWorkerId"));
-
-  let avg;
 
   function average(
     score1: number,
@@ -39,24 +38,12 @@ export async function POST(request: NextRequest, response: NextResponse) {
     const total = 6;
     let countZero = 0;
 
-    if (score1 === 0) {
-      countZero++;
-    }
-    if (score2 === 0) {
-      countZero++;
-    }
-    if (score3 === 0) {
-      countZero++;
-    }
-    if (score4 === 0) {
-      countZero++;
-    }
-    if (score5 === 0) {
-      countZero++;
-    }
-    if (score6 === 0) {
-      countZero++;
-    }
+    if (score1 === 0) countZero++;
+    if (score2 === 0) countZero++;
+    if (score3 === 0) countZero++;
+    if (score4 === 0) countZero++;
+    if (score5 === 0) countZero++;
+    if (score6 === 0) countZero++;
 
     const sum = score1 + score2 + score3 + score4 + score5 + score6;
     const avg = sum / (total - countZero);
@@ -64,27 +51,32 @@ export async function POST(request: NextRequest, response: NextResponse) {
   }
   //console.log(firstName, lastName, email, phone);
 
-  const reviewData = await prisma.officeWorkerReview.create({
-    data: {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      phone: phone,
-      review: review,
-      score1: score1,
-      score2: score2,
-      score3: score3,
-      score4: score4,
-      score5: score5,
-      score6: score6,
-      isApproved: 0,
-      officeWorkerId: officeWorkerId,
-      avg: average(score1, score2, score3, score4, score5, score6),
+  try {
+    const reviewData = await prisma.officeWorkerReview.create({
+      data: {
+        firstName,
+        lastName,
+        email,
+        phone,
+        review,
+        score1,
+        score2,
+        score3,
+        score4,
+        score5,
+        score6,
+        isApproved: 0,
+        officeWorkerId,
+        avg: average(score1, score2, score3, score4, score5, score6),
+        kvkkConsent: kvkkConsent === "true" ? 1 : 0,
+        marketingConsent: marketingConsent === "true" ? 1 : 0,
+        nameConsent: nameConsent === "true" ? 1 : 0,
+      },
+    });
 
-      kvkkConsent: kvkkConsent === "true" ? 1 : 0,
-      marketingConsent: marketingConsent === "true" ? 1 : 0,
-    },
-  });
-
-  return NextResponse.json({ message: "success" });
+    return NextResponse.json({ message: "success", reviewData });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ message: "error", error }, { status: 500 });
+  }
 }

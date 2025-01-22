@@ -54,7 +54,7 @@ const OfficeWorkerPage = async ({ params }: Props) => {
     },
   });
 
-  console.log(officeWorker);
+  // console.log(officeWorker);
   // find the office worker's projects
   const projects = await prisma.project.findMany({
     where: {

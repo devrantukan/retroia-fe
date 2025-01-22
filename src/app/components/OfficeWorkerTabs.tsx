@@ -25,17 +25,17 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
   const totalPages = Math.ceil(
     officeWorker.properties.length / elementsPerPage
   );
-  console.log(officeWorker.properties.length);
+  // console.log(officeWorker.properties.length);
 
   let paginatedArray: any[] = [];
   if (officeWorker.properties.length === 1) {
     paginatedArray = [officeWorker.properties[0]];
-    console.log("pga", paginatedArray);
+    // console.log("pga", paginatedArray);
   } else {
     const indexMin = (selectedPage - 1) * elementsPerPage;
     const indexMax = indexMin + elementsPerPage;
     paginatedArray = officeWorker.properties.slice(indexMin, indexMax);
-    console.log(paginatedArray);
+    // console.log(paginatedArray);
   }
 
   return (

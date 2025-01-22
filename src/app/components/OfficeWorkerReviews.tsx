@@ -19,6 +19,7 @@ const OfficeWorkerReviews = ({ reviews }: Props) => {
                   lastName: string;
                   createdAt: Date;
                   avg: number;
+                  nameConsent: boolean;
                 },
                 index: number
               ) => (
@@ -43,7 +44,11 @@ const OfficeWorkerReviews = ({ reviews }: Props) => {
 
                     <div className="space-y-0.5">
                       <p className="text-base font-semibold text-gray-900 dark:text-white">
-                        {review.firstName} {review.lastName}
+                        {review.nameConsent
+                          ? `${review.firstName} ${review.lastName}`
+                          : `${review.firstName.charAt(
+                              0
+                            )}*** ${review.lastName.charAt(0)}***`}
                       </p>
                       <p className="text-sm font-normal text-gray-500 dark:text-gray-400">
                         {review.createdAt.toLocaleDateString("tr-TR")}
