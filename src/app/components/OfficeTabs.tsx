@@ -268,7 +268,12 @@ const OfficeTabs = ({ office }: Props) => {
                               Hakkımızda
                             </h2>
 
-                            <p>{office.description}</p>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: office.description,
+                              }}
+                              className="prose max-w-none"
+                            />
                           </div>
                         </main>
                       </div>
