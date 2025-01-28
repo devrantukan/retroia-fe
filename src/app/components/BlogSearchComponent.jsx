@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   InstantSearch,
   SearchBox,
@@ -94,7 +94,10 @@ const PaginationWithResults = connectStateResults(({ searchResults }) => {
   const hasResults = searchResults && searchResults.nbHits !== 0;
   return hasResults ? (
     <Pagination
-      // ... pagination props ...
+      className="flex justify-center mt-4"
+      padding={2}
+      showFirst={false}
+      showLast={false}
     />
   ) : null;
 });
@@ -159,10 +162,39 @@ const MapResults = connectStateResults(({ searchResults }) => {
   );
 });
 
+const ScrollableResults = ({ searchResults }) => {
+  const searchResultsRef = useRef(null);
+
+  useEffect(() => {
+    if (searchResults?.page) {
+      // Get viewport height
+      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+      
+      // Get element position
+      const element = searchResultsRef.current;
+      const elementPosition = element?.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset;
+
+      // Calculate offset based on viewport height
+      const offset = vh < 800 ? -100 : -150; // Smaller offset for mobile
+
+      window.scrollTo({
+        top: offsetPosition + offset,
+        behavior: 'smooth'
+      });
+    }
+  }, [searchResults?.page]);
+
+  return <div ref={searchResultsRef} />;
+};
+
+const ConnectedScrollableResults = connectStateResults(ScrollableResults);
+
 const BlogSearchComponent = ({ type, contract, country, city, district, neighborhood }) => {
   const postCollection = `posts`;
 
    const [isOpen, setIsOpen] = useState(false);
+   const searchResultsRef = useRef(null);
 
    const handleClick = () => {
     setIsOpen(!isOpen);
@@ -201,6 +233,9 @@ const BlogSearchComponent = ({ type, contract, country, city, district, neighbor
   // const filters = country ? `type:=${type}&&contract:=${contract}&&country:=${country}` : `type:=${type}&&contract:=${contract}`
  const filters = url
 //console.log(filters)
+
+
+
   return (
     <InstantSearch
       indexName={postCollection}
@@ -226,6 +261,7 @@ const BlogSearchComponent = ({ type, contract, country, city, district, neighbor
         aroundLatLngViaIP={true}
         typoTolerance={true}
       />
+      <ConnectedScrollableResults />
       <div className="flex flex-col lg:flex-row">
 
       <div  className={`bg-white mr-4 gap-y-2 p-4 rounded-xl ${isOpen ? '' : 'hidden'} lg:block  `}>
@@ -325,9 +361,21 @@ const BlogSearchComponent = ({ type, contract, country, city, district, neighbor
        
        
             <h3>Oda sayısı</h3>
-            <RefinementList attribute="bedrooms" className="mb-4" transformItems={transformItems}  />
+            <RefinementList 
+              attribute="bedrooms" 
+              className="mb-4" 
+              transformItems={items => items
+                .sort((a, b) => parseInt(a.label) - parseInt(b.label))
+              }
+            />
             <h3>Banyo sayısı</h3>
-            <RefinementList attribute="bathrooms" className="mb-4" transformItems={transformItems}/>
+            <RefinementList 
+              attribute="bathrooms" 
+              className="mb-4" 
+              transformItems={items => items
+                .sort((a, b) => parseInt(a.label) - parseInt(b.label))
+              }
+            />
             {/* <h3>Yüzme Havuzu</h3>
             <RefinementList attribute="hasSwimmingPool" className="mb-4" transformItems={transformItems}/> */}
             <h3>Fiyat</h3>
@@ -390,30 +438,16 @@ const BlogSearchComponent = ({ type, contract, country, city, district, neighbor
           <div className="w-full ">
             <MapResults />
           </div>
-          <Hits hitComponent={BlogHitComponent} className= "w-full" />
-          <Pagination
-            className="flex justify-center items-center gap-2 my-4"
-            translations={{
-              previous: '‹',
-              next: '›',
-              first: '«',
-              last: '»',
-              page: (page) => page,
-              ariaPrevious: 'Önceki sayfa',
-              ariaNext: 'Sonraki sayfa',
-              ariaFirst: 'İlk sayfa',
-              ariaLast: 'Son sayfa',
-              ariaPage: (page) => `${page}. sayfa`,
-            }}
-            padding={2}
-            showFirst={false}
-            showLast={false}
-            totalPages={5}
-          />
+          <div id="search-container">
+            <Hits hitComponent={BlogHitComponent} />
+            <PaginationWithResults />
+          </div>
         </main>
       </div>
       </div>
     </InstantSearch>
 
   );
-};export default BlogSearchComponent;
+};
+
+export default BlogSearchComponent;
