@@ -13,6 +13,7 @@ import {
   LinkedinLogo,
   InstagramLogo,
   Globe,
+  YoutubeLogo,
 } from "@phosphor-icons/react/dist/ssr";
 import ShowContactDetailsButton from "./ShowContactDetailsButton";
 import ReviewModalSidebar from "./ReviewModalSidebar";
@@ -60,6 +61,20 @@ const OfficeWorkerSidebar = ({ officeWorker }: Props) => {
                 href={`https://facebook.com/${officeWorker.facebookAccountId}`}
               >
                 <FacebookLogo
+                  width={32}
+                  height={32}
+                  className="border rounded-2xl p-1 hover:bg-slate-200"
+                />
+              </Link>
+            </li>
+          )}
+          {officeWorker.youtubeAccountId && (
+            <li key={3}>
+              <Link
+                target="_blank"
+                href={`https://youtube.com/${officeWorker.youtubeAccountId}`}
+              >
+                <YoutubeLogo
                   width={32}
                   height={32}
                   className="border rounded-2xl p-1 hover:bg-slate-200"

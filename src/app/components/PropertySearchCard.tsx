@@ -74,13 +74,38 @@ const PropertySearchCard = ({ property, showAvatar }: any) => {
             </div>
             <div className="bg-gradient-to-br from-slate-50 to-slate-200 px-4 flex justify-start items-center h-1/3 w-full">
               <p className="text-2xl lining-nums  font-semibold tracking-wider">
-                {" "}
-                {property.price.toLocaleString("tr-TR", {
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0,
-                })}
+                {property.discountedPrice > 0 ? (
+                  <>
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl font-bold text-primary">
+                        {property.discountedPrice.toLocaleString("tr-TR", {
+                          style: "currency",
+                          currency: "TRY",
+                          maximumFractionDigits: 0,
+                        })}
+                      </span>
+                      <span className="text-lg line-through text-gray-400">
+                        {property.price.toLocaleString("tr-TR", {
+                          style: "currency",
+                          currency: "TRY",
+                          maximumFractionDigits: 0,
+                        })}
+                      </span>
+                      <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                        İNDİRİMLİ
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  <span className="text-2xl font-bold text-primary">
+                    {property.price.toLocaleString("tr-TR", {
+                      style: "currency",
+                      currency: "TRY",
+                      maximumFractionDigits: 0,
+                    })}
+                  </span>
+                )}
               </p>
-              <span className="text-lg">₺</span>
             </div>
           </div>
         </div>

@@ -1,3 +1,4 @@
+"use client";
 import { Card } from "@nextui-org/react";
 import { Prisma } from "@prisma/client";
 import Link from "next/link";
@@ -5,7 +6,110 @@ import { Avatar } from "@nextui-org/react";
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 
-const PropertyCard = ({ property, showAvatar }: any) => {
+interface PropertyCardProps {
+  property: {
+    id: number;
+    title: string;
+    price: number;
+    bedrooms: number;
+    bathrooms: number;
+    size: number;
+    images: {
+      url: string;
+    }[];
+    slug: string;
+    discountedPrice: number;
+    location: {
+      country: string;
+      city: string;
+      district: string;
+      neighborhood: string;
+    };
+    agent: {
+      name: string;
+      surname: string;
+      avatarUrl: string;
+      slug: string;
+      office: {
+        title: string;
+        id: number;
+        slug: string;
+        name: string;
+      };
+      role: {
+        title: string;
+        slug: string;
+      };
+    };
+    agentId: number;
+
+    type: string;
+    contract: string;
+    country: string;
+  };
+  showAvatar?: boolean;
+}
+
+const PriceDisplay = ({ price }: { price: number }) => {
+  const [currency, setCurrency] = useState("TRY");
+  const [rate, setRate] = useState(1);
+
+  useEffect(() => {
+    const detectCurrency = async () => {
+      try {
+        // Get location from IP
+        const geoRes = await fetch("https://ipapi.co/json/");
+        const geoData = await geoRes.json();
+
+        // Get exchange rates
+        const ratesRes = await fetch(
+          "https://api.exchangerate-api.com/v4/latest/TRY"
+        );
+        const ratesData = await ratesRes.json();
+
+        // Determine currency based on location
+        let selectedCurrency = "USD";
+        let selectedRate = ratesData.rates.USD;
+
+        if (geoData.continent_code === "EU") {
+          selectedCurrency = "EUR";
+          selectedRate = ratesData.rates.EUR;
+        } else if (geoData.country_code === "TR") {
+          selectedCurrency = "TRY";
+          selectedRate = 1;
+        } else if (geoData.country_code === "GB") {
+          selectedCurrency = "GBP";
+          selectedRate = ratesData.rates.GBP;
+        }
+
+        setCurrency(selectedCurrency);
+        setRate(selectedRate);
+      } catch (error) {
+        console.error("Error fetching location or rates:", error);
+        // Fallback to TRY
+        setCurrency("TRY");
+        setRate(1);
+      }
+    };
+
+    detectCurrency();
+  }, []);
+
+  const formatPrice = (price: number, currency: string, rate: number) => {
+    const convertedPrice = parseFloat((price * rate).toFixed(2));
+    const formatter = new Intl.NumberFormat("tr-TR", {
+      style: "currency",
+      currency: currency,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    });
+    return formatter.format(convertedPrice);
+  };
+
+  return formatPrice(price, currency, rate);
+};
+
+const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [cardWidth, setCardWidth] = useState(0);
 
@@ -74,7 +178,7 @@ const PropertyCard = ({ property, showAvatar }: any) => {
               "https://inegzzkuttzsznxfbsmp.supabase.co/storage/v1/object/public/siteImages/no-image.jpg"
             }
             className={imageClassName}
-            alt={property.name}
+            alt={property.title}
             width={400}
             height={240}
           />
@@ -87,17 +191,31 @@ const PropertyCard = ({ property, showAvatar }: any) => {
                 {property.location.district} / {property.location.neighborhood}
               </p>
               <p className={`text-primary-600 ${titleClassName} font-bold `}>
-                {property.name}
+                {property.title}
               </p>
             </div>
             <div className="bg-gradient-to-br from-slate-50 to-slate-200 px-4 flex justify-start items-center h-1/3 w-full ">
               <p className="text-2xl lining-nums font-semibold tracking-wider">
-                {property.price.toLocaleString("tr-TR", {
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0,
-                })}
+                {property.discountedPrice > 0 ? (
+                  <>
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl font-bold text-primary">
+                        <PriceDisplay price={property.discountedPrice} />
+                      </span>
+                      <span className="text-lg line-through text-gray-400">
+                        <PriceDisplay price={property.price} />
+                      </span>
+                      <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                        İNDİRİMLİ
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  <span className="text-2xl font-bold text-primary">
+                    <PriceDisplay price={property.price} />
+                  </span>
+                )}
               </p>
-              <span className="text-lg">₺</span>
             </div>
           </div>
         </div>
