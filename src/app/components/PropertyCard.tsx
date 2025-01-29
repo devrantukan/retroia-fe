@@ -48,6 +48,7 @@ interface PropertyCardProps {
     country: string;
   };
   showAvatar?: boolean;
+  index?: number;
 }
 
 const PriceDisplay = ({ price }: { price: number }) => {
