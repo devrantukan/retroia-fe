@@ -10,6 +10,7 @@ interface PropertyCardProps {
   property: {
     id: number;
     title: string;
+    name: string;
     price: number;
     bedrooms: number;
     bathrooms: number;
@@ -192,7 +193,7 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
                 {property.location.district} / {property.location.neighborhood}
               </p>
               <p className={`text-primary-600 ${titleClassName} font-bold `}>
-                {property.title}
+                {property.name}
               </p>
             </div>
             <div className="bg-gradient-to-br from-slate-50 to-slate-200 px-4 flex justify-start items-center h-1/3 w-full ">

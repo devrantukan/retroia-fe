@@ -153,16 +153,16 @@ const OfficeWorkerSidebar = ({ officeWorker }: Props) => {
       </Button>
       <hr className="mb-2 mt-4" />
       <ShowContactDetailsButton
-        phone={officeWorker.office.phone}
-        fax={officeWorker.office.fax}
-        email={officeWorker.office.email}
+        phone={officeWorker.phone}
+        fax={officeWorker.fax}
+        email={officeWorker.email}
       />
       <hr className="mb-0 mt-4" />
       <div className="bg-blue-200 mt-4 rounded-lg p-4">
         <p className="font-bold">Taşınmaz Ticareti Yetki Belgesi No</p>
-        <p>{officeWorker.companyLegalName}</p>
-        <p className="font-bold">İşletme Ünvanı</p>
         <p>{officeWorker.commercialDocumentId}</p>
+        <p className="font-bold">İşletme Ünvanı</p>
+        <p>{officeWorker.companyLegalName}</p>
       </div>
       <hr className="mb-0 mt-4" />
       <div className="bg-blue-200 mt-4 rounded-lg p-4">
