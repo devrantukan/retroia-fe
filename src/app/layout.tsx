@@ -13,7 +13,7 @@ const raleway = Raleway({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://retroia.com"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://emlak.retroia.com"
   ),
   title: {
     default: "Retroia - Emlak ve Gayrimenkul",
