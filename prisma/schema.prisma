@@ -204,6 +204,8 @@ model Office {
   webUrl        String
   slug          String
   projects    Project[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt @default(now())
 
 
 }
