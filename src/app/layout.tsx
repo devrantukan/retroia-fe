@@ -1,25 +1,75 @@
-import type { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import { Raleway } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./components/providers";
 import Appbar from "./components/Appbar";
 import SignInPanel from "./components/signInPanel";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 import Footer from "./components/Footer";
+import "react-toastify/dist/ReactToastify.css";
 
 const raleway = Raleway({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Retroia Gayrimenkul, Real Estate",
-  description: "Retroia Gayrimenkul, Real Estate",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://retroia.com"
+  ),
+  title: {
+    default: "Retroia - Emlak ve Gayrimenkul",
+    template: "%s | Retroia",
+  },
+  description:
+    "Türkiye genelinde satılık ve kiralık emlak ilanları, gayrimenkul yatırım fırsatları.",
+  keywords: [
+    "emlak",
+    "gayrimenkul",
+    "satılık",
+    "kiralık",
+    "ev",
+    "daire",
+    "villa",
+    "arsa",
+  ],
+  authors: [{ name: "Retroia" }],
+  creator: "Retroia",
+  publisher: "Retroia",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    siteName: "Retroia",
+    locale: "tr_TR",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  icons: {
+    icon: "/favicon.ico",
+    // Add more icon sizes if needed
+    // apple: '/apple-icon.png',
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="tr">
       <head>
@@ -53,6 +103,16 @@ export default function RootLayout({
           content="/favicon/browserconfig.xml"
         />
         <meta name="theme-color" content="#ffffff" />
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="robots" content="index, follow" />
+        <meta name="google" content="notranslate" />
+        <meta property="og:locale" content="tr_TR" />
+        <link
+          rel="alternate"
+          href="https://emlak.retroia.com"
+          hrefLang="tr-TR"
+        />
       </head>
       <body className={raleway.className}>
         <Providers>

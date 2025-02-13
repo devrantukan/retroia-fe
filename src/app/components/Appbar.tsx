@@ -30,27 +30,27 @@ const Appbar = () => {
   console.log(pathname);
   return (
     <Navbar
-      className="shadow-md bg-blue-950  w-full flex justify-between "
+      className="shadow-md bg-blue-950  w-full flex justify-between"
       maxWidth={"full"}
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
     >
-      <NavbarContent justify="center">
+      <NavbarContent justify="center" className="w-full">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="sm:hidden text-white"
         />
-        <NavbarBrand>
+        <NavbarBrand className="w-full flex lg:justify-start justify-center mr-12">
           <Link
             href={"/"}
             className="flex items-center text-primary-400 hover:text-primary-600 transition-colors"
           >
             <Image
               src={"/retroia-logo.png"}
-              width={128}
-              height={96}
+              width={125}
+              height={80}
               alt="Retroia Logo"
-              className="h-[50px] w-auto"
+              className="h-[40px] sm:w-full"
             />
           </Link>
         </NavbarBrand>

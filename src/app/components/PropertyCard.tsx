@@ -119,7 +119,7 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
     const updateWidth = () => {
       if (cardRef.current) {
         const width = cardRef.current.getBoundingClientRect().width;
-        console.log("Property Card width:", width);
+        // console.log("Property Card width:", width);
         setCardWidth(width);
       }
     };

@@ -231,15 +231,17 @@ const OfficeTabs = ({ office }: Props) => {
               </CardBody>
             </Card>
           </Tab>
-          <Tab id="tab-projects" key="projects" title="Projelerimiz">
-            <Card>
-              <CardBody>
-                {office.projects.map((project: any, index: number) => (
-                  <ProjectCard project={project} key={index} />
-                ))}
-              </CardBody>
-            </Card>
-          </Tab>
+          {office.projects.length > 0 && (
+            <Tab id="tab-projects" key="projects" title="Projelerimiz">
+              <Card>
+                <CardBody>
+                  {office.projects.map((project: any, index: number) => (
+                    <ProjectCard project={project} key={index} />
+                  ))}
+                </CardBody>
+              </Card>
+            </Tab>
+          )}
           <Tab key="about-us" title="Hakkımızda">
             <Card>
               <CardBody>
