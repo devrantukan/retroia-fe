@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon/favicon.ico",
     // Add more icon sizes if needed
     // apple: '/apple-icon.png',
   },

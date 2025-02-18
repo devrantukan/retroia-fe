@@ -171,7 +171,7 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
         className={`hover:text-primary-500 transition-colors justify-between ${
           showAvatar == true ? "lg:w-4/5" : "lg:w-full"
         }`}
-        href={`/property/${property.id}`}
+        href={`/portfoy/${property.id}`}
       >
         <div className="flex lg:flex-row flex-col w-full m-0">
           <Image

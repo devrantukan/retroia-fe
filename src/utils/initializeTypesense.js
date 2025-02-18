@@ -85,7 +85,7 @@ async function insertData(item) {
       parseFloat(item.location.latitude) || 0,
       parseFloat(item.location.longitude) || 0
     ],
-    'location': {
+    location: {
       latitude: parseFloat(item.location.latitude),
       longitude: parseFloat(item.location.longitude)
     },

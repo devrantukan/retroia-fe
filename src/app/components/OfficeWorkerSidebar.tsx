@@ -86,7 +86,7 @@ const OfficeWorkerSidebar = ({ officeWorker }: Props) => {
             <li key={3}>
               <Link
                 target="_blank"
-                href={`https://linkedin.com/${officeWorker.linkedInAccountId}`}
+                href={`https://linkedin.com/in/${officeWorker.linkedInAccountId}`}
               >
                 <LinkedinLogo
                   width={32}

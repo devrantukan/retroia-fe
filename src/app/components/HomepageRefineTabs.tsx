@@ -77,7 +77,7 @@ const HomepageRefineTabs = () => {
                         const result = await response.json();
 
                         if (result.exists) {
-                          router.push(`/property/${data.propertyId}`);
+                          router.push(`/portfoy/${data.propertyId}`);
                         } else {
                           setError("propertyId", {
                             type: "manual",

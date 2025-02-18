@@ -34,7 +34,7 @@ export async function generateMetadata({
 
     return {
       metadataBase: new URL(
-        process.env.NEXT_PUBLIC_SITE_URL || "https://retroia.com"
+        process.env.NEXT_PUBLIC_SITE_URL || "https://emlak.retroia.com"
       ),
       title: `${property.name} - ${property.location?.city}, ${property.location?.district}`,
       description: `${property.feature?.bedrooms} Yatak Odalı, ${

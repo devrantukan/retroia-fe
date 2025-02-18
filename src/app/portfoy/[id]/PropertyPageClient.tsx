@@ -142,7 +142,7 @@ const PropertyPageClient = ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="w-full">
-      <div className="p-6 pb-0">
+      <div className="p-4 lg:p-6 pb-0">
         <BreadCrumb
           location={{
             country: property.location?.country || "",
@@ -154,45 +154,84 @@ const PropertyPageClient = ({ params }: { params: { id: string } }) => {
           contract={property.contract}
           propertyType={property.type}
         />
-        <div>
-          <div className="flex flex-col lg:flex-row items-start lg:items-center gap-2 justify-between">
+        <div className="space-y-4 mt-4">
+          <div className="flex flex-col lg:flex-row items-start gap-4 lg:gap-6 justify-between">
+            {/* Left side - Title and Details */}
             <div className="w-full lg:w-3/4">
-              <h2 className="text-2xl font-bold text-primary my-5">
+              <h2 className="text-xl lg:text-2xl font-bold text-primary mb-3">
                 {property.name}
               </h2>
+              {/* Mobile View */}
+              <div className="flex justify-between items-center text-sm text-gray-500 w-full lg:hidden">
+                <div className="flex items-center gap-2">
+                  <span className="text-primary">İlan No:</span>
+                  <span>{property.id}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-primary">Son Güncelleme:</span>
+                  <span>
+                    {new Date(property.updatedAt).toLocaleDateString("tr-TR", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </span>
+                </div>
+              </div>
+              {/* Desktop View */}
+              <div className="hidden lg:flex lg:flex-wrap gap-x-6 gap-y-2 text-sm text-gray-500">
+                <div className="flex items-center gap-2">
+                  <span className="text-primary">İlan No:</span>
+                  <span>{property.id}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-primary">Son Güncelleme:</span>
+                  <span>
+                    {new Date(property.updatedAt).toLocaleDateString("tr-TR", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </span>
+                </div>
+              </div>
             </div>
-            <div className="w-full lg:w-1/4 lg:text-right text-left">
-              {property.discountedPrice > 0 ? (
-                <>
-                  <div className="flex items-center gap-2">
-                    <span className="text-2xl font-bold text-primary">
-                      {property.discountedPrice.toLocaleString("tr-TR", {
-                        style: "currency",
-                        currency: "TRY",
-                        maximumFractionDigits: 0,
-                      })}
-                    </span>
-                    <span className="text-lg line-through text-gray-400">
+
+            {/* Right side - Price */}
+            <div className="w-full lg:w-1/4 mt-4 lg:mt-0">
+              <div className="flex flex-col items-start lg:items-end">
+                {property.discountedPrice > 0 ? (
+                  <>
+                    <div className="flex items-center gap-3 flex-wrap lg:justify-end">
+                      <span className="text-xl lg:text-2xl font-bold text-primary order-1">
+                        {property.discountedPrice.toLocaleString("tr-TR", {
+                          style: "currency",
+                          currency: "TRY",
+                          maximumFractionDigits: 0,
+                        })}
+                      </span>
+                      <span className="bg-red-500 text-white text-xs px-3 py-1.5 rounded-full order-2">
+                        İNDİRİMLİ
+                      </span>
+                    </div>
+                    <span className="text-base lg:text-lg line-through text-gray-400 mt-2">
                       {property.price.toLocaleString("tr-TR", {
                         style: "currency",
                         currency: "TRY",
                         maximumFractionDigits: 0,
                       })}
                     </span>
-                    <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-                      İNDİRİMLİ
-                    </span>
-                  </div>
-                </>
-              ) : (
-                <span className="text-2xl font-bold text-primary">
-                  {property.price.toLocaleString("tr-TR", {
-                    style: "currency",
-                    currency: "TRY",
-                    maximumFractionDigits: 0,
-                  })}
-                </span>
-              )}
+                  </>
+                ) : (
+                  <span className="text-xl lg:text-2xl font-bold text-primary">
+                    {property.price.toLocaleString("tr-TR", {
+                      style: "currency",
+                      currency: "TRY",
+                      maximumFractionDigits: 0,
+                    })}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>

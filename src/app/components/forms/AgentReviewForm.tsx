@@ -55,25 +55,25 @@ const FormSchema = z.object({
     required_error: "Lütfen Soyadınızı Giriniz",
   }),
   officeWorkerId: z.string({
-    required_error: "Lütfen Soyadınızı Giriniz",
+    required_error: "Lütfen Skorunuzu Giriniz",
   }),
   score1: z.string({
-    required_error: "Lütfen Soyadınızı Giriniz",
+    required_error: "Lütfen Skorunuzu Giriniz",
   }),
   score2: z.string({
-    required_error: "Lütfen Soyadınızı Giriniz",
+    required_error: "Lütfen Skorunuzu Giriniz",
   }),
   score3: z.string({
-    required_error: "Lütfen Soyadınızı Giriniz",
+    required_error: "Lütfen Skorunuzu Giriniz",
   }),
   score4: z.string({
-    required_error: "Lütfen Soyadınızı Giriniz",
+    required_error: "Lütfen Skorunuzu Giriniz",
   }),
   score5: z.string({
-    required_error: "Lütfen Soyadınızı Giriniz",
+    required_error: "Lütfen Skorunuzu Giriniz",
   }),
   score6: z.string({
-    required_error: "Lütfen Soyadınızı Giriniz",
+    required_error: "Lütfen Skorunuzu Giriniz",
   }),
   email: z
     .string()
@@ -90,8 +90,8 @@ const FormSchema = z.object({
     ),
   review: z
     .string()
-    .min(10, `Text must be at least ${10} characters`)
-    .max(1000, `Text must not exceed ${1000} characters`)
+    .min(10, `Yorumunuz en az ${10} karakter olmalıdır`)
+    .max(1000, `Yorumunuz en fazla ${1000} karakter olmalıdır`)
     .optional(),
 
   kvkkConsent: z.literal<boolean>(true, {
@@ -107,11 +107,13 @@ const FormSchema = z.object({
       }),
     })
     .optional(),
-  nameConsent: z.literal<boolean>(true, {
-    errorMap: () => ({
-      message: "İsminizin görünmesine izin vermelisiniz",
-    }),
-  }),
+  nameConsent: z
+    .literal<boolean>(true, {
+      errorMap: () => ({
+        message: "İsminizin görünmesine izin vermelisiniz",
+      }),
+    })
+    .optional(),
 });
 
 export default function ReviewForm({ officeWorkerId, onClose }: Props) {
