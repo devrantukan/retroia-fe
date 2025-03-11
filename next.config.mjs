@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-
+  basePath: '/emlak',
+  assetPrefix: '/emlak/',
   images: {
   loader: 'custom',
   loaderFile: './src/lib/supabaseImageLoader.ts',
