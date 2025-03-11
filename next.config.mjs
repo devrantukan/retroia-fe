@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   basePath: '/emlak',
-  assetPrefix: process.env.NODE_ENV === 'production' ? 'https://www2.retroia.com/emlak' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/emlak' : '',
   trailingSlash: true,
+  output: 'standalone',
   images: {
   loader: 'custom',
   loaderFile: './src/lib/supabaseImageLoader.ts',
