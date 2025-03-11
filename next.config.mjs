@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   basePath: '/emlak',
-  assetPrefix: '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/emlak/' : '',
   trailingSlash: true,
   output: 'standalone',
   distDir: '.next',
@@ -11,6 +11,20 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   generateEtags: true,
+  webpack: (config, { isServer }) => {
+    config.output.publicPath = `/emlak/_next/`;
+    return config;
+  },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: '/emlak/_next/:path*',
+          destination: '/_next/:path*',
+        },
+      ],
+    };
+  },
   images: {
   loader: 'custom',
   loaderFile: './src/lib/supabaseImageLoader.ts',
