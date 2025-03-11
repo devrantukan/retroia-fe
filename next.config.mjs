@@ -1,9 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   basePath: '/emlak',
-  assetPrefix: process.env.NODE_ENV === 'production' ? 'https://www2.retroia.com/emlak' : '',
+  assetPrefix: '',
   trailingSlash: true,
   output: 'standalone',
+  distDir: '.next',
+  experimental: {
+    outputFileTracingRoot: process.cwd(),
+  },
   compress: true,
   poweredByHeader: false,
   generateEtags: true,
