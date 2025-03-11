@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   basePath: '/emlak',
-  assetPrefix: '/emlak/',
+  assetPrefix: 'https://www2.retroia.com/emlak/',
   images: {
   loader: 'custom',
   loaderFile: './src/lib/supabaseImageLoader.ts',
