@@ -8,13 +8,17 @@ export async function uploadImages(images: File[]) {
 
   const data = await Promise.all(
     images.map((file) =>
-      supabase.storage.from("propertyImages").upload(`${file.name}_${Date.now()}`, file)
+      supabase.storage
+        .from("propertyImages")
+        .upload(`${file.name}_${Date.now()}`, file)
     )
   );
 
   const urls = data.map(
     (item) =>
-      supabase.storage.from("propertyImages").getPublicUrl(item.data?.path ?? "").data.publicUrl
+      supabase.storage
+        .from("propertyImages")
+        .getPublicUrl(item.data?.path ?? "").data.publicUrl
   );
 
   return urls;
@@ -26,13 +30,15 @@ export async function uploadAvatar(image: File) {
 
   const supabase = createClient(supabaseUrl, supabaseKey);
 
-  const data = await supabase.storage.from("avatars").upload(`${image.name}_${Date.now()}`, image);
+  const data = await supabase.storage
+    .from("avatars")
+    .upload(`${image.name}_${Date.now()}`, image);
 
   console.log({ data });
 
-  const urlData = await supabase.storage.from("avatars").getPublicUrl(data.data?.path!);
+  const urlData = await supabase.storage
+    .from("avatars")
+    .getPublicUrl(data.data?.path!);
 
   return urlData.data.publicUrl;
 }
-
-

@@ -131,6 +131,7 @@ const PropertyPageClient = ({ params }: { params: { id: string } }) => {
         original: image.url,
         thumbnail: image.url,
       }));
+      console.log(imageItems);
       galleryItems = [...galleryItems, ...imageItems];
     }
 

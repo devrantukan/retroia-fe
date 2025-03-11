@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {images: {
+const nextConfig = {
+  basePath: '/emlak',
+  images: {
+  loader: 'custom',
+  loaderFile: './src/lib/supabaseImageLoader.ts',
     remotePatterns: [
       {
         protocol: 'https',
