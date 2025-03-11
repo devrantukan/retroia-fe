@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: '/',
+
   images: {
   loader: 'custom',
   loaderFile: './src/lib/supabaseImageLoader.ts',
