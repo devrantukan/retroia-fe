@@ -15,14 +15,28 @@ const nextConfig = {
     config.output.publicPath = `/emlak/_next/`;
     return config;
   },
+  async redirects() {
+    return [
+      {
+        source: '/emlak/emlak/:path*',
+        destination: '/emlak/:path*',
+        permanent: true,
+      },
+      {
+        source: '/emlak/emlak',
+        destination: '/emlak',
+        permanent: true,
+      }
+    ];
+  },
   async rewrites() {
     return {
       beforeFiles: [
         {
           source: '/emlak/_next/:path*',
           destination: '/_next/:path*',
-        },
-      ],
+        }
+      ]
     };
   },
   images: {
