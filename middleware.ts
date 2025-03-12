@@ -44,8 +44,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Match all paths except static files and WordPress admin
-    "/((?!wp-admin|wp-login|wp-content|favicon.ico).*)",
-    "/emlak/:path*",
+    "/((?!_next/static|_next/image|favicon.ico|wp-admin|wp-login|wp-content).*)",
   ],
 };

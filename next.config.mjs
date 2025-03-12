@@ -20,32 +20,33 @@ const nextConfig = {
   async rewrites() {
     return {
       beforeFiles: [
+        // Handle static assets
         {
-          source: '/emlak/_next/:path*',
+          source: '/_next/:path*',
           destination: '/_next/:path*',
         }
       ],
       afterFiles: [
-        // Handle Next.js pages
+        // Handle pages directly since Traefik strips /emlak
         {
-          source: '/emlak/ofislerimiz',
+          source: '/ofislerimiz',
           destination: '/ofislerimiz',
         },
         {
-          source: '/emlak/danismanlarimiz',
+          source: '/danismanlarimiz',
           destination: '/danismanlarimiz',
         },
         {
-          source: '/emlak/gayrimenkul-danismani-basvuru-formu',
+          source: '/gayrimenkul-danismani-basvuru-formu',
           destination: '/gayrimenkul-danismani-basvuru-formu',
         },
         {
-          source: '/emlak/gayrimenkullerinizi-satalim-kiralayalim',
+          source: '/gayrimenkullerinizi-satalim-kiralayalim',
           destination: '/gayrimenkullerinizi-satalim-kiralayalim',
         },
-        // Handle API routes if any
+        // Handle API routes
         {
-          source: '/emlak/api/:path*',
+          source: '/api/:path*',
           destination: '/api/:path*',
         }
       ]
