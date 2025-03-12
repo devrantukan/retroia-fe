@@ -22,7 +22,11 @@ const nextConfig = {
       beforeFiles: [
         {
           source: '/emlak/_next/:path*',
-          destination: '/_next/:path*',
+          destination: '/emlak/_next/:path*',
+        },
+        {
+          source: '/emlak/:path*',
+          destination: '/:path*',
         }
       ]
     };
