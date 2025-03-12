@@ -17,22 +17,35 @@ const nextConfig = {
     }
     return config;
   },
+  async headers() {
+    return [
+      {
+        source: '/emlak/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, must-revalidate'
+          },
+          {
+            key: 'RSC',
+            value: '1'
+          }
+        ]
+      }
+    ];
+  },
   async rewrites() {
     return {
       beforeFiles: [
         {
           source: '/emlak/_next/:path*',
           destination: '/_next/:path*',
-        },
-        {
-          source: '/emlak/:path*',
-          destination: '/:path*',
         }
       ],
       afterFiles: [
         {
-          source: '/emlak/emlak/:path*',
-          destination: '/emlak/:path*',
+          source: '/emlak/:path*',
+          destination: '/:path*',
         }
       ]
     };
