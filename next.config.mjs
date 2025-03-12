@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '' : '',
+  basePath: '/emlak',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/emlak' : '',
   trailingSlash: true,
   output: 'standalone',
   distDir: '.next',
@@ -13,30 +13,16 @@ const nextConfig = {
   generateEtags: true,
   webpack: (config, { isServer }) => {
     if (process.env.NODE_ENV === 'production') {
-      config.output.publicPath = `/_next/`;
+      config.output.publicPath = `/emlak/_next/`;
     }
     return config;
-  },
-  async redirects() {
-    return [
-      {
-        source: '/emlak/emlak/:path*',
-        destination: '/emlak/:path*',
-        permanent: true,
-      },
-      {
-        source: '/emlak/emlak',
-        destination: '/emlak',
-        permanent: true,
-      }
-    ];
   },
   async rewrites() {
     return {
       beforeFiles: [
         {
-          source: '/_next/:path*',
-          destination: '/_next/:path*',
+          source: '/emlak/_next/:path*',
+          destination: '/emlak/_next/:path*',
         }
       ]
     };
