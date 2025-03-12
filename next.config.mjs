@@ -23,6 +23,10 @@ const nextConfig = {
         {
           source: '/emlak/_next/:path*',
           destination: '/emlak/_next/:path*',
+        },
+        {
+          source: '/emlak/:path*',
+          destination: '/:path*',
         }
       ]
     };
@@ -37,7 +41,7 @@ const nextConfig = {
         port: '',
         pathname: '/*',
       },
-      {
+      {     
         protocol: 'https',
         hostname: 'flowbite.s3.amazonaws.com',
   
