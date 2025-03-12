@@ -19,39 +19,11 @@ const nextConfig = {
 
   async rewrites() {
     return {
-      beforeFiles: [
-        // Handle static assets
-        {
-          source: '/emlak/_next/:path*',
-          destination: '/_next/:path*',
-        }
-      ],
-      afterFiles: [
-        // Handle pages directly since Traefik strips /emlak
-        {
-          source: '/ofislerimiz',
-          destination: '/ofislerimiz',
-        },
-        {
-          source: '/danismanlarimiz',
-          destination: '/danismanlarimiz',
-        },
-        {
-          source: '/gayrimenkul-danismani-basvuru-formu',
-          destination: '/gayrimenkul-danismani-basvuru-formu',
-        },
-        {
-          source: '/gayrimenkullerinizi-satalim-kiralayalim',
-          destination: '/gayrimenkullerinizi-satalim-kiralayalim',
-        },
-        // Handle API routes
-        {
-          source: '/api/:path*',
-          destination: '/api/:path*',
-        }
-      ]
+      beforeFiles: [],
+      afterFiles: []
     };
   },
+
   async headers() {
     return [
       {
