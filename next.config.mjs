@@ -19,13 +19,27 @@ const nextConfig = {
 
   async rewrites() {
     return {
-      beforeFiles: [],
+      beforeFiles: [
+        {
+          source: '/emlak/_next/static/:path*',
+          destination: '/_next/static/:path*'
+        }
+      ],
       afterFiles: []
     };
   },
 
   async headers() {
     return [
+      {
+        source: '/emlak/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          }
+        ]
+      },
       {
         source: '/:path*',
         headers: [
