@@ -31,15 +31,12 @@ const nextConfig = {
       ],
       afterFiles: [
         {
+          source: '/emlak/:path*',
+          destination: '/:path*',
+        },
+        {
           source: '/:path*',
           destination: '/emlak/:path*',
-          has: [
-            {
-              type: 'header',
-              key: 'referer',
-              value: '(.*)/emlak/.*'
-            }
-          ]
         }
       ]
     };
