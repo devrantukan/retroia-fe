@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: '/emlak',
+  basePath: '',
   assetPrefix: process.env.NODE_ENV === 'production' ? '/emlak' : '',
   trailingSlash: true,
   distDir: '.next',
@@ -23,6 +23,12 @@ const nextConfig = {
         {
           source: '/emlak/_next/:path*',
           destination: '/_next/:path*',
+        }
+      ],
+      afterFiles: [
+        {
+          source: '/emlak/:path*',
+          destination: '/:path*',
         }
       ]
     };
