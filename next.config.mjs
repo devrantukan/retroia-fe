@@ -16,20 +16,12 @@ const nextConfig = {
     }
     return config;
   },
-  async headers() {
+  async redirects() {
     return [
       {
-        source: '/emlak/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'no-store, must-revalidate'
-          },
-          {
-            key: 'RSC',
-            value: '1'
-          }
-        ]
+        source: '/emlak/emlak/:path*',
+        destination: '/emlak/:path*',
+        permanent: true,
       }
     ];
   },
@@ -40,8 +32,27 @@ const nextConfig = {
           source: '/emlak/_next/:path*',
           destination: '/_next/:path*',
         }
+      ],
+      afterFiles: [
+        {
+          source: '/emlak/:path*',
+          destination: '/:path*',
+        }
       ]
     };
+  },
+  async headers() {
+    return [
+      {
+        source: '/emlak/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600'
+          }
+        ]
+      }
+    ];
   },
   images: {
   loader: 'custom',
