@@ -12,7 +12,7 @@ const nextConfig = {
   generateEtags: true,
   webpack: (config, { isServer }) => {
     if (process.env.NODE_ENV === 'production') {
-      config.output.publicPath = `/emlak/_next/`;
+      config.output.publicPath = `/emlak/emlak/_next/`;
     }
     return config;
   },
@@ -21,8 +21,12 @@ const nextConfig = {
     return {
       beforeFiles: [
         {
-          source: '/emlak/_next/static/:path*',
-          destination: '/_next/static/:path*'
+          source: '/emlak/emlak/_next/:path*',
+          destination: '/_next/:path*'
+        },
+        {
+          source: '/emlak/_next/:path*',
+          destination: '/emlak/emlak/_next/:path*'
         }
       ],
       afterFiles: []
@@ -32,7 +36,7 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/emlak/_next/static/:path*',
+        source: '/emlak/emlak/_next/:path*',
         headers: [
           {
             key: 'Cache-Control',
