@@ -2,15 +2,9 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-
-  // Skip WordPress paths
-  if (pathname.startsWith("/wp-") || pathname === "/") {
-    return NextResponse.next();
-  }
-
-  // Handle static assets
-  if (pathname.includes("/_next/")) {
+  // Since we're using basePath, we don't need to handle /emlak prefix
+  // Just handle static assets and skip WordPress paths
+  if (request.nextUrl.pathname.includes("/_next/")) {
     return NextResponse.next();
   }
 
@@ -19,6 +13,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|wp-admin|wp-login|wp-content).*)",
+    // Only match paths under our basePath
+    "/emlak/:path*",
   ],
 };
