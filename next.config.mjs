@@ -25,10 +25,10 @@ const nextConfig = {
           destination: '/_next/:path*',
         }
       ],
-      fallback: [
+      afterFiles: [
         {
-          source: '/emlak/:path*',
-          destination: '/:path*',
+          source: '/emlak/emlak/:path*',
+          destination: '/emlak/:path*',
         }
       ]
     };
