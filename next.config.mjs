@@ -22,11 +22,20 @@ const nextConfig = {
       beforeFiles: [
         {
           source: '/emlak/_next/:path*',
-          destination: '/emlak/_next/:path*',
-        },
+          destination: '/_next/:path*',
+        }
+      ],
+      afterFiles: [
         {
-          source: '/emlak/:path*',
-          destination: '/:path*',
+          source: '/emlak/emlak/:path*',
+          destination: '/emlak/:path*',
+          has: [
+            {
+              type: 'header',
+              key: 'host',
+              value: 'www2.retroia.com'
+            }
+          ]
         }
       ]
     };
