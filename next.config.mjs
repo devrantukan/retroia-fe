@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: '/emlak',
+  basePath: '',
   assetPrefix: process.env.NODE_ENV === 'production' ? '/emlak' : '',
   trailingSlash: true,
   distDir: '.next',
@@ -12,7 +12,7 @@ const nextConfig = {
   generateEtags: true,
   webpack: (config, { isServer }) => {
     if (process.env.NODE_ENV === 'production') {
-      config.output.publicPath = `/emlak/emlak/_next/`;
+      config.output.publicPath = `/emlak/_next/`;
     }
     return config;
   },
@@ -20,23 +20,47 @@ const nextConfig = {
   async rewrites() {
     return {
       beforeFiles: [
-        {
-          source: '/emlak/emlak/_next/:path*',
-          destination: '/_next/:path*'
-        },
+        // Handle static assets
         {
           source: '/emlak/_next/:path*',
-          destination: '/emlak/emlak/_next/:path*'
+          destination: '/_next/:path*'
         }
       ],
-      afterFiles: []
+      afterFiles: [
+        // Handle API routes first
+        {
+          source: '/api/:path*',
+          destination: '/emlak/api/:path*',
+        },
+        {
+          source: '/emlak/api/:path*',
+          destination: '/api/:path*'
+        },
+        // Handle page routes
+        {
+          source: '/emlak/ofislerimiz',
+          destination: '/ofislerimiz'
+        },
+        {
+          source: '/emlak/danismanlarimiz',
+          destination: '/danismanlarimiz'
+        },
+        {
+          source: '/emlak/gayrimenkul-danismani-basvuru-formu',
+          destination: '/gayrimenkul-danismani-basvuru-formu'
+        },
+        {
+          source: '/emlak/gayrimenkullerinizi-satalim-kiralayalim',
+          destination: '/gayrimenkullerinizi-satalim-kiralayalim'
+        }
+      ]
     };
   },
 
   async headers() {
     return [
       {
-        source: '/emlak/emlak/_next/:path*',
+        source: '/emlak/_next/:path*',
         headers: [
           {
             key: 'Cache-Control',
