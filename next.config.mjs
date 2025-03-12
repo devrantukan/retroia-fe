@@ -25,17 +25,10 @@ const nextConfig = {
           destination: '/_next/:path*',
         }
       ],
-      afterFiles: [
+      fallback: [
         {
-          source: '/emlak/emlak/:path*',
-          destination: '/emlak/:path*',
-          has: [
-            {
-              type: 'header',
-              key: 'host',
-              value: 'www2.retroia.com'
-            }
-          ]
+          source: '/emlak/:path*',
+          destination: '/:path*',
         }
       ]
     };
