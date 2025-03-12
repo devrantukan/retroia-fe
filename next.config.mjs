@@ -41,12 +41,6 @@ const nextConfig = {
           source: '/emlak/_next/:path*',
           destination: '/_next/:path*',
         }
-      ],
-      afterFiles: [
-        {
-          source: '/emlak/:path*',
-          destination: '/:path*',
-        }
       ]
     };
   },
