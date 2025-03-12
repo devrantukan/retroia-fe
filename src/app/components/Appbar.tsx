@@ -18,9 +18,9 @@ import Link from "next/link";
 import React, { ReactNode } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { getRoute } from "@/utils/routes";
 
 const Appbar = () => {
-  //  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMenuOpen, setIsMenuOpen] = React.useReducer(
     (current) => !current,
     false
@@ -42,7 +42,7 @@ const Appbar = () => {
         />
         <NavbarBrand className="w-full flex lg:justify-start justify-center mr-12">
           <Link
-            href={"/"}
+            href={getRoute("/")}
             className="flex items-center text-primary-400 hover:text-primary-600 transition-colors"
           >
             <Image
@@ -72,34 +72,34 @@ const Appbar = () => {
             aria-label="Portföy seçenekleri"
             className="text-primary"
           >
-            <DropdownItem key="konut" href="/konut/satilik">
+            <DropdownItem key="konut" href={getRoute("/konut/satilik")}>
               Satılık Konutlar
             </DropdownItem>
-            <DropdownItem key="ticari" href="/ticari/satilik">
+            <DropdownItem key="ticari" href={getRoute("/ticari/satilik")}>
               Satılık Ticari Gayrimenkuller
             </DropdownItem>
-            <DropdownItem key="arsa" href="/arsa-arazi/satilik">
+            <DropdownItem key="arsa" href={getRoute("/arsa-arazi/satilik")}>
               Satılık Arsalar
             </DropdownItem>
-            <DropdownItem key="konut" href="/konut/kiralik">
+            <DropdownItem key="konut" href={getRoute("/konut/kiralik")}>
               Kiralık Konutlar
             </DropdownItem>
-            <DropdownItem key="ticari" href="/ticari/kiralik">
+            <DropdownItem key="ticari" href={getRoute("/ticari/kiralik")}>
               Kiralık Ticari Gayrimenkuller
             </DropdownItem>
-            <DropdownItem key="arsa" href="/arsa-arazi/kiralik">
+            <DropdownItem key="arsa" href={getRoute("/arsa-arazi/kiralik")}>
               Kiralık Arsalar
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
 
-        <NavbarItem isActive={pathname === "/ofislerimiz"}>
-          <Link href="/ofislerimiz">Ofislerimiz</Link>
+        <NavbarItem isActive={pathname === getRoute("/ofislerimiz")}>
+          <Link href={getRoute("/ofislerimiz")}>Ofislerimiz</Link>
         </NavbarItem>
-        <NavbarItem isActive={pathname === "/danismanlarimiz"}>
+        <NavbarItem isActive={pathname === getRoute("/danismanlarimiz")}>
           <Link
-            href="/danismanlarimiz"
-            {...(pathname === "/danismanlarimiz"
+            href={getRoute("/danismanlarimiz")}
+            {...(pathname === getRoute("/danismanlarimiz")
               ? { "aria-current": "page" }
               : { color: "foreground" })}
           >
@@ -107,25 +107,30 @@ const Appbar = () => {
           </Link>
         </NavbarItem>
         <NavbarItem
-          isActive={pathname === "/gayrimenkul-danismani-basvuru-formu"}
+          isActive={
+            pathname === getRoute("/gayrimenkul-danismani-basvuru-formu")
+          }
         >
           <Link
-            {...(pathname === "/gayrimenkul-danismani-basvuru-formu"
+            {...(pathname === getRoute("/gayrimenkul-danismani-basvuru-formu")
               ? { "aria-current": "page" }
               : { color: "foreground" })}
-            href="/gayrimenkul-danismani-basvuru-formu"
+            href={getRoute("/gayrimenkul-danismani-basvuru-formu")}
           >
             Danışman ol
           </Link>
         </NavbarItem>
         <NavbarItem
-          isActive={pathname === "/gayrimenkullerinizi-satalim-kiralayalim"}
+          isActive={
+            pathname === getRoute("/gayrimenkullerinizi-satalim-kiralayalim")
+          }
         >
           <Link
-            {...(pathname === "/gayrimenkullerinizi-satalim-kiralayalim"
+            {...(pathname ===
+            getRoute("/gayrimenkullerinizi-satalim-kiralayalim")
               ? { "aria-current": "page" }
               : { color: "foreground" })}
-            href="/gayrimenkullerinizi-satalim-kiralayalim"
+            href={getRoute("/gayrimenkullerinizi-satalim-kiralayalim")}
           >
             Retroia ile Sat Kirala
           </Link>
@@ -144,31 +149,34 @@ const Appbar = () => {
               </Button>
             </DropdownTrigger>
             <DropdownMenu aria-label="Portföy seçenekleri">
-              <DropdownItem key="konut" href="/konut/satilik">
+              <DropdownItem key="konut" href={getRoute("/konut/satilik")}>
                 Satılık Konutlar
               </DropdownItem>
-              <DropdownItem key="ticari" href="/ticari/satilik">
+              <DropdownItem key="ticari" href={getRoute("/ticari/satilik")}>
                 Satılık Ticari Gayrimenkuller
               </DropdownItem>
-              <DropdownItem key="arsa" href="/arsa-arazi/satilik">
+              <DropdownItem key="arsa" href={getRoute("/arsa-arazi/satilik")}>
                 Satılık Arsalar
               </DropdownItem>
-              <DropdownItem key="konut" href="/konut/kiralik">
+              <DropdownItem key="konut" href={getRoute("/konut/kiralik")}>
                 Kiralık Konutlar
               </DropdownItem>
-              <DropdownItem key="ticari" href="/ticari/kiralik">
+              <DropdownItem key="ticari" href={getRoute("/ticari/kiralik")}>
                 Kiralık Ticari Gayrimenkuller
               </DropdownItem>
-              <DropdownItem key="arsa" href="/arsa-arazi/kiralik">
+              <DropdownItem key="arsa" href={getRoute("/arsa-arazi/kiralik")}>
                 Kiralık Arsalar
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </NavbarMenuItem>
-        <NavbarItem isActive={pathname === "/ofislerimiz"} className="h-1/4">
+        <NavbarItem
+          isActive={pathname === getRoute("/ofislerimiz")}
+          className="h-1/4"
+        >
           <Link
-            href="/ofislerimiz"
-            {...(pathname === "/ofislerimiz"
+            href={getRoute("/ofislerimiz")}
+            {...(pathname === getRoute("/ofislerimiz")
               ? { "aria-current": "page" }
               : { color: "foreground" })}
             className="text-3xl text-blue-950"
@@ -178,12 +186,12 @@ const Appbar = () => {
           </Link>
         </NavbarItem>
         <NavbarItem
-          isActive={pathname === "/danismanlarimiz"}
+          isActive={pathname === getRoute("/danismanlarimiz")}
           className="h-1/4"
         >
           <Link
-            href="/danismanlarimiz"
-            {...(pathname === "/danismanlarimiz"
+            href={getRoute("/danismanlarimiz")}
+            {...(pathname === getRoute("/danismanlarimiz")
               ? { "aria-current": "page" }
               : { color: "foreground" })}
             className="text-3xl text-blue-950"
@@ -193,14 +201,16 @@ const Appbar = () => {
           </Link>
         </NavbarItem>
         <NavbarItem
-          isActive={pathname === "/gayrimenkul-danismani-basvuru-formu"}
+          isActive={
+            pathname === getRoute("/gayrimenkul-danismani-basvuru-formu")
+          }
           className="h-1/4"
         >
           <Link
-            {...(pathname === "/gayrimenkul-danismani-basvuru-formu"
+            {...(pathname === getRoute("/gayrimenkul-danismani-basvuru-formu")
               ? { "aria-current": "page" }
               : { color: "foreground" })}
-            href="/gayrimenkul-danismani-basvuru-formu"
+            href={getRoute("/gayrimenkul-danismani-basvuru-formu")}
             className="text-3xl text-blue-950"
             onClick={() => setIsMenuOpen()}
           >
@@ -208,14 +218,17 @@ const Appbar = () => {
           </Link>
         </NavbarItem>
         <NavbarItem
-          isActive={pathname === "/gayrimenkullerinizi-satalim-kiralayalim"}
+          isActive={
+            pathname === getRoute("/gayrimenkullerinizi-satalim-kiralayalim")
+          }
           className="h-1/4"
         >
           <Link
-            {...(pathname === "/gayrimenkullerinizi-satalim-kiralayalim"
+            {...(pathname ===
+            getRoute("/gayrimenkullerinizi-satalim-kiralayalim")
               ? { "aria-current": "page" }
               : { color: "foreground" })}
-            href="/gayrimenkullerinizi-satalim-kiralayalim"
+            href={getRoute("/gayrimenkullerinizi-satalim-kiralayalim")}
             className="text-3xl text-blue-950"
             onClick={() => setIsMenuOpen()}
           >
