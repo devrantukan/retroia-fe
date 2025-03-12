@@ -26,9 +26,27 @@ const nextConfig = {
         }
       ],
       afterFiles: [
+        // Handle Next.js pages
         {
-          source: '/emlak/:path*',
-          destination: '/:path*',
+          source: '/emlak/ofislerimiz',
+          destination: '/ofislerimiz',
+        },
+        {
+          source: '/emlak/danismanlarimiz',
+          destination: '/danismanlarimiz',
+        },
+        {
+          source: '/emlak/gayrimenkul-danismani-basvuru-formu',
+          destination: '/gayrimenkul-danismani-basvuru-formu',
+        },
+        {
+          source: '/emlak/gayrimenkullerinizi-satalim-kiralayalim',
+          destination: '/gayrimenkullerinizi-satalim-kiralayalim',
+        },
+        // Handle API routes if any
+        {
+          source: '/emlak/api/:path*',
+          destination: '/api/:path*',
         }
       ]
     };
