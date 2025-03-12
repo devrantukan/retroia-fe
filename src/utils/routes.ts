@@ -6,7 +6,7 @@
 export const getRoute = (path: string): string => {
   // If path already starts with /emlak, return as is
   if (path.startsWith("/emlak")) {
-    return path;
+    return `/${path}/`;
   }
 
   // Add /emlak to path, handling both paths with and without leading slash
