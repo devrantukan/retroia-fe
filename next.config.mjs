@@ -18,18 +18,25 @@ const nextConfig = {
     return config;
   },
   async rewrites() {
-    return {
-      beforeFiles: [
-        {
-          source: '/emlak/_next/:path*',
-          destination: '/emlak/_next/:path*',
-        },
-        {
-          source: '/emlak/:path*',
-          destination: '/:path*',
-        }
-      ]
-    };
+    return [
+      {
+        source: '/emlak/_next/:path*',
+        destination: '/_next/:path*',
+      },
+      {
+        source: '/emlak/emlak/:path*',
+        destination: '/emlak/:path*',
+      }
+    ];
+  },
+  async redirects() {
+    return [
+      {
+        source: '/emlak/emlak/:path*',
+        destination: '/emlak/:path*',
+        permanent: true
+      }
+    ];
   },
   images: {
   loader: 'custom',
