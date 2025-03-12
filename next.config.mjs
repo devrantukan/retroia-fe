@@ -23,6 +23,10 @@ const nextConfig = {
         {
           source: '/emlak/_next/:path*',
           destination: '/_next/:path*',
+        },
+        {
+          source: '/emlak/:path*',
+          destination: '/:path*',
         }
       ],
       afterFiles: [
