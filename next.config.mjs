@@ -3,12 +3,11 @@ const nextConfig = {
   basePath: '/emlak',
   assetPrefix: process.env.NODE_ENV === 'production' ? '/emlak' : '',
   trailingSlash: true,
-  output: 'standalone',
   distDir: '.next',
   experimental: {
     outputFileTracingRoot: process.cwd(),
   },
-  compress: true,
+ // compress: true,
   poweredByHeader: false,
   generateEtags: true,
   webpack: (config, { isServer }) => {
@@ -86,7 +85,7 @@ const nextConfig = {
     ],
     
   },
-  staticPageGenerationTimeout: 1000,
+
 };
 
 
