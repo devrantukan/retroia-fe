@@ -11,6 +11,11 @@ const NEXT_ROUTES = [
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Skip API routes completely
+  if (pathname.startsWith("/api/") || pathname.startsWith("/emlak/api/")) {
+    return NextResponse.next();
+  }
+
   // Skip WordPress paths
   if (pathname.startsWith("/wp-") || pathname === "/") {
     return NextResponse.next();
@@ -18,11 +23,6 @@ export function middleware(request: NextRequest) {
 
   // Handle static assets
   if (pathname.includes("/_next/")) {
-    return NextResponse.next();
-  }
-
-  // Skip API routes - let rewrites handle them
-  if (pathname.startsWith("/api/") || pathname.startsWith("/emlak/api/")) {
     return NextResponse.next();
   }
 

@@ -27,16 +27,16 @@ const nextConfig = {
         }
       ],
       afterFiles: [
-        // Handle API routes first
-        {
-          source: '/api/:path*',
-          destination: '/emlak/api/:path*',
-        },
+        // Handle API routes first - this is important!
         {
           source: '/emlak/api/:path*',
           destination: '/api/:path*'
         },
-        // Handle page routes
+        {
+          source: '/api/:path*',
+          destination: '/api/:path*'
+        },
+        // Then handle page routes
         {
           source: '/emlak/ofislerimiz',
           destination: '/ofislerimiz'
