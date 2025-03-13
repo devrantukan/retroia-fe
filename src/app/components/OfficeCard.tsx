@@ -16,7 +16,7 @@ const OfficeCard = ({ office, key, officeId }: Props) => {
   // console.log(office);
   return (
     <Card className="p-2 pb-4 mx-2 ">
-      <Link href={`/ofis/${office.id}/${office.slug}`}>
+      <Link href={`/emlak/ofis/${office.id}/${office.slug}`}>
         <Image
           src={`${office.avatarUrl}`}
           alt={""}

@@ -16,31 +16,43 @@ interface propertyPages {
 }
 
 const propertyPages = [
-  { id: 0, page: "Satılık Konutlar", href: "/konut/satilik" },
-  { id: 1, page: "Satılık Ticari Gayrimenkuller", href: "/ticari/satilik" },
-  { id: 2, page: "Satılık Arsalar", href: "/arsa-arazi/satilik" },
-  { id: 3, page: "Kiralık Konutlar", href: "/konut/kiralik" },
-  { id: 4, page: "Kiralık Ticari Gayrimenkuller", href: "/ticari/kiralik" },
-  { id: 2, page: "Kiralık Arsalar", href: "/arsa-arazi/kiralik" },
+  { id: 0, page: "Satılık Konutlar", href: "/emlak/konut/satilik/" },
+  {
+    id: 1,
+    page: "Satılık Ticari Gayrimenkuller",
+    href: "/emlak/ticari/satilik/",
+  },
+  { id: 2, page: "Satılık Arsalar", href: "/emlak/arsa-arazi/satilik/" },
+  { id: 3, page: "Kiralık Konutlar", href: "/emlak/konut/kiralik/" },
+  {
+    id: 4,
+    page: "Kiralık Ticari Gayrimenkuller",
+    href: "/emlak/ticari/kiralik/",
+  },
+  { id: 5, page: "Kiralık Arsalar", href: "/emlak/arsa-arazi/kiralik/" },
 ];
 
 const cooperatePages = [
-  { id: 0, page: "Ofislerimiz", href: "/ofislerimiz" },
-  { id: 1, page: "Danışmanlarımız", href: "/danismanlarimiz" },
-  { id: 2, page: "Danışman Ol", href: "/gayrimenkul-danismani-basvuru-formu" },
+  { id: 0, page: "Ofislerimiz", href: "/emlak/ofislerimiz/" },
+  { id: 1, page: "Danışmanlarımız", href: "/emlak/danismanlarimiz/" },
+  {
+    id: 2,
+    page: "Danışman Ol",
+    href: "/emlak/gayrimenkul-danismani-basvuru-formu/      ",
+  },
   {
     id: 3,
     page: "Gayrimenkulünüzü Satalım / Kiralayalım",
-    href: "/gayrimenkullerinizi-satalim-kiralayalim",
+    href: "/emlak/gayrimenkullerinizi-satalim-kiralayalim/",
   },
 ];
 
 const aboutPages = [
-  { id: 0, page: "Biz Kimiz?", href: "/biz-kimiz" },
+  { id: 0, page: "Biz Kimiz?", href: "/emlak/biz-kimiz/" },
   {
     id: 1,
     page: "KVKK ve Aydınlatma Metni",
-    href: "/kvkk-ve-aydinlatma-metni",
+    href: "/emlak/kvkk-ve-aydinlatma-metni/",
   },
   // { id: 2, page: "KVKK Bilgi Başvuru Formu", href: "/pricing/tiers" },
   // { id: 3, page: "Yasal Uyarı ve Kullanım Koşulları", href: "/team" },
@@ -70,7 +82,7 @@ export default function Footer() {
       <div className="w-full flex lg:flex-row flex-col justify-between">
         <nav aria-label="Social media links" className="flex flex-col h-full">
           <Image
-            src={"/retroia-logo-dark.png"}
+            src={"/emlak/retroia-logo-dark.png"}
             width={128}
             height={96}
             alt="Retroia Logo"

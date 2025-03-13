@@ -27,7 +27,7 @@ const Appbar = () => {
   );
 
   const pathname = usePathname();
-  console.log(pathname);
+
   return (
     <Navbar
       className="shadow-md bg-blue-950  w-full flex justify-between"
@@ -42,11 +42,11 @@ const Appbar = () => {
         />
         <NavbarBrand className="w-full flex lg:justify-start justify-center mr-12">
           <Link
-            href={getRoute("/")}
+            href={getRoute("/emlak/")}
             className="flex items-center text-primary-400 hover:text-primary-600 transition-colors"
           >
             <Image
-              src={"/retroia-logo.png"}
+              src={"/emlak/retroia-logo.png"}
               width={125}
               height={80}
               alt="Retroia Logo"
