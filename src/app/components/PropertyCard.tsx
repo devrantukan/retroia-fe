@@ -171,7 +171,7 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
         className={`hover:text-primary-500 transition-colors justify-between ${
           showAvatar == true ? "lg:w-4/5" : "lg:w-full"
         }`}
-        href={`/portfoy/${property.id}`}
+        href={`/emlak/portfoy/${property.id}`}
       >
         <div className="flex lg:flex-row flex-col w-full m-0">
           <Image
@@ -235,7 +235,7 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
       {showAvatar == true && (
         <div className="lg:w-1/5 w-full flex lg:items-center items-start  flex-col my-auto  hover:cursor-pointer rounded-l-none rounded-xl hover:bg-gradient-to-br hover:from-slate-50 hover:to-slate-200">
           <Link
-            href={`/ofis/${property.agent.office.id}/${property.agent.office.slug}/${property.agent.role.slug}/${property.agentId}/${property.agent.slug}`}
+            href={`/emlak/ofis/${property.agent.office.id}/${property.agent.office.slug}/${property.agent.role.slug}/${property.agentId}/${property.agent.slug}`}
             className="flex  w-full lg:justify-center  items-center  flex-row lg:flex-col lg:my-6 gap-x-2 lg:gap-x-0"
           >
             <Avatar

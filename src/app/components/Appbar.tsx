@@ -42,7 +42,7 @@ const Appbar = () => {
         />
         <NavbarBrand className="w-full flex lg:justify-start justify-center mr-12">
           <Link
-            href={getRoute("/emlak/")}
+            href={"/emlak/"}
             className="flex items-center text-primary-400 hover:text-primary-600 transition-colors"
           >
             <Image
