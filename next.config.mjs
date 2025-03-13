@@ -27,16 +27,14 @@ const nextConfig = {
         }
       ],
       afterFiles: [
-        // Handle API routes
+        // Handle API routes with and without trailing slash
+        {
+          source: '/emlak/api/:path*/',
+          destination: '/api/:path*/'
+        },
         {
           source: '/emlak/api/:path*',
-          destination: '/api/:path*',
-          has: [
-            {
-              type: 'header',
-              key: 'host'
-            }
-          ]
+          destination: '/api/:path*/'
         },
         // Handle page routes
         {
