@@ -24,9 +24,9 @@ export function middleware(request: NextRequest) {
   // Handle API routes - redirect to /emlak/api if accessed directly at /api
   if (pathname.startsWith("/api/")) {
     const url = new URL(request.url);
-    console.log("redirecting to /emlak/api", pathname, url.origin);
     // Keep the original hostname (www or www2)
-    return NextResponse.redirect(new URL(`/emlak${pathname}`, url.origin), {
+    const newUrl = new URL(`/emlak${pathname}`, url.origin);
+    return NextResponse.redirect(newUrl, {
       status: 307, // Temporary redirect to preserve POST methods
     });
   }
@@ -49,5 +49,6 @@ export const config = {
   matcher: [
     "/((?!wp-admin|wp-login|wp-content|favicon.ico).*)",
     "/emlak/:path*",
+    "/api/:path*", // Add this to ensure API routes are matched
   ],
 };

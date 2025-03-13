@@ -27,6 +27,17 @@ const nextConfig = {
         }
       ],
       afterFiles: [
+        // Handle API routes
+        {
+          source: '/emlak/api/:path*',
+          destination: '/api/:path*',
+          has: [
+            {
+              type: 'header',
+              key: 'host'
+            }
+          ]
+        },
         // Handle page routes
         {
           source: '/emlak/ofislerimiz',
