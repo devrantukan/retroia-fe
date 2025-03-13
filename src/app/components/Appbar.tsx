@@ -72,33 +72,33 @@ const Appbar = () => {
             aria-label="Portföy seçenekleri"
             className="text-primary"
           >
-            <DropdownItem key="konut" href={getRoute("/konut/satilik")}>
+            <DropdownItem key="konut" href={getRoute("/konut/satilik/")}>
               Satılık Konutlar
             </DropdownItem>
-            <DropdownItem key="ticari" href={getRoute("/ticari/satilik")}>
+            <DropdownItem key="ticari" href={getRoute("/ticari/satilik/")}>
               Satılık Ticari Gayrimenkuller
             </DropdownItem>
-            <DropdownItem key="arsa" href={getRoute("/arsa-arazi/satilik")}>
+            <DropdownItem key="arsa" href={getRoute("/arsa-arazi/satilik/")}>
               Satılık Arsalar
             </DropdownItem>
-            <DropdownItem key="konut" href={getRoute("/konut/kiralik")}>
+            <DropdownItem key="konut" href={getRoute("/konut/kiralik/")}>
               Kiralık Konutlar
             </DropdownItem>
-            <DropdownItem key="ticari" href={getRoute("/ticari/kiralik")}>
+            <DropdownItem key="ticari" href={getRoute("/ticari/kiralik/")}>
               Kiralık Ticari Gayrimenkuller
             </DropdownItem>
-            <DropdownItem key="arsa" href={getRoute("/arsa-arazi/kiralik")}>
+            <DropdownItem key="arsa" href={getRoute("/arsa-arazi/kiralik/")}>
               Kiralık Arsalar
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
 
         <NavbarItem isActive={pathname === getRoute("/ofislerimiz")}>
-          <Link href={getRoute("/ofislerimiz")}>Ofislerimiz</Link>
+          <Link href={getRoute("/ofislerimiz/")}>Ofislerimiz</Link>
         </NavbarItem>
         <NavbarItem isActive={pathname === getRoute("/danismanlarimiz")}>
           <Link
-            href={getRoute("/danismanlarimiz")}
+            href={getRoute("/danismanlarimiz/")}
             {...(pathname === getRoute("/danismanlarimiz")
               ? { "aria-current": "page" }
               : { color: "foreground" })}
@@ -115,7 +115,7 @@ const Appbar = () => {
             {...(pathname === getRoute("/gayrimenkul-danismani-basvuru-formu")
               ? { "aria-current": "page" }
               : { color: "foreground" })}
-            href={getRoute("/gayrimenkul-danismani-basvuru-formu")}
+            href={getRoute("/gayrimenkul-danismani-basvuru-formu/")}
           >
             Danışman ol
           </Link>
@@ -130,7 +130,7 @@ const Appbar = () => {
             getRoute("/gayrimenkullerinizi-satalim-kiralayalim")
               ? { "aria-current": "page" }
               : { color: "foreground" })}
-            href={getRoute("/gayrimenkullerinizi-satalim-kiralayalim")}
+            href={getRoute("/gayrimenkullerinizi-satalim-kiralayalim/")}
           >
             Retroia ile Sat Kirala
           </Link>
@@ -210,7 +210,7 @@ const Appbar = () => {
             {...(pathname === getRoute("/gayrimenkul-danismani-basvuru-formu")
               ? { "aria-current": "page" }
               : { color: "foreground" })}
-            href={getRoute("/gayrimenkul-danismani-basvuru-formu")}
+            href={getRoute("/gayrimenkul-danismani-basvuru-formu/")}
             className="text-3xl text-blue-950"
             onClick={() => setIsMenuOpen()}
           >
@@ -228,7 +228,7 @@ const Appbar = () => {
             getRoute("/gayrimenkullerinizi-satalim-kiralayalim")
               ? { "aria-current": "page" }
               : { color: "foreground" })}
-            href={getRoute("/gayrimenkullerinizi-satalim-kiralayalim")}
+            href={getRoute("/gayrimenkullerinizi-satalim-kiralayalim/")}
             className="text-3xl text-blue-950"
             onClick={() => setIsMenuOpen()}
           >

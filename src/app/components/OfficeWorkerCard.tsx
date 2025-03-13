@@ -14,7 +14,7 @@ const OfficeWorkerCard = ({ officeWorker, index }: Props) => {
   return (
     <Card key={index} className="w-[300px] h-[400px] px-4 m-2 pb-2">
       <Link
-        href={`ofis/${officeWorker.office.id}/${officeWorker.office.slug}/${officeWorker.role.slug}/${officeWorker.id}/${officeWorker.slug}`}
+        href={`/emlak/ofis/${officeWorker.office.id}/${officeWorker.office.slug}/${officeWorker.role.slug}/${officeWorker.id}/${officeWorker.slug}`}
       >
         <Image
           src={`${officeWorker.avatarUrl}`}

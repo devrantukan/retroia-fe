@@ -38,7 +38,7 @@ const cooperatePages = [
   {
     id: 2,
     page: "Danışman Ol",
-    href: "/emlak/gayrimenkul-danismani-basvuru-formu/      ",
+    href: "/emlak/gayrimenkul-danismani-basvuru-formu/",
   },
   {
     id: 3,
