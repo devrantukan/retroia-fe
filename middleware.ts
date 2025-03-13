@@ -27,6 +27,8 @@ export function middleware(request: NextRequest) {
     // Keep the original hostname (www or www2) and ensure trailing slash
     const path = pathname.endsWith("/") ? pathname : `${pathname}/`;
     const newUrl = new URL(`/emlak${path}`, url.origin);
+
+    console.log("redirecting to /emlak/api", pathname, url.origin);
     return NextResponse.redirect(newUrl, {
       status: 307, // Temporary redirect to preserve POST methods
     });
