@@ -27,13 +27,13 @@ const nextConfig = {
         }
       ],
       afterFiles: [
-        // Handle API routes first - this is important!
-        {
-          source: '/emlak/api/:path*',
-          destination: '/api/:path*'
-        },
+        // Handle API routes first
         {
           source: '/api/:path*',
+          destination: '/emlak/api/:path*',
+        },
+        {
+          source: '/emlak/api/:path*',
           destination: '/api/:path*'
         },
         // Then handle page routes

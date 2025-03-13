@@ -62,7 +62,7 @@ const OfficeTabs = ({ office }: Props) => {
   });
 
   const router = useRouter();
-  const [activeTab, setActiveTab] = React.useState("properties");
+  const [activeTab, setActiveTab] = React.useState("our-staff");
 
   const handleTabChange = (value: React.Key) => {
     //update the state

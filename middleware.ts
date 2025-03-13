@@ -23,7 +23,11 @@ export function middleware(request: NextRequest) {
 
   // Handle API routes - redirect to /emlak/api if accessed directly at /api
   if (pathname.startsWith("/api/")) {
-    return NextResponse.redirect(new URL(`/emlak${pathname}`, request.url));
+    const url = new URL(request.url);
+    // Keep the original hostname (www or www2)
+    return NextResponse.redirect(new URL(`/emlak${pathname}`, url.origin), {
+      status: 307, // Temporary redirect to preserve POST methods
+    });
   }
 
   // Handle direct access to Next.js routes without /emlak prefix
@@ -33,7 +37,8 @@ export function middleware(request: NextRequest) {
       (route) => routePath === route || routePath === route + "/"
     )
   ) {
-    return NextResponse.redirect(new URL(`/emlak${pathname}`, request.url));
+    const url = new URL(request.url);
+    return NextResponse.redirect(new URL(`/emlak${pathname}`, url.origin));
   }
 
   return NextResponse.next();

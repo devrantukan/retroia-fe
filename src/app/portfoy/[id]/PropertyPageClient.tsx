@@ -42,7 +42,8 @@ const PropertyPageClient = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     const fetchProperty = async () => {
       try {
-        const response = await fetch(`/api/properties/${params.id}`);
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || "/emlak/api";
+        const response = await fetch(`${API_URL}/properties/${params.id}`);
         if (!response.ok) {
           throw new Error("Property not found");
         }
