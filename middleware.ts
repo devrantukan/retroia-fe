@@ -11,11 +11,6 @@ const NEXT_ROUTES = [
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Skip API routes completely
-  if (pathname.startsWith("/api/") || pathname.startsWith("/emlak/api/")) {
-    return NextResponse.next();
-  }
-
   // Skip WordPress paths
   if (pathname.startsWith("/wp-") || pathname === "/") {
     return NextResponse.next();
@@ -24,6 +19,11 @@ export function middleware(request: NextRequest) {
   // Handle static assets
   if (pathname.includes("/_next/")) {
     return NextResponse.next();
+  }
+
+  // Handle API routes - redirect to /emlak/api if accessed directly at /api
+  if (pathname.startsWith("/api/")) {
+    return NextResponse.redirect(new URL(`/emlak${pathname}`, request.url));
   }
 
   // Handle direct access to Next.js routes without /emlak prefix
