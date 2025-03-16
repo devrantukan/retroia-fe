@@ -8,7 +8,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   try {
     const API_URL = process.env.NEXT_PUBLIC_API_URL || "/emlak/api";
-    const response = await fetch(`${API_URL}/properties/${params.id}`, {
+    const response = await fetch(`${API_URL}/properties/${params.id}/`, {
       next: { revalidate: 3600 },
     });
 

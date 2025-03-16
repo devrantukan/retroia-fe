@@ -25,17 +25,21 @@ export default function BreadCrumb({
 
   return (
     <Breadcrumbs underline="active" onAction={(key) => setCurrentPage(key)}>
-      <BreadcrumbItem href="/" key="home" isCurrent={currentPage === "home"}>
+      <BreadcrumbItem
+        href="/emlak/"
+        key="home"
+        isCurrent={currentPage === "home"}
+      >
         <House size={16} />
       </BreadcrumbItem>
       <BreadcrumbItem key="contract" isCurrent={currentPage === "contract"}>
-        <Link href={`/${propertyType.slug}/${contract.slug}`}>
+        <Link href={`/emlak/${propertyType.slug}/${contract.slug}`}>
           {contract.value}
         </Link>
       </BreadcrumbItem>
       <BreadcrumbItem key="country" isCurrent={currentPage === "country"}>
         <Link
-          href={`/${propertyType.slug}/${contract.slug}/${slugify(
+          href={`/emlak/${propertyType.slug}/${contract.slug}/${slugify(
             location.country,
             { lower: true }
           )}`}
@@ -45,7 +49,7 @@ export default function BreadCrumb({
       </BreadcrumbItem>
       <BreadcrumbItem key="city" isCurrent={currentPage === "city"}>
         <Link
-          href={`/${propertyType.slug}/${contract.slug}/${slugify(
+          href={`/emlak/${propertyType.slug}/${contract.slug}/${slugify(
             location.country,
             { lower: true }
           )}/${slugify(location.city, { lower: true })}`}
@@ -55,7 +59,7 @@ export default function BreadCrumb({
       </BreadcrumbItem>
       <BreadcrumbItem key="district" isCurrent={currentPage === "district"}>
         <Link
-          href={`/${propertyType.slug}/${contract.slug}/${slugify(
+          href={`/emlak/${propertyType.slug}/${contract.slug}/${slugify(
             location.country,
             { lower: true }
           )}/${slugify(location.city, { lower: true })}/${slugify(
@@ -71,7 +75,7 @@ export default function BreadCrumb({
         isCurrent={currentPage === "neighborhood"}
       >
         <Link
-          href={`/${propertyType.slug}/${contract.slug}/${slugify(
+          href={`/emlak/${propertyType.slug}/${contract.slug}/${slugify(
             location.country,
             { lower: true }
           )}/${slugify(location.city, { lower: true })}/${slugify(
