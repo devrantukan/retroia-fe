@@ -7,12 +7,10 @@ export async function generateMetadata({
   params: { id: string };
 }): Promise<Metadata> {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/properties/${params.id}`,
-      {
-        next: { revalidate: 3600 },
-      }
-    );
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || "/emlak/api";
+    const response = await fetch(`${API_URL}/properties/${params.id}`, {
+      next: { revalidate: 3600 },
+    });
 
     if (!response.ok) {
       return {
