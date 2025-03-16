@@ -71,8 +71,10 @@ const HomepageRefineTabs = () => {
                   <form
                     onSubmit={handleSubmit(async (data) => {
                       try {
+                        const API_URL =
+                          process.env.NEXT_PUBLIC_API_URL || "/emlak/api";
                         const response = await fetch(
-                          `/api/properties/check/${data.propertyId}`
+                          `${API_URL}/properties/check/${data.propertyId}`
                         );
                         const result = await response.json();
 
