@@ -22,7 +22,7 @@ import {
 import { X, EnvelopeSimple, Phone } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
-
+import Share from "@/app/components/Share";
 const PropertyPageClient = ({ params }: { params: { id: string } }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [property, setProperty] = useState<any>(null);
@@ -132,7 +132,7 @@ const PropertyPageClient = ({ params }: { params: { id: string } }) => {
         original: image.url,
         thumbnail: image.url,
       }));
-      console.log(imageItems);
+      //console.log(imageItems);
       galleryItems = [...galleryItems, ...imageItems];
     }
 
@@ -202,37 +202,46 @@ const PropertyPageClient = ({ params }: { params: { id: string } }) => {
             {/* Right side - Price */}
             <div className="w-full lg:w-1/4 mt-4 lg:mt-0">
               <div className="flex flex-col items-start lg:items-end">
-                {property.discountedPrice > 0 ? (
-                  <>
-                    <div className="flex items-center gap-3 flex-wrap lg:justify-end">
-                      <span className="text-xl lg:text-2xl font-bold text-primary order-1">
-                        {property.discountedPrice.toLocaleString("tr-TR", {
+                <div className="flex flex-row lg:flex-col items-center lg:items-end justify-between w-full gap-y-2">
+                  <div>
+                    {property.discountedPrice > 0 ? (
+                      <>
+                        <div className="flex items-center gap-3 flex-wrap lg:justify-end">
+                          <span className="text-xl lg:text-2xl font-bold text-primary order-1">
+                            {property.discountedPrice.toLocaleString("tr-TR", {
+                              style: "currency",
+                              currency: "TRY",
+                              maximumFractionDigits: 0,
+                            })}
+                          </span>
+                          <span className="bg-red-500 text-white text-xs px-3 py-1.5 rounded-full order-2">
+                            İNDİRİMLİ
+                          </span>
+                        </div>
+                        <span className="text-base lg:text-lg line-through text-gray-400 mt-2">
+                          {property.price.toLocaleString("tr-TR", {
+                            style: "currency",
+                            currency: "TRY",
+                            maximumFractionDigits: 0,
+                          })}
+                        </span>
+                      </>
+                    ) : (
+                      <span className="text-xl lg:text-2xl font-bold text-primary">
+                        {property.price.toLocaleString("tr-TR", {
                           style: "currency",
                           currency: "TRY",
                           maximumFractionDigits: 0,
                         })}
                       </span>
-                      <span className="bg-red-500 text-white text-xs px-3 py-1.5 rounded-full order-2">
-                        İNDİRİMLİ
-                      </span>
-                    </div>
-                    <span className="text-base lg:text-lg line-through text-gray-400 mt-2">
-                      {property.price.toLocaleString("tr-TR", {
-                        style: "currency",
-                        currency: "TRY",
-                        maximumFractionDigits: 0,
-                      })}
-                    </span>
-                  </>
-                ) : (
-                  <span className="text-xl lg:text-2xl font-bold text-primary">
-                    {property.price.toLocaleString("tr-TR", {
-                      style: "currency",
-                      currency: "TRY",
-                      maximumFractionDigits: 0,
-                    })}
-                  </span>
-                )}
+                    )}
+                  </div>
+                  <Share
+                    title={property.name}
+                    type={"İlan"}
+                    avatarUrl={property.images[0].url || ""}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -355,7 +364,7 @@ const PropertyPageClient = ({ params }: { params: { id: string } }) => {
               <div className="flex-grow">
                 <h3 className="text-base font-semibold mb-2 text-right">
                   <Link
-                    href={`/ofis/${property.agent?.officeId}/${property.agent?.office.slug}/${property.agent?.role.slug}/${property.agent?.id}/${property.agent?.slug}`}
+                    href={`/emlak/ofis/${property.agent?.officeId}/${property.agent?.office.slug}/${property.agent?.role.slug}/${property.agent?.id}/${property.agent?.slug}`}
                   >
                     {property.agent?.name} {property.agent?.surname}
                   </Link>

@@ -34,7 +34,7 @@ export async function generateMetadata({
 
     return {
       metadataBase: new URL(
-        process.env.NEXT_PUBLIC_SITE_URL || "https://emlak.retroia.com"
+        process.env.NEXT_PUBLIC_SITE_URL || "https://www.retroia.com/emlak"
       ),
       title: `${property.name} - ${property.location?.city}, ${property.location?.district}`,
       description: `${property.feature?.bedrooms} Yatak Odalı, ${
@@ -57,7 +57,7 @@ export async function generateMetadata({
         siteName: "Retroia",
         locale: "tr_TR",
         type: "article",
-        url: `/property/${params.id}`,
+        url: `/portfoy/${params.id}`,
         authors: [property.agent?.name],
         publishedTime: property.created_at,
         modifiedTime: property.updated_at,
@@ -73,7 +73,7 @@ export async function generateMetadata({
         ],
       },
       alternates: {
-        canonical: `/property/${params.id}`,
+        canonical: `/portfoy/${params.id}`,
       },
       other: {
         "geo.position": `${property.location?.latitude};${property.location?.longitude}`,

@@ -21,7 +21,7 @@ const OfficeWorkerCardLight = ({ officeWorker, index }: Props) => {
           officeWorker.roleId === 9 ||
           officeWorker.roleId === 10
             ? "#"
-            : `/ofis/${officeWorker.office.id}/${officeWorker.office.slug}/${officeWorker.role.slug}/${officeWorker.id}/${officeWorker.slug}`
+            : `/emlak/ofis/${officeWorker.office.id}/${officeWorker.office.slug}/${officeWorker.role.slug}/${officeWorker.id}/${officeWorker.slug}`
         }
         className="flex flex-col"
       >

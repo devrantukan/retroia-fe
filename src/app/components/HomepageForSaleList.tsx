@@ -44,7 +44,7 @@ export default function HomepageForSaleList({
                   <div className="flex items-end ">
                     <Button className="bg-blue-950 w-full">
                       <Link
-                        href={`/konut/satilik`}
+                        href={`/emlak/konut/satilik`}
                         className="text-white font-bold flex flex-row"
                       >
                         <span className="mr-4">Daha Fazla Görüntüle</span>
@@ -72,7 +72,7 @@ export default function HomepageForSaleList({
                   <div className="flex items-end ">
                     <Button className="bg-blue-950 w-full">
                       <Link
-                        href={`/ticari/satilik`}
+                        href={`/emlak/ticari/satilik`}
                         className="text-white font-bold flex flex-row"
                       >
                         <span className="mr-4">Daha Fazla Görüntüle</span>
@@ -100,7 +100,7 @@ export default function HomepageForSaleList({
                   <div className="flex items-end ">
                     <Button className="bg-blue-950 w-full">
                       <Link
-                        href={`/arsa-arazi/satilik`}
+                        href={`/emlak/arsa-arazi/satilik`}
                         className="text-white font-bold flex flex-row"
                       >
                         <span className="mr-4">Daha Fazla Görüntüle</span>

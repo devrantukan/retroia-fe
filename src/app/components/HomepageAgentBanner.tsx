@@ -26,7 +26,7 @@ export default function HomepageAgentBanner() {
           </p>
           <Button className="bg-white">
             <Link
-              href="/gayrimenkul-danismani-basvuru-formu"
+              href="/emlak/gayrimenkul-danismani-basvuru-formu"
               className="text-blue-950 font-bold flex flex-row"
             >
               <span className="mr-4">Danışman Ol</span>

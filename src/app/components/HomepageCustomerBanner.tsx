@@ -25,7 +25,7 @@ export default function HomepageCustomerBanner() {
           </p>
           <Button className=" bg-white">
             <Link
-              href="/gayrimenkullerinizi-satalim-kiralayalim "
+              href="/emlak/gayrimenkullerinizi-satalim-kiralayalim "
               className="text-blue-950 font-bold flex flex-row"
             >
               <span className="mr-4">Hemen Başvur</span>

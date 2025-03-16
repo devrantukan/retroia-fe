@@ -25,7 +25,8 @@ export default function Share({
 }) {
   const currentPage = usePathname();
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL || "https://www.retroia.com/emlak";
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [scrollBehavior, setScrollBehavior] = React.useState<
@@ -60,13 +61,13 @@ export default function Share({
                       alt={title}
                       width={640}
                       height={640}
-                      className="aspect-square max-w-[10rem] rounded-lg"
+                      className="aspect-auto max-w-[10rem] rounded-lg"
                     />
                   )}
                   <h2 className="font-bold">{title}</h2>
                 </div>
                 <ShareSocial
-                  url={`${baseUrl}${currentPage}`}
+                  url={`${baseUrl.replace("/emlak", "")}${currentPage}`}
                   socialTypes={["facebook", "twitter", "linkedin", "whatsapp"]}
                 />
               </ModalBody>
