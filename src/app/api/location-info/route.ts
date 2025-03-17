@@ -29,6 +29,11 @@ export async function GET() {
     // Fetch location data using client IP
     const locationResponse = await fetch(`https://ipapi.co/${clientIP}/json/`);
     if (!locationResponse.ok) {
+      console.error("Location API error:", {
+        status: locationResponse.status,
+        statusText: locationResponse.statusText,
+        clientIP,
+      });
       throw new Error(
         `Location API error: ${locationResponse.status} ${locationResponse.statusText}`
       );
@@ -40,6 +45,10 @@ export async function GET() {
       "https://api.exchangerate-api.com/v4/latest/TRY"
     );
     if (!ratesResponse.ok) {
+      console.error("Exchange rates API error:", {
+        status: ratesResponse.status,
+        statusText: ratesResponse.statusText,
+      });
       throw new Error(
         `Exchange rates API error: ${ratesResponse.status} ${ratesResponse.statusText}`
       );
@@ -67,10 +76,11 @@ export async function GET() {
       rate: selectedRate,
     });
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error("Error in location-info API:", error);
     return NextResponse.json(
       {
         error: "Failed to fetch data",
+        details: error instanceof Error ? error.message : "Unknown error",
         currency: "TRY",
         rate: 1,
       },
