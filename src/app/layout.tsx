@@ -5,6 +5,7 @@ import { Providers } from "./components/providers";
 import Appbar from "./components/Appbar";
 import SignInPanel from "./components/signInPanel";
 import { ToastContainer } from "react-toastify";
+import GoogleAnalytics from "./components/GoogleAnalytics";
 
 import Footer from "./components/Footer";
 import "react-toastify/dist/ReactToastify.css";
@@ -70,6 +71,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+
   return (
     <html lang="tr">
       <head>
@@ -113,6 +116,9 @@ export default function RootLayout({
           href="https://emlak.retroia.com"
           hrefLang="tr-TR"
         />
+        {GA_MEASUREMENT_ID && (
+          <GoogleAnalytics GA_MEASUREMENT_ID={GA_MEASUREMENT_ID} />
+        )}
       </head>
       <body className={raleway.className}>
         <Providers>
