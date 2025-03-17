@@ -150,7 +150,9 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
         console.error("Error fetching districts:", error);
       }
     }
-    fetchDistricts();
+    if (selectedCity) {
+      fetchDistricts();
+    }
   }, [selectedCity, API_URL]);
 
   async function fetchNeighborhoods(district_slug: string) {
