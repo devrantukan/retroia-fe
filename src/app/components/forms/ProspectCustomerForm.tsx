@@ -179,8 +179,9 @@ export default function ProspectCustomerForm({
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || "/emlak/api";
       const { data: responseData } = await axios.post(
-        "/api/forms/post-prospect-customer-form",
+        `${API_URL}/forms/post-prospect-customer-form`,
         data,
         {
           headers: {

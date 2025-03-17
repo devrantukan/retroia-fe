@@ -19,7 +19,11 @@ export default function ContactForm({ officeId }: { officeId: string }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/contact-requests", formData);
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || "/emlak/api";
+      const response = await axios.post(
+        `${API_URL}/contact-requests`,
+        formData
+      );
 
       if (response.status === 200) {
         toast.success(
