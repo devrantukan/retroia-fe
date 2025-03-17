@@ -469,9 +469,12 @@ export default function ProspectAgentForm({
                       {" "}
                       <Link
                         onClick={() => {
-                          window.open("/kvkk-ve-aydinlatma-metni", "_blank");
+                          window.open(
+                            "/emlak/kvkk-ve-aydinlatma-metni",
+                            "_blank"
+                          );
                         }}
-                        href="/kvkk-ve-aydinlatma-metni"
+                        href="/emlak/kvkk-ve-aydinlatma-metni"
                         target="_blank"
                       >
                         KVKK metnini{" "}
