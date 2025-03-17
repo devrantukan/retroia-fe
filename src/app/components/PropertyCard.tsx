@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Avatar } from "@nextui-org/react";
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
+import { getLocationInfo } from "../utils/getLocationInfo";
 
 interface PropertyCardProps {
   property: {
@@ -59,33 +60,11 @@ const PriceDisplay = ({ price }: { price: number }) => {
   useEffect(() => {
     const detectCurrency = async () => {
       try {
-        // Get location from IP
-        const geoRes = await fetch("https://ipapi.co/json/");
-        const geoData = await geoRes.json();
-
-        // Get exchange rates
-        const ratesRes = await fetch(
-          "https://api.exchangerate-api.com/v4/latest/TRY"
-        );
-        const ratesData = await ratesRes.json();
-
-        // Determine currency based on location
-        let selectedCurrency = "USD";
-        let selectedRate = ratesData.rates.USD;
-
-        if (geoData.continent_code === "EU") {
-          selectedCurrency = "EUR";
-          selectedRate = ratesData.rates.EUR;
-        } else if (geoData.country_code === "TR") {
-          selectedCurrency = "TRY";
-          selectedRate = 1;
-        } else if (geoData.country_code === "GB") {
-          selectedCurrency = "GBP";
-          selectedRate = ratesData.rates.GBP;
+        const data = await getLocationInfo();
+        if (data && !data.error) {
+          setCurrency(data.currency);
+          setRate(data.rate);
         }
-
-        setCurrency(selectedCurrency);
-        setRate(selectedRate);
       } catch (error) {
         console.error("Error fetching location or rates:", error);
         // Fallback to TRY
