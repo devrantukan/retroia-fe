@@ -14,7 +14,7 @@ const raleway = Raleway({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://emlak.retroia.com"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://www.retroia.com/emlak/"
   ),
   title: {
     default: "Retroia - Emlak ve Gayrimenkul",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/favicon/favicon.ico",
+    icon: "/emlak/favicon/favicon.ico",
     // Add more icon sizes if needed
     // apple: '/apple-icon.png',
   },
@@ -79,31 +79,31 @@ export default function RootLayout({
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href="/favicon/apple-touch-icon.png"
+          href="/emlak/favicon/apple-touch-icon.png"
         />
         <link
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href="/favicon/favicon-32x32.png"
+          href="/emlak/favicon/favicon-32x32.png"
         />
         <link
           rel="icon"
           type="image/png"
           sizes="16x16"
-          href="/favicon/favicon-16x16.png"
+          href="/emlak/favicon/favicon-16x16.png"
         />
         <link rel="manifest" href="/favicon/site.webmanifest" />
         <link
           rel="mask-icon"
-          href="/favicon/safari-pinned-tab.svg"
+          href="/emlak/favicon/safari-pinned-tab.svg"
           color="#172B4D"
         />
-        <link rel="shortcut icon" href="/favicon/favicon.ico" />
+        <link rel="shortcut icon" href="/emlak/favicon/favicon.ico" />
         <meta name="msapplication-TileColor" content="#172B4D" />
         <meta
           name="msapplication-config"
-          content="/favicon/browserconfig.xml"
+          content="/emlak/favicon/browserconfig.xml"
         />
         <meta name="theme-color" content="#ffffff" />
         <meta charSet="utf-8" />
@@ -113,7 +113,7 @@ export default function RootLayout({
         <meta property="og:locale" content="tr_TR" />
         <link
           rel="alternate"
-          href="https://emlak.retroia.com"
+          href="https://www.retroia.com/emlak/"
           hrefLang="tr-TR"
         />
         {GA_MEASUREMENT_ID && (
