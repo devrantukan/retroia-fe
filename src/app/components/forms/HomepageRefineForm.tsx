@@ -118,7 +118,7 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
   useEffect(() => {
     async function fetchCountries() {
       try {
-        const response = await axios.get(`${API_URL}/location/get-countries`);
+        const response = await axios.get(`${API_URL}/location/get-countries/`);
         setCountries(response.data);
       } catch (error) {
         console.error("Error fetching countries:", error);
@@ -130,7 +130,7 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
   useEffect(() => {
     async function fetchCities() {
       try {
-        const response = await axios.get(`${API_URL}/location/get-cities`);
+        const response = await axios.get(`${API_URL}/location/get-cities/`);
         setCities(response.data);
       } catch (error) {
         console.error("Error fetching cities:", error);
@@ -143,7 +143,7 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
     async function fetchDistricts() {
       try {
         const response = await axios.get(
-          `${API_URL}/location/get-districts/${selectedCity}`
+          `${API_URL}/location/get-districts/${selectedCity}/`
         );
         setDistricts(response.data);
       } catch (error) {
@@ -156,7 +156,7 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
   async function fetchNeighborhoods(district_slug: string) {
     try {
       const response = await axios.get(
-        `${API_URL}/location/get-neighborhood/${district_slug}`
+        `${API_URL}/location/get-neighborhood/${district_slug}/`
       );
       setNeighborhoods(response.data);
     } catch (error) {
