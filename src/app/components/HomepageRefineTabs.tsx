@@ -79,7 +79,7 @@ const HomepageRefineTabs = () => {
                         const result = await response.json();
 
                         if (result.exists) {
-                          router.push(`/portfoy/${data.propertyId}`);
+                          router.push(`/emlak/portfoy/${data.propertyId}`);
                         } else {
                           setError("propertyId", {
                             type: "manual",
