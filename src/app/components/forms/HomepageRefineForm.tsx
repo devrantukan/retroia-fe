@@ -114,49 +114,49 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
   const [selectedCity, setSelectedCity] = React.useState("");
   const [selectedCountry, setSelectedCountry] = React.useState("");
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "/emlak/api";
   useEffect(() => {
     async function fetchCountries() {
       try {
-        const response = await axios.get("/api/location/get-countries");
+        const response = await axios.get(`${API_URL}/location/get-countries`);
         setCountries(response.data);
       } catch (error) {
         console.error("Error fetching countries:", error);
       }
     }
     fetchCountries();
-  }, []);
+  }, [API_URL]);
 
   useEffect(() => {
     async function fetchCities() {
       try {
-        const response = await axios.get("/api/location/get-cities");
+        const response = await axios.get(`${API_URL}/location/get-cities`);
         setCities(response.data);
       } catch (error) {
         console.error("Error fetching cities:", error);
       }
     }
     fetchCities();
-  }, []);
+  }, [API_URL]);
 
   useEffect(() => {
     async function fetchDistricts() {
       try {
         const response = await axios.get(
-          `/api/location/get-districts/${selectedCity}`
+          `${API_URL}/location/get-districts/${selectedCity}`
         );
         setDistricts(response.data);
-        // console.log("rd", response.data);
       } catch (error) {
         console.error("Error fetching districts:", error);
       }
     }
     fetchDistricts();
-  }, [selectedCity]);
+  }, [selectedCity, API_URL]);
 
   async function fetchNeighborhoods(district_slug: string) {
     try {
       const response = await axios.get(
-        `/api/location/get-neighborhood/${district_slug}`
+        `${API_URL}/location/get-neighborhood/${district_slug}`
       );
       setNeighborhoods(response.data);
     } catch (error) {
@@ -180,7 +180,7 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
   }, [form, propertyType]);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    const url = `${data.propertyType}/${data.contract}${
+    const url = `/emlak/${data.propertyType}/${data.contract}${
       selectedCountry ? `/${selectedCountry}` : ""
     }${data.city ? `/${data.city}` : ""}${
       data.district ? `/${data.district}` : ""
