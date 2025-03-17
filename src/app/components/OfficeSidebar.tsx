@@ -140,7 +140,7 @@ const OfficeSidebar = ({ office }: Props) => {
       <div className="bg-blue-200 mt-4 rounded-lg p-4">
         <p className="font-bold mb-2">Aramıza Katıl</p>
         <p>Gayrimenkul Danışmanı Olmak İster misiniz?</p>
-        <Link href={"/gayrimenkul-danismani-basvuru-formu"}>
+        <Link href={"/emlak/gayrimenkul-danismani-basvuru-formu"}>
           <Button className="mt-4 bg-blue-950 text-white font-bold text-md">
             Danışman Ol
             <ArrowCircleRight width={24} height={24} />

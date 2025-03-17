@@ -13,7 +13,7 @@ const PropertySearchCard = ({ property, showAvatar }: any) => {
     const updateWidth = () => {
       if (cardRef.current) {
         const width = cardRef.current.getBoundingClientRect().width;
-        console.log("Current width:", width);
+        //  console.log("Current width:", width);
         setCardWidth(width);
       }
     };
