@@ -6,9 +6,16 @@ export async function GET() {
     // Get client IP from headers
     const headersList = headers();
     const forwardedFor = headersList.get("x-forwarded-for");
-    const clientIP = forwardedFor ? forwardedFor.split(",")[0] : null;
+    const cfConnectingIp = headersList.get("cf-connecting-ip");
+    const clientIP =
+      cfConnectingIp || (forwardedFor ? forwardedFor.split(",")[0] : null);
 
     if (!clientIP) {
+      console.error("No client IP found in headers:", {
+        forwardedFor,
+        cfConnectingIp,
+        allHeaders: Object.fromEntries(headersList.entries()),
+      });
       return NextResponse.json(
         {
           error: "Could not determine client IP",
@@ -21,12 +28,22 @@ export async function GET() {
 
     // Fetch location data using client IP
     const locationResponse = await fetch(`https://ipapi.co/${clientIP}/json/`);
+    if (!locationResponse.ok) {
+      throw new Error(
+        `Location API error: ${locationResponse.status} ${locationResponse.statusText}`
+      );
+    }
     const locationData = await locationResponse.json();
 
     // Fetch exchange rates
     const ratesResponse = await fetch(
       "https://api.exchangerate-api.com/v4/latest/TRY"
     );
+    if (!ratesResponse.ok) {
+      throw new Error(
+        `Exchange rates API error: ${ratesResponse.status} ${ratesResponse.statusText}`
+      );
+    }
     const ratesData = await ratesResponse.json();
 
     // Determine currency based on location
