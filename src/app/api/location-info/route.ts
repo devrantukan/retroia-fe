@@ -1,9 +1,26 @@
 import { NextResponse } from "next/server";
+import { headers } from "next/headers";
 
 export async function GET() {
   try {
-    // Fetch location data
-    const locationResponse = await fetch("https://ipapi.co/json/");
+    // Get client IP from headers
+    const headersList = headers();
+    const forwardedFor = headersList.get("x-forwarded-for");
+    const clientIP = forwardedFor ? forwardedFor.split(",")[0] : null;
+
+    if (!clientIP) {
+      return NextResponse.json(
+        {
+          error: "Could not determine client IP",
+          currency: "TRY",
+          rate: 1,
+        },
+        { status: 400 }
+      );
+    }
+
+    // Fetch location data using client IP
+    const locationResponse = await fetch(`https://ipapi.co/${clientIP}/json/`);
     const locationData = await locationResponse.json();
 
     // Fetch exchange rates
