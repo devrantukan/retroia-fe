@@ -32,7 +32,7 @@ const HomepageRefineTabs = () => {
   });
 
   return (
-    <div className="flex flex-col w-full z-30">
+    <div className="flex flex-col w-full z-30 lg:ml-[8%]">
       <h1 className="text-3xl font-bold text-left text-slate-600  mb-4">
         Doğru Gayrimenkulün Olduğu Yerde
       </h1>
@@ -41,7 +41,7 @@ const HomepageRefineTabs = () => {
         <br />
         yatırımı da yapmanızı sağlamak için doğru mülk nerede ise biz oradayız.
       </h1>
-      <div className="flex flex-col justify-between lg:h-[400px] lg:w-[700px] h-auto ">
+      <div className="flex flex-col justify-between lg:h-[400px] lg:w-[40%]  h-auto ">
         <div className="flex flex-col">
           <Tabs aria-label="Options" variant="solid" color="primary">
             <Tab key="properties" title="Konut">
@@ -95,7 +95,7 @@ const HomepageRefineTabs = () => {
                     })}
                     className="flex flex-col gap-4"
                   >
-                    <div>
+                    <div className="flex flex-col gap-2">
                       <input
                         type="text"
                         placeholder="İlan numarasını giriniz"
