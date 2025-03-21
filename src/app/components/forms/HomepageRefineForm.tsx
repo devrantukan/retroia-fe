@@ -207,7 +207,7 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
             name="contract"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Satılık / Kiralık</FormLabel>
+                <FormLabel className="text-white">Satılık / Kiralık</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
@@ -233,7 +233,7 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
             name="country"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Ülke</FormLabel>
+                <FormLabel className="text-white">Ülke</FormLabel>
                 <Select
                   value={selectedCountry}
                   onValueChange={(value) => setSelectedCountry(value)}
@@ -266,7 +266,7 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
             name="city"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>İl</FormLabel>
+                <FormLabel className="text-white">İl</FormLabel>
                 <Popover open={cityOpen} onOpenChange={setCityOpen}>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -333,7 +333,7 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
             name="district"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>İlçe</FormLabel>
+                <FormLabel className="text-white">İlçe</FormLabel>
                 <Popover open={districtOpen} onOpenChange={setDistrictOpen}>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -402,7 +402,7 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
             name="neighborhood"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Mahalle</FormLabel>
+                <FormLabel className="text-white">Mahalle</FormLabel>
                 <Popover
                   open={neighborhoodOpen}
                   onOpenChange={setNeighborhoodOpen}
@@ -477,8 +477,8 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
               control={form.control}
               name="min"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Min</FormLabel>
+                <FormItem className="mt-0 space-y-0 flex flex-col">
+                  <FormLabel className="mt-0 mb-2 text-white">Min</FormLabel>
                   <FormControl className="bg-white">
                     <Input placeholder="min" {...field} />
                   </FormControl>
@@ -490,8 +490,8 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
               control={form.control}
               name="max"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Max</FormLabel>
+                <FormItem className="mt-0 space-y-0 flex flex-col">
+                  <FormLabel className="mt-0 mb-2 text-white">Max</FormLabel>
                   <FormControl className="bg-white">
                     <Input placeholder="max" {...field} />
                   </FormControl>
@@ -504,7 +504,7 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
               name="propertyType"
               render={({ field }) => (
                 <FormItem className="hidden">
-                  <FormLabel>Type</FormLabel>
+                  <FormLabel className="text-white">Type</FormLabel>
                   <FormControl className="bg-white">
                     <Input
                       placeholder="Type"
@@ -522,7 +522,7 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
               name="currency"
               render={({ field }) => (
                 <FormItem className="hidden">
-                  <FormLabel>Para Birimi</FormLabel>
+                  <FormLabel className="text-white">Para Birimi</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -547,8 +547,8 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
           </div>
         </div>
         <div className="flex justify-end">
-          <Button className="w-20 bg-blue-950">Harita</Button>
-          <Button className="ml-2 w-56 bg-orange-600" type="submit">
+          <Button className="w-20 bg-[#A1A4A3]">Harita</Button>
+          <Button className="ml-2 w-56 bg-[#BFAA8B]" type="submit">
             Ara
           </Button>
         </div>

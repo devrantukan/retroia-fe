@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || "https://www.retroia.com/emlak/";
+    process.env.NEXT_PUBLIC_SITE_URL || "https://www.retroia.com/emlak";
 
   // Static routes
   const routes: MetadataRoute.Sitemap = [
@@ -12,11 +12,47 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
     },
     {
-      url: `${baseUrl}/about`,
+      url: `${baseUrl}/ofislerimiz`,
       lastModified: new Date(),
     },
     {
-      url: `${baseUrl}/contact`,
+      url: `${baseUrl}/danismanlarimiz`,
+      lastModified: new Date(),
+    },
+    {
+      url: `${baseUrl}/gayrimenkul-danismani-basvuru-formu`,
+      lastModified: new Date(),
+    },
+    {
+      url: `${baseUrl}/gayrimenkullerinizi-satalim-kiralayalim`,
+      lastModified: new Date(),
+    },
+    {
+      url: `${baseUrl}/konut/kiralik`,
+      lastModified: new Date(),
+    },
+    {
+      url: `${baseUrl}/konut/satilik`,
+      lastModified: new Date(),
+    },
+    {
+      url: `${baseUrl}/ticari/kiralik`,
+      lastModified: new Date(),
+    },
+    {
+      url: `${baseUrl}/ticari/satilik`,
+      lastModified: new Date(),
+    },
+    {
+      url: `${baseUrl}/arsa-arazi/kiralik`,
+      lastModified: new Date(),
+    },
+    {
+      url: `${baseUrl}/arsa-arazi/satilik`,
+      lastModified: new Date(),
+    },
+    {
+      url: `${baseUrl}/emlak/biz-kimiz`,
       lastModified: new Date(),
     },
   ];

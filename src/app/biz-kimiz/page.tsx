@@ -8,7 +8,7 @@ export default function AboutUs() {
         {/* Hero Section */}
         <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center">
           <Image
-            src="/placeholder.svg?height=800&width=1200"
+            src="https://cdn.pixabay.com/photo/2024/11/08/09/45/facade-9182972_1280.jpg?width=1920&quality=75"
             alt="Retroia Gayrimenkul"
             fill
             className="object-cover"

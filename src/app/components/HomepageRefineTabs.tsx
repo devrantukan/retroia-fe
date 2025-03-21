@@ -33,40 +33,40 @@ const HomepageRefineTabs = () => {
 
   return (
     <div className="flex flex-col w-full z-30">
-      <h1 className="text-3xl font-medium text-left text-slate-600  mb-2">
+      <h1 className="text-3xl font-bold text-left text-slate-600  mb-4">
         Doğru Gayrimenkulün Olduğu Yerde
       </h1>
-      <h1 className="text-xl mb-8 font-light text-left text-slate-600">
+      <h1 className="text-xl mb-8 font-normal text-left text-slate-600">
         Hayallerinizdeki gayrimenkulü bulmanıza yardımcı olurken, en karlı{" "}
         <br />
         yatırımı da yapmanızı sağlamak için doğru mülk nerede ise biz oradayız.
       </h1>
       <div className="flex flex-col justify-between lg:h-[400px] lg:w-[700px] h-auto ">
         <div className="flex flex-col">
-          <Tabs aria-label="Options">
+          <Tabs aria-label="Options" variant="solid" color="primary">
             <Tab key="properties" title="Konut">
-              <Card className="bg-slate-300 ">
+              <Card className="bg-[#172554]">
                 <CardBody>
                   <HomepageRefineForm propertyType={"konut"} />
                 </CardBody>
               </Card>
             </Tab>
             <Tab key="about-us" title="Ticari">
-              <Card className="bg-slate-300">
+              <Card className="bg-[#172554]">
                 <CardBody>
                   <HomepageRefineForm propertyType={"ticari"} />
                 </CardBody>
               </Card>
             </Tab>
             <Tab key="our-office" title="Arsa/Arazi">
-              <Card className="bg-slate-300">
+              <Card className="bg-[#172554]">
                 <CardBody>
                   <HomepageRefineForm propertyType={"arsa-arazi"} />
                 </CardBody>
               </Card>
             </Tab>
             <Tab key="propertyId" title="İlan No">
-              <Card className="bg-slate-300">
+              <Card className="bg-[#172554]">
                 <CardBody>
                   <form
                     onSubmit={handleSubmit(async (data) => {
@@ -110,7 +110,7 @@ const HomepageRefineTabs = () => {
                     </div>
                     <button
                       type="submit"
-                      className="w-full bg-[#FF6634] hover:bg-[#eb5626] text-white py-2 px-4 rounded-lg transition-colors duration-200 font-medium"
+                      className="w-full bg-[#BFAA8B] hover:bg-[#eb5626] text-white py-2 px-4 rounded-lg transition-colors duration-200 font-medium"
                     >
                       İlan Ara
                     </button>
