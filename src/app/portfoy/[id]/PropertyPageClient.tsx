@@ -255,6 +255,7 @@ const PropertyPageClient = ({ params }: { params: { id: string } }) => {
               <ImageGallery
                 items={getGalleryImages(property.images)}
                 additionalClass="aspect-ratio-gallery"
+                lazyLoad={true}
               />
               <style jsx global>{`
                 .image-gallery-image {
