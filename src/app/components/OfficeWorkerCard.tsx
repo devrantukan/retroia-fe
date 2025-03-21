@@ -12,7 +12,10 @@ interface Props {
 
 const OfficeWorkerCard = ({ officeWorker, index }: Props) => {
   return (
-    <Card key={index} className="w-[300px] h-[400px] px-4 m-2 pb-2">
+    <Card
+      key={index}
+      className="min-w-[300px] min-h-[400px] h-auto w-full px-4 m-2 pb-2"
+    >
       <Link
         href={`/emlak/ofis/${officeWorker.office.id}/${officeWorker.office.slug}/${officeWorker.role.slug}/${officeWorker.id}/${officeWorker.slug}`}
       >
