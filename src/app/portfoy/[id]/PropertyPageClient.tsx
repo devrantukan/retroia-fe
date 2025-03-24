@@ -128,11 +128,22 @@ const PropertyPageClient = ({ params }: { params: { id: string } }) => {
     }
 
     if (propertyImages && propertyImages.length > 0) {
-      const imageItems = propertyImages.map((image) => ({
-        original: image.url,
-        thumbnail: image.url,
-      }));
-      //console.log(imageItems);
+      const imageItems = propertyImages.map((image) => {
+        // Transform the URL to use thumbnail-property-images bucket
+        const thumbnailUrl = image.url.replace(
+          "/propertyImages/",
+          "/thumbnails-property-images/"
+        );
+        const imageUrl = image.url.replace(
+          "/propertyImages/",
+          "/property-images/"
+        );
+        console.log(thumbnailUrl);
+        return {
+          original: imageUrl,
+          thumbnail: thumbnailUrl,
+        };
+      });
       galleryItems = [...galleryItems, ...imageItems];
     }
 

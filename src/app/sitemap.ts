@@ -82,7 +82,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Add property routes
     properties.forEach((property) => {
       routes.push({
-        url: `${baseUrl}/property/${property.id}`,
+        url: `${baseUrl}/portfoy/${property.id}`,
         lastModified: property.updatedAt || new Date(),
       });
     });

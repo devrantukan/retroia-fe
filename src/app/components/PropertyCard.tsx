@@ -144,6 +144,11 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
       ? "w-full flex lg:flex-row mb-4 min-h-[150px] lg:max-h-[150px]"
       : "w-full flex lg:flex-row mb-4 min-h-[150px] lg:max-h-[150px]";
 
+  const thumbnailUrl = property.images?.[0]?.url.replace(
+    "/propertyImages/",
+    "/thumbnails-property-images/"
+  );
+
   return (
     <Card ref={cardRef} className={cardClassName} shadow="md">
       <Link
@@ -155,7 +160,7 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
         <div className="flex lg:flex-row flex-col w-full m-0">
           <Image
             src={
-              property.images?.[0]?.url ||
+              thumbnailUrl ||
               "https://inegzzkuttzsznxfbsmp.supabase.co/storage/v1/object/public/siteImages/no-image.jpg"
             }
             className={imageClassName}
