@@ -39,6 +39,11 @@ const PropertySearchCard = ({ property, showAvatar }: any) => {
     ? "object-cover w-full lg:w-auto h-auto lg:max-w-[200px] lg:min-w-[200px] lg:min-h-[130px] lg:max-h-[150px] bg-gray-200"
     : "object-cover w-full lg:w-auto h-auto lg:max-w-[220px] lg:min-w-[220px] lg:min-h-[150px] lg:max-h-[160px] bg-gray-200";
 
+  const thumbnailUrl = property.images?.[0]?.url.replace(
+    "/propertyImages/",
+    "/thumbnails-property-images/"
+  );
+
   return (
     <Card
       ref={cardRef}
@@ -54,7 +59,7 @@ const PropertySearchCard = ({ property, showAvatar }: any) => {
         <div className="flex lg:flex-row flex-col w-full m-0">
           <Image
             src={
-              property.images?.[0]?.url ||
+              thumbnailUrl ||
               "https://inegzzkuttzsznxfbsmp.supabase.co/storage/v1/object/public/siteImages/no-image.jpg"
             }
             className={imageClassName}
