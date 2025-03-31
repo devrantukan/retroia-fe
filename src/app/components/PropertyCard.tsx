@@ -98,7 +98,6 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
     const updateWidth = () => {
       if (cardRef.current) {
         const width = cardRef.current.getBoundingClientRect().width;
-        // console.log("Property Card width:", width);
         setCardWidth(width);
       }
     };
@@ -115,6 +114,14 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
     // Cleanup
     return () => observer.disconnect();
   }, []);
+
+  // Debug logs
+  console.log("Property data:", {
+    id: property.id,
+    price: property.price,
+    discountedPrice: property.discountedPrice,
+    hasDiscount: property.discountedPrice > 0,
+  });
 
   const imageClassName =
     cardWidth < 500
@@ -158,16 +165,23 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
         href={`/emlak/portfoy/${property.id}`}
       >
         <div className="flex lg:flex-row flex-col w-full m-0">
-          <Image
-            src={
-              thumbnailUrl ||
-              "https://inegzzkuttzsznxfbsmp.supabase.co/storage/v1/object/public/siteImages/no-image.jpg"
-            }
-            className={imageClassName}
-            alt={property.title}
-            width={400}
-            height={240}
-          />
+          <div className="relative">
+            <Image
+              src={
+                thumbnailUrl ||
+                "https://inegzzkuttzsznxfbsmp.supabase.co/storage/v1/object/public/siteImages/no-image.jpg"
+              }
+              className={imageClassName}
+              alt={property.title}
+              width={400}
+              height={240}
+            />
+            {property.discountedPrice > 0 && (
+              <span className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap">
+                İNDİRİMLİ
+              </span>
+            )}
+          </div>
           <div className="flex flex-col w-full">
             <div className="p-4 h-2/3 ">
               <p
@@ -180,28 +194,35 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
                 {property.name}
               </p>
             </div>
-            <div className="bg-gradient-to-br from-slate-50 to-slate-200 px-4 flex justify-start items-center h-1/3 w-full ">
-              <p className="text-2xl lining-nums font-semibold tracking-wider">
+            <div className="bg-gradient-to-br from-slate-50 to-slate-200 px-4 flex justify-start items-center h-1/3 w-full">
+              <div className="text-2xl lining-nums font-semibold tracking-wider w-full">
                 {property.discountedPrice > 0 ? (
-                  <>
-                    <div className="flex items-center gap-2">
-                      <span className="text-2xl font-bold text-primary">
-                        <PriceDisplay price={property.discountedPrice} />
-                      </span>
-                      <span className="text-lg line-through text-gray-400">
-                        <PriceDisplay price={property.price} />
-                      </span>
-                      <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-                        İNDİRİMLİ
-                      </span>
-                    </div>
-                  </>
+                  <div className="flex items-center gap-2 w-full">
+                    <span className="text-2xl font-bold text-primary">
+                      {property.discountedPrice.toLocaleString("tr-TR", {
+                        style: "currency",
+                        currency: "TRY",
+                        maximumFractionDigits: 0,
+                      })}
+                    </span>
+                    <span className="text-lg line-through text-gray-400">
+                      {property.price.toLocaleString("tr-TR", {
+                        style: "currency",
+                        currency: "TRY",
+                        maximumFractionDigits: 0,
+                      })}
+                    </span>
+                  </div>
                 ) : (
                   <span className="text-2xl font-bold text-primary">
-                    <PriceDisplay price={property.price} />
+                    {property.price.toLocaleString("tr-TR", {
+                      style: "currency",
+                      currency: "TRY",
+                      maximumFractionDigits: 0,
+                    })}
                   </span>
                 )}
-              </p>
+              </div>
             </div>
           </div>
         </div>

@@ -13,8 +13,17 @@ export async function GET(
       id: +params.id,
       publishingStatus: "PUBLISHED",
     },
-
-    include: {
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      price: true,
+      discountedPrice: true,
+      videoSource: true,
+      threeDSource: true,
+      publishingStatus: true,
+      createdAt: true,
+      updatedAt: true,
       status: true,
       feature: true,
       location: true,

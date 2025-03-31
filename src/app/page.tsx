@@ -46,6 +46,7 @@ export default async function Home({ searchParams }: Props) {
       id: true,
       name: true,
       price: true,
+      discountedPrice: true,
       images: {
         select: {
           url: true,
