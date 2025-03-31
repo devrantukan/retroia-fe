@@ -23,7 +23,16 @@ import { X, EnvelopeSimple, Phone } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 import Share from "@/app/components/Share";
-const PropertyPageClient = ({ params }: { params: { id: string } }) => {
+
+interface PropertyPageClientProps {
+  params: {
+    id: string;
+    agentId?: string;
+    agentSlug?: string;
+  };
+}
+
+const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [property, setProperty] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -33,6 +42,7 @@ const PropertyPageClient = ({ params }: { params: { id: string } }) => {
   const [scrollBehavior, setScrollBehavior] = React.useState<
     "inside" | "outside" | "normal"
   >("outside");
+  const [agent, setAgent] = useState<any>(null);
 
   const defaultImage = {
     original: "https://picsum.photos/id/1018/1000/600",
@@ -78,6 +88,51 @@ const PropertyPageClient = ({ params }: { params: { id: string } }) => {
 
     fetchProperty();
   }, [params.id]);
+
+  useEffect(() => {
+    const fetchAgent = async () => {
+      if (params.agentId && params.agentSlug) {
+        try {
+          const agentResponse = await fetch(
+            `/api/officeWorker/${params.agentId}`
+          );
+          if (agentResponse.ok) {
+            const agentData = await agentResponse.json();
+            console.log("Fetched agent data:", agentData); // Debug log
+            // Transform the data to match the expected format
+            const transformedAgentData = {
+              id: agentData.id,
+              name: agentData.name,
+              surname: agentData.surname,
+              email: agentData.email,
+              phone: agentData.phone,
+              avatarUrl: agentData.avatarUrl,
+              officeId: agentData.officeId,
+              office: {
+                id: agentData.office.id,
+                name: agentData.office.name,
+                slug: agentData.office.name.toLowerCase().replace(/\s+/g, "-"),
+              },
+              role: {
+                id: agentData.role.id,
+                name: agentData.role.name,
+                slug: agentData.role.slug,
+              },
+              slug: params.agentSlug, // Use the agentSlug from URL parameters
+            };
+            console.log("Transformed agent data:", transformedAgentData); // Debug log
+            setAgent(transformedAgentData);
+          } else {
+            console.error("Agent data not found");
+          }
+        } catch (agentError) {
+          console.error("Error fetching agent data:", agentError);
+        }
+      }
+    };
+
+    fetchAgent();
+  }, [params.agentId, params.agentSlug]);
 
   const getGalleryImages = (propertyImages: any[]) => {
     let galleryItems = [];
@@ -148,6 +203,30 @@ const PropertyPageClient = ({ params }: { params: { id: string } }) => {
     }
 
     return galleryItems.length > 0 ? galleryItems : [defaultImage];
+  };
+
+  const renderAgentSection = () => {
+    // If URL has agent parameters, show that agent
+    if (params.agentId && params.agentSlug && agent) {
+      return (
+        <>
+          <Title title="Danışman Detayları" className="mt-6" />
+          <AgentInfo agent={agent} params={params} />
+        </>
+      );
+    }
+
+    // If no URL parameters, show the property's agent
+    if (property?.agent) {
+      return (
+        <>
+          <Title title="Danışman Detayları" className="mt-6" />
+          <AgentInfo agent={property.agent} params={params} />
+        </>
+      );
+    }
+
+    return null;
   };
 
   if (loading) return <LoadingSpinner />;
@@ -357,50 +436,7 @@ const PropertyPageClient = ({ params }: { params: { id: string } }) => {
                 )}
             </div>
 
-            <Title title="Danışman Detayları" className="mt-6" />
-            <div className="flex items-start space-x-3 p-2 justify-between">
-              <div className="flex-shrink-0 w-24 h-24">
-                {property.agent?.avatarUrl ? (
-                  <Image
-                    src={property.agent.avatarUrl}
-                    alt={property.agent.name}
-                    width={64}
-                    height={64}
-                    className="rounded-full object-cover border border-gray-300"
-                  />
-                ) : (
-                  <User name={property.agent?.name} className="text-gray-400" />
-                )}
-              </div>
-
-              <div className="flex-grow">
-                <h3 className="text-base font-semibold mb-2 text-right">
-                  <Link
-                    href={`/emlak/ofis/${property.agent?.officeId}/${property.agent?.office.slug}/${property.agent?.role.slug}/${property.agent?.id}/${property.agent?.slug}`}
-                  >
-                    {property.agent?.name} {property.agent?.surname}
-                  </Link>
-                </h3>
-
-                <div className="space-y-1 text-right">
-                  <a
-                    href={`mailto:${property.agent?.email}`}
-                    className="flex items-center text-blue-600 hover:text-blue-800 justify-end text-sm"
-                  >
-                    <EnvelopeSimple size={20} weight="light" className="mr-2" />
-                    {property.agent?.email}
-                  </a>
-
-                  <a
-                    href={`tel:${property.agent?.phone}`}
-                    className="flex items-center text-blue-600 hover:text-blue-800 justify-end text-sm"
-                  >
-                    <Phone size={20} weight="light" className="mr-2" />
-                    {property.agent?.phone}
-                  </a>
-                </div>
-              </div>
-            </div>
+            {renderAgentSection()}
           </Card>
         </div>
       </div>
@@ -492,6 +528,58 @@ const Attribute = ({
   <div className="flex justify-between">
     <span className="text-sm text-slate-600">{label}</span>
     <span className="text-sm text-slate-600">{value}</span>
+  </div>
+);
+
+const AgentInfo = ({
+  agent,
+  params,
+}: {
+  agent: any;
+  params: { agentSlug?: string };
+}) => (
+  <div className="flex items-start space-x-3 p-2 justify-between">
+    <div className="flex-shrink-0 w-24 h-24">
+      {agent.avatarUrl ? (
+        <Image
+          src={agent.avatarUrl}
+          alt={agent.name}
+          width={64}
+          height={64}
+          className="rounded-full object-cover border border-gray-300"
+        />
+      ) : (
+        <User name={agent.name} className="text-gray-400" />
+      )}
+    </div>
+
+    <div className="flex-grow">
+      <h3 className="text-base font-semibold mb-2 text-right">
+        <Link
+          href={`/emlak/ofis/${agent.officeId}/${agent.office.slug}/${agent.role.slug}/${agent.id}/${agent.slug}`}
+        >
+          {agent.name} {agent.surname}
+        </Link>
+      </h3>
+
+      <div className="space-y-1 text-right">
+        <a
+          href={`mailto:${agent.email}`}
+          className="flex items-center text-blue-600 hover:text-blue-800 justify-end text-sm"
+        >
+          <EnvelopeSimple size={20} weight="light" className="mr-2" />
+          {agent.email}
+        </a>
+
+        <a
+          href={`tel:${agent.phone}`}
+          className="flex items-center text-blue-600 hover:text-blue-800 justify-end text-sm"
+        >
+          <Phone size={20} weight="light" className="mr-2" />
+          {agent.phone}
+        </a>
+      </div>
+    </div>
   </div>
 );
 
