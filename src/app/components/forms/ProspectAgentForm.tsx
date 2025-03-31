@@ -153,7 +153,7 @@ export default function ProspectAgentForm({
     async function fetchDistricts(city: string) {
       try {
         const API_URL = process.env.NEXT_PUBLIC_API_URL || "/emlak/api";
-        const response = await axios.get(`${API_URL}/data/districts/${city}`);
+        const response = await axios.get(`${API_URL}/data/districts/${city}/`);
         setDistrictOptions(response.data);
         setDistrict("");
       } catch (error) {
