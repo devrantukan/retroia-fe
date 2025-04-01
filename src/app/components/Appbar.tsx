@@ -72,22 +72,22 @@ const Appbar = () => {
             aria-label="Portföy seçenekleri"
             className="text-primary"
           >
-            <DropdownItem key="konut" href={getRoute("/konut/satilik/")}>
+            <DropdownItem key="konut" href={"/emlak/konut/satilik/"}>
               Satılık Konutlar
             </DropdownItem>
-            <DropdownItem key="ticari" href={getRoute("/ticari/satilik/")}>
+            <DropdownItem key="ticari" href={"/emlak/ticari/satilik/"}>
               Satılık Ticari Gayrimenkuller
             </DropdownItem>
-            <DropdownItem key="arsa" href={getRoute("/arsa-arazi/satilik/")}>
+            <DropdownItem key="arsa" href={"/emlak/arsa-arazi/satilik/"}>
               Satılık Arsalar
             </DropdownItem>
-            <DropdownItem key="konut" href={getRoute("/konut/kiralik/")}>
+            <DropdownItem key="konut" href={"/emlak/konut/kiralik/"}>
               Kiralık Konutlar
             </DropdownItem>
-            <DropdownItem key="ticari" href={getRoute("/ticari/kiralik/")}>
+            <DropdownItem key="ticari" href={"/emlak/ticari/kiralik/"}>
               Kiralık Ticari Gayrimenkuller
             </DropdownItem>
-            <DropdownItem key="arsa" href={getRoute("/arsa-arazi/kiralik/")}>
+            <DropdownItem key="arsa" href={"/emlak/arsa-arazi/kiralik/"}>
               Kiralık Arsalar
             </DropdownItem>
           </DropdownMenu>

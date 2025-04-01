@@ -309,10 +309,21 @@ model Project {
   description String
   location    ProjectLocation?
   feature     ProjectFeature?
-  images      ProjectImage[]  
+  images      ProjectImage[] 
+  unitSizes    ProjectUnitSize[]
+  socialFeatures  ProjectSocialFeatures[]
   officeId    Int 
   office      Office   @relation(fields: [officeId], references: [id])
   assignedAgents String
+  publishingStatus String
+  startDate   DateTime
+  endDate     DateTime
+  deedInfo    String
+  landArea    String
+  nOfUnits    String
+  slug        String
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt @default(now())
 }
 
 model ProjectLocation {
@@ -341,6 +352,19 @@ model ProjectFeature {
   hasBalcony      Boolean
   projectId    Int      @unique
   project      Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model ProjectUnitSize {
+  id       Int        @id @default(autoincrement())
+  value    String
+  Project  Project[]
+
+}
+
+model ProjectSocialFeatures {
+  id       Int        @id @default(autoincrement())
+  value    String
+  Project  Project[]
 }
 
 model ProjectImage {
