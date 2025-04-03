@@ -59,14 +59,22 @@ const OfficeWorkerPage = async ({ params }: Props) => {
   const projects = await prisma.project.findMany({
     where: {
       officeId: officeWorker?.office?.id,
-      // assignedAgents: {
-      //   contains: +params.workerId,
-      // },
+      publishingStatus: "PUBLISHED",
     },
-
     include: {
       images: true,
       location: true,
+      feature: true,
+      unitSizes: {
+        select: {
+          value: true,
+        },
+      },
+      socialFeatures: {
+        select: {
+          value: true,
+        },
+      },
     },
   });
 

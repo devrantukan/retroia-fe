@@ -1,75 +1,207 @@
 import { Card, Image } from "@nextui-org/react";
-import { Prisma } from "@prisma/client";
-import Link from "next/link";
-import { Avatar } from "@nextui-org/react";
+import { Project } from "@prisma/client";
+import {
+  MapPin,
+  Building2,
+  Users,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import { useState, useEffect } from "react";
 
-const ProjectCard = ({ project, showAvatar }: any) => {
+interface ProjectCardProps {
+  project: Project & {
+    images: { url: string }[];
+    location: {
+      country: string;
+      city: string;
+      district: string;
+      neighborhood: string;
+    };
+    unitSizes: {
+      value: string;
+    }[];
+    socialFeatures: {
+      value: string;
+    }[];
+  };
+}
+
+const ProjectCard = ({ project }: ProjectCardProps) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const nextImage = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentImageIndex((prev) =>
+      prev === project.images.length - 1 ? 0 : prev + 1
+    );
+    setTimeout(() => setIsTransitioning(false), 500);
+  };
+
+  const prevImage = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentImageIndex((prev) =>
+      prev === 0 ? project.images.length - 1 : prev - 1
+    );
+    setTimeout(() => setIsTransitioning(false), 500);
+  };
+
+  // Auto-advance slides every 5 seconds
+  useEffect(() => {
+    if (project.images.length <= 1) return;
+
+    const timer = setInterval(() => {
+      nextImage();
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [currentImageIndex, project.images.length]);
+
   return (
-    <Card className="w-full flex lg:flex-row mb-4" shadow="md">
-      <Link
-        className="hover:text-primary-500 transition-colors w-4/5"
-        href={`/project/${project.id}`}
-      >
-        <div className="flex lg:flex-row ">
-          <Image
-            radius="none"
-            src={
-              project.id === 1
-                ? project.images[0].url
-                : `/images/${Math.floor(Math.random() * 9 + 1)}.jpg`
-            }
-            className="object-fill w-64 h-48"
-            alt={project.name}
-          />
-          <div className="flex flex-col mt-2">
-            <div className="p-4 h-full">
-              <p className="text-slate-600">
-                {project.location.country} / {project.location.city} /{" "}
-                {project.location.district} / {project.location.neighborhood}
-              </p>
-              <p className="text-primary-600 text-xl font-bold">
-                {project.name}
-              </p>
+    <Card
+      className="w-full mb-6 hover:shadow-xl transition-all duration-300 overflow-hidden group"
+      shadow="md"
+    >
+      <div className="flex flex-col lg:flex-row">
+        {/* Image Section */}
+        <div className="relative w-full lg:w-96 aspect-[4/3]">
+          {project.images.map((image, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-500 ${
+                index === currentImageIndex
+                  ? "opacity-100 z-10"
+                  : "opacity-0 z-0"
+              }`}
+            >
+              <Image
+                radius="none"
+                src={image.url}
+                className="w-full h-full object-cover"
+                alt={`${project.name} - Image ${index + 1}`}
+                removeWrapper
+              />
             </div>
-            <div className="bg-gradient-to-br from-slate-50 to-slate-200 p-4 flex justify-start">
-              <p className="text-2xl lining-nums font-semibold tracking-wider">
-                {/* {project.price.toLocaleString("tr-TR", {
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0,
-                })} */}
-              </p>
-              <span className="text-lg">₺</span>
+          ))}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+          {/* Navigation Arrows */}
+          {project.images.length > 1 && (
+            <>
+              <button
+                onClick={prevImage}
+                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-colors duration-200 z-20"
+                disabled={isTransitioning}
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={nextImage}
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-colors duration-200 z-20"
+                disabled={isTransitioning}
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </>
+          )}
+
+          {/* Dots Navigation */}
+          {project.images.length > 1 && (
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+              {project.images.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    if (!isTransitioning) {
+                      setIsTransitioning(true);
+                      setCurrentImageIndex(index);
+                      setTimeout(() => setIsTransitioning(false), 500);
+                    }
+                  }}
+                  className={`w-2 h-2 rounded-full transition-colors duration-200 ${
+                    index === currentImageIndex
+                      ? "bg-white"
+                      : "bg-white/50 hover:bg-white/75"
+                  }`}
+                  disabled={isTransitioning}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Content Section */}
+        <div className="flex flex-col flex-grow p-5 lg:p-7">
+          {/* Project Name */}
+          <h3 className="text-primary-600 text-2xl lg:text-3xl font-bold mb-3 lg:mb-4 group-hover:text-primary-500 transition-colors duration-300">
+            {project.name}
+          </h3>
+
+          {/* Location */}
+          <div className="flex items-center gap-2 text-sm text-slate-600 mb-4 lg:mb-5">
+            <MapPin className="w-4 h-4 text-primary-500" />
+            <div className="flex flex-wrap items-center gap-1">
+              <span>{project.location.country}</span>
+              <span>•</span>
+              <span>{project.location.city}</span>
+              <span>•</span>
+              <span>{project.location.district}</span>
+              {project.location.neighborhood && (
+                <>
+                  <span>•</span>
+                  <span>{project.location.neighborhood}</span>
+                </>
+              )}
             </div>
           </div>
+
+          {/* Unit Sizes */}
+          {project.unitSizes && project.unitSizes.length > 0 && (
+            <div className="mb-4 lg:mb-5">
+              <div className="flex items-center gap-2 mb-3">
+                <Building2 className="w-4 h-4 text-primary-500" />
+                <p className="text-sm font-semibold text-slate-700">
+                  Daire Tipleri
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {project.unitSizes.map((size, index) => (
+                  <span
+                    key={index}
+                    className="bg-primary-50 text-primary-600 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-primary-100 transition-colors duration-200"
+                  >
+                    {size.value}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Social Features */}
+          {project.socialFeatures && project.socialFeatures.length > 0 && (
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <Users className="w-4 h-4 text-primary-500" />
+                <p className="text-sm font-semibold text-slate-700">
+                  Sosyal Alanlar
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {project.socialFeatures.map((feature, index) => (
+                  <span
+                    key={index}
+                    className="bg-slate-50 text-slate-600 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-slate-100 transition-colors duration-200"
+                  >
+                    {feature.value}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-      </Link>
-      <div className="w-1/5 flex items-center flex-col my-auto  hover:bg-slate-100 hover:cursor-pointer rounded-xl mr-4">
-        {/* <Avatar
-          showFallback
-          name={property.agent?.name + " " + property.agent?.surname}
-          src="https://images.unsplash.com/broken"
-        />
-        <p>
-          {property.agent?.name} {property.agent?.surname}
-        </p>
-        <p>{property.agent?.office.title}</p> */}
-        {/* {showAvatar == true && (
-          <Link
-            href={`/danisman/${property.agentId}/${property.agent.slug}`}
-            className="flex justify-center items-center flex-col my-6"
-          >
-            <Avatar
-              showFallback
-              name={property.agent?.name + " " + property.agent?.surname}
-              src={property.agent?.avatarUrl}
-              className="h-16 w-16 mb-2"
-            />
-            <p className="font-bold">
-              {property.agent.name} {property.agent.surname}
-            </p>
-            <p className="font-light">{property.agent.office.name}</p>
-          </Link>
-        )} */}
       </div>
     </Card>
   );

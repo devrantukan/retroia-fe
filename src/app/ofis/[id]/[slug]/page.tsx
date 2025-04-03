@@ -54,9 +54,23 @@ const OfficePage = async ({ params }: Props) => {
       neighborhood: true,
       images: true,
       projects: {
+        where: {
+          publishingStatus: "PUBLISHED",
+        },
         include: {
           images: true,
           location: true,
+          feature: true,
+          unitSizes: {
+            select: {
+              value: true,
+            },
+          },
+          socialFeatures: {
+            select: {
+              value: true,
+            },
+          },
         },
       },
     },
