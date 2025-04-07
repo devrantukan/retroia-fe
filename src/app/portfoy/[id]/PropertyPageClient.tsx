@@ -54,7 +54,7 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
       try {
         const API_URL =
           process.env.NODE_ENV === "production" ? "/emlak/api" : "/api";
-        const response = await fetch(`${API_URL}/properties/${params.id}`);
+        const response = await fetch(`${API_URL}/properties/${params.id}/`);
         if (!response.ok) {
           throw new Error("Property not found");
         }
