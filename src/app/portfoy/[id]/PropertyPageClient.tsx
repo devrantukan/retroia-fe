@@ -189,22 +189,26 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
     if (propertyImages && propertyImages.length > 0) {
       const imageItems = propertyImages.map((image) => {
         // Transform the URL to use the correct bucket names
-        const originalUrl = image.url.replace(
-          "/propertyImages/",
-          "/property-images/"
-        );
-        const thumbnailUrl = image.url.replace(
-          "/propertyImages/",
-          "/thumbnails-property-images/"
-        );
+        const originalUrl = image.url.includes("/propertyImages/")
+          ? image.url.replace("/propertyImages/", "/property-images/")
+          : image.url;
 
-        // Create a fallback URL using the original propertyImages bucket
-        const fallbackUrl = image.url;
+        const thumbnailUrl = image.url.includes("/propertyImages/")
+          ? image.url.replace(
+              "/propertyImages/",
+              "/thumbnails-property-images/"
+            )
+          : image.url.includes("/property-images/")
+          ? image.url.replace(
+              "/property-images/",
+              "/thumbnails-property-images/"
+            )
+          : image.url;
 
         return {
           original: originalUrl,
           thumbnail: thumbnailUrl,
-          fallback: fallbackUrl,
+          fallback: image.url,
           renderItem: (item: any) => (
             <div className="relative w-full h-full">
               <Image
@@ -214,7 +218,7 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                 className="object-cover"
                 onError={(e) => {
                   const img = e.target as HTMLImageElement;
-                  img.src = fallbackUrl;
+                  img.src = image.url;
                 }}
               />
             </div>
@@ -228,7 +232,7 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                 className="object-cover"
                 onError={(e) => {
                   const img = e.target as HTMLImageElement;
-                  img.src = fallbackUrl;
+                  img.src = image.url;
                 }}
               />
             </div>
@@ -406,6 +410,26 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                 }
                 video.image-gallery-image {
                   border-radius: 0.75rem !important;
+                }
+                .image-gallery-thumbnails {
+                  padding: 10px 0 !important;
+                }
+                .image-gallery-thumbnails-container {
+                  text-align: center !important;
+                }
+                .image-gallery-thumbnail {
+                  width: 100px !important;
+                  height: 75px !important;
+                  margin: 0 5px !important;
+                  border: 2px solid transparent !important;
+                  border-radius: 0.5rem !important;
+                  overflow: hidden !important;
+                }
+                .image-gallery-thumbnail.active {
+                  border-color: #0066cc !important;
+                }
+                .image-gallery-thumbnail:hover {
+                  border-color: #0066cc !important;
                 }
               `}</style>
             </div>
