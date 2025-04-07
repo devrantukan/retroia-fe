@@ -6,11 +6,15 @@ import Appbar from "./components/Appbar";
 import SignInPanel from "./components/signInPanel";
 import { ToastContainer } from "react-toastify";
 import GoogleAnalytics from "./components/GoogleAnalytics";
-
 import Footer from "./components/Footer";
 import "react-toastify/dist/ReactToastify.css";
 
-const raleway = Raleway({ subsets: ["latin"] });
+const raleway = Raleway({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-raleway",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -74,7 +78,7 @@ export default function RootLayout({
   const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
   return (
-    <html lang="tr">
+    <html lang="tr" className={raleway.variable}>
       <head>
         <link
           rel="apple-touch-icon"
@@ -120,7 +124,7 @@ export default function RootLayout({
           <GoogleAnalytics GA_MEASUREMENT_ID={GA_MEASUREMENT_ID} />
         )}
       </head>
-      <body className={raleway.className}>
+      <body className={`${raleway.className} font-sans`}>
         <Providers>
           <Appbar>{/* <SignInPanel /> */}</Appbar>
           {children}

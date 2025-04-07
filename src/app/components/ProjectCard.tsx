@@ -8,6 +8,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 interface ProjectCardProps {
   project: Project & {
@@ -61,149 +62,140 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   }, [currentImageIndex, project.images.length]);
 
   return (
-    <Card
-      className="w-full mb-6 hover:shadow-xl transition-all duration-300 overflow-hidden group"
-      shadow="md"
-    >
-      <div className="flex flex-col lg:flex-row">
-        {/* Image Section */}
-        <div className="relative w-full lg:w-96 aspect-[4/3]">
-          {project.images.map((image, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 transition-opacity duration-500 ${
-                index === currentImageIndex
-                  ? "opacity-100 z-10"
-                  : "opacity-0 z-0"
-              }`}
-            >
-              <Image
-                radius="none"
-                src={image.url}
-                className="w-full h-full object-cover"
-                alt={`${project.name} - Image ${index + 1}`}
-                removeWrapper
-              />
-            </div>
-          ))}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-          {/* Navigation Arrows */}
-          {project.images.length > 1 && (
-            <>
-              <button
-                onClick={prevImage}
-                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-colors duration-200 z-20"
-                disabled={isTransitioning}
+    <Link href={`/projeler/${project.slug}`}>
+      <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+        <div className="flex flex-col lg:flex-row">
+          {/* Image Section */}
+          <div className="relative w-full lg:w-96 aspect-[4/3]">
+            {project.images.map((image, index) => (
+              <div
+                key={index}
+                className={`absolute inset-0 transition-opacity duration-500 ${
+                  index === currentImageIndex
+                    ? "opacity-100 z-10"
+                    : "opacity-0 z-0"
+                }`}
               >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={nextImage}
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-colors duration-200 z-20"
-                disabled={isTransitioning}
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </>
-          )}
-
-          {/* Dots Navigation */}
-          {project.images.length > 1 && (
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-              {project.images.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    if (!isTransitioning) {
-                      setIsTransitioning(true);
-                      setCurrentImageIndex(index);
-                      setTimeout(() => setIsTransitioning(false), 500);
-                    }
-                  }}
-                  className={`w-2 h-2 rounded-full transition-colors duration-200 ${
-                    index === currentImageIndex
-                      ? "bg-white"
-                      : "bg-white/50 hover:bg-white/75"
-                  }`}
-                  disabled={isTransitioning}
+                <Image
+                  radius="none"
+                  src={image.url}
+                  className="w-full h-full object-cover"
+                  alt={`${project.name} - Image ${index + 1}`}
+                  removeWrapper
                 />
-              ))}
-            </div>
-          )}
-        </div>
+              </div>
+            ))}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-        {/* Content Section */}
-        <div className="flex flex-col flex-grow p-5 lg:p-7">
-          {/* Project Name */}
-          <h3 className="text-primary-600 text-2xl lg:text-3xl font-bold mb-3 lg:mb-4 group-hover:text-primary-500 transition-colors duration-300">
-            {project.name}
-          </h3>
+            {/* Navigation Arrows */}
+            {project.images.length > 1 && (
+              <>
+                <button
+                  onClick={prevImage}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-colors duration-200 z-20"
+                  disabled={isTransitioning}
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={nextImage}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-colors duration-200 z-20"
+                  disabled={isTransitioning}
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </>
+            )}
 
-          {/* Location */}
-          <div className="flex items-center gap-2 text-sm text-slate-600 mb-4 lg:mb-5">
-            <MapPin className="w-4 h-4 text-primary-500" />
-            <div className="flex flex-wrap items-center gap-1">
-              <span>{project.location.country}</span>
-              <span>•</span>
-              <span>{project.location.city}</span>
-              <span>•</span>
-              <span>{project.location.district}</span>
-              {project.location.neighborhood && (
-                <>
-                  <span>•</span>
-                  <span>{project.location.neighborhood}</span>
-                </>
-              )}
-            </div>
+            {/* Dots Navigation */}
+            {project.images.length > 1 && (
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                {project.images.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      if (!isTransitioning) {
+                        setIsTransitioning(true);
+                        setCurrentImageIndex(index);
+                        setTimeout(() => setIsTransitioning(false), 500);
+                      }
+                    }}
+                    className={`w-2 h-2 rounded-full transition-colors duration-200 ${
+                      index === currentImageIndex
+                        ? "bg-white"
+                        : "bg-white/50 hover:bg-white/75"
+                    }`}
+                    disabled={isTransitioning}
+                  />
+                ))}
+              </div>
+            )}
           </div>
 
-          {/* Unit Sizes */}
-          {project.unitSizes && project.unitSizes.length > 0 && (
-            <div className="mb-4 lg:mb-5">
-              <div className="flex items-center gap-2 mb-3">
-                <Building2 className="w-4 h-4 text-primary-500" />
-                <p className="text-sm font-semibold text-slate-700">
-                  Daire Tipleri
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {project.unitSizes.map((size, index) => (
-                  <span
-                    key={index}
-                    className="bg-primary-50 text-primary-600 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-primary-100 transition-colors duration-200"
-                  >
-                    {size.value}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
+          {/* Content Section */}
+          <div className="flex flex-col flex-grow p-5 lg:p-7">
+            {/* Project Info */}
+            <div className="p-4">
+              <h3 className="text-xl font-bold mb-2">{project.name}</h3>
 
-          {/* Social Features */}
-          {project.socialFeatures && project.socialFeatures.length > 0 && (
-            <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Users className="w-4 h-4 text-primary-500" />
-                <p className="text-sm font-semibold text-slate-700">
-                  Sosyal Alanlar
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {project.socialFeatures.map((feature, index) => (
-                  <span
-                    key={index}
-                    className="bg-slate-50 text-slate-600 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-slate-100 transition-colors duration-200"
-                  >
-                    {feature.value}
-                  </span>
-                ))}
+              {/* Location */}
+              <div className="flex items-center gap-2 text-slate-600 mb-4">
+                <MapPin className="w-4 h-4" />
+                <span>
+                  {project.location?.city}, {project.location?.district}
+                  {project.location?.neighborhood &&
+                    `, ${project.location?.neighborhood}`}
+                </span>
               </div>
             </div>
-          )}
+
+            {/* Unit Sizes */}
+            {project.unitSizes && project.unitSizes.length > 0 && (
+              <div className="mb-4 lg:mb-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <Building2 className="w-4 h-4 text-primary-500" />
+                  <p className="text-sm font-semibold text-slate-700">
+                    Daire Tipleri
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {project.unitSizes.map((size, index) => (
+                    <span
+                      key={index}
+                      className="bg-primary-50 text-primary-600 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-primary-100 transition-colors duration-200"
+                    >
+                      {size.value}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Social Features */}
+            {project.socialFeatures && project.socialFeatures.length > 0 && (
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Users className="w-4 h-4 text-primary-500" />
+                  <p className="text-sm font-semibold text-slate-700">
+                    Sosyal Alanlar
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {project.socialFeatures.map((feature, index) => (
+                    <span
+                      key={index}
+                      className="bg-slate-50 text-slate-600 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-slate-100 transition-colors duration-200"
+                    >
+                      {feature.value}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </Card>
+    </Link>
   );
 };
 

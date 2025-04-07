@@ -52,10 +52,14 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
   useEffect(() => {
     const fetchProperty = async () => {
       try {
-        const API_URL = process.env.NEXT_PUBLIC_API_URL || "/emlak/api";
-        const response = await fetch(`${API_URL}/properties/${params.id}/`);
+        const API_URL =
+          process.env.NODE_ENV === "production"
+            ? `/emlak/api/properties/${params.id}/`
+            : `/api/properties/${params.id}`;
+
+        const response = await fetch(API_URL);
         if (!response.ok) {
-          throw new Error("Property not found");
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
         setProperty(data);
@@ -184,19 +188,51 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
 
     if (propertyImages && propertyImages.length > 0) {
       const imageItems = propertyImages.map((image) => {
-        // Transform the URL to use thumbnail-property-images bucket
+        // Transform the URL to use the correct bucket names
+        const originalUrl = image.url.replace(
+          "/propertyImages/",
+          "/property-images/"
+        );
         const thumbnailUrl = image.url.replace(
           "/propertyImages/",
           "/thumbnails-property-images/"
         );
-        const imageUrl = image.url.replace(
-          "/propertyImages/",
-          "/property-images/"
-        );
-        console.log(thumbnailUrl);
+
+        // Create a fallback URL using the original propertyImages bucket
+        const fallbackUrl = image.url;
+
         return {
-          original: imageUrl,
+          original: originalUrl,
           thumbnail: thumbnailUrl,
+          fallback: fallbackUrl,
+          renderItem: (item: any) => (
+            <div className="relative w-full h-full">
+              <Image
+                src={originalUrl}
+                alt={`${property.name} - ${property.location.city} ${property.location.district} ${property.location.neighborhood} - ${property.type.name} ${property.subType.name}`}
+                fill
+                className="object-cover"
+                onError={(e) => {
+                  const img = e.target as HTMLImageElement;
+                  img.src = fallbackUrl;
+                }}
+              />
+            </div>
+          ),
+          renderThumbInner: (item: any) => (
+            <div className="relative w-full h-full">
+              <Image
+                src={thumbnailUrl}
+                alt={`${property.name} - ${property.location.city} ${property.location.district} ${property.location.neighborhood} - ${property.type.name} ${property.subType.name} - Thumbnail`}
+                fill
+                className="object-cover"
+                onError={(e) => {
+                  const img = e.target as HTMLImageElement;
+                  img.src = fallbackUrl;
+                }}
+              />
+            </div>
+          ),
         };
       });
       galleryItems = [...galleryItems, ...imageItems];
