@@ -206,13 +206,13 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
           : image.url;
 
         return {
-          original: originalUrl,
-          thumbnail: thumbnailUrl,
+          original: image.url, // Use original URL for main image
+          thumbnail: image.url, // Use original URL for thumbnail
           fallback: image.url,
           renderItem: (item: any) => (
             <div className="relative w-full h-full">
               <Image
-                src={originalUrl}
+                src={image.url}
                 alt={`${property.name} - ${property.location.city} ${property.location.district} ${property.location.neighborhood} - ${property.type.name} ${property.subType.name}`}
                 fill
                 className="object-cover"
@@ -226,7 +226,7 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
           renderThumbInner: (item: any) => (
             <div className="relative w-full h-full">
               <Image
-                src={thumbnailUrl}
+                src={image.url}
                 alt={`${property.name} - ${property.location.city} ${property.location.district} ${property.location.neighborhood} - ${property.type.name} ${property.subType.name} - Thumbnail`}
                 fill
                 className="object-cover"
@@ -430,6 +430,19 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                 }
                 .image-gallery-thumbnail:hover {
                   border-color: #0066cc !important;
+                }
+                .image-gallery-thumbnail .image-gallery-thumbnail-inner {
+                  width: 100% !important;
+                  height: 100% !important;
+                  position: relative !important;
+                }
+                .image-gallery-thumbnail .image-gallery-thumbnail-image {
+                  width: 100% !important;
+                  height: 100% !important;
+                  object-fit: cover !important;
+                  position: absolute !important;
+                  top: 0 !important;
+                  left: 0 !important;
                 }
               `}</style>
             </div>
