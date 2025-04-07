@@ -52,8 +52,9 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
   useEffect(() => {
     const fetchProperty = async () => {
       try {
-        const API_URL = process.env.NEXT_PUBLIC_API_URL || "/emlak/api";
-        const response = await fetch(`${API_URL}/properties/${params.id}/`);
+        const API_URL =
+          process.env.NODE_ENV === "production" ? "/emlak/api" : "/api";
+        const response = await fetch(`${API_URL}/properties/${params.id}`);
         if (!response.ok) {
           throw new Error("Property not found");
         }
@@ -184,7 +185,20 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
 
     if (propertyImages && propertyImages.length > 0) {
       const imageItems = propertyImages.map((image) => {
-        // Transform the URL to use thumbnail-property-images bucket
+        // For Supabase URLs, we need to handle them differently
+        if (image.url.includes("supabase.co")) {
+          // Create thumbnail URL by replacing 'property-images' with 'thumbnails-property-images'
+          const thumbnailUrl = image.url.replace(
+            "property-images",
+            "thumbnails-property-images"
+          );
+          return {
+            original: image.url,
+            thumbnail: thumbnailUrl,
+          };
+        }
+
+        // Fallback for other URL formats
         const thumbnailUrl = image.url.replace(
           "/propertyImages/",
           "/thumbnails-property-images/"
@@ -193,7 +207,6 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
           "/propertyImages/",
           "/property-images/"
         );
-        console.log(thumbnailUrl);
         return {
           original: imageUrl,
           thumbnail: thumbnailUrl,
