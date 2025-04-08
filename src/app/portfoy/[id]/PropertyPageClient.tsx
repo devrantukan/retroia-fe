@@ -95,42 +95,62 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
 
   useEffect(() => {
     const fetchAgent = async () => {
-      if (params.agentId && params.agentSlug) {
+      if (params.agentId) {
         try {
-          const agentResponse = await fetch(
-            `/api/officeWorker/${params.agentId}`
-          );
-          if (agentResponse.ok) {
-            const agentData = await agentResponse.json();
-            console.log("Fetched agent data:", agentData); // Debug log
-            // Transform the data to match the expected format
-            const transformedAgentData = {
-              id: agentData.id,
-              name: agentData.name,
-              surname: agentData.surname,
-              email: agentData.email,
-              phone: agentData.phone,
-              avatarUrl: agentData.avatarUrl,
-              officeId: agentData.officeId,
-              office: {
-                id: agentData.office.id,
-                name: agentData.office.name,
-                slug: agentData.office.name.toLowerCase().replace(/\s+/g, "-"),
-              },
-              role: {
-                id: agentData.role.id,
-                name: agentData.role.name,
-                slug: agentData.role.slug,
-              },
-              slug: params.agentSlug, // Use the agentSlug from URL parameters
-            };
-            console.log("Transformed agent data:", transformedAgentData); // Debug log
-            setAgent(transformedAgentData);
-          } else {
-            console.error("Agent data not found");
+          const API_URL = new URL(
+            `/api/officeWorker/${params.agentId}`,
+            window.location.origin
+          ).toString();
+
+          const agentResponse = await fetch(API_URL, {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              "Cache-Control": "no-cache",
+            },
+            credentials: "same-origin",
+            redirect: "follow",
+          });
+
+          if (!agentResponse.ok) {
+            throw new Error(
+              `Failed to fetch agent data: ${agentResponse.status}`
+            );
           }
+
+          const agentData = await agentResponse.json();
+          if (!agentData) {
+            console.error("No agent data received");
+            return;
+          }
+
+          const transformedAgentData = {
+            id: agentData.id,
+            name: agentData.name || "",
+            surname: agentData.surname || "",
+            email: agentData.email || "",
+            phone: agentData.phone || "",
+            avatarUrl: agentData.avatarUrl || "",
+            officeId: agentData.officeId,
+            office: {
+              id: agentData.office?.id || 0,
+              name: agentData.office?.name || "",
+              slug: (agentData.office?.name || "")
+                .toLowerCase()
+                .replace(/\s+/g, "-"),
+            },
+            role: {
+              id: agentData.role?.id || 0,
+              name: agentData.role?.name || "",
+              slug: agentData.role?.slug || "",
+            },
+            slug: agentData.slug || params.agentSlug || "",
+          };
+          setAgent(transformedAgentData);
         } catch (agentError) {
           console.error("Error fetching agent data:", agentError);
+          // Set agent to null to indicate failed fetch
+          setAgent(null);
         }
       }
     };

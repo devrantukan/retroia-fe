@@ -7,7 +7,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 
 interface ProjectCardProps {
@@ -32,14 +32,14 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const nextImage = () => {
+  const nextImage = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setCurrentImageIndex((prev) =>
       prev === project.images.length - 1 ? 0 : prev + 1
     );
     setTimeout(() => setIsTransitioning(false), 500);
-  };
+  }, [isTransitioning, project.images.length]);
 
   const prevImage = () => {
     if (isTransitioning) return;
@@ -59,10 +59,10 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
     }, 5000);
 
     return () => clearInterval(timer);
-  }, [currentImageIndex, project.images.length]);
+  }, [currentImageIndex, project.images.length, nextImage]);
 
   return (
-    <Link href={`/projeler/${project.slug}`}>
+    <Link href={`/emlak/projeler/${project.slug}`}>
       <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
         <div className="flex flex-col lg:flex-row">
           {/* Image Section */}
