@@ -98,7 +98,9 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
       if (params.agentId) {
         try {
           const API_URL = new URL(
-            `/api/officeWorker/${params.agentId}`,
+            process.env.NODE_ENV === "production"
+              ? `/emlak/api/officeWorker/${params.agentId}/`
+              : `/api/officeWorker/${params.agentId}`,
             window.location.origin
           ).toString();
 
