@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import { CalendarIcon } from "@heroicons/react/24/outline";
+import { MapPin } from "lucide-react";
 
 const ProjectMap = dynamic(() => import("./ProjectMap"), {
   ssr: false,
@@ -21,6 +22,10 @@ interface ProjectGalleryProps {
   startDate?: Date;
   endDate?: Date;
   location?: {
+    country: string;
+    city: string;
+    district: string;
+    neighborhood: string;
     latitude: number | null;
     longitude: number | null;
   } | null;
@@ -49,9 +54,6 @@ export default function ProjectGallery({
         <div className="relative aspect-[16/9] rounded-lg overflow-hidden bg-slate-100 flex items-center justify-center">
           <p>Görsel bulunamadı</p>
         </div>
-        {location?.latitude && location?.longitude && (
-          <ProjectMap lat={location.latitude} lng={location.longitude} />
-        )}
       </div>
     );
   }
@@ -69,39 +71,46 @@ export default function ProjectGallery({
               className="object-cover"
             />
             {/* Title and Dates Overlay */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <div className="bg-black/50 backdrop-blur-sm px-8 py-4 rounded-lg text-center">
-                <h1 className="text-4xl font-bold text-white mb-4">{name}</h1>
-                {(startDate || endDate) && (
-                  <div className="flex items-center justify-center gap-6 text-white/90">
-                    {startDate && (
-                      <div className="flex items-center gap-2">
-                        <CalendarIcon className="w-5 h-5" />
-                        <span>
-                          Başlangıç:{" "}
-                          {startDate.toLocaleDateString("tr-TR", {
-                            day: "numeric",
-                            month: "long",
-                            year: "numeric",
-                          })}
-                        </span>
-                      </div>
-                    )}
-                    {endDate && (
-                      <div className="flex items-center gap-2">
-                        <CalendarIcon className="w-5 h-5" />
-                        <span>
-                          Teslim:{" "}
-                          {endDate.toLocaleDateString("tr-TR", {
-                            day: "numeric",
-                            month: "long",
-                            year: "numeric",
-                          })}
-                        </span>
-                      </div>
-                    )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-6">
+              <div className="space-y-4">
+                <h1 className="text-3xl font-bold text-white">{name}</h1>
+                {location && (
+                  <div className="flex items-center gap-2 text-white/90">
+                    <MapPin className="w-5 h-5" />
+                    <span>
+                      {location.city}, {location.district}
+                      {location.neighborhood && `, ${location.neighborhood}`}
+                    </span>
                   </div>
                 )}
+                <div className="flex flex-col gap-2">
+                  {startDate && (
+                    <div className="flex items-center gap-2 text-white/90">
+                      <CalendarIcon className="w-5 h-5" />
+                      <span>
+                        Başlangıç:{" "}
+                        {startDate.toLocaleDateString("tr-TR", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </span>
+                    </div>
+                  )}
+                  {endDate && (
+                    <div className="flex items-center gap-2 text-white/90">
+                      <CalendarIcon className="w-5 h-5" />
+                      <span>
+                        Teslim:{" "}
+                        {endDate.toLocaleDateString("tr-TR", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </>
@@ -128,11 +137,6 @@ export default function ProjectGallery({
           </>
         )}
       </div>
-
-      {/* Map */}
-      {location?.latitude && location?.longitude && (
-        <ProjectMap lat={location.latitude} lng={location.longitude} />
-      )}
     </div>
   );
 }

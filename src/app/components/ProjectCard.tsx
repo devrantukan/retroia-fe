@@ -158,29 +158,25 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                 {/* Project Dates */}
                 <div className="flex flex-col gap-2 text-slate-600">
                   <div className="flex items-center gap-2 bg-white/50 backdrop-blur-sm px-3 py-2 rounded-lg">
-                    <CalendarIcon className="w-4 h-4 text-primary-500" />
-                    <span className="text-sm">
-                      Başlangıç:{" "}
-                      <span className="font-medium">
-                        {project.startDate?.toLocaleDateString("tr-TR", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        })}
-                      </span>
+                    <CalendarIcon className="w-4 h-4 text-primary-500 flex-shrink-0" />
+                    <span className="text-sm w-20">Başlangıç:</span>
+                    <span className="text-sm font-medium">
+                      {project.startDate?.toLocaleDateString("tr-TR", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 bg-white/50 backdrop-blur-sm px-3 py-2 rounded-lg">
-                    <CalendarIcon className="w-4 h-4 text-primary-500" />
-                    <span className="text-sm">
-                      Teslim:{" "}
-                      <span className="font-medium">
-                        {project.endDate?.toLocaleDateString("tr-TR", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        })}
-                      </span>
+                    <CalendarIcon className="w-4 h-4 text-primary-500 flex-shrink-0" />
+                    <span className="text-sm w-20">Teslim:</span>
+                    <span className="text-sm font-medium">
+                      {project.endDate?.toLocaleDateString("tr-TR", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
                     </span>
                   </div>
                 </div>
