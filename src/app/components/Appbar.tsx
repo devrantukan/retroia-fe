@@ -117,6 +117,9 @@ const Appbar = () => {
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
+        <NavbarItem isActive={pathname === getRoute("/projelerimiz")}>
+          <Link href={getRoute("/projelerimiz/")}>Projelerimiz</Link>
+        </NavbarItem>
 
         <NavbarItem isActive={pathname === getRoute("/ofislerimiz")}>
           <Link href={getRoute("/ofislerimiz/")}>Ofislerimiz</Link>
@@ -202,6 +205,21 @@ const Appbar = () => {
             </DropdownMenu>
           </Dropdown>
         </NavbarMenuItem>
+        <NavbarItem
+          isActive={pathname === getRoute("/ofislerimiz")}
+          className="h-1/4"
+        >
+          <Link
+            href={getRoute("/projelerimiz/")}
+            {...(pathname === getRoute("/projelerimiz/")
+              ? { "aria-current": "page" }
+              : { color: "foreground" })}
+            className="text-3xl text-blue-950"
+            onClick={() => setIsMenuOpen()}
+          >
+            Projeler
+          </Link>
+        </NavbarItem>
         <NavbarItem
           isActive={pathname === getRoute("/ofislerimiz")}
           className="h-1/4"
