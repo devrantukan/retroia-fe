@@ -61,9 +61,26 @@ const OfficeWorkerPage = async ({ params }: Props) => {
       officeId: officeWorker?.office?.id,
       publishingStatus: "PUBLISHED",
     },
-    include: {
-      images: true,
-      location: true,
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      startDate: true,
+      endDate: true,
+      assignedAgents: true,
+      images: {
+        select: {
+          url: true,
+        },
+      },
+      location: {
+        select: {
+          country: true,
+          city: true,
+          district: true,
+          neighborhood: true,
+        },
+      },
       feature: true,
       unitSizes: {
         select: {
@@ -75,6 +92,7 @@ const OfficeWorkerPage = async ({ params }: Props) => {
           value: true,
         },
       },
+      slug: true,
     },
   });
 

@@ -6,15 +6,29 @@ interface OfficeMapProps {
 }
 
 export default function OfficeMap({ lat, lng }: OfficeMapProps) {
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY;
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey:
-      process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY ||
-      "AIzaSyDMTvXdDIxkmlxtPmBRBEUvpwX1PtWQTr4",
+    googleMapsApiKey: apiKey || "",
   });
 
-  const center = { lat, lng };
+  if (!apiKey) {
+    console.error("Google Maps API key is not configured");
+    return (
+      <div className="w-full aspect-square bg-slate-100 flex items-center justify-center">
+        <p>Harita yüklenemedi: API anahtarı yapılandırılmamış</p>
+      </div>
+    );
+  }
 
-  if (!isLoaded) return <div>Loading...</div>;
+  if (!isLoaded) {
+    return (
+      <div className="w-full aspect-square bg-slate-100 flex items-center justify-center">
+        <p>Harita yükleniyor...</p>
+      </div>
+    );
+  }
+
+  const center = { lat, lng };
 
   return (
     <GoogleMap

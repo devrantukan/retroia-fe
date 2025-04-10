@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { CalendarIcon } from "@heroicons/react/24/outline";
 
 interface ProjectCardProps {
   project: Project & {
@@ -25,6 +26,8 @@ interface ProjectCardProps {
     socialFeatures: {
       value: string;
     }[];
+    startDate: Date;
+    endDate: Date;
   };
 }
 
@@ -66,7 +69,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
       <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
         <div className="flex flex-col lg:flex-row">
           {/* Image Section */}
-          <div className="relative w-full lg:w-96 aspect-[4/3]">
+          <div className="relative w-full lg:w-1/2 aspect-[4/3]">
             {project.images.map((image, index) => (
               <div
                 key={index}
@@ -82,6 +85,9 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                   className="w-full h-full object-cover"
                   alt={`${project.name} - Image ${index + 1}`}
                   removeWrapper
+                  width={640}
+                  height={480}
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
             ))}
@@ -91,14 +97,22 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             {project.images.length > 1 && (
               <>
                 <button
-                  onClick={prevImage}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    prevImage();
+                  }}
                   className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-colors duration-200 z-20"
                   disabled={isTransitioning}
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <button
-                  onClick={nextImage}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    nextImage();
+                  }}
                   className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-colors duration-200 z-20"
                   disabled={isTransitioning}
                 >
@@ -133,25 +147,49 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           </div>
 
           {/* Content Section */}
-          <div className="flex flex-col flex-grow p-5 lg:p-7">
+          <div className="flex flex-col flex-grow w-full lg:w-1/2 p-4 lg:p-5 lg:pt-0">
             {/* Project Info */}
-            <div className="p-4">
-              <h3 className="text-xl font-bold mb-2">{project.name}</h3>
+            <div>
+              <div className="bg-gradient-to-r from-primary-500/10 to-transparent p-4 rounded-lg">
+                <h3 className="text-xl font-bold text-primary-600 mb-2">
+                  {project.name}
+                </h3>
 
-              {/* Location */}
-              <div className="flex items-center gap-2 text-slate-600 mb-4">
-                <MapPin className="w-4 h-4" />
-                <span>
-                  {project.location?.city}, {project.location?.district}
-                  {project.location?.neighborhood &&
-                    `, ${project.location?.neighborhood}`}
-                </span>
+                {/* Project Dates */}
+                <div className="flex flex-col gap-2 text-slate-600">
+                  <div className="flex items-center gap-2 bg-white/50 backdrop-blur-sm px-3 py-2 rounded-lg">
+                    <CalendarIcon className="w-4 h-4 text-primary-500" />
+                    <span className="text-sm">
+                      Başlangıç:{" "}
+                      <span className="font-medium">
+                        {project.startDate?.toLocaleDateString("tr-TR", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </span>
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/50 backdrop-blur-sm px-3 py-2 rounded-lg">
+                    <CalendarIcon className="w-4 h-4 text-primary-500" />
+                    <span className="text-sm">
+                      Teslim:{" "}
+                      <span className="font-medium">
+                        {project.endDate?.toLocaleDateString("tr-TR", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </span>
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Unit Sizes */}
             {project.unitSizes && project.unitSizes.length > 0 && (
-              <div className="mb-4 lg:mb-5">
+              <div className="mt-4">
                 <div className="flex items-center gap-2 mb-3">
                   <Building2 className="w-4 h-4 text-primary-500" />
                   <p className="text-sm font-semibold text-slate-700">
@@ -173,7 +211,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 
             {/* Social Features */}
             {project.socialFeatures && project.socialFeatures.length > 0 && (
-              <div>
+              <div className="mt-4">
                 <div className="flex items-center gap-2 mb-3">
                   <Users className="w-4 h-4 text-primary-500" />
                   <p className="text-sm font-semibold text-slate-700">
@@ -192,6 +230,16 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                 </div>
               </div>
             )}
+
+            {/* Location */}
+            <div className="flex items-center gap-2 text-slate-600 mt-auto pt-3">
+              <MapPin className="w-4 h-4 text-primary-500" />
+              <span className="text-sm">
+                {project.location?.city}, {project.location?.district}
+                {project.location?.neighborhood &&
+                  `, ${project.location?.neighborhood}`}
+              </span>
+            </div>
           </div>
         </div>
       </div>

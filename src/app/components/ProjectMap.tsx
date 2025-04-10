@@ -8,26 +8,38 @@ interface ProjectMapProps {
 }
 
 export default function ProjectMap({ lat, lng }: ProjectMapProps) {
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY || "",
+    googleMapsApiKey: apiKey || "",
   });
+
+  if (!apiKey) {
+    console.error("Google Maps API key is not configured");
+    return (
+      <div className="w-full h-full min-h-[50vh] mb-4 bg-slate-100 flex items-center justify-center">
+        <p>Harita yüklenemedi: API anahtarı yapılandırılmamış</p>
+      </div>
+    );
+  }
 
   if (!isLoaded) {
     return (
-      <div className="h-[400px] rounded-lg overflow-hidden bg-slate-100 flex items-center justify-center">
+      <div className="w-full h-full min-h-[50vh] mb-4 bg-slate-100 flex items-center justify-center">
         <p>Harita yükleniyor...</p>
       </div>
     );
   }
 
+  const center = { lat, lng };
+
   return (
-    <div className="h-[400px] rounded-lg overflow-hidden">
+    <div className="w-full h-full min-h-[50vh] mb-4">
       <GoogleMap
         zoom={15}
-        center={{ lat, lng }}
-        mapContainerClassName="w-full h-full"
+        center={center}
+        mapContainerStyle={{ width: "100%", height: "100%", minHeight: "50vh" }}
       >
-        <Marker position={{ lat, lng }} />
+        <Marker position={center} />
       </GoogleMap>
     </div>
   );

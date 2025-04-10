@@ -234,7 +234,7 @@ const OfficeTabs = ({ office }: Props) => {
           {office.projects.length > 0 && (
             <Tab id="tab-projects" key="projects" title="Projelerimiz">
               <Card>
-                <CardBody>
+                <CardBody className="space-y-6">
                   {office.projects.map((project: any, index: number) => (
                     <ProjectCard project={project} key={index} />
                   ))}
