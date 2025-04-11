@@ -118,7 +118,9 @@ const Appbar = () => {
           </DropdownMenu>
         </Dropdown>
         <NavbarItem isActive={pathname === getRoute("/projelerimiz")}>
-          <Link href={getRoute("/projelerimiz/")}>Projelerimiz</Link>
+          <Link href="https://www.retroia.com/projeler/" target="_blank">
+            Projelerimiz
+          </Link>
         </NavbarItem>
 
         <NavbarItem isActive={pathname === getRoute("/ofislerimiz")}>
@@ -210,14 +212,12 @@ const Appbar = () => {
           className="h-1/4"
         >
           <Link
-            href={getRoute("/projelerimiz/")}
-            {...(pathname === getRoute("/projelerimiz/")
-              ? { "aria-current": "page" }
-              : { color: "foreground" })}
+            href="https://www.retroia.com/projeler/"
+            target="_blank"
             className="text-3xl text-blue-950"
             onClick={() => setIsMenuOpen()}
           >
-            Projeler
+            Projelerimiz
           </Link>
         </NavbarItem>
         <NavbarItem

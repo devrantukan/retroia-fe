@@ -65,7 +65,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   }, [currentImageIndex, project.images.length, nextImage]);
 
   return (
-    <Link href={`/emlak/projeler/${project.slug}`}>
+    <Link href={`/emlak/projelerimiz/${project.slug}/`}>
       <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
         <div className="flex flex-col lg:flex-row">
           {/* Image Section */}
