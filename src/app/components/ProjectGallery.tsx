@@ -18,7 +18,7 @@ interface ProjectGalleryProps {
     latitude: number | null;
     longitude: number | null;
   } | null;
-  catalogUrl?: string;
+  catalogUrl: string | null;
 }
 
 export default function ProjectGallery({

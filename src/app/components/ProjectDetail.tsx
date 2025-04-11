@@ -28,7 +28,7 @@ interface ProjectDetailProps {
     deedInfo: string;
     landArea: string;
     nOfUnits: string;
-    catalogUrl?: string;
+    catalogUrl: string | null;
   };
   agent?: OfficeWorker & {
     office: {
