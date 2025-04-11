@@ -6,7 +6,7 @@ interface OfficeMapProps {
 }
 
 export default function OfficeMap({ lat, lng }: OfficeMapProps) {
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY;
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: apiKey || "",
   });

@@ -615,19 +615,13 @@ const OfficeTabs = ({ office }: Props) => {
           <Tab key="customer-reviews" title="Müşteri Yorumları">
             <Card>
               <CardBody>
-                {reviewsOfOffice.map((reviews, index) => (
-                  <OfficeWorkerReviews reviews={reviews} key={index} />
-                ))}
-                <div className="mt-6 text-center">
-                  <button
-                    type="button"
-                    className="mb-2 me-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-                  >
-                    {reviewsOfOffice.length > 0
-                      ? "Daha fazla yorum göster"
-                      : "Henüz yorum yapılmamış"}
-                  </button>
-                </div>
+                {reviewsOfOffice.length > 0 ? (
+                  <OfficeWorkerReviews reviews={reviewsOfOffice.flat()} />
+                ) : (
+                  <p className="text-center text-gray-500">
+                    Henüz yorum yapılmamış
+                  </p>
+                )}
               </CardBody>
             </Card>
           </Tab>

@@ -28,6 +28,7 @@ interface ProjectCardProps {
     }[];
     startDate: Date;
     endDate: Date;
+    catalogUrl?: string;
   };
 }
 
@@ -123,23 +124,24 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 
             {/* Dots Navigation */}
             {project.images.length > 1 && (
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-50">
                 {project.images.map((_, index) => (
-                  <button
+                  <div
                     key={index}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
                       if (!isTransitioning) {
                         setIsTransitioning(true);
                         setCurrentImageIndex(index);
                         setTimeout(() => setIsTransitioning(false), 500);
                       }
                     }}
-                    className={`w-2 h-2 rounded-full transition-colors duration-200 ${
+                    className={`w-2 h-2 rounded-full transition-colors duration-200 cursor-pointer ${
                       index === currentImageIndex
                         ? "bg-white"
                         : "bg-white/50 hover:bg-white/75"
                     }`}
-                    disabled={isTransitioning}
                   />
                 ))}
               </div>
