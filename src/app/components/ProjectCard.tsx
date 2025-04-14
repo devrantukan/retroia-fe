@@ -1,4 +1,4 @@
-import { Card, Image } from "@nextui-org/react";
+import { Card } from "@nextui-org/react";
 import { Project } from "@prisma/client";
 import {
   MapPin,
@@ -10,6 +10,7 @@ import {
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { CalendarIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 interface ProjectCardProps {
   project: Project & {
@@ -81,14 +82,12 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                 }`}
               >
                 <Image
-                  radius="none"
                   src={image.url}
-                  className="w-full h-full object-cover"
                   alt={`${project.name} - Image ${index + 1}`}
-                  removeWrapper
-                  width={640}
-                  height={480}
+                  fill
+                  className="object-cover"
                   sizes="(max-width: 768px) 100vw, 33vw"
+                  priority={index === 0}
                 />
               </div>
             ))}
