@@ -192,15 +192,12 @@ const ConnectedScrollableResults = connectStateResults(ScrollableResults);
 
 const BlogSearchComponent = ({ type, contract, country, city, district, neighborhood }) => {
   const postCollection = `posts`;
+  const [isOpen, setIsOpen] = useState(false);
+  const searchResultsRef = useRef(null);
 
-   const [isOpen, setIsOpen] = useState(false);
-   const searchResultsRef = useRef(null);
-
-   const handleClick = () => {
+  const handleClick = () => {
     setIsOpen(!isOpen);
-   };
-
-  //console.log('parameters1:', contract, type, country, city , district, neighborhood )
+  };
 
   let url = `type:=${type}&&contract:=${contract}`
 
@@ -219,8 +216,6 @@ const BlogSearchComponent = ({ type, contract, country, city, district, neighbor
     }
   }
 
-  //console.log('url',url)
-
   const transformItems = (items) => {
     return items.map((item) => ({
       ...item,
@@ -228,11 +223,7 @@ const BlogSearchComponent = ({ type, contract, country, city, district, neighbor
     })).sort((a, b) => a.label < b.label ? -1 : 1);
   };
 
-
-
-  // const filters = country ? `type:=${type}&&contract:=${contract}&&country:=${country}` : `type:=${type}&&contract:=${contract}`
  const filters = url
-//console.log(filters)
 
 
 

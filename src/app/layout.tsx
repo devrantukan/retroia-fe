@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import GoogleAnalytics from "./components/GoogleAnalytics";
 import Footer from "./components/Footer";
 import "react-toastify/dist/ReactToastify.css";
+import { CurrencyProvider } from "./context/CurrencyContext";
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -125,12 +126,14 @@ export default function RootLayout({
         )}
       </head>
       <body className={`${raleway.className} font-sans`}>
-        <Providers>
-          <Appbar>{/* <SignInPanel /> */}</Appbar>
-          {children}
-          <ToastContainer />
-          <Footer />
-        </Providers>
+        <CurrencyProvider>
+          <Providers>
+            <Appbar>{/* <SignInPanel /> */}</Appbar>
+            {children}
+            <ToastContainer />
+            <Footer />
+          </Providers>
+        </CurrencyProvider>
       </body>
     </html>
   );

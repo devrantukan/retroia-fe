@@ -23,6 +23,7 @@ import { X, EnvelopeSimple, Phone } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 import Share from "@/app/components/Share";
+import { getLocationInfo } from "@/app/utils/getLocationInfo";
 
 interface PropertyPageClientProps {
   params: {
@@ -360,31 +361,19 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                       <>
                         <div className="flex items-center gap-3 flex-wrap lg:justify-end">
                           <span className="text-xl lg:text-2xl font-bold text-primary order-1">
-                            {property.discountedPrice.toLocaleString("tr-TR", {
-                              style: "currency",
-                              currency: "TRY",
-                              maximumFractionDigits: 0,
-                            })}
+                            <PriceDisplay price={property.discountedPrice} />
                           </span>
                           <span className="bg-red-500 text-white text-xs px-3 py-1.5 rounded-full order-2">
                             İNDİRİMLİ
                           </span>
                         </div>
                         <span className="text-base lg:text-lg line-through text-gray-400 mt-2">
-                          {property.price.toLocaleString("tr-TR", {
-                            style: "currency",
-                            currency: "TRY",
-                            maximumFractionDigits: 0,
-                          })}
+                          <PriceDisplay price={property.price} />
                         </span>
                       </>
                     ) : (
                       <span className="text-xl lg:text-2xl font-bold text-primary">
-                        {property.price.toLocaleString("tr-TR", {
-                          style: "currency",
-                          currency: "TRY",
-                          maximumFractionDigits: 0,
-                        })}
+                        <PriceDisplay price={property.price} />
                       </span>
                     )}
                   </div>
@@ -677,5 +666,42 @@ const AgentInfo = ({
     </div>
   </div>
 );
+
+const PriceDisplay = ({ price }: { price: number }) => {
+  const [currency, setCurrency] = useState("TRY");
+  const [rate, setRate] = useState(1);
+
+  useEffect(() => {
+    const detectCurrency = async () => {
+      try {
+        const data = await getLocationInfo();
+        if (data && !data.error) {
+          setCurrency(data.currency);
+          setRate(data.rate);
+        }
+      } catch (error) {
+        console.error("Error fetching location or rates:", error);
+        // Fallback to TRY
+        setCurrency("TRY");
+        setRate(1);
+      }
+    };
+
+    detectCurrency();
+  }, []);
+
+  const formatPrice = (price: number, currency: string, rate: number) => {
+    const convertedPrice = parseFloat((price * rate).toFixed(2));
+    const formatter = new Intl.NumberFormat("tr-TR", {
+      style: "currency",
+      currency: currency,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    });
+    return formatter.format(convertedPrice);
+  };
+
+  return formatPrice(price, currency, rate);
+};
 
 export default PropertyPageClient;

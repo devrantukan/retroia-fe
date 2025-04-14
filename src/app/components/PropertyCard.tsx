@@ -6,6 +6,7 @@ import { Avatar } from "@nextui-org/react";
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 import { getLocationInfo } from "../utils/getLocationInfo";
+import PriceDisplay from "./PriceDisplay";
 
 interface PropertyCardProps {
   property: {
@@ -52,43 +53,6 @@ interface PropertyCardProps {
   showAvatar?: boolean;
   index?: number;
 }
-
-const PriceDisplay = ({ price }: { price: number }) => {
-  const [currency, setCurrency] = useState("TRY");
-  const [rate, setRate] = useState(1);
-
-  useEffect(() => {
-    const detectCurrency = async () => {
-      try {
-        const data = await getLocationInfo();
-        if (data && !data.error) {
-          setCurrency(data.currency);
-          setRate(data.rate);
-        }
-      } catch (error) {
-        console.error("Error fetching location or rates:", error);
-        // Fallback to TRY
-        setCurrency("TRY");
-        setRate(1);
-      }
-    };
-
-    detectCurrency();
-  }, []);
-
-  const formatPrice = (price: number, currency: string, rate: number) => {
-    const convertedPrice = parseFloat((price * rate).toFixed(2));
-    const formatter = new Intl.NumberFormat("tr-TR", {
-      style: "currency",
-      currency: currency,
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    });
-    return formatter.format(convertedPrice);
-  };
-
-  return formatPrice(price, currency, rate);
-};
 
 const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -199,27 +163,15 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
                 {property.discountedPrice > 0 ? (
                   <div className="flex items-center gap-2 w-full">
                     <span className="text-2xl font-bold text-primary">
-                      {property.discountedPrice.toLocaleString("tr-TR", {
-                        style: "currency",
-                        currency: "TRY",
-                        maximumFractionDigits: 0,
-                      })}
+                      <PriceDisplay price={property.discountedPrice} />
                     </span>
                     <span className="text-lg line-through text-gray-400">
-                      {property.price.toLocaleString("tr-TR", {
-                        style: "currency",
-                        currency: "TRY",
-                        maximumFractionDigits: 0,
-                      })}
+                      <PriceDisplay price={property.price} />
                     </span>
                   </div>
                 ) : (
                   <span className="text-2xl font-bold text-primary">
-                    {property.price.toLocaleString("tr-TR", {
-                      style: "currency",
-                      currency: "TRY",
-                      maximumFractionDigits: 0,
-                    })}
+                    <PriceDisplay price={property.price} />
                   </span>
                 )}
               </div>
