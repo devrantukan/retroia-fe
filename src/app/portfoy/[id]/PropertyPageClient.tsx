@@ -380,7 +380,9 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                   <Share
                     title={property.name}
                     type={"İlan"}
-                    avatarUrl={property.images[0].url || ""}
+                    avatarUrl={
+                      property.images?.[0]?.url || "/images/placeholder.png"
+                    }
                   />
                 </div>
               </div>
