@@ -17,8 +17,33 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams.toString());
   const pagenum = params.get("pagenum");
+  const tab = params.get("tab");
 
   const pathname = usePathname();
+  const router = useRouter();
+  const [activeTab, setActiveTab] = React.useState(tab || "about-me");
+
+  const handleTabChange = (value: React.Key) => {
+    //update the state
+    setActiveTab(value.toString());
+    // update the URL query parameter
+    router.replace(`?tab=${value}`, { scroll: false });
+
+    // Smooth scroll to tab
+    const selectedTab = document.getElementById(`tab-${value}`);
+    if (selectedTab) {
+      selectedTab.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
+  // if the query parameter changes, update the state
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tabParam = params.get("tab");
+    if (tabParam) {
+      setActiveTab(tabParam);
+    }
+  }, []);
 
   const selectedPage = parseInt(pagenum || "1");
   const elementsPerPage = 8;
@@ -41,8 +66,12 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
   return (
     <div className="p-4 flex flex-col justify-between lg:w-3/4">
       <div className="flex w-full flex-col">
-        <Tabs aria-label="Options">
-          <Tab key="about-us" title="Hakkımda">
+        <Tabs
+          aria-label="Options"
+          selectedKey={activeTab}
+          onSelectionChange={handleTabChange}
+        >
+          <Tab id="tab-about-me" key="about-me" title="Hakkımda">
             <Card>
               <CardBody>
                 <div dangerouslySetInnerHTML={{ __html: officeWorker.about }} />
@@ -50,7 +79,7 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
             </Card>
           </Tab>
           {paginatedArray.length > 0 && (
-            <Tab key="properties" title="Portföylerim">
+            <Tab id="tab-properties" key="properties" title="Portföylerim">
               <Card>
                 <CardBody>
                   {paginatedArray.map((property: any, index: number) => (
@@ -70,9 +99,9 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
             </Tab>
           )}
           {officeWorker.assignedProjects.length > 0 && (
-            <Tab key="projects" title="Projelerimiz">
+            <Tab id="tab-projects" key="projects" title="Projelerimiz">
               <Card>
-                <CardBody>
+                <CardBody className="space-y-6">
                   {officeWorker.assignedProjects.map((project: any) => (
                     <ProjectCard project={project} key={project._id} />
                   ))}
@@ -81,7 +110,11 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
             </Tab>
           )}
           {officeWorker.reviews.length > 0 && (
-            <Tab key="customer-reviews" title="Müşteri Yorumları">
+            <Tab
+              id="tab-customer-reviews"
+              key="customer-reviews"
+              title="Müşteri Yorumları"
+            >
               <Card>
                 <CardBody>
                   <OfficeWorkerReviews reviews={officeWorker.reviews} />
