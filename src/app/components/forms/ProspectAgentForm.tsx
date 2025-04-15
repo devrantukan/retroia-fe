@@ -152,7 +152,9 @@ export default function ProspectAgentForm({
   useEffect(() => {
     async function fetchDistricts(city: string) {
       try {
-        const API_URL = process.env.NEXT_PUBLIC_API_URL || "/emlak/api";
+        const API_URL =
+          process.env.NEXT_PUBLIC_API_URL ||
+          "https://www.retroia.com/emlak/api";
         const encodedCity = encodeURIComponent(city);
         const response = await axios.get(
           `${API_URL}/data/districts/${encodedCity}/`
@@ -234,7 +236,8 @@ export default function ProspectAgentForm({
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || "/emlak/api";
+      const API_URL =
+        process.env.NEXT_PUBLIC_API_URL || "https://www.retroia.com/emlak/api";
       const { data: responseData } = await axios.post(
         `${API_URL}/forms/post-prospect-agent-form`,
         data,
