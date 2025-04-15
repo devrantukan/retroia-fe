@@ -21,7 +21,7 @@ export default function ContactForm({ officeId }: { officeId: string }) {
     try {
       const API_URL = process.env.NEXT_PUBLIC_API_URL || "/emlak/api";
       const response = await axios.post(
-        `${API_URL}/contact-requests`,
+        `${API_URL}/contact-requests/`,
         formData
       );
 

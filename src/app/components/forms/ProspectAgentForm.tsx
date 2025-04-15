@@ -239,7 +239,7 @@ export default function ProspectAgentForm({
       const API_URL =
         process.env.NEXT_PUBLIC_API_URL || "https://www.retroia.com/emlak/api";
       const { data: responseData } = await axios.post(
-        `${API_URL}/forms/post-prospect-agent-form`,
+        `${API_URL}/forms/post-prospect-agent-form/`,
         data,
         {
           headers: {
