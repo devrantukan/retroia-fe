@@ -50,7 +50,8 @@ const Appbar = () => {
               width={125}
               height={80}
               alt="Retroia Logo"
-              className="h-[40px] sm:w-full"
+              className="h-[40px] w-auto object-contain"
+              priority
             />
           </Link>
         </NavbarBrand>
@@ -208,7 +209,7 @@ const Appbar = () => {
           </Dropdown>
         </NavbarMenuItem>
         <NavbarItem
-          isActive={pathname === getRoute("/ofislerimiz")}
+          isActive={pathname === getRoute("/ofislerimiz/")}
           className="h-1/4"
         >
           <Link
@@ -221,7 +222,7 @@ const Appbar = () => {
           </Link>
         </NavbarItem>
         <NavbarItem
-          isActive={pathname === getRoute("/ofislerimiz")}
+          isActive={pathname === getRoute("/ofislerimiz/")}
           className="h-1/4"
         >
           <Link
