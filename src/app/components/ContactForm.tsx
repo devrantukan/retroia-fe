@@ -19,10 +19,28 @@ export default function ContactForm({ officeId }: { officeId: string }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || "/emlak/api";
+      // In development, use /api directly
+      const API_URL =
+        process.env.NODE_ENV === "development"
+          ? "/api"
+          : process.env.NEXT_PUBLIC_API_URL || "/emlak/api";
+
+      // Create FormData object
+      const formDataObj = new FormData();
+      formDataObj.append("firstName", formData.firstName);
+      formDataObj.append("lastName", formData.lastName);
+      formDataObj.append("phone", formData.phone);
+      formDataObj.append("message", formData.message);
+      formDataObj.append("officeId", officeId);
+
       const response = await axios.post(
         `${API_URL}/contact-requests/`,
-        formData
+        formDataObj,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
       if (response.status === 200) {
