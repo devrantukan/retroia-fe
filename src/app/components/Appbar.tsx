@@ -46,11 +46,15 @@ const Appbar = () => {
             className="flex items-center text-primary-400 hover:text-primary-600 transition-colors"
           >
             <Image
-              src={"/emlak/retroia-logo.png"}
+              src={
+                process.env.NODE_ENV === "development"
+                  ? "https://www.retroia.com/emlak/retroia-logo.png"
+                  : "/emlak/retroia-logo.png"
+              }
               width={125}
               height={80}
               alt="Retroia Logo"
-              className="h-[40px] w-auto object-contain"
+              className="h-[40px] w-[125px] object-contain"
               priority
             />
           </Link>
