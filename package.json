@@ -44,6 +44,7 @@
     "instantsearch.css": "^8.5.1",
     "lucide-react": "^0.465.0",
     "next": "^14.2.3",
+    "nodemailer": "^6.10.1",
     "react": "^18",
     "react-dom": "^18",
     "react-google-recaptcha-v3": "^1.10.1",
@@ -68,7 +69,9 @@
   },
   "devDependencies": {
     "@types/google-map-react": "^2.1.10",
+    "@types/next": "^8.0.7",
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.17",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-image-gallery": "^1.2.4",
