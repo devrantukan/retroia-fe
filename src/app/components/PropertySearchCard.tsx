@@ -40,10 +40,18 @@ const PropertySearchCard = ({ property, showAvatar }: any) => {
     ? "object-cover w-full lg:w-auto h-auto lg:max-w-[200px] lg:min-w-[200px] lg:min-h-[130px] lg:max-h-[150px] bg-gray-200"
     : "object-cover w-full lg:w-auto h-auto lg:max-w-[220px] lg:min-w-[220px] lg:min-h-[150px] lg:max-h-[160px] bg-gray-200";
 
-  const thumbnailUrl = property.images?.[0]?.url.replace(
-    "/propertyImages/",
-    "/thumbnails-property-images/"
-  );
+  const thumbnailUrl = property.images?.[0]?.thumbnailUrl;
+  const originalUrl = property.images?.[0]?.url;
+  const defaultImageUrl = "/images/placeholder.png";
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    const target = e.target as HTMLImageElement;
+    if (target.src !== originalUrl) {
+      target.src = originalUrl || defaultImageUrl;
+    } else if (target.src !== defaultImageUrl) {
+      target.src = defaultImageUrl;
+    }
+  };
 
   return (
     <Card
@@ -60,14 +68,12 @@ const PropertySearchCard = ({ property, showAvatar }: any) => {
         <div className="flex lg:flex-row flex-col w-full m-0">
           <div className="relative">
             <Image
-              src={
-                thumbnailUrl ||
-                "https://inegzzkuttzsznxfbsmp.supabase.co/storage/v1/object/public/siteImages/no-image.jpg"
-              }
+              src={thumbnailUrl || originalUrl || defaultImageUrl}
               className={imageClassName}
               alt={property.images?.[0]?.name || "No Image"}
               width={240}
               height={160}
+              onError={handleImageError}
             />
             {property.discountedPrice > 0 && (
               <span className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap">

@@ -19,6 +19,7 @@ interface PropertyCardProps {
     size: number;
     images: {
       url: string;
+      thumbnailUrl?: string;
     }[];
     slug: string;
     discountedPrice: number;
@@ -115,10 +116,18 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
       ? "w-full flex lg:flex-row mb-4 min-h-[150px] lg:max-h-[150px]"
       : "w-full flex lg:flex-row mb-4 min-h-[150px] lg:max-h-[150px]";
 
-  const thumbnailUrl = property.images?.[0]?.url.replace(
-    "/propertyImages/",
-    "/thumbnails-property-images/"
-  );
+  const thumbnailUrl = property.images?.[0]?.thumbnailUrl;
+  const originalUrl = property.images?.[0]?.url;
+  const defaultImageUrl = "/images/placeholder.png";
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    const target = e.target as HTMLImageElement;
+    if (target.src !== originalUrl) {
+      target.src = originalUrl || defaultImageUrl;
+    } else if (target.src !== defaultImageUrl) {
+      target.src = defaultImageUrl;
+    }
+  };
 
   return (
     <Card ref={cardRef} className={cardClassName} shadow="md">
@@ -129,16 +138,14 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
         href={`/emlak/portfoy/${property.id}`}
       >
         <div className="flex lg:flex-row flex-col w-full m-0">
-          <div className="relative">
+          <div className="relative w-full lg:w-auto">
             <Image
-              src={
-                thumbnailUrl ||
-                "https://inegzzkuttzsznxfbsmp.supabase.co/storage/v1/object/public/siteImages/no-image.jpg"
-              }
-              className={imageClassName}
+              src={thumbnailUrl || originalUrl || defaultImageUrl}
               alt={property.title}
               width={400}
               height={240}
+              className={imageClassName}
+              onError={handleImageError}
             />
             {property.discountedPrice > 0 && (
               <span className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap">

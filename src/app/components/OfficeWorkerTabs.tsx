@@ -27,7 +27,9 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
     //update the state
     setActiveTab(value.toString());
     // update the URL query parameter
-    router.replace(`?tab=${value}`, { scroll: false });
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.set("tab", value.toString());
+    router.replace(`?${newParams.toString()}`, { scroll: false });
 
     // Smooth scroll to tab
     const selectedTab = document.getElementById(`tab-${value}`);
@@ -43,7 +45,7 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
     if (tabParam) {
       setActiveTab(tabParam);
     }
-  }, []);
+  }, [searchParams]);
 
   const selectedPage = parseInt(pagenum || "1");
   const elementsPerPage = 8;
@@ -103,7 +105,7 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
               <Card>
                 <CardBody className="space-y-6">
                   {officeWorker.assignedProjects.map((project: any) => (
-                    <ProjectCard project={project} key={project._id} />
+                    <ProjectCard project={project} key={project.id} />
                   ))}
                 </CardBody>
               </Card>
