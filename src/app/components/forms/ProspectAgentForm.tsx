@@ -238,15 +238,35 @@ export default function ProspectAgentForm({
     try {
       const API_URL =
         process.env.NEXT_PUBLIC_API_URL || "https://www.retroia.com/emlak/api";
-      const { data: responseData } = await axios.post(
+
+      // Create FormData object
+      const formData = new FormData();
+      formData.append("firstName", data.firstName);
+      formData.append("lastName", data.lastName);
+      formData.append("email", data.email);
+      formData.append("phone", data.phone);
+      formData.append("city", data.city);
+      formData.append("district", data.district);
+      formData.append("occupation", data.occupation);
+      formData.append("educationLevel", data.educationLevel);
+      formData.append("kvkkConsent", data.kvkkConsent.toString());
+      if (data.marketingConsent) {
+        formData.append("marketingConsent", data.marketingConsent.toString());
+      }
+
+      const response = await fetch(
         `${API_URL}/forms/post-prospect-agent-form/`,
-        data,
         {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
+          method: "POST",
+          body: formData,
         }
       );
+
+      if (!response.ok) {
+        throw new Error("Form submission failed");
+      }
+
+      const responseData = await response.json();
 
       if (responseData.message === "success") {
         toast.success(
@@ -259,8 +279,17 @@ export default function ProspectAgentForm({
 
         // Reset form
         form.reset();
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPhone("");
+        setCity("");
+        setDistrict("");
+        setOccupation("");
+        setEducationLevel("");
       }
     } catch (error) {
+      console.error("Form submission error:", error);
       toast.error(
         "Başvuru gönderilemedi. Lütfen bilgilerinizi kontrol edip tekrar deneyiniz.",
         {
