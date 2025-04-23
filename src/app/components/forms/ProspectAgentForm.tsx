@@ -239,7 +239,7 @@ export default function ProspectAgentForm({
       const API_URL =
         process.env.NEXT_PUBLIC_API_URL || "https://www.retroia.com/emlak/api";
 
-      // Create URLSearchParams object
+      // Create URLSearchParams directly
       const params = new URLSearchParams();
       params.append("firstName", data.firstName);
       params.append("lastName", data.lastName);
@@ -266,6 +266,8 @@ export default function ProspectAgentForm({
       );
 
       if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        console.error("Server response:", errorData);
         throw new Error("Form submission failed");
       }
 
