@@ -113,13 +113,6 @@ const Appbar = () => {
             >
               Kiralık Arsalar
             </DropdownItem>
-            <DropdownItem
-              key="projeler"
-              href="https://www.retroia.com/projeler/"
-              target="_blank"
-            >
-              Projeler
-            </DropdownItem>
           </DropdownMenu>
         </Dropdown>
         <NavbarItem isActive={pathname === getRoute("/projelerimiz")}>
@@ -219,13 +212,6 @@ const Appbar = () => {
                 href={getRoute("/arsa-arazi/kiralik/")}
               >
                 Kiralık Arsalar
-              </DropdownItem>
-              <DropdownItem
-                key="projeler"
-                href="https://www.retroia.com/projeler/"
-                target="_blank"
-              >
-                Projeler
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
