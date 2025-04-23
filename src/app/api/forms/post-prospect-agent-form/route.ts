@@ -6,6 +6,9 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
 
+    let data: Record<string, number> = {};
+    formData.forEach((value, key) => (data[key] = parseInt(value as string)));
+
     const firstName = formData.get("firstName") as string;
     const lastName = formData.get("lastName") as string;
     const email = formData.get("email") as string;
