@@ -14,6 +14,8 @@ async function sendEmailNotification(data: {
   educationLevel: string;
 }) {
   try {
+    console.log("Starting email notification...");
+
     const transporter = nodemailer.createTransport({
       host: "mail.retroia.com",
       port: 465,
@@ -22,7 +24,14 @@ async function sendEmailNotification(data: {
         user: "info@retroia.com",
         pass: "Info!2025",
       },
+      tls: {
+        rejectUnauthorized: false,
+      },
     });
+
+    // Verify SMTP connection
+    await transporter.verify();
+    console.log("SMTP connection verified");
 
     const emailContent = `
       <h2>New Agent Prospect Submitted</h2>
@@ -35,15 +44,23 @@ async function sendEmailNotification(data: {
       <p><strong>Education Level:</strong> ${data.educationLevel}</p>
     `;
 
-    await transporter.sendMail({
+    const mailOptions = {
       from: "info@retroia.com",
       to: "info@retroia.com",
       cc: "devrantukan@gmail.com",
       subject: "New Agent Prospect Submission",
       html: emailContent,
-    });
+    };
+
+    console.log("Sending email with options:", mailOptions);
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent successfully:", info);
+
+    return info;
   } catch (error) {
     console.error("Error sending email:", error);
+    throw error; // Re-throw to handle in the main function
   }
 }
 
@@ -105,6 +122,16 @@ export async function POST(request: NextRequest) {
       educationLevel,
     }).catch((error) => {
       console.error("Error in email notification:", error);
+      // Log additional error details
+      if (error.code) {
+        console.error("SMTP Error Code:", error.code);
+      }
+      if (error.command) {
+        console.error("SMTP Command:", error.command);
+      }
+      if (error.response) {
+        console.error("SMTP Response:", error.response);
+      }
     });
 
     return NextResponse.json({ message: "success" });
