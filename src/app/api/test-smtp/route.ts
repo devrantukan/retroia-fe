@@ -85,7 +85,7 @@ export async function GET() {
         });
 
         results.push(tlsResult);
-      } catch (error) {
+      } catch (error: any) {
         console.error(`Test failed for port ${port}:`, error);
         results.push({ port, error: error.message });
       }
