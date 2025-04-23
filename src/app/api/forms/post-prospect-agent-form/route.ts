@@ -51,35 +51,35 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Send email notification
-    const transporter = nodemailer.createTransport({
-      host: "mail.retroia.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: "info@retroia.com",
-        pass: "Info!2025",
-      },
-    });
+    // // Send email notification
+    // const transporter = nodemailer.createTransport({
+    //   host: "mail.retroia.com",
+    //   port: 465,
+    //   secure: true,
+    //   auth: {
+    //     user: "info@retroia.com",
+    //     pass: "Info!2025",
+    //   },
+    // });
 
-    const emailContent = `
-      <h2>New Agent Prospect Submitted</h2>
-      <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Phone:</strong> ${phone}</p>
-      <p><strong>City:</strong> ${city}</p>
-      <p><strong>District:</strong> ${district}</p>
-      <p><strong>Occupation:</strong> ${occupation}</p>
-      <p><strong>Education Level:</strong> ${educationLevel}</p>
-    `;
+    // const emailContent = `
+    //   <h2>New Agent Prospect Submitted</h2>
+    //   <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+    //   <p><strong>Email:</strong> ${email}</p>
+    //   <p><strong>Phone:</strong> ${phone}</p>
+    //   <p><strong>City:</strong> ${city}</p>
+    //   <p><strong>District:</strong> ${district}</p>
+    //   <p><strong>Occupation:</strong> ${occupation}</p>
+    //   <p><strong>Education Level:</strong> ${educationLevel}</p>
+    // `;
 
-    await transporter.sendMail({
-      from: "info@retroia.com",
-      to: "info@retroia.com",
-      cc: "devrantukan@gmail.com",
-      subject: "New Agent Prospect Submission",
-      html: emailContent,
-    });
+    // await transporter.sendMail({
+    //   from: "info@retroia.com",
+    //   to: "info@retroia.com",
+    //   cc: "devrantukan@gmail.com",
+    //   subject: "New Agent Prospect Submission",
+    //   html: emailContent,
+    // });
 
     return NextResponse.json({ message: "success" });
   } catch (error) {
