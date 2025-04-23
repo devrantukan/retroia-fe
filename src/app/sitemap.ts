@@ -12,47 +12,47 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
     },
     {
-      url: `${baseUrl}/ofislerimiz`,
+      url: `${baseUrl}/ofislerimiz/`,
       lastModified: new Date(),
     },
     {
-      url: `${baseUrl}/danismanlarimiz`,
+      url: `${baseUrl}/danismanlarimiz/`,
       lastModified: new Date(),
     },
     {
-      url: `${baseUrl}/gayrimenkul-danismani-basvuru-formu`,
+      url: `${baseUrl}/gayrimenkul-danismani-basvuru-formu/`,
       lastModified: new Date(),
     },
     {
-      url: `${baseUrl}/gayrimenkullerinizi-satalim-kiralayalim`,
+      url: `${baseUrl}/gayrimenkullerinizi-satalim-kiralayalim/`,
       lastModified: new Date(),
     },
     {
-      url: `${baseUrl}/konut/kiralik`,
+      url: `${baseUrl}/konut/kiralik/`,
       lastModified: new Date(),
     },
     {
-      url: `${baseUrl}/konut/satilik`,
+      url: `${baseUrl}/konut/satilik/`,
       lastModified: new Date(),
     },
     {
-      url: `${baseUrl}/ticari/kiralik`,
+      url: `${baseUrl}/ticari/kiralik/`,
       lastModified: new Date(),
     },
     {
-      url: `${baseUrl}/ticari/satilik`,
+      url: `${baseUrl}/ticari/satilik/`,
       lastModified: new Date(),
     },
     {
-      url: `${baseUrl}/arsa-arazi/kiralik`,
+      url: `${baseUrl}/arsa-arazi/kiralik/`,
       lastModified: new Date(),
     },
     {
-      url: `${baseUrl}/arsa-arazi/satilik`,
+      url: `${baseUrl}/arsa-arazi/satilik/`,
       lastModified: new Date(),
     },
     {
-      url: `${baseUrl}/emlak/biz-kimiz`,
+      url: `${baseUrl}/emlak/biz-kimiz/`,
       lastModified: new Date(),
     },
   ];
@@ -82,7 +82,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Add property routes
     properties.forEach((property) => {
       routes.push({
-        url: `${baseUrl}/portfoy/${property.id}`,
+        url: `${baseUrl}/portfoy/${property.id}/`,
         lastModified: property.updatedAt || new Date(),
       });
     });
