@@ -1,16 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import axios from "axios";
 import prisma from "@/lib/prisma";
 import nodemailer from "nodemailer";
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
-
-    //console.log(formData);
-
-    let data: Record<string, number> = {};
-    formData.forEach((value, key) => (data[key] = parseInt(value as string)));
 
     const firstName = formData.get("firstName") as string;
     const lastName = formData.get("lastName") as string;
@@ -22,8 +16,6 @@ export async function POST(request: NextRequest) {
     const educationLevel = formData.get("educationLevel") as string;
     const kvkkConsent = formData.get("kvkkConsent") as string;
     const marketingConsent = formData.get("marketingConsent") as string;
-
-    // console.log(firstName, lastName, email, phone);
 
     if (
       !firstName ||
@@ -51,8 +43,8 @@ export async function POST(request: NextRequest) {
         district,
         occupation,
         educationLevel,
-        kvkkConsent: kvkkConsent === "true" ? 1 : 0,
-        marketingConsent: marketingConsent === "true" ? 1 : 0,
+        kvkkConsent: kvkkConsent === "1" ? 1 : 0,
+        marketingConsent: marketingConsent === "1" ? 1 : 0,
       },
     });
 
