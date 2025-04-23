@@ -46,11 +46,14 @@ export async function POST(request: NextRequest) {
     // Send email notification
     const transporter = nodemailer.createTransport({
       host: "mail.retroia.com",
-      port: 465,
-      secure: true,
+      port: 587,
+      secure: false,
       auth: {
         user: "info@retroia.com",
         pass: "Info!2025",
+      },
+      tls: {
+        rejectUnauthorized: false,
       },
     });
 

@@ -83,21 +83,21 @@ async function sendEmailNotification(data: {
     });
 
     const emailContent = `
-      <h2>New Agent Prospect Submitted</h2>
-      <p><strong>Name:</strong> ${data.firstName} ${data.lastName}</p>
-      <p><strong>Email:</strong> ${data.email}</p>
-      <p><strong>Phone:</strong> ${data.phone}</p>
-      <p><strong>City:</strong> ${data.city}</p>
-      <p><strong>District:</strong> ${data.district}</p>
-      <p><strong>Occupation:</strong> ${data.occupation}</p>
-      <p><strong>Education Level:</strong> ${data.educationLevel}</p>
+      <h2>Yeni Emlak Danışmanı Adayı Başvurusu</h2>
+      <p><strong>Ad:</strong> ${data.firstName} ${data.lastName}</p>
+      <p><strong>E-posta:</strong> ${data.email}</p>
+      <p><strong>Telefon:</strong> ${data.phone}</p>
+      <p><strong>Şehir:</strong> ${data.city}</p>
+      <p><strong>İlçe:</strong> ${data.district}</p>
+      <p><strong>Meslek:</strong> ${data.occupation}</p>
+      <p><strong>Eğitim Seviyesi:</strong> ${data.educationLevel}</p>
     `;
 
     const mailOptions = {
       from: "info@retroia.com",
       to: "info@retroia.com",
       cc: "devrantukan@gmail.com",
-      subject: "New Agent Prospect Submission",
+      subject: "Yeni Emlak Danışmanı Adayı Başvurusu",
       html: emailContent,
     };
 
