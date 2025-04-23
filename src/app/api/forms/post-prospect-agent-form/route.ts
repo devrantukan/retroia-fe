@@ -2,12 +2,54 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import nodemailer from "nodemailer";
 
+// Function to send email asynchronously
+async function sendEmailNotification(data: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  city: string;
+  district: string;
+  occupation: string;
+  educationLevel: string;
+}) {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "mail.retroia.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: "info@retroia.com",
+        pass: "Info!2025",
+      },
+    });
+
+    const emailContent = `
+      <h2>New Agent Prospect Submitted</h2>
+      <p><strong>Name:</strong> ${data.firstName} ${data.lastName}</p>
+      <p><strong>Email:</strong> ${data.email}</p>
+      <p><strong>Phone:</strong> ${data.phone}</p>
+      <p><strong>City:</strong> ${data.city}</p>
+      <p><strong>District:</strong> ${data.district}</p>
+      <p><strong>Occupation:</strong> ${data.occupation}</p>
+      <p><strong>Education Level:</strong> ${data.educationLevel}</p>
+    `;
+
+    await transporter.sendMail({
+      from: "info@retroia.com",
+      to: "info@retroia.com",
+      cc: "devrantukan@gmail.com",
+      subject: "New Agent Prospect Submission",
+      html: emailContent,
+    });
+  } catch (error) {
+    console.error("Error sending email:", error);
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
-
-    let data: Record<string, number> = {};
-    formData.forEach((value, key) => (data[key] = parseInt(value as string)));
 
     const firstName = formData.get("firstName") as string;
     const lastName = formData.get("lastName") as string;
@@ -51,35 +93,19 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // // Send email notification
-    // const transporter = nodemailer.createTransport({
-    //   host: "mail.retroia.com",
-    //   port: 465,
-    //   secure: true,
-    //   auth: {
-    //     user: "info@retroia.com",
-    //     pass: "Info!2025",
-    //   },
-    // });
-
-    // const emailContent = `
-    //   <h2>New Agent Prospect Submitted</h2>
-    //   <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-    //   <p><strong>Email:</strong> ${email}</p>
-    //   <p><strong>Phone:</strong> ${phone}</p>
-    //   <p><strong>City:</strong> ${city}</p>
-    //   <p><strong>District:</strong> ${district}</p>
-    //   <p><strong>Occupation:</strong> ${occupation}</p>
-    //   <p><strong>Education Level:</strong> ${educationLevel}</p>
-    // `;
-
-    // await transporter.sendMail({
-    //   from: "info@retroia.com",
-    //   to: "info@retroia.com",
-    //   cc: "devrantukan@gmail.com",
-    //   subject: "New Agent Prospect Submission",
-    //   html: emailContent,
-    // });
+    // Send email notification asynchronously
+    sendEmailNotification({
+      firstName,
+      lastName,
+      email,
+      phone,
+      city,
+      district,
+      occupation,
+      educationLevel,
+    }).catch((error) => {
+      console.error("Error in email notification:", error);
+    });
 
     return NextResponse.json({ message: "success" });
   } catch (error) {
