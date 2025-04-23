@@ -2,6 +2,47 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import nodemailer from "nodemailer";
 
+// Function to test SMTP connection
+async function testSMTPConnection() {
+  try {
+    console.log("Testing SMTP connection...");
+
+    const transporter = nodemailer.createTransport({
+      host: "mail.retroia.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: "info@retroia.com",
+        pass: "Info!2025",
+      },
+      debug: true, // Enable debug logging
+      logger: true, // Enable logger
+      tls: {
+        rejectUnauthorized: false,
+        minVersion: "TLSv1.2",
+      },
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 10000,
+    });
+
+    // Test connection
+    console.log("Attempting to verify connection...");
+    await transporter.verify();
+    console.log("Connection verified successfully");
+
+    return true;
+  } catch (error: any) {
+    console.error("SMTP Connection Test Failed:", {
+      message: error.message,
+      code: error.code,
+      command: error.command,
+      response: error.response,
+    });
+    return false;
+  }
+}
+
 // Function to send email asynchronously
 async function sendEmailNotification(data: {
   firstName: string;
@@ -16,6 +57,12 @@ async function sendEmailNotification(data: {
   try {
     console.log("Starting email notification...");
 
+    // First test the connection
+    const connectionTest = await testSMTPConnection();
+    if (!connectionTest) {
+      throw new Error("SMTP connection test failed");
+    }
+
     const transporter = nodemailer.createTransport({
       host: "mail.retroia.com",
       port: 465,
@@ -24,18 +71,16 @@ async function sendEmailNotification(data: {
         user: "info@retroia.com",
         pass: "Info!2025",
       },
+      debug: true,
+      logger: true,
       tls: {
         rejectUnauthorized: false,
         minVersion: "TLSv1.2",
       },
-      connectionTimeout: 10000, // 10 seconds
+      connectionTimeout: 10000,
       greetingTimeout: 10000,
       socketTimeout: 10000,
     });
-
-    // Verify SMTP connection
-    await transporter.verify();
-    console.log("SMTP connection verified");
 
     const emailContent = `
       <h2>New Agent Prospect Submitted</h2>
@@ -64,7 +109,7 @@ async function sendEmailNotification(data: {
     return info;
   } catch (error) {
     console.error("Error sending email:", error);
-    throw error; // Re-throw to handle in the main function
+    throw error;
   }
 }
 
