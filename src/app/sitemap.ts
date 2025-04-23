@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || "https://www.retroia.com/emlak";
+    process.env.NEXT_PUBLIC_SITE_URL || "https://www.retroia.com/emlak/";
 
   // Static routes
   const routes: MetadataRoute.Sitemap = [
@@ -90,7 +90,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Add office routes
     offices.forEach((office) => {
       routes.push({
-        url: `${baseUrl}/office/${office.id}`,
+        url: `${baseUrl}/ofislerimiz/${office.id}/`,
         lastModified: office.updatedAt || new Date(),
       });
     });
