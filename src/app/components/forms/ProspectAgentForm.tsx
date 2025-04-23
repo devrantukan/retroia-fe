@@ -239,26 +239,29 @@ export default function ProspectAgentForm({
       const API_URL =
         process.env.NEXT_PUBLIC_API_URL || "https://www.retroia.com/emlak/api";
 
-      // Create FormData object
-      const formData = new FormData();
-      formData.append("firstName", data.firstName);
-      formData.append("lastName", data.lastName);
-      formData.append("email", data.email);
-      formData.append("phone", data.phone);
-      formData.append("city", data.city);
-      formData.append("district", data.district);
-      formData.append("occupation", data.occupation);
-      formData.append("educationLevel", data.educationLevel);
-      formData.append("kvkkConsent", data.kvkkConsent.toString());
+      // Create URLSearchParams object
+      const params = new URLSearchParams();
+      params.append("firstName", data.firstName);
+      params.append("lastName", data.lastName);
+      params.append("email", data.email);
+      params.append("phone", data.phone);
+      params.append("city", data.city);
+      params.append("district", data.district);
+      params.append("occupation", data.occupation);
+      params.append("educationLevel", data.educationLevel);
+      params.append("kvkkConsent", data.kvkkConsent ? "1" : "0");
       if (data.marketingConsent) {
-        formData.append("marketingConsent", data.marketingConsent.toString());
+        params.append("marketingConsent", "1");
       }
 
       const response = await fetch(
         `${API_URL}/forms/post-prospect-agent-form/`,
         {
           method: "POST",
-          body: formData,
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: params.toString(),
         }
       );
 
