@@ -9,8 +9,8 @@ async function testSMTPConnection() {
 
     const transporter = nodemailer.createTransport({
       host: "mail.retroia.com",
-      port: 465,
-      secure: true,
+      port: 587,
+      secure: false,
       auth: {
         user: "info@retroia.com",
         pass: "Info!2025",
@@ -65,8 +65,8 @@ async function sendEmailNotification(data: {
 
     const transporter = nodemailer.createTransport({
       host: "mail.retroia.com",
-      port: 465,
-      secure: true,
+      port: 587,
+      secure: false,
       auth: {
         user: "info@retroia.com",
         pass: "Info!2025",
