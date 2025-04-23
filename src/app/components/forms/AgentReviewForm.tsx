@@ -146,7 +146,7 @@ export default function ReviewForm({ officeWorkerId, onClose }: Props) {
     try {
       const API_URL = process.env.NEXT_PUBLIC_API_URL || "/emlak/api";
       const { data: responseData } = await axios.post(
-        `${API_URL}/forms/post-agent-review-form`,
+        `${API_URL}/forms/post-agent-review-form/`,
         data,
         {
           headers: {
