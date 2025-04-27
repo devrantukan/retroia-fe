@@ -241,6 +241,7 @@ model OfficeWorker {
   office      Office   @relation(fields: [officeId], references: [id])
   properties  Property[]
   slug        String
+  title       String?
   reviews     OfficeWorkerReview[]
 
 

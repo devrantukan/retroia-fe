@@ -66,7 +66,10 @@ export default async function Home({ searchParams }: Props) {
     },
 
     skip: 0,
-    take: 50,
+    take: 100,
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 
   return (

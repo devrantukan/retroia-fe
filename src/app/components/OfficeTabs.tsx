@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useMemo } from "react";
 
 import { Tabs, Tab, Card, CardBody, Button } from "@nextui-org/react";
 import Link from "next/link";
@@ -16,40 +16,106 @@ import Image from "next/image";
 import ProjectCard from "./ProjectCard";
 import PaginationContainer from "./PaginationContainer";
 import ContactForm from "./ContactForm";
+import PropertySearchPanel from "./PropertySearchPanel";
 
 interface Props {
   office: any;
 }
 
 const OfficeTabs = ({ office }: Props) => {
-  // find all properties of office workers
-  let propertiesOfOffice: any[] = [];
-  office.workers.forEach((worker: any) => {
-    //    console.log(worker);
-    propertiesOfOffice.push(worker.properties);
-  });
-
-  let flatArrayProperties: any[] = [];
-  propertiesOfOffice.flat().forEach((property: any) => {
-    flatArrayProperties.push(property);
-  });
-  //console.log(flatArrayProperties);
-
   const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams.toString());
-  const pagenum = params.get("pagenum");
+  const router = useRouter();
+  const [sortBy, setSortBy] = useState("newest");
+  const [filters, setFilters] = useState<any>({});
 
-  //console.log(typeof pagenum);
+  const activeTab = searchParams.get("tab") || "properties";
+
+  const handleTabChange = (key: React.Key) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("tab", key.toString());
+    router.push(`?${params.toString()}`);
+  };
+
+  const handleSortChange = (sortBy: string) => {
+    setSortBy(sortBy);
+  };
+
+  const handleFilterChange = (newFilters: any) => {
+    setFilters(newFilters);
+  };
+
+  const flatArrayProperties = useMemo(() => {
+    let propertiesOfOffice: any[] = [];
+    office.workers.forEach((worker: any) => {
+      propertiesOfOffice.push(worker.properties);
+    });
+
+    let flatArray: any[] = [];
+    propertiesOfOffice.flat().forEach((property: any) => {
+      flatArray.push(property);
+    });
+    return flatArray;
+  }, [office.workers]);
+
+  const filteredAndSortedProperties = useMemo(() => {
+    if (!flatArrayProperties) return [];
+
+    let filtered = [...flatArrayProperties];
+    console.log("Total properties before filter:", filtered.length);
+
+    // Apply contract filter
+    if (filters.contract) {
+      console.log("Filtering by contract:", filters.contract);
+      filtered = filtered.filter((property) => {
+        const isRental = property.name.toUpperCase().includes("KİRALIK");
+        const isSale = property.name.toUpperCase().includes("SATILIK");
+        console.log(
+          "Property:",
+          property.name,
+          "Is Rental:",
+          isRental,
+          "Is Sale:",
+          isSale
+        );
+        return filters.contract === "1" ? isRental : isSale;
+      });
+      console.log("Properties after filter:", filtered.length);
+    }
+
+    // Apply sorting
+    return filtered.sort((a, b) => {
+      switch (sortBy) {
+        case "price_desc":
+          return (b.price || 0) - (a.price || 0);
+        case "price_asc":
+          return (a.price || 0) - (b.price || 0);
+        case "newest":
+          return (
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
+        case "oldest":
+          return (
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          );
+        default:
+          return 0;
+      }
+    });
+  }, [flatArrayProperties, sortBy, filters]);
+
+  const pagenum = searchParams.get("pagenum");
 
   const pathname = usePathname();
 
   const selectedPage = parseInt(pagenum || "1");
   const elementsPerPage = 8;
-  const totalPages = Math.ceil(flatArrayProperties.length / elementsPerPage);
+  const totalPages = Math.ceil(
+    filteredAndSortedProperties.length / elementsPerPage
+  );
 
   const indexMin = selectedPage;
   const indexMax = indexMin + elementsPerPage;
-  const paginatedArray = flatArrayProperties.filter(
+  const paginatedArray = filteredAndSortedProperties.filter(
     (x: any, index: number) => index >= indexMin && index < indexMax
   );
 
@@ -61,10 +127,9 @@ const OfficeTabs = ({ office }: Props) => {
     }
   });
 
-  const router = useRouter();
-  const [activeTab, setActiveTab] = React.useState("our-staff");
+  const [activeTabState, setActiveTab] = React.useState("our-staff");
 
-  const handleTabChange = (value: React.Key) => {
+  const handleTabChangeState = (value: React.Key) => {
     //update the state
     setActiveTab(value.toString());
     // update the URL query parameter
@@ -215,31 +280,38 @@ const OfficeTabs = ({ office }: Props) => {
           <Tab id="tab-properties" key="properties" title="Portföylerimiz">
             <Card>
               <CardBody>
-                {paginatedArray.flat().map((property: any, index: number) => (
-                  <PropertyCard
-                    showAvatar={true}
-                    property={property}
-                    key={index}
-                    index={index}
-                  />
-                ))}
-                <PaginationContainer
-                  currentPage={selectedPage}
-                  totalPages={totalPages}
-                  route={pathname}
+                <PropertySearchPanel
+                  onSortChange={handleSortChange}
+                  onFilterChange={handleFilterChange}
                 />
+                <div className="grid grid-cols-1 gap-6 mt-6">
+                  {paginatedArray.map((property) => (
+                    <PropertyCard
+                      key={property.id}
+                      property={property}
+                      showAvatar={true}
+                    />
+                  ))}
+                </div>
+                <div className="mt-6">
+                  <PaginationContainer
+                    currentPage={selectedPage}
+                    totalPages={Math.ceil(
+                      filteredAndSortedProperties.length / elementsPerPage
+                    )}
+                    route={pathname}
+                  />
+                </div>
               </CardBody>
             </Card>
           </Tab>
           {office.projects.length > 0 && (
-            <Tab id="tab-projects" key="projects" title="Projelerimiz">
-              <Card>
-                <CardBody className="space-y-6">
-                  {office.projects.map((project: any, index: number) => (
-                    <ProjectCard project={project} key={index} />
-                  ))}
-                </CardBody>
-              </Card>
+            <Tab id="tab-projects" key="projects" title="Projeler">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                {office.projects.map((project: any) => (
+                  <ProjectCard key={project.id} project={project} />
+                ))}
+              </div>
             </Tab>
           )}
           <Tab key="about-us" title="Hakkımızda">

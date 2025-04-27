@@ -27,7 +27,7 @@ export default function HomepageRentalList({
             onSelectionChange={(key) => setSelected(key.toString())}
             className="w-full flex justify-end"
           >
-            <Tab key="konut" title="Konut">
+            <Tab key="kiralik-konut" title="Konut">
               <Card>
                 <CardBody className="grid grid-cols-1 lg:h-[900px] h-full gap-x-4">
                   <div className="flex flex-col justify-start">
@@ -55,7 +55,7 @@ export default function HomepageRentalList({
                 </CardBody>
               </Card>
             </Tab>
-            <Tab key="ticari" title="Ticari">
+            <Tab key="kiralik-ticari" title="Ticari">
               <Card>
                 <CardBody className="grid grid-cols-1 lg:h-[900px] h-full gap-x-4">
                   <div className="flex flex-col justify-start">
@@ -83,7 +83,7 @@ export default function HomepageRentalList({
                 </CardBody>
               </Card>
             </Tab>
-            <Tab key="arsa-arazi" title="Arsa Arazi">
+            <Tab key="kiralik-arsa-arazi" title="Arsa Arazi">
               <Card>
                 <CardBody className="grid grid-cols-1 lg:h-[900px] h-full gap-x-4">
                   <div className="flex flex-col justify-start">

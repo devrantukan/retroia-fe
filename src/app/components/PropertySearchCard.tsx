@@ -40,8 +40,14 @@ const PropertySearchCard = ({ property, showAvatar }: any) => {
     ? "object-cover w-full lg:w-auto h-auto lg:max-w-[200px] lg:min-w-[200px] lg:min-h-[130px] lg:max-h-[150px] bg-gray-200"
     : "object-cover w-full lg:w-auto h-auto lg:max-w-[220px] lg:min-w-[220px] lg:min-h-[150px] lg:max-h-[160px] bg-gray-200";
 
-  const thumbnailUrl = property.images?.[0]?.thumbnailUrl;
   const originalUrl = property.images?.[0]?.url;
+
+  const thumbnailUrl = originalUrl.includes("/propertyImages/")
+    ? originalUrl.replace("/propertyImages/", "/thumbnails-property-images/")
+    : originalUrl.includes("/property-images/")
+    ? originalUrl.replace("/property-images/", "/thumbnails-property-images/")
+    : originalUrl;
+
   const defaultImageUrl = "/images/placeholder.png";
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {

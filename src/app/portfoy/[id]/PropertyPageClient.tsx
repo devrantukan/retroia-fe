@@ -228,6 +228,8 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
             )
           : image.url;
 
+        console.log(image.url, thumbnailUrl, originalUrl);
+
         return {
           original: image.url, // Use original URL for main image
           thumbnail: image.url, // Use original URL for thumbnail
@@ -235,13 +237,13 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
           renderItem: (item: any) => (
             <div className="relative w-full h-full">
               <Image
-                src={image.url}
+                src={originalUrl}
                 alt={`${property.name} - ${property.location.city} ${property.location.district} ${property.location.neighborhood} - ${property.type.name} ${property.subType.name}`}
                 fill
                 className="object-cover"
                 onError={(e) => {
                   const img = e.target as HTMLImageElement;
-                  img.src = image.url;
+                  img.src = originalUrl;
                 }}
               />
             </div>
@@ -249,13 +251,13 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
           renderThumbInner: (item: any) => (
             <div className="relative w-full h-full">
               <Image
-                src={image.url}
+                src={thumbnailUrl}
                 alt={`${property.name} - ${property.location.city} ${property.location.district} ${property.location.neighborhood} - ${property.type.name} ${property.subType.name} - Thumbnail`}
                 fill
                 className="object-cover"
                 onError={(e) => {
                   const img = e.target as HTMLImageElement;
-                  img.src = image.url;
+                  img.src = thumbnailUrl;
                 }}
               />
             </div>

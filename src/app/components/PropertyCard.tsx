@@ -116,8 +116,14 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
       ? "w-full flex lg:flex-row mb-4 min-h-[150px] lg:max-h-[150px]"
       : "w-full flex lg:flex-row mb-4 min-h-[150px] lg:max-h-[150px]";
 
-  const thumbnailUrl = property.images?.[0]?.thumbnailUrl;
   const originalUrl = property.images?.[0]?.url;
+
+  const thumbnailUrl = originalUrl.includes("/propertyImages/")
+    ? originalUrl.replace("/propertyImages/", "/thumbnails-property-images/")
+    : originalUrl.includes("/property-images/")
+    ? originalUrl.replace("/property-images/", "/thumbnails-property-images/")
+    : originalUrl;
+
   const defaultImageUrl = "/images/placeholder.png";
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
