@@ -147,16 +147,11 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
           <div className="relative w-full lg:w-auto">
             <Image
               src={thumbnailUrl || originalUrl || defaultImageUrl}
-              alt={property.name || "Property Image"}
-              width={800}
-              height={600}
-              className="w-full h-48 object-cover rounded-t-lg"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                if (target.src !== originalUrl) {
-                  target.src = originalUrl || defaultImageUrl;
-                }
-              }}
+              alt={property.title}
+              width={400}
+              height={240}
+              className={imageClassName}
+              onError={handleImageError}
             />
             {property.discountedPrice > 0 && (
               <span className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap">
