@@ -54,6 +54,7 @@ const OfficeTabs = ({ office }: Props) => {
     propertiesOfOffice.flat().forEach((property: any) => {
       flatArray.push(property);
     });
+    console.log("Initial total properties:", flatArray.length);
     return flatArray;
   }, [office.workers]);
 
@@ -66,24 +67,16 @@ const OfficeTabs = ({ office }: Props) => {
     // Apply contract filter
     if (filters.contract) {
       console.log("Filtering by contract:", filters.contract);
+      console.log("Sample property contract:", filtered[0]?.contract);
       filtered = filtered.filter((property) => {
-        const isRental = property.name.toUpperCase().includes("KİRALIK");
-        const isSale = property.name.toUpperCase().includes("SATILIK");
-        console.log(
-          "Property:",
-          property.name,
-          "Is Rental:",
-          isRental,
-          "Is Sale:",
-          isSale
-        );
-        return filters.contract === "1" ? isRental : isSale;
+        console.log("Property contract:", property.contract);
+        return property.contract?.id === parseInt(filters.contract);
       });
       console.log("Properties after filter:", filtered.length);
     }
 
     // Apply sorting
-    return filtered.sort((a, b) => {
+    const sorted = filtered.sort((a, b) => {
       switch (sortBy) {
         case "price_desc":
           return (b.price || 0) - (a.price || 0);
@@ -101,23 +94,27 @@ const OfficeTabs = ({ office }: Props) => {
           return 0;
       }
     });
+    console.log("Final sorted and filtered properties:", sorted.length);
+    return sorted;
   }, [flatArrayProperties, sortBy, filters]);
 
   const pagenum = searchParams.get("pagenum");
-
   const pathname = usePathname();
-
   const selectedPage = parseInt(pagenum || "1");
   const elementsPerPage = 8;
   const totalPages = Math.ceil(
     filteredAndSortedProperties.length / elementsPerPage
   );
+  console.log("Total pages:", totalPages, "Current page:", selectedPage);
 
-  const indexMin = selectedPage;
-  const indexMax = indexMin + elementsPerPage;
-  const paginatedArray = filteredAndSortedProperties.filter(
-    (x: any, index: number) => index >= indexMin && index < indexMax
-  );
+  // Get the current page's items
+  const paginatedProperties = useMemo(() => {
+    const startIndex = (selectedPage - 1) * elementsPerPage;
+    const endIndex = startIndex + elementsPerPage;
+    const pageItems = filteredAndSortedProperties.slice(startIndex, endIndex);
+    console.log("Items on current page:", pageItems.length);
+    return pageItems;
+  }, [filteredAndSortedProperties, selectedPage, elementsPerPage]);
 
   // find all reviews of office workers
   let reviewsOfOffice: any[] = [];
@@ -285,7 +282,7 @@ const OfficeTabs = ({ office }: Props) => {
                   onFilterChange={handleFilterChange}
                 />
                 <div className="grid grid-cols-1 gap-6 mt-6">
-                  {paginatedArray.map((property) => (
+                  {paginatedProperties.map((property) => (
                     <PropertyCard
                       key={property.id}
                       property={property}
@@ -296,9 +293,7 @@ const OfficeTabs = ({ office }: Props) => {
                 <div className="mt-6">
                   <PaginationContainer
                     currentPage={selectedPage}
-                    totalPages={Math.ceil(
-                      filteredAndSortedProperties.length / elementsPerPage
-                    )}
+                    totalPages={totalPages}
                     route={pathname}
                   />
                 </div>

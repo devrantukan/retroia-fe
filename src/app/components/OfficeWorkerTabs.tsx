@@ -45,18 +45,10 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
     // Apply contract filter
     if (filters.contract) {
       console.log("Filtering by contract:", filters.contract);
+      console.log("Sample property contract:", filtered[0]?.contract);
       filtered = filtered.filter((property) => {
-        const isRental = property.name.toUpperCase().includes("KİRALIK");
-        const isSale = property.name.toUpperCase().includes("SATILIK");
-        console.log(
-          "Property:",
-          property.name,
-          "Is Rental:",
-          isRental,
-          "Is Sale:",
-          isSale
-        );
-        return filters.contract === "1" ? isRental : isSale;
+        console.log("Property contract:", property.contract);
+        return property.contract?.id === parseInt(filters.contract);
       });
       console.log("Properties after filter:", filtered.length);
     }

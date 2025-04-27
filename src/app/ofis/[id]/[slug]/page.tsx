@@ -29,6 +29,7 @@ const OfficePage = async ({ params }: Props) => {
               status: true,
               feature: true,
               location: true,
+              contract: true,
               agent: {
                 include: {
                   office: true,
