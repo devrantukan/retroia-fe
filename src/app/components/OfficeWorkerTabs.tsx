@@ -82,6 +82,13 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
     filteredAndSortedProperties.length / elementsPerPage
   );
 
+  // Get the current page's items
+  const paginatedProperties = useMemo(() => {
+    const startIndex = (selectedPage - 1) * elementsPerPage;
+    const endIndex = startIndex + elementsPerPage;
+    return filteredAndSortedProperties.slice(startIndex, endIndex);
+  }, [filteredAndSortedProperties, selectedPage, elementsPerPage]);
+
   return (
     <div className="p-4 flex flex-col justify-between lg:w-3/4">
       <div className="flex w-full flex-col">
@@ -106,7 +113,7 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
                     onFilterChange={handleFilterChange}
                   />
                   <div className="grid grid-cols-1 gap-6 mt-6">
-                    {filteredAndSortedProperties.map((property) => (
+                    {paginatedProperties.map((property) => (
                       <PropertyCard key={property.id} property={property} />
                     ))}
                   </div>
