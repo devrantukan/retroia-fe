@@ -190,7 +190,7 @@ const ScrollableResults = ({ searchResults }) => {
 
 const ConnectedScrollableResults = connectStateResults(ScrollableResults);
 
-const BlogSearchComponent = ({ type, contract, country, city, district, neighborhood }) => {
+const BlogSearchComponent = ({ type, contract, country, city, district, neighborhood, min, max }) => {
   const postCollection = `posts`;
   const [isOpen, setIsOpen] = useState(false);
   const searchResultsRef = useRef(null);
@@ -202,7 +202,6 @@ const BlogSearchComponent = ({ type, contract, country, city, district, neighbor
   let url = `type:=${type}&&contract:=${contract}`
 
   if(country) {
-
     url += `&&country:=${country}`;
     if(city) {
       url += `&&city:=${city}`;
@@ -212,20 +211,29 @@ const BlogSearchComponent = ({ type, contract, country, city, district, neighbor
           url += `&&neighborhood:=${neighborhood}`;
         }
       }
-
     }
+  }
+
+  // Add price range filter if min/max are provided
+  if (min || max) {
+    let priceFilter = 'price:';
+    if (min && max) {
+      priceFilter += `${min}..${max}`;
+    } else if (min) {
+      priceFilter += `>=${min}`;
+    } else if (max) {
+      priceFilter += `<=${max}`;
+    }
+    url += `&&${priceFilter}`;
   }
 
   const transformItems = (items) => {
     return items.map((item) => ({
       ...item,
-    
     })).sort((a, b) => a.label < b.label ? -1 : 1);
   };
 
- const filters = url
-
-
+  const filters = url;
 
   return (
     <InstantSearch
@@ -240,6 +248,12 @@ const BlogSearchComponent = ({ type, contract, country, city, district, neighbor
             city: city ? [city] : [],
             district: district ? [district] : [],
             neighborhood: neighborhood ? [neighborhood] : []
+          },
+          range: {
+            price: {
+              min: min ? parseInt(min) : undefined,
+              max: max ? parseInt(max) : undefined
+            }
           }
         }
       }}
@@ -374,12 +388,17 @@ const BlogSearchComponent = ({ type, contract, country, city, district, neighbor
             <RangeInput 
               attribute="price" 
               className="mb-4"
+              defaultRefinement={{
+                min: min ? parseInt(min) : undefined,
+                max: max ? parseInt(max) : undefined
+              }}
               translations={{
                 submit: 'Uygula',
                 separator: 'ile',
                 currency: '₺',
                 placeholder: 'Fiyat giriniz'
               }}
+              maxLength={10}
             />
         <SearchBox 
           translations={{

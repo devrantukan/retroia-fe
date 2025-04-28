@@ -1,4 +1,5 @@
-//  "use client";
+"use client";
+
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import { Input } from "@nextui-org/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -22,6 +23,10 @@ const Search = ({
   district: string;
   neighborhood: string;
 }) => {
+  const searchParams = useSearchParams();
+  const min = searchParams.get("min");
+  const max = searchParams.get("max");
+
   // const searchParams = useSearchParams();
   // const pathName = usePathname();
   // const router = useRouter();
@@ -42,6 +47,8 @@ const Search = ({
         city={city}
         district={district}
         neighborhood={neighborhood}
+        min={min}
+        max={max}
       />
       {/* <Input
         onChange={(e) => handleChange(e.target.value)}

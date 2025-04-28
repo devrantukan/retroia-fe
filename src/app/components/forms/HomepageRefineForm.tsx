@@ -182,13 +182,22 @@ export function HomepageRefineForm({ propertyType }: { propertyType: string }) {
   }, [form, propertyType]);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    const url = `/emlak/${data.propertyType}/${data.contract}${
+    const baseUrl = `/emlak/${data.propertyType}/${data.contract}${
       selectedCountry ? `/${selectedCountry}` : ""
     }${data.city ? `/${data.city}` : ""}${
       data.district ? `/${data.district}` : ""
     }${data.neighborhood ? `/${data.neighborhood}` : ""}`;
-    //  console.log(url);
-    router.push(url);
+
+    // Add min/max as query parameters
+    const params = new URLSearchParams();
+    if (data.min) params.append("min", data.min);
+    if (data.max) params.append("max", data.max);
+
+    // Remove trailing slash and combine with query parameters
+    const finalUrl = `${baseUrl.replace(/\/+$/, "")}${
+      params.toString() ? `?${params.toString()}` : ""
+    }`;
+    router.push(finalUrl);
     toast({
       title: "You submitted the following values:",
       description: (

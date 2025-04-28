@@ -80,13 +80,13 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
     return () => observer.disconnect();
   }, []);
 
-  // Debug logs
-  console.log("Property data:", {
-    id: property.id,
-    price: property.price,
-    discountedPrice: property.discountedPrice,
-    hasDiscount: property.discountedPrice > 0,
-  });
+  // // Debug logs
+  // console.log("Property data:", {
+  //   id: property.id,
+  //   price: property.price,
+  //   discountedPrice: property.discountedPrice,
+  //   hasDiscount: property.discountedPrice > 0,
+  // });
 
   const imageClassName =
     cardWidth < 500
@@ -153,11 +153,12 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
               className={imageClassName}
               onError={handleImageError}
             />
-            {property.discountedPrice > 0 && (
-              <span className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap">
-                İNDİRİMLİ
-              </span>
-            )}
+            {property.discountedPrice > 0 &&
+              property.price != property.discountedPrice && (
+                <span className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap">
+                  İNDİRİMLİ
+                </span>
+              )}
           </div>
           <div className="flex flex-col w-full">
             <div className="p-4 h-2/3 ">
@@ -173,7 +174,8 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
             </div>
             <div className="bg-gradient-to-br from-slate-50 to-slate-200 px-4 flex justify-start items-center h-1/3 w-full">
               <div className="text-2xl lining-nums font-semibold tracking-wider w-full">
-                {property.discountedPrice > 0 ? (
+                {property.discountedPrice > 0 &&
+                property.price != property.discountedPrice ? (
                   <div className="flex items-center gap-2 w-full">
                     <span className="text-2xl font-bold text-primary">
                       <PriceDisplay price={property.discountedPrice} />

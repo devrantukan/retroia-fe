@@ -36,6 +36,42 @@ const nextConfig = {
           source: '/emlak/api/:path*',
           destination: '/api/:path*/'
         },
+        // Handle property routes with query parameters
+        {
+          source: '/emlak/:type/:contract/:path*/',
+          has: [
+            {
+              type: 'query',
+              key: 'min',
+            },
+            {
+              type: 'query',
+              key: 'max',
+            }
+          ],
+          destination: '/emlak/:type/:contract/:path*'
+        },
+        // Handle property routes with trailing slash
+        {
+          source: '/emlak/:type/:contract/',
+          destination: '/emlak/:type/:contract'
+        },
+        {
+          source: '/emlak/:type/:contract/:country/',
+          destination: '/emlak/:type/:contract/:country'
+        },
+        {
+          source: '/emlak/:type/:contract/:country/:city/',
+          destination: '/emlak/:type/:contract/:country/:city'
+        },
+        {
+          source: '/emlak/:type/:contract/:country/:city/:district/',
+          destination: '/emlak/:type/:contract/:country/:city/:district'
+        },
+        {
+          source: '/emlak/:type/:contract/:country/:city/:district/:neighborhood/',
+          destination: '/emlak/:type/:contract/:country/:city/:district/:neighborhood'
+        },
         // Handle page routes
         {
           source: '/emlak/ofislerimiz',
