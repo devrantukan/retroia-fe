@@ -1,12 +1,20 @@
 "use client";
 
 import { Project, OfficeWorker } from "@prisma/client";
-import { MapPin, Building2, Users, CalendarIcon } from "lucide-react";
+import {
+  MapPin,
+  Building2,
+  Users,
+  CalendarIcon,
+  Image as ImageIcon,
+  X,
+} from "lucide-react";
 import ProjectGallery from "./ProjectGallery";
 import ProjectMap from "./ProjectMap";
 import { User, EnvelopeSimple, Phone } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 interface ProjectDetailProps {
   project: Project & {
@@ -44,8 +52,39 @@ interface ProjectDetailProps {
 }
 
 export default function ProjectDetail({ project, agent }: ProjectDetailProps) {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Image Overlay */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button
+            className="absolute top-4 right-4 text-white hover:text-gray-300 z-[101]"
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedImage(null);
+            }}
+          >
+            <X className="w-6 h-6" />
+          </button>
+          <div className="relative w-full h-full max-w-4xl max-h-[90vh]">
+            <div className="relative w-full h-full">
+              <Image
+                src={selectedImage}
+                alt={`${project.name} - Büyük Görsel`}
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Image Gallery */}
       <ProjectGallery
         images={project.images}
@@ -176,15 +215,47 @@ export default function ProjectDetail({ project, agent }: ProjectDetailProps) {
         </div>
       </div>
 
+      {/* Image Grid */}
+      {project.images.length > 1 && (
+        <div className="mt-12">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="bg-primary-50 p-2 rounded-lg">
+              <ImageIcon className="w-5 h-5 text-primary-500" />
+            </div>
+            <h3 className="text-xl font-semibold text-slate-900">
+              Proje Görselleri
+            </h3>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {project.images.slice(1).map((image, index) => (
+              <div
+                key={index}
+                className="relative aspect-square rounded-lg overflow-hidden cursor-pointer"
+                onClick={() => setSelectedImage(image.url)}
+              >
+                <Image
+                  src={image.url}
+                  alt={`${project.name} - Görsel ${index + 2}`}
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Map Section */}
       {project.location &&
         project.location.latitude &&
         project.location.longitude && (
           <div className="mt-12">
-            <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center">
-              <MapPin className="w-5 h-5 mr-2 text-slate-500" />
-              Konum
-            </h3>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-primary-50 p-2 rounded-lg">
+                <MapPin className="w-5 h-5 text-primary-500" />
+              </div>
+              <h3 className="text-xl font-semibold text-slate-900">Konum</h3>
+            </div>
             <div className="h-[400px] rounded-lg overflow-hidden">
               <ProjectMap
                 lat={project.location.latitude}

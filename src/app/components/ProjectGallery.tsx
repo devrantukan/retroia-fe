@@ -29,16 +29,6 @@ export default function ProjectGallery({
   location,
   catalogUrl,
 }: ProjectGalleryProps) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
-
   if (!images || images.length === 0) {
     return (
       <div className="relative aspect-[16/9] rounded-lg overflow-hidden bg-slate-100 flex items-center justify-center">
@@ -49,36 +39,14 @@ export default function ProjectGallery({
 
   return (
     <div className="relative w-full h-[50vh] lg:h-[80vh] rounded-lg overflow-hidden">
-      {images[currentImageIndex]?.url && (
+      {images[0]?.url && (
         <>
           <Image
-            src={images[currentImageIndex].url}
-            alt={`${name} - Görsel ${currentImageIndex + 1}`}
+            src={images[0].url}
+            alt={`${name} - Ana Görsel`}
             fill
             className="object-cover"
           />
-
-          {/* Navigation Buttons */}
-          {images.length > 1 && (
-            <>
-              <button
-                onClick={prevImage}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-md z-20"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button
-                onClick={nextImage}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-md z-20"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-              {/* Image Counter */}
-              <div className="absolute bottom-4 right-4 bg-white/80 px-3 py-1 rounded-full text-sm z-20">
-                {currentImageIndex + 1} / {images.length}
-              </div>
-            </>
-          )}
 
           {/* Project Info Overlay */}
           <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 pb-12 bg-gradient-to-t from-black/80 to-transparent z-10">
