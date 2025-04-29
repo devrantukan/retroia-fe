@@ -104,30 +104,39 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
               </CardBody>
             </Card>
           </Tab>
-          {filteredAndSortedProperties.length > 0 && (
-            <Tab id="tab-properties" key="properties" title="Portföylerim">
-              <Card>
-                <CardBody>
-                  <PropertySearchPanel
-                    onSortChange={handleSortChange}
-                    onFilterChange={handleFilterChange}
-                  />
-                  <div className="grid grid-cols-1 gap-6 mt-6">
-                    {paginatedProperties.map((property) => (
-                      <PropertyCard key={property.id} property={property} />
-                    ))}
+          <Tab id="tab-properties" key="properties" title="Portföylerim">
+            <Card>
+              <CardBody>
+                <PropertySearchPanel
+                  onSortChange={handleSortChange}
+                  onFilterChange={handleFilterChange}
+                  totalProperties={filteredAndSortedProperties.length}
+                />
+                {filteredAndSortedProperties.length > 0 ? (
+                  <>
+                    <div className="grid grid-cols-1 gap-6 mt-6">
+                      {paginatedProperties.map((property) => (
+                        <PropertyCard key={property.id} property={property} />
+                      ))}
+                    </div>
+                    <div className="mt-6">
+                      <PaginationContainer
+                        currentPage={selectedPage}
+                        totalPages={totalPages}
+                        route={pathname}
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-center py-8">
+                    <p className="text-gray-500">
+                      Bu kriterlere uygun ilan bulunamadı.
+                    </p>
                   </div>
-                  <div className="mt-6">
-                    <PaginationContainer
-                      currentPage={selectedPage}
-                      totalPages={totalPages}
-                      route={pathname}
-                    />
-                  </div>
-                </CardBody>
-              </Card>
-            </Tab>
-          )}
+                )}
+              </CardBody>
+            </Card>
+          </Tab>
           {officeWorker.assignedProjects.length > 0 && (
             <Tab id="tab-projects" key="projects" title="Projelerimiz">
               <Card>

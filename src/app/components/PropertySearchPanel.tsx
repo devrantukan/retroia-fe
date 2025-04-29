@@ -11,11 +11,13 @@ import { useState } from "react";
 interface PropertySearchPanelProps {
   onSortChange: (sortBy: string) => void;
   onFilterChange: (filters: any) => void;
+  totalProperties?: number;
 }
 
 export default function PropertySearchPanel({
   onSortChange,
   onFilterChange,
+  totalProperties = 0,
 }: PropertySearchPanelProps) {
   const [selectedSort, setSelectedSort] = useState("newest");
   const [selectedContract, setSelectedContract] = useState<string | null>(null);
@@ -43,40 +45,33 @@ export default function PropertySearchPanel({
   };
 
   return (
-    <div className="flex flex-col gap-4 p-4 bg-white rounded-lg shadow-sm">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <h3 className="text-sm font-semibold">Filtreler</h3>
-          <div className="flex gap-2">
-            {contractOptions.map((option) => (
-              <Chip
-                key={option.key}
-                variant={selectedContract === option.key ? "solid" : "bordered"}
-                color={selectedContract === option.key ? "primary" : "default"}
-                onClick={() => handleContractChange(option.key)}
-                className="cursor-pointer"
-              >
-                {option.label}
-              </Chip>
-            ))}
-          </div>
-        </div>
-        <Dropdown>
-          <DropdownTrigger>
-            <Button variant="bordered">
-              {sortOptions.find((option) => option.key === selectedSort)
-                ?.label || "Sırala"}
-            </Button>
-          </DropdownTrigger>
-          <DropdownMenu
-            aria-label="Sıralama seçenekleri"
-            onAction={(key) => handleSortChange(key as string)}
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap gap-2">
+        {contractOptions.map((option) => (
+          <Chip
+            key={option.key}
+            variant={selectedContract === option.key ? "solid" : "bordered"}
+            color={selectedContract === option.key ? "primary" : "default"}
+            onClick={() => handleContractChange(option.key)}
+            className="cursor-pointer"
           >
-            {sortOptions.map((option) => (
-              <DropdownItem key={option.key}>{option.label}</DropdownItem>
-            ))}
-          </DropdownMenu>
-        </Dropdown>
+            {option.label}
+          </Chip>
+        ))}
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        {sortOptions.map((option) => (
+          <Chip
+            key={option.key}
+            variant={selectedSort === option.key ? "solid" : "bordered"}
+            color={selectedSort === option.key ? "primary" : "default"}
+            onClick={() => handleSortChange(option.key)}
+            className="cursor-pointer"
+          >
+            {option.label}
+          </Chip>
+        ))}
       </div>
     </div>
   );
