@@ -54,7 +54,7 @@ const aboutPages = [
     page: "KVKK ve Aydınlatma Metni",
     href: "/emlak/kvkk-ve-aydinlatma-metni/",
   },
-  // { id: 2, page: "KVKK Bilgi Başvuru Formu", href: "/pricing/tiers" },
+  { id: 2, page: "Blog", href: "https://retroia.com/blog/" },
   // { id: 3, page: "Yasal Uyarı ve Kullanım Koşulları", href: "/team" },
 ];
 
