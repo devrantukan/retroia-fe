@@ -228,7 +228,7 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
             )
           : image.url;
 
-        console.log(image.url, thumbnailUrl, originalUrl);
+        // console.log(image.url, thumbnailUrl, originalUrl);
 
         return {
           original: image.url, // Use original URL for main image
@@ -383,7 +383,9 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                     title={property.name}
                     type={"İlan"}
                     avatarUrl={
-                      property.images?.[0]?.url || "/images/placeholder.png"
+                      property.images && property.images.length > 0
+                        ? property.images[0].url
+                        : "/images/placeholder.png"
                     }
                   />
                 </div>

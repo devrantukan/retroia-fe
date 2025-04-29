@@ -12,6 +12,7 @@ import {
   RangeInput,
   connectStateResults,
   ClearRefinements,
+  connectRange,
 } from "react-instantsearch-dom";
 import typesenseInstantsearchAdapter from "../../lib/typesense"; // adjust the path based on your directory structure
 import PropertySearchCard from "../components/PropertySearchCard";
@@ -190,10 +191,64 @@ const ScrollableResults = ({ searchResults }) => {
 
 const ConnectedScrollableResults = connectStateResults(ScrollableResults);
 
+const CustomRangeInput = connectRange(({ 
+  currentRefinement, 
+  refine, 
+  min, 
+  max, 
+  attribute,
+  className 
+}) => {
+  const [localMin, setLocalMin] = useState(currentRefinement.min || min);
+  const [localMax, setLocalMax] = useState(currentRefinement.max || max);
+
+  useEffect(() => {
+    if (min && max) {
+      setLocalMin(min);
+      setLocalMax(max);
+    }
+  }, [min, max]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    refine({ min: localMin, max: localMax });
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className={`flex flex-col gap-2 ${className || ''}`}>
+      <div className="flex gap-2">
+        <input
+          type="number"
+          value={localMin || ''}
+          onChange={(e) => setLocalMin(parseInt(e.target.value))}
+          placeholder="Min"
+          className="w-full p-2 border rounded"
+        />
+        <input
+          type="number"
+          value={localMax || ''}
+          onChange={(e) => setLocalMax(parseInt(e.target.value))}
+          placeholder="Max"
+          className="w-full p-2 border rounded"
+        />
+      </div>
+      <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+        Uygula
+      </button>
+    </form>
+  );
+});
+
 const BlogSearchComponent = ({ type, contract, country, city, district, neighborhood, min, max }) => {
   const postCollection = `posts`;
   const [isOpen, setIsOpen] = useState(false);
   const searchResultsRef = useRef(null);
+  const [priceRange, setPriceRange] = useState({
+    min: min ? parseInt(min) : undefined,
+    max: max ? parseInt(max) : undefined
+  });
+
+  console.log('BlogSearchComponent params:', { min, max, priceRange });
 
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -268,195 +323,175 @@ const BlogSearchComponent = ({ type, contract, country, city, district, neighbor
       />
       <ConnectedScrollableResults />
       <div className="flex flex-col lg:flex-row">
-
-      <div  className={`bg-white mr-4 gap-y-2 p-4 rounded-xl ${isOpen ? '' : 'hidden'} lg:block  `}>
-
-            <ClearRefinements
-              translations={{
-                reset: 'Tüm Filtreleri Temizle',
-              }}
-            />
-            <h3>Hizmet Tipi</h3>
-            <RefinementList 
-              attribute="contract" 
-              className="mb-4"
-              defaultRefinement={contract ? [contract] : []}
-              transformItems={items => 
-                items.map(item => ({
-                  ...item,
-                  isRefined: item.label === contract
-                }))
-              }
-            /> 
-            <h3>Gayrimenkul Tipi</h3>
-            <RefinementList 
-              attribute="type" 
-              className="mb-4"
-              defaultRefinement={type ? [type] : []}
-              transformItems={items => 
-                items.map(item => ({
-                  ...item,
-                  isRefined: item.label === type
-                }))
-              }
-            />
-            <h3>Ülke</h3> 
-            <RefinementList 
-              attribute="country" 
-              className="mb-4" 
-              searchable={true}   
-              translations={{
-                showMore(expanded) {
-                  return expanded ? 'Show less' : 'Show more';
-                },
-                noResults: 'No results',
-                submitTitle: 'Submit your search query.',
-                resetTitle: 'Clear your search query.',
-                placeholder: 'Arama...',
-              }}
-            transformItems={transformItems} />
-            <h3>Şehir</h3>
-            <RefinementList 
-              attribute="city" 
-              className="mb-4" 
-              searchable={true} 
-              transformItems={transformItems}
-              translations={{
-                showMore(expanded) {
-                  return expanded ? 'Show less' : 'Show more';
-                },
-                noResults: 'No results',
-                submitTitle: 'Submit your search query.',
-                resetTitle: 'Clear your search query.',
-                placeholder: 'Arama...',
-              }}
-               />
-            <h3>İlçe</h3>
-            <RefinementList 
-              attribute="district" 
-              className="mb-4"  
-              searchable={true} 
-              transformItems={transformItems}
-              translations={{
-                showMore(expanded) {
-                  return expanded ? 'Show less' : 'Show more';
-                },
-                noResults: 'No results',
-                submitTitle: 'Submit your search query.',
-                resetTitle: 'Clear your search query.',
-                placeholder: 'Arama...',
-              }}
-              />
-            <h3>Mahalle</h3>
-            <RefinementList 
-              attribute="neighborhood"  
-              className="mb-4"
-              searchable={true}  
-              transformItems={transformItems}
-              translations={{
-                showMore(expanded) {
-                  return expanded ? 'Show less' : 'Show more';
-                },
-                noResults: 'No results',
-                submitTitle: 'Submit your search query.',
-                resetTitle: 'Clear your search query.',
-                placeholder: 'Arama...',
-              }}
-              /> 
-       
-       
-            <h3>Oda sayısı</h3>
-            <RefinementList 
-              attribute="bedrooms" 
-              className="mb-4" 
-              transformItems={items => items
-                .sort((a, b) => parseInt(a.label) - parseInt(b.label))
-              }
-            />
-            <h3>Banyo sayısı</h3>
-            <RefinementList 
-              attribute="bathrooms" 
-              className="mb-4" 
-              transformItems={items => items
-                .sort((a, b) => parseInt(a.label) - parseInt(b.label))
-              }
-            />
-            {/* <h3>Yüzme Havuzu</h3>
-            <RefinementList attribute="hasSwimmingPool" className="mb-4" transformItems={transformItems}/> */}
-            <h3>Fiyat</h3>
-           
-            <RangeInput 
-              attribute="price" 
-              className="mb-4"
-              defaultRefinement={{
-                min: min ? parseInt(min) : undefined,
-                max: max ? parseInt(max) : undefined
-              }}
-              translations={{
-                submit: 'Uygula',
-                separator: 'ile',
-                currency: '₺',
-                placeholder: 'Fiyat giriniz'
-              }}
-              maxLength={10}
-            />
-        <SearchBox 
-          translations={{
-            placeholder: 'Ara...',
-            submitTitle: 'Aramayı başlat',
-            resetTitle: 'Aramayı temizle'
-          }}
-        />
-       
-      </div>
-
-      <div className="flex w-full" >
-        <main style={{ display: "flex", flexDirection: "column", gap: "1rem" }} className="w-full ">
-          <div style={{ padding: "2%" }}  className="w-full">
-
-  
-          <Stats 
-          className="mb-2"  
+        <div className={`bg-white mr-4 gap-y-2 p-4 rounded-xl ${isOpen ? '' : 'hidden'} lg:block`}>
+          <ClearRefinements
             translations={{
-              stats(nbHits, processingTimeMS) {
-                return `${nbHits.toLocaleString('tr-TR')} sonuç bulundu ${processingTimeMS.toLocaleString('tr-TR')} milisaniyede`;
-              }
+              reset: 'Tüm Filtreleri Temizle',
             }}
           />
-<Button 
-  onClick={handleClick} 
-  className="lg:hidden flex items-center gap-2 mb-2"
->
-  {isOpen ? 'Filtreleri Gizle' : 'Sonuçları Filtrele'}
-  {isOpen ? <CaretUp size={20} /> : <CaretDown size={20} />}
-</Button>
-            <SortBy
-              container = '#sort-by'
-              defaultRefinement={postCollection}
-              items={[
-                { value: postCollection, label: "Yayınlanma Tarihi En Yeni" },
-                { value: `${postCollection}/sort/published_date:desc`, label: "Yayınlanma Tarihi En Eski" },
-                { value: `${postCollection}/sort/title:asc`, label: "Başlık A-Z" },
-                { value: `${postCollection}/sort/title:desc`, label: "Başlık Z-A" },
-                { value: `${postCollection}/sort/price:desc`, label: "Fiyat Azalan" },
-                { value: `${postCollection}/sort/price:asc`, label: "Fiyat Artan" },
-              ]}
-            />
-          
+          <h3>Hizmet Tipi</h3>
+          <RefinementList 
+            attribute="contract" 
+            className="mb-4"
+            defaultRefinement={contract ? [contract] : []}
+            transformItems={items => 
+              items.map(item => ({
+                ...item,
+                isRefined: item.label === contract
+              }))
+            }
+          /> 
+          <h3>Gayrimenkul Tipi</h3>
+          <RefinementList 
+            attribute="type" 
+            className="mb-4"
+            defaultRefinement={type ? [type] : []}
+            transformItems={items => 
+              items.map(item => ({
+                ...item,
+                isRefined: item.label === type
+              }))
+            }
+          />
+          <h3>Ülke</h3> 
+          <RefinementList 
+            attribute="country" 
+            className="mb-4" 
+            searchable={true}   
+            translations={{
+              showMore(expanded) {
+                return expanded ? 'Show less' : 'Show more';
+              },
+              noResults: 'No results',
+              submitTitle: 'Submit your search query.',
+              resetTitle: 'Clear your search query.',
+              placeholder: 'Arama...',
+            }}
+            transformItems={transformItems} 
+          />
+          <h3>Şehir</h3>
+          <RefinementList 
+            attribute="city" 
+            className="mb-4" 
+            searchable={true} 
+            transformItems={transformItems}
+            translations={{
+              showMore(expanded) {
+                return expanded ? 'Show less' : 'Show more';
+              },
+              noResults: 'No results',
+              submitTitle: 'Submit your search query.',
+              resetTitle: 'Clear your search query.',
+              placeholder: 'Arama...',
+            }}
+          />
+          <h3>İlçe</h3>
+          <RefinementList 
+            attribute="district" 
+            className="mb-4"  
+            searchable={true} 
+            transformItems={transformItems}
+            translations={{
+              showMore(expanded) {
+                return expanded ? 'Show less' : 'Show more';
+              },
+              noResults: 'No results',
+              submitTitle: 'Submit your search query.',
+              resetTitle: 'Clear your search query.',
+              placeholder: 'Arama...',
+            }}
+          />
+          <h3>Mahalle</h3>
+          <RefinementList 
+            attribute="neighborhood"  
+            className="mb-4"
+            searchable={true}  
+            transformItems={transformItems}
+            translations={{
+              showMore(expanded) {
+                return expanded ? 'Show less' : 'Show more';
+              },
+              noResults: 'No results',
+              submitTitle: 'Submit your search query.',
+              resetTitle: 'Clear your search query.',
+              placeholder: 'Arama...',
+            }}
+          /> 
+          <h3>Oda sayısı</h3>
+          <RefinementList 
+            attribute="bedrooms" 
+            className="mb-4" 
+            transformItems={items => items
+              .sort((a, b) => parseInt(a.label) - parseInt(b.label))
+            }
+          />
+          <h3>Banyo sayısı</h3>
+          <RefinementList 
+            attribute="bathrooms" 
+            className="mb-4" 
+            transformItems={items => items
+              .sort((a, b) => parseInt(a.label) - parseInt(b.label))
+            }
+          />
+          <h3>Fiyat</h3>
+          <CustomRangeInput 
+            attribute="price"
+            min={min ? parseInt(min) : undefined}
+            max={max ? parseInt(max) : undefined}
+            className="mb-4"
+          />
+          <SearchBox 
+            translations={{
+              placeholder: 'Ara...',
+              submitTitle: 'Aramayı başlat',
+              resetTitle: 'Aramayı temizle'
+            }}
+          />
+        </div>
 
-          </div>
-          <div className="w-full ">
-            <MapResults />
-          </div>
-          <div id="search-container">
-            <Hits hitComponent={BlogHitComponent} />
-            <PaginationWithResults />
-          </div>
-        </main>
-      </div>
+        <div className="flex w-full" >
+          <main style={{ display: "flex", flexDirection: "column", gap: "1rem" }} className="w-full ">
+            <div style={{ padding: "2%" }}  className="w-full">
+              <Stats 
+                className="mb-2"  
+                translations={{
+                  stats(nbHits, processingTimeMS) {
+                    return `${nbHits.toLocaleString('tr-TR')} sonuç bulundu ${processingTimeMS.toLocaleString('tr-TR')} milisaniyede`;
+                  }
+                }}
+              />
+              <Button 
+                onClick={handleClick} 
+                className="lg:hidden flex items-center gap-2 mb-2"
+              >
+                {isOpen ? 'Filtreleri Gizle' : 'Sonuçları Filtrele'}
+                {isOpen ? <CaretUp size={20} /> : <CaretDown size={20} />}
+              </Button>
+              <SortBy
+                container = '#sort-by'
+                defaultRefinement={postCollection}
+                items={[
+                  { value: postCollection, label: "Yayınlanma Tarihi En Yeni" },
+                  
+                  { value: `${postCollection}/sort/published_date:asc`, label: "Yayınlanma Tarihi En Eski" },
+                  { value: `${postCollection}/sort/title:asc`, label: "Başlık A-Z" },
+                  { value: `${postCollection}/sort/title:desc`, label: "Başlık Z-A" },
+                  { value: `${postCollection}/sort/price:desc`, label: "Fiyat Azalan" },
+                  { value: `${postCollection}/sort/price:asc`, label: "Fiyat Artan" },
+                ]}
+              />
+            </div>
+            <div className="w-full ">
+              <MapResults />
+            </div>
+            <div id="search-container">
+              <Hits hitComponent={BlogHitComponent} />
+              <PaginationWithResults />
+            </div>
+          </main>
+        </div>
       </div>
     </InstantSearch>
-
   );
 };
 

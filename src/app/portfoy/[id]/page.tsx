@@ -49,9 +49,9 @@ export async function generateMetadata({
         title: property.name,
         description: property.description,
         images:
-          property.images?.map((img: any) => ({
-            url: img.url,
-          })) || [],
+          property.images && property.images.length > 0
+            ? [{ url: property.images[0].url }]
+            : [],
         siteName: "Retroia",
         locale: "tr_TR",
         type: "article",

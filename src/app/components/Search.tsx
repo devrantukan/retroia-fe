@@ -27,6 +27,8 @@ const Search = ({
   const min = searchParams.get("min");
   const max = searchParams.get("max");
 
+  console.log("Search params:", { min, max });
+
   // const searchParams = useSearchParams();
   // const pathName = usePathname();
   // const router = useRouter();

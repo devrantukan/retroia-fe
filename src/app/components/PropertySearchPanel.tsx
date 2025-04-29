@@ -46,7 +46,7 @@ export default function PropertySearchPanel({
     <div className="flex flex-col gap-4 p-4 bg-white rounded-lg shadow-sm">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h3 className="text-lg font-semibold">Filtreler</h3>
+          <h3 className="text-sm font-semibold">Filtreler</h3>
           <div className="flex gap-2">
             {contractOptions.map((option) => (
               <Chip
