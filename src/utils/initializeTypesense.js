@@ -15,6 +15,15 @@ const client = new Typesense.Client({
   connectionTimeoutSeconds: 6,
 });
 
+async function deleteCollection() {
+  try {
+    await client.collections('posts').delete();
+    console.log('Successfully deleted existing collection');
+  } catch (error) {
+    console.log('No existing collection to delete or error:', error.message);
+  }
+}
+
 async function createCollection() {
   const collectionSchema = {
     name: "posts",
@@ -98,6 +107,7 @@ async function insertData(item) {
   return await client.collections("posts").documents().create(samplePost);
 }
 async function main() {
+  await deleteCollection();
   await createCollection();
 
   const properties = await prisma.property.findMany({
