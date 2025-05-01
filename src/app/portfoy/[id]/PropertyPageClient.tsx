@@ -232,7 +232,7 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
 
         return {
           original: image.url, // Use original URL for main image
-          thumbnail: image.url, // Use original URL for thumbnail
+          thumbnail: thumbnailUrl, // Use original URL for thumbnail
           fallback: image.url,
           renderItem: (item: any) => (
             <div className="relative w-full h-full">
@@ -253,7 +253,8 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
               <Image
                 src={thumbnailUrl}
                 alt={`${property.name} - ${property.location.city} ${property.location.district} ${property.location.neighborhood} - ${property.type.name} ${property.subType.name} - Thumbnail`}
-                fill
+                width={400}
+                height={300}
                 className="object-cover"
                 onError={(e) => {
                   const img = e.target as HTMLImageElement;
@@ -494,8 +495,16 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                 />
               </>
             )}
-            <Attribute label="Alan" value={property.feature?.area + " m2"} />
-
+            <Attribute
+              label="Net Alan"
+              value={property.feature?.area + " m2"}
+            />
+            {property.feature?.grossArea > 0 && (
+              <Attribute
+                label="Brüt Alan"
+                value={property.feature?.grossArea + " m2"}
+              />
+            )}
             <Title title="Adres Bilgileri" className="mt-7" />
             <Attribute label="Şehir" value={property.location?.city} />
             <Attribute label="İlçe" value={property.location?.district} />
