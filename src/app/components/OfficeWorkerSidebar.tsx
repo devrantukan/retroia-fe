@@ -33,7 +33,7 @@ const OfficeWorkerSidebar = ({ officeWorker }: Props) => {
       <p className="text-lg font-normal text-center">{officeWorker.title}</p>
       <p className="text-lg font-bold text-center text-blue-950 hover:text-blue-600">
         <Link
-          href={`/ofis/${officeWorker.office.id}/${officeWorker.office.slug}`}
+          href={`/emlak/ofis/${officeWorker.office.id}/${officeWorker.office.slug}`}
         >
           {officeWorker.office.name}
         </Link>

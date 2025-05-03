@@ -474,6 +474,10 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
         </div>
         <div className="flex lg:w-1/3 w-full mb-6 mt-4 mr-4 h-[560px]">
           <Card className="p-5 flex flex-col gap-1 w-full">
+            <h3 className="text-xl font-bold text-primary text-right">
+              {property.type.value} / {property.subType.value}{" "}
+            </h3>
+
             <Title title="Özellikler" />
             {property.typeId == 1 && (
               <>
@@ -620,13 +624,15 @@ const Title = ({ title, className }: { title: string; className?: string }) => (
 const Attribute = ({
   label,
   value,
+  className,
 }: {
   label: string;
   value?: string | number;
+  className?: string;
 }) => (
   <div className="flex justify-between">
     <span className="text-sm text-slate-600">{label}</span>
-    <span className="text-sm text-slate-600">{value}</span>
+    <span className={`text-sm text-slate-600 ${className || ""}`}>{value}</span>
   </div>
 );
 
