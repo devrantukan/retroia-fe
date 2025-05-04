@@ -49,6 +49,37 @@ export default function Share({
     }
     ogImage.setAttribute("content", avatarUrl);
 
+    // Update or create og:image:width
+    let ogImageWidth = document.querySelector(
+      'meta[property="og:image:width"]'
+    );
+    if (!ogImageWidth) {
+      ogImageWidth = document.createElement("meta");
+      ogImageWidth.setAttribute("property", "og:image:width");
+      document.head.appendChild(ogImageWidth);
+    }
+    ogImageWidth.setAttribute("content", "1200");
+
+    // Update or create og:image:height
+    let ogImageHeight = document.querySelector(
+      'meta[property="og:image:height"]'
+    );
+    if (!ogImageHeight) {
+      ogImageHeight = document.createElement("meta");
+      ogImageHeight.setAttribute("property", "og:image:height");
+      document.head.appendChild(ogImageHeight);
+    }
+    ogImageHeight.setAttribute("content", "630");
+
+    // Update or create og:image:type
+    let ogImageType = document.querySelector('meta[property="og:image:type"]');
+    if (!ogImageType) {
+      ogImageType = document.createElement("meta");
+      ogImageType.setAttribute("property", "og:image:type");
+      document.head.appendChild(ogImageType);
+    }
+    ogImageType.setAttribute("content", "image/jpeg");
+
     // Update or create og:title
     let ogTitle = document.querySelector('meta[property="og:title"]');
     if (!ogTitle) {
@@ -67,11 +98,7 @@ export default function Share({
         ogDescription.setAttribute("property", "og:description");
         document.head.appendChild(ogDescription);
       }
-      // Strip HTML tags from description
-      const tmp = document.createElement("DIV");
-      tmp.innerHTML = description;
-      const cleanDescription = tmp.textContent || tmp.innerText || "";
-      ogDescription.setAttribute("content", cleanDescription);
+      ogDescription.setAttribute("content", description);
     }
 
     // Update or create og:url
@@ -86,6 +113,9 @@ export default function Share({
     return () => {
       // Clean up meta tags when component unmounts
       if (ogImage) ogImage.remove();
+      if (ogImageWidth) ogImageWidth.remove();
+      if (ogImageHeight) ogImageHeight.remove();
+      if (ogImageType) ogImageType.remove();
       if (ogTitle) ogTitle.remove();
       if (ogDescription) ogDescription.remove();
       if (ogUrl) ogUrl.remove();
@@ -130,25 +160,10 @@ export default function Share({
                     )}
                   </div>
                 </div>
-                <div className="flex flex-col gap-4">
-                  <ShareSocial
-                    url={fullUrl}
-                    socialTypes={[
-                      "facebook",
-                      "twitter",
-                      "linkedin",
-                      "whatsapp",
-                    ]}
-                  />
-                  <Button
-                    className="w-full"
-                    onClick={() => {
-                      navigator.clipboard.writeText(fullUrl);
-                    }}
-                  >
-                    Kopyala
-                  </Button>
-                </div>
+                <ShareSocial
+                  url={fullUrl}
+                  socialTypes={["facebook", "twitter", "linkedin", "whatsapp"]}
+                />
               </ModalBody>
             </>
           )}
