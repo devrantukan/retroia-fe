@@ -54,7 +54,7 @@ const stripHtml = (html: string) => {
 
   // Split by sentence endings (., !, ?) and take first two sentences
   const sentences = text.split(/(?<=[.!?])\s+/).slice(0, 2);
-
+  console.log(sentences.join(" "));
   return sentences.join(" ");
 };
 
