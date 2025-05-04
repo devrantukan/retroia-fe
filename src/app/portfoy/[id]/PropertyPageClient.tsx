@@ -499,6 +499,28 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                 />
               </>
             )}
+            {property.typeId == 3 && (
+              <>
+                {property.feature?.parcelNumber > 0 && (
+                  <Attribute
+                    label="Parsel Numarası"
+                    value={property.feature?.parcelNumber || "-"}
+                  />
+                )}
+                {property.feature?.blockNumber > 0 && (
+                  <Attribute
+                    label="Ada Numarası"
+                    value={property.feature?.blockNumber || "-"}
+                  />
+                )}
+                {property.feature?.zoningStatus > 0 && (
+                  <Attribute
+                    label="İmar Durumu"
+                    value={property.feature?.zoningStatus || "-"}
+                  />
+                )}
+              </>
+            )}
             <Attribute
               label="Net Alan"
               value={property.feature?.area + " m2"}

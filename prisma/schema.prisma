@@ -74,13 +74,17 @@ model PropertyFeature {
   floor           Int
   totalFloor      Int
   area            Int
-  grossArea       Int   
+  grossArea       Int  
+  zoningStatus    Boolean
+  parcelNumber    Int
+  blockNumber     Int
   hasSwimmingPool Boolean
   hasGardenYard   Boolean
   hasBalcony      Boolean
   property        Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
   propertyId      Int      @unique
 }
+
 
 model PropertyLocation {
   id            Int      @id @default(autoincrement())
