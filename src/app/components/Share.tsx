@@ -43,6 +43,14 @@ export default function Share({
     // Update meta tags when component mounts or props change
     const metaTags = document.getElementsByTagName("meta");
 
+    // Update or create title tag first
+    let titleTag = document.querySelector("title");
+    if (!titleTag) {
+      titleTag = document.createElement("title");
+      document.head.appendChild(titleTag);
+    }
+    titleTag.textContent = title;
+
     // Update or create og:title
     let ogTitle = document.querySelector('meta[property="og:title"]');
     if (!ogTitle) {
@@ -61,13 +69,23 @@ export default function Share({
     }
     twitterTitle.setAttribute("content", title);
 
-    // Update or create title tag
-    let titleTag = document.querySelector("title");
-    if (!titleTag) {
-      titleTag = document.createElement("title");
-      document.head.appendChild(titleTag);
+    // Update or create og:site_name
+    let ogSiteName = document.querySelector('meta[property="og:site_name"]');
+    if (!ogSiteName) {
+      ogSiteName = document.createElement("meta");
+      ogSiteName.setAttribute("property", "og:site_name");
+      document.head.appendChild(ogSiteName);
     }
-    titleTag.textContent = title;
+    ogSiteName.setAttribute("content", "Retroia");
+
+    // Update or create og:type
+    let ogType = document.querySelector('meta[property="og:type"]');
+    if (!ogType) {
+      ogType = document.createElement("meta");
+      ogType.setAttribute("property", "og:type");
+      document.head.appendChild(ogType);
+    }
+    ogType.setAttribute("content", "article");
 
     // Update or create og:image
     let ogImage = document.querySelector('meta[property="og:image"]');
@@ -159,20 +177,13 @@ export default function Share({
     }
     ogUrl.setAttribute("content", fullUrl);
 
-    // Add og:type
-    let ogType = document.querySelector('meta[property="og:type"]');
-    if (!ogType) {
-      ogType = document.createElement("meta");
-      ogType.setAttribute("property", "og:type");
-      document.head.appendChild(ogType);
-    }
-    ogType.setAttribute("content", "website");
-
     return () => {
       // Clean up meta tags when component unmounts
+      if (titleTag) titleTag.remove();
       if (ogTitle) ogTitle.remove();
       if (twitterTitle) twitterTitle.remove();
-      if (titleTag) titleTag.remove();
+      if (ogSiteName) ogSiteName.remove();
+      if (ogType) ogType.remove();
       if (ogImage) ogImage.remove();
       if (twitterImage) twitterImage.remove();
       if (ogImageSecure) ogImageSecure.remove();
@@ -182,7 +193,6 @@ export default function Share({
       if (ogImageAlt) ogImageAlt.remove();
       if (ogDescription) ogDescription.remove();
       if (ogUrl) ogUrl.remove();
-      if (ogType) ogType.remove();
     };
   }, [title, description, fullImageUrl, fullUrl]);
 
