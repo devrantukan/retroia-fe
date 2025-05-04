@@ -301,7 +301,7 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
     if (params.agentId && params.agentSlug && agent) {
       return (
         <>
-          <Title title="Danışman Detayları" className="mt-6" />
+          <Title title="Danışman Detayları" className="mt-4" />
           <AgentInfo agent={agent} params={params} />
         </>
       );
@@ -311,7 +311,7 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
     if (property?.agent) {
       return (
         <>
-          <Title title="Danışman Detayları" className="mt-6" />
+          <Title title="Danışman Detayları" className="mt-4" />
           <AgentInfo agent={property.agent} params={params} />
         </>
       );
@@ -559,14 +559,14 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                 value={property.feature?.grossArea + " m2"}
               />
             )}
-            <Title title="Adres Bilgileri" className="mt-7" />
+            <Title title="Adres Bilgileri" className="mt-4" />
             <Attribute label="Şehir" value={property.location?.city} />
             <Attribute label="İlçe" value={property.location?.district} />
             <Attribute
               label="Mahalle"
               value={property.location?.neighborhood}
             />
-            <div className="mt-6 w-full flex flex-row gap-1 justify-between items-center">
+            <div className="mt-4 w-full flex flex-row gap-1 justify-between items-center">
               <div className="lg:w-1/2">
                 {property.location?.latitude !== 0 &&
                   property.location?.longitude !== 0 && (

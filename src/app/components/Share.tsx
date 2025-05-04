@@ -8,7 +8,7 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { ShareSocial } from "react-share-social";
 import { ShareFat } from "@phosphor-icons/react/dist/ssr";
 import { usePathname } from "next/navigation";
@@ -34,6 +34,68 @@ export default function Share({
   const [scrollBehavior, setScrollBehavior] = React.useState<
     "inside" | "normal" | "outside"
   >("inside");
+
+  useEffect(() => {
+    // Update meta tags when component mounts or props change
+    const metaTags = document.getElementsByTagName("meta");
+
+    // Update or create title tag first
+    let titleTag = document.querySelector("title");
+    if (!titleTag) {
+      titleTag = document.createElement("title");
+      document.head.appendChild(titleTag);
+    }
+    titleTag.textContent = title;
+
+    // Update or create og:title
+    let ogTitle = document.querySelector('meta[property="og:title"]');
+    if (!ogTitle) {
+      ogTitle = document.createElement("meta");
+      ogTitle.setAttribute("property", "og:title");
+      document.head.appendChild(ogTitle);
+    }
+    ogTitle.setAttribute("content", title);
+
+    // Update or create twitter:title
+    let twitterTitle = document.querySelector('meta[name="twitter:title"]');
+    if (!twitterTitle) {
+      twitterTitle = document.createElement("meta");
+      twitterTitle.setAttribute("name", "twitter:title");
+      document.head.appendChild(twitterTitle);
+    }
+    twitterTitle.setAttribute("content", title);
+
+    // Update or create og:description
+    let ogDescription = document.querySelector(
+      'meta[property="og:description"]'
+    );
+    if (!ogDescription) {
+      ogDescription = document.createElement("meta");
+      ogDescription.setAttribute("property", "og:description");
+      document.head.appendChild(ogDescription);
+    }
+    ogDescription.setAttribute("content", description || "");
+
+    // Update or create twitter:description
+    let twitterDescription = document.querySelector(
+      'meta[name="twitter:description"]'
+    );
+    if (!twitterDescription) {
+      twitterDescription = document.createElement("meta");
+      twitterDescription.setAttribute("name", "twitter:description");
+      document.head.appendChild(twitterDescription);
+    }
+    twitterDescription.setAttribute("content", description || "");
+
+    // Update or create og:site_name
+    let ogSiteName = document.querySelector('meta[property="og:site_name"]');
+    if (!ogSiteName) {
+      ogSiteName = document.createElement("meta");
+      ogSiteName.setAttribute("property", "og:site_name");
+      document.head.appendChild(ogSiteName);
+    }
+    ogSiteName.setAttribute("content", "RetroIA");
+  }, [title, description]);
 
   return (
     <>
@@ -66,7 +128,14 @@ export default function Share({
                       className="aspect-auto max-w-[10rem] rounded-lg"
                     />
                   )}
-                  <h2 className="font-bold">{title}</h2>
+                  <div className="flex flex-col">
+                    <h2 className="font-bold">{title}</h2>
+                    {description && (
+                      <p className="text-sm text-gray-600 mt-2">
+                        {description}
+                      </p>
+                    )}
+                  </div>
                 </div>
                 <ShareSocial
                   url={`${baseUrl.replace("/emlak", "")}${currentPage}`}
