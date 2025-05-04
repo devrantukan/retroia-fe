@@ -33,6 +33,12 @@ interface PropertyPageClientProps {
   };
 }
 
+const stripHtml = (html: string) => {
+  const tmp = document.createElement("DIV");
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || "";
+};
+
 const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [property, setProperty] = useState<any>(null);
@@ -383,6 +389,7 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                   <Share
                     title={property.name}
                     type={"İlan"}
+                    description={stripHtml(property.description)}
                     avatarUrl={
                       property.images && property.images.length > 0
                         ? property.images[0].url
@@ -479,7 +486,7 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
             </h3>
 
             <Title title="Özellikler" />
-            {property.typeId == 1 && (
+            {property.type.id == 1 && (
               <>
                 <Attribute
                   label="Oda Sayısı"
@@ -499,7 +506,7 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                 />
               </>
             )}
-            {property.typeId == 3 && (
+            {property.type.id == 3 && (
               <>
                 {property.feature?.parcelNumber > 0 && (
                   <Attribute
@@ -513,7 +520,7 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                     value={property.feature?.blockNumber || "-"}
                   />
                 )}
-                {property.feature?.zoningStatus > 0 && (
+                {property.feature?.zoningStatus && (
                   <Attribute
                     label="İmar Durumu"
                     value={property.feature?.zoningStatus || "-"}
@@ -649,12 +656,14 @@ const Attribute = ({
   className,
 }: {
   label: string;
-  value?: string | number;
+  value?: string | number | boolean;
   className?: string;
 }) => (
   <div className="flex justify-between">
     <span className="text-sm text-slate-600">{label}</span>
-    <span className={`text-sm text-slate-600 ${className || ""}`}>{value}</span>
+    <span className={`text-sm text-slate-600 ${className || ""}`}>
+      {typeof value === "boolean" ? (value ? "Var" : "Yok") : value}
+    </span>
   </div>
 );
 
