@@ -33,6 +33,9 @@ export default function Share({
     ? avatarUrl
     : `${baseUrl}${avatarUrl}`;
 
+  // Custom description for link sharing
+  const shareDescription = `${description} `;
+
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [scrollBehavior, setScrollBehavior] = React.useState<
     "inside" | "normal" | "outside"
@@ -77,7 +80,7 @@ export default function Share({
       ogDescription.setAttribute("property", "og:description");
       document.head.appendChild(ogDescription);
     }
-    ogDescription.setAttribute("content", description || "");
+    ogDescription.setAttribute("content", shareDescription);
 
     // Update or create twitter:description
     let twitterDescription = document.querySelector(
@@ -88,7 +91,7 @@ export default function Share({
       twitterDescription.setAttribute("name", "twitter:description");
       document.head.appendChild(twitterDescription);
     }
-    twitterDescription.setAttribute("content", description || "");
+    twitterDescription.setAttribute("content", shareDescription);
 
     // Update or create og:site_name
     let ogSiteName = document.querySelector('meta[property="og:site_name"]');
@@ -204,7 +207,14 @@ export default function Share({
       if (ogImageAlt) ogImageAlt.remove();
       if (ogUrl) ogUrl.remove();
     };
-  }, [title, description, fullImageUrl, fullUrl]);
+  }, [
+    title,
+    description,
+    fullImageUrl,
+    fullUrl,
+    currentPage,
+    shareDescription,
+  ]);
 
   return (
     <>
