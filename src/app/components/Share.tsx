@@ -43,6 +43,32 @@ export default function Share({
     // Update meta tags when component mounts or props change
     const metaTags = document.getElementsByTagName("meta");
 
+    // Update or create og:title
+    let ogTitle = document.querySelector('meta[property="og:title"]');
+    if (!ogTitle) {
+      ogTitle = document.createElement("meta");
+      ogTitle.setAttribute("property", "og:title");
+      document.head.appendChild(ogTitle);
+    }
+    ogTitle.setAttribute("content", title);
+
+    // Update or create twitter:title
+    let twitterTitle = document.querySelector('meta[name="twitter:title"]');
+    if (!twitterTitle) {
+      twitterTitle = document.createElement("meta");
+      twitterTitle.setAttribute("name", "twitter:title");
+      document.head.appendChild(twitterTitle);
+    }
+    twitterTitle.setAttribute("content", title);
+
+    // Update or create title tag
+    let titleTag = document.querySelector("title");
+    if (!titleTag) {
+      titleTag = document.createElement("title");
+      document.head.appendChild(titleTag);
+    }
+    titleTag.textContent = title;
+
     // Update or create og:image
     let ogImage = document.querySelector('meta[property="og:image"]');
     if (!ogImage) {
@@ -51,6 +77,15 @@ export default function Share({
       document.head.appendChild(ogImage);
     }
     ogImage.setAttribute("content", fullImageUrl);
+
+    // Update or create twitter:image
+    let twitterImage = document.querySelector('meta[name="twitter:image"]');
+    if (!twitterImage) {
+      twitterImage = document.createElement("meta");
+      twitterImage.setAttribute("name", "twitter:image");
+      document.head.appendChild(twitterImage);
+    }
+    twitterImage.setAttribute("content", fullImageUrl);
 
     // Update or create og:image:secure_url
     let ogImageSecure = document.querySelector(
@@ -103,15 +138,6 @@ export default function Share({
     }
     ogImageAlt.setAttribute("content", title);
 
-    // Update or create og:title
-    let ogTitle = document.querySelector('meta[property="og:title"]');
-    if (!ogTitle) {
-      ogTitle = document.createElement("meta");
-      ogTitle.setAttribute("property", "og:title");
-      document.head.appendChild(ogTitle);
-    }
-    ogTitle.setAttribute("content", title);
-
     // Update or create og:description
     let ogDescription: HTMLMetaElement | null = null;
     if (description) {
@@ -133,17 +159,30 @@ export default function Share({
     }
     ogUrl.setAttribute("content", fullUrl);
 
+    // Add og:type
+    let ogType = document.querySelector('meta[property="og:type"]');
+    if (!ogType) {
+      ogType = document.createElement("meta");
+      ogType.setAttribute("property", "og:type");
+      document.head.appendChild(ogType);
+    }
+    ogType.setAttribute("content", "website");
+
     return () => {
       // Clean up meta tags when component unmounts
+      if (ogTitle) ogTitle.remove();
+      if (twitterTitle) twitterTitle.remove();
+      if (titleTag) titleTag.remove();
       if (ogImage) ogImage.remove();
+      if (twitterImage) twitterImage.remove();
       if (ogImageSecure) ogImageSecure.remove();
       if (ogImageWidth) ogImageWidth.remove();
       if (ogImageHeight) ogImageHeight.remove();
       if (ogImageType) ogImageType.remove();
       if (ogImageAlt) ogImageAlt.remove();
-      if (ogTitle) ogTitle.remove();
       if (ogDescription) ogDescription.remove();
       if (ogUrl) ogUrl.remove();
+      if (ogType) ogType.remove();
     };
   }, [title, description, fullImageUrl, fullUrl]);
 
