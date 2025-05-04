@@ -41,10 +41,10 @@ const stripHtml = (html: string) => {
   tmp.innerHTML = html;
 
   // Remove all Quill.js classes
-  const elements = tmp.getElementsByClassName("ql-align-center");
-  while (elements.length > 0) {
-    elements[0].removeAttribute("class");
-  }
+  const quillElements = tmp.querySelectorAll('[class*="ql-"]');
+  quillElements.forEach((element) => {
+    element.removeAttribute("class");
+  });
 
   // Get text content and clean it up
   let text = tmp.textContent || tmp.innerText || "";
