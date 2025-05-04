@@ -67,7 +67,11 @@ export default function Share({
         ogDescription.setAttribute("property", "og:description");
         document.head.appendChild(ogDescription);
       }
-      ogDescription.setAttribute("content", description);
+      // Strip HTML tags from description
+      const tmp = document.createElement("DIV");
+      tmp.innerHTML = description;
+      const cleanDescription = tmp.textContent || tmp.innerText || "";
+      ogDescription.setAttribute("content", cleanDescription);
     }
 
     // Update or create og:url
