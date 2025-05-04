@@ -34,9 +34,28 @@ interface PropertyPageClientProps {
 }
 
 const stripHtml = (html: string) => {
+  if (!html) return "";
+
+  // Create a temporary div
   const tmp = document.createElement("DIV");
   tmp.innerHTML = html;
-  return tmp.textContent || tmp.innerText || "";
+
+  // Remove all Quill.js classes
+  const elements = tmp.getElementsByClassName("ql-align-center");
+  while (elements.length > 0) {
+    elements[0].removeAttribute("class");
+  }
+
+  // Get text content and clean it up
+  let text = tmp.textContent || tmp.innerText || "";
+
+  // Remove extra whitespace and newlines
+  text = text.replace(/\s+/g, " ").trim();
+
+  // Split by sentence endings (., !, ?) and take first two sentences
+  const sentences = text.split(/(?<=[.!?])\s+/).slice(0, 2);
+
+  return sentences.join(" ");
 };
 
 const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
