@@ -389,7 +389,10 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                   <Share
                     title={property.name}
                     type={"İlan"}
-                    description={stripHtml(property.description)}
+                    description={stripHtml(property.description)
+                      .split(/[.!?]+\s+/)
+                      .slice(0, 2)
+                      .join(". ")}
                     avatarUrl={
                       property.images && property.images.length > 0
                         ? property.images[0].url

@@ -126,10 +126,25 @@ export default function Share({
                     )}
                   </div>
                 </div>
-                <ShareSocial
-                  url={fullUrl}
-                  socialTypes={["facebook", "twitter", "linkedin", "whatsapp"]}
-                />
+                <div className="flex flex-col gap-4">
+                  <ShareSocial
+                    url={fullUrl}
+                    socialTypes={[
+                      "facebook",
+                      "twitter",
+                      "linkedin",
+                      "whatsapp",
+                    ]}
+                  />
+                  <Button
+                    className="w-full"
+                    onClick={() => {
+                      navigator.clipboard.writeText(fullUrl);
+                    }}
+                  >
+                    Kopyala
+                  </Button>
+                </div>
               </ModalBody>
             </>
           )}
