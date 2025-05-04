@@ -29,7 +29,10 @@ export default function Share({
   const currentPage = usePathname();
   const baseUrl =
     process.env.NEXT_PUBLIC_BASE_URL || "https://www.retroia.com/emlak";
-  const fullUrl = `${baseUrl.replace("/emlak", "")}${currentPage}`;
+  const fullUrl = `${baseUrl}${currentPage}`;
+  const fullImageUrl = avatarUrl.startsWith("http")
+    ? avatarUrl
+    : `${baseUrl}${avatarUrl}`;
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [scrollBehavior, setScrollBehavior] = React.useState<
@@ -47,7 +50,18 @@ export default function Share({
       ogImage.setAttribute("property", "og:image");
       document.head.appendChild(ogImage);
     }
-    ogImage.setAttribute("content", avatarUrl);
+    ogImage.setAttribute("content", fullImageUrl);
+
+    // Update or create og:image:secure_url
+    let ogImageSecure = document.querySelector(
+      'meta[property="og:image:secure_url"]'
+    );
+    if (!ogImageSecure) {
+      ogImageSecure = document.createElement("meta");
+      ogImageSecure.setAttribute("property", "og:image:secure_url");
+      document.head.appendChild(ogImageSecure);
+    }
+    ogImageSecure.setAttribute("content", fullImageUrl);
 
     // Update or create og:image:width
     let ogImageWidth = document.querySelector(
@@ -79,6 +93,15 @@ export default function Share({
       document.head.appendChild(ogImageType);
     }
     ogImageType.setAttribute("content", "image/jpeg");
+
+    // Update or create og:image:alt
+    let ogImageAlt = document.querySelector('meta[property="og:image:alt"]');
+    if (!ogImageAlt) {
+      ogImageAlt = document.createElement("meta");
+      ogImageAlt.setAttribute("property", "og:image:alt");
+      document.head.appendChild(ogImageAlt);
+    }
+    ogImageAlt.setAttribute("content", title);
 
     // Update or create og:title
     let ogTitle = document.querySelector('meta[property="og:title"]');
@@ -113,14 +136,16 @@ export default function Share({
     return () => {
       // Clean up meta tags when component unmounts
       if (ogImage) ogImage.remove();
+      if (ogImageSecure) ogImageSecure.remove();
       if (ogImageWidth) ogImageWidth.remove();
       if (ogImageHeight) ogImageHeight.remove();
       if (ogImageType) ogImageType.remove();
+      if (ogImageAlt) ogImageAlt.remove();
       if (ogTitle) ogTitle.remove();
       if (ogDescription) ogDescription.remove();
       if (ogUrl) ogUrl.remove();
     };
-  }, [title, description, avatarUrl, fullUrl]);
+  }, [title, description, fullImageUrl, fullUrl]);
 
   return (
     <>
@@ -156,7 +181,9 @@ export default function Share({
                   <div className="flex flex-col">
                     <h2 className="font-bold">{title}</h2>
                     {description && (
-                      <p className="text-sm text-gray-600">{description}</p>
+                      <p className="text-sm text-gray-600 mt-2">
+                        {description}
+                      </p>
                     )}
                   </div>
                 </div>

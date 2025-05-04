@@ -36,15 +36,7 @@ interface PropertyPageClientProps {
 const stripHtml = (html: string) => {
   const tmp = document.createElement("DIV");
   tmp.innerHTML = html;
-  // Remove all Quill.js classes
-  const elements = tmp.getElementsByClassName("ql-align-center");
-  while (elements.length > 0) {
-    elements[0].removeAttribute("class");
-  }
-  const text = tmp.textContent || tmp.innerText || "";
-  // Split by sentence endings (., !, ?) and take first two sentences
-  const sentences = text.split(/(?<=[.!?])\s+/).slice(0, 2);
-  return sentences.join(" ");
+  return tmp.textContent || tmp.innerText || "";
 };
 
 const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
@@ -397,7 +389,9 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                   <Share
                     title={property.name}
                     type={"İlan"}
-                    description={stripHtml(property.description)}
+                    description={
+                      stripHtml(property.description).slice(0, 80) + "..."
+                    }
                     avatarUrl={
                       property.images && property.images.length > 0
                         ? property.images[0].url
