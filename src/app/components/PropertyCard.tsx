@@ -117,12 +117,13 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
       : "w-full flex lg:flex-row mb-4 min-h-[150px] lg:max-h-[150px]";
 
   const originalUrl = property.images?.[0]?.url;
-
-  const thumbnailUrl = originalUrl.includes("/propertyImages/")
-    ? originalUrl.replace("/propertyImages/", "/thumbnails-property-images/")
-    : originalUrl.includes("/property-images/")
-    ? originalUrl.replace("/property-images/", "/thumbnails-property-images/")
-    : originalUrl;
+  const thumbnailUrl = originalUrl
+    ? originalUrl.includes("/propertyImages/")
+      ? originalUrl.replace("/propertyImages/", "/thumbnails-property-images/")
+      : originalUrl.includes("/property-images/")
+      ? originalUrl.replace("/property-images/", "/thumbnails-property-images/")
+      : originalUrl
+    : null;
 
   const defaultImageUrl = "/images/placeholder.png";
 
@@ -146,7 +147,12 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
         <div className="flex lg:flex-row flex-col w-full m-0">
           <div className="relative w-full lg:w-auto">
             <Image
-              src={thumbnailUrl || originalUrl || defaultImageUrl}
+              src={
+                thumbnailUrl ||
+                originalUrl ||
+                defaultImageUrl ||
+                "/images/placeholder.png"
+              }
               alt={property.title}
               width={400}
               height={240}

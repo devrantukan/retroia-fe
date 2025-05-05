@@ -42,11 +42,13 @@ const PropertySearchCard = ({ property, showAvatar }: any) => {
 
   const originalUrl = property.images?.[0]?.url;
 
-  const thumbnailUrl = originalUrl.includes("/propertyImages/")
-    ? originalUrl.replace("/propertyImages/", "/thumbnails-property-images/")
-    : originalUrl.includes("/property-images/")
-    ? originalUrl.replace("/property-images/", "/thumbnails-property-images/")
-    : originalUrl;
+  const thumbnailUrl = originalUrl
+    ? originalUrl.includes("/propertyImages/")
+      ? originalUrl.replace("/propertyImages/", "/thumbnails-property-images/")
+      : originalUrl.includes("/property-images/")
+      ? originalUrl.replace("/property-images/", "/thumbnails-property-images/")
+      : originalUrl
+    : null;
 
   const defaultImageUrl = "/images/placeholder.png";
 
@@ -74,7 +76,12 @@ const PropertySearchCard = ({ property, showAvatar }: any) => {
         <div className="flex lg:flex-row flex-col w-full m-0">
           <div className="relative">
             <Image
-              src={thumbnailUrl || originalUrl || defaultImageUrl}
+              src={
+                thumbnailUrl ||
+                originalUrl ||
+                defaultImageUrl ||
+                "/images/placeholder.png"
+              }
               className={imageClassName}
               alt={property.images?.[0]?.name || "No Image"}
               width={240}
