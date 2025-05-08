@@ -42,7 +42,7 @@ export default function HomepageRentalList({
                       ))}
                   </div>
                   <div className="flex items-end">
-                    <Link href={`/konut/kiralik/`} className="w-full">
+                    <Link href={`/emlak/konut/kiralik/`} className="w-full">
                       <Button className="bg-blue-950 w-full">
                         <span className="text-white font-bold flex flex-row">
                           <span className="mr-4">Daha Fazla Görüntüle</span>
@@ -69,7 +69,7 @@ export default function HomepageRentalList({
                       ))}
                   </div>
                   <div className="flex items-end ">
-                    <Link href={`/ticari/kiralik/`} className="w-full">
+                    <Link href={`/emlak/ticari/kiralik/`} className="w-full">
                       <Button className="bg-blue-950 w-full">
                         <span className="text-white font-bold flex flex-row">
                           <span className="mr-4">Daha Fazla Görüntüle</span>
@@ -96,7 +96,10 @@ export default function HomepageRentalList({
                       ))}
                   </div>
                   <div className="flex items-end ">
-                    <Link href={`/arsa-arazi/kiralik/`} className="w-full">
+                    <Link
+                      href={`/emlak/arsa-arazi/kiralik/`}
+                      className="w-full"
+                    >
                       <Button className="bg-blue-950 w-full">
                         <span className="text-white font-bold flex flex-row">
                           <span className="mr-4">Daha Fazla Görüntüle</span>
