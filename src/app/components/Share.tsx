@@ -32,6 +32,7 @@ export default function Share({
   const fullImageUrl = avatarUrl.startsWith("http")
     ? avatarUrl
     : `${baseUrl}${avatarUrl}`;
+  const createdElements = React.useRef<Element[]>([]);
 
   // Custom description for link sharing
   const shareDescription = `${description} `;
@@ -50,6 +51,7 @@ export default function Share({
     if (!titleTag) {
       titleTag = document.createElement("title");
       document.head.appendChild(titleTag);
+      createdElements.current.push(titleTag);
     }
     titleTag.textContent = title;
 
@@ -59,6 +61,7 @@ export default function Share({
       ogTitle = document.createElement("meta");
       ogTitle.setAttribute("property", "og:title");
       document.head.appendChild(ogTitle);
+      createdElements.current.push(ogTitle);
     }
     ogTitle.setAttribute("content", title);
 
@@ -68,6 +71,7 @@ export default function Share({
       twitterTitle = document.createElement("meta");
       twitterTitle.setAttribute("name", "twitter:title");
       document.head.appendChild(twitterTitle);
+      createdElements.current.push(twitterTitle);
     }
     twitterTitle.setAttribute("content", title);
 
@@ -79,6 +83,7 @@ export default function Share({
       ogDescription = document.createElement("meta");
       ogDescription.setAttribute("property", "og:description");
       document.head.appendChild(ogDescription);
+      createdElements.current.push(ogDescription);
     }
     ogDescription.setAttribute("content", shareDescription);
 
@@ -90,6 +95,7 @@ export default function Share({
       twitterDescription = document.createElement("meta");
       twitterDescription.setAttribute("name", "twitter:description");
       document.head.appendChild(twitterDescription);
+      createdElements.current.push(twitterDescription);
     }
     twitterDescription.setAttribute("content", shareDescription);
 
@@ -99,6 +105,7 @@ export default function Share({
       ogSiteName = document.createElement("meta");
       ogSiteName.setAttribute("property", "og:site_name");
       document.head.appendChild(ogSiteName);
+      createdElements.current.push(ogSiteName);
     }
     ogSiteName.setAttribute("content", "RetroIA");
 
@@ -108,6 +115,7 @@ export default function Share({
       ogType = document.createElement("meta");
       ogType.setAttribute("property", "og:type");
       document.head.appendChild(ogType);
+      createdElements.current.push(ogType);
     }
     ogType.setAttribute("content", "article");
 
@@ -117,6 +125,7 @@ export default function Share({
       ogImage = document.createElement("meta");
       ogImage.setAttribute("property", "og:image");
       document.head.appendChild(ogImage);
+      createdElements.current.push(ogImage);
     }
     ogImage.setAttribute("content", fullImageUrl);
 
@@ -126,6 +135,7 @@ export default function Share({
       twitterImage = document.createElement("meta");
       twitterImage.setAttribute("name", "twitter:image");
       document.head.appendChild(twitterImage);
+      createdElements.current.push(twitterImage);
     }
     twitterImage.setAttribute("content", fullImageUrl);
 
@@ -137,6 +147,7 @@ export default function Share({
       ogImageSecure = document.createElement("meta");
       ogImageSecure.setAttribute("property", "og:image:secure_url");
       document.head.appendChild(ogImageSecure);
+      createdElements.current.push(ogImageSecure);
     }
     ogImageSecure.setAttribute("content", fullImageUrl);
 
@@ -148,6 +159,7 @@ export default function Share({
       ogImageWidth = document.createElement("meta");
       ogImageWidth.setAttribute("property", "og:image:width");
       document.head.appendChild(ogImageWidth);
+      createdElements.current.push(ogImageWidth);
     }
     ogImageWidth.setAttribute("content", "1200");
 
@@ -159,6 +171,7 @@ export default function Share({
       ogImageHeight = document.createElement("meta");
       ogImageHeight.setAttribute("property", "og:image:height");
       document.head.appendChild(ogImageHeight);
+      createdElements.current.push(ogImageHeight);
     }
     ogImageHeight.setAttribute("content", "630");
 
@@ -168,6 +181,7 @@ export default function Share({
       ogImageType = document.createElement("meta");
       ogImageType.setAttribute("property", "og:image:type");
       document.head.appendChild(ogImageType);
+      createdElements.current.push(ogImageType);
     }
     ogImageType.setAttribute("content", "image/jpeg");
 
@@ -177,6 +191,7 @@ export default function Share({
       ogImageAlt = document.createElement("meta");
       ogImageAlt.setAttribute("property", "og:image:alt");
       document.head.appendChild(ogImageAlt);
+      createdElements.current.push(ogImageAlt);
     }
     ogImageAlt.setAttribute("content", title);
 
@@ -186,26 +201,23 @@ export default function Share({
       ogUrl = document.createElement("meta");
       ogUrl.setAttribute("property", "og:url");
       document.head.appendChild(ogUrl);
+      createdElements.current.push(ogUrl);
     }
     ogUrl.setAttribute("content", fullUrl);
 
     return () => {
-      // Clean up meta tags when component unmounts
-      if (titleTag) titleTag.remove();
-      if (ogTitle) ogTitle.remove();
-      if (twitterTitle) twitterTitle.remove();
-      if (ogDescription) ogDescription.remove();
-      if (twitterDescription) twitterDescription.remove();
-      if (ogSiteName) ogSiteName.remove();
-      if (ogType) ogType.remove();
-      if (ogImage) ogImage.remove();
-      if (twitterImage) twitterImage.remove();
-      if (ogImageSecure) ogImageSecure.remove();
-      if (ogImageWidth) ogImageWidth.remove();
-      if (ogImageHeight) ogImageHeight.remove();
-      if (ogImageType) ogImageType.remove();
-      if (ogImageAlt) ogImageAlt.remove();
-      if (ogUrl) ogUrl.remove();
+      // Only remove elements we created
+      createdElements.current.forEach((element) => {
+        try {
+          if (element instanceof Element && document.contains(element)) {
+            element.remove();
+          }
+        } catch (error) {
+          console.warn("Failed to remove element:", error);
+        }
+      });
+      // Clear the ref
+      createdElements.current = [];
     };
   }, [
     title,

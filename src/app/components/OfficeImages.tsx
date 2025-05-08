@@ -5,15 +5,15 @@ import Image from "next/image";
 export default function OfficeImages({ images }: { images: any[] }) {
   return (
     <>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {images.map((image, index) => (
-          <div key={index}>
+          <div key={index} className="aspect-video relative">
             <Image
-              className="h-auto max-w-full rounded-lg"
+              className="rounded-lg object-cover"
               src={image.url}
               alt=""
-              width={480}
-              height={400}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
         ))}

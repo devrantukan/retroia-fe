@@ -52,7 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
     },
     {
-      url: `${baseUrl}/emlak/biz-kimiz/`,
+      url: `${baseUrl}/biz-kimiz/`,
       lastModified: new Date(),
     },
   ];
@@ -68,6 +68,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       where: {
         publishingStatus: "PUBLISHED",
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     // Fetch offices directly from Prisma
@@ -76,6 +79,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         id: true,
         updatedAt: true,
         createdAt: true,
+        slug: true,
       },
     });
 
@@ -90,7 +94,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Add office routes
     offices.forEach((office) => {
       routes.push({
-        url: `${baseUrl}/ofislerimiz/${office.id}/`,
+        url: `${baseUrl}/ofislerimiz/${office.id}/${office.slug}/`,
         lastModified: office.updatedAt || new Date(),
       });
     });

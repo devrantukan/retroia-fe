@@ -41,7 +41,6 @@ export default async function Home({ searchParams }: Props) {
     where: {
       publishingStatus: "PUBLISHED",
     },
-
     select: {
       id: true,
       name: true,
@@ -64,20 +63,30 @@ export default async function Home({ searchParams }: Props) {
       type: true,
       contract: true,
     },
-
-    skip: 0,
-    take: 100,
     orderBy: {
       createdAt: "desc",
     },
   });
 
+  // Get at least 5 satılık konut properties
+  const satilikKonut = properties
+    .filter((p) => p.type.value === "konut" && p.contract.value === "satılık")
+    .slice(0, 5);
+
+  // Get other properties
+  const otherProperties = properties.filter(
+    (p) => !(p.type.value === "konut" && p.contract.value === "satılık")
+  );
+
+  // Combine the results
+  const selectedProperties = [...satilikKonut, ...otherProperties];
+
   return (
     <div>
       <HomepageHero />
       <div className="flex lg:flex-row flex-col gap-y-6  ">
-        <HomepageRentalList properties={properties} />
-        <HomepageForSaleList properties={properties} />
+        <HomepageRentalList properties={selectedProperties} />
+        <HomepageForSaleList properties={selectedProperties} />
       </div>
       <div className="flex lg:flex-row flex-col gap-y-6 mt-6 gap-x-6">
         <HomepageCustomerBanner />

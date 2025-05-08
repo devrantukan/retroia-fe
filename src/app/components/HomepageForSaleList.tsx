@@ -42,15 +42,14 @@ export default function HomepageForSaleList({
                       ))}
                   </div>
                   <div className="flex items-end ">
-                    <Button className="bg-blue-950 w-full">
-                      <Link
-                        href={`/emlak/konut/satilik`}
-                        className="text-white font-bold flex flex-row"
-                      >
-                        <span className="mr-4">Daha Fazla Görüntüle</span>
-                        <ArrowCircleRight width={20} height={20} />
-                      </Link>
-                    </Button>
+                    <Link href={`/konut/satilik/`} className="w-full">
+                      <Button className="bg-blue-950 w-full">
+                        <span className="text-white font-bold flex flex-row">
+                          <span className="mr-4">Daha Fazla Görüntüle</span>
+                          <ArrowCircleRight width={20} height={20} />
+                        </span>
+                      </Button>
+                    </Link>
                   </div>
                 </CardBody>
               </Card>
@@ -70,15 +69,14 @@ export default function HomepageForSaleList({
                       ))}
                   </div>
                   <div className="flex items-end ">
-                    <Button className="bg-blue-950 w-full">
-                      <Link
-                        href={`/emlak/ticari/satilik`}
-                        className="text-white font-bold flex flex-row"
-                      >
-                        <span className="mr-4">Daha Fazla Görüntüle</span>
-                        <ArrowCircleRight width={20} height={20} />
-                      </Link>
-                    </Button>
+                    <Link href={`/ticari/satilik/`} className="w-full">
+                      <Button className="bg-blue-950 w-full">
+                        <span className="text-white font-bold flex flex-row">
+                          <span className="mr-4">Daha Fazla Görüntüle</span>
+                          <ArrowCircleRight width={20} height={20} />
+                        </span>
+                      </Button>
+                    </Link>
                   </div>
                 </CardBody>
               </Card>
@@ -98,15 +96,14 @@ export default function HomepageForSaleList({
                       ))}
                   </div>
                   <div className="flex items-end ">
-                    <Button className="bg-blue-950 w-full">
-                      <Link
-                        href={`/emlak/arsa-arazi/satilik`}
-                        className="text-white font-bold flex flex-row"
-                      >
-                        <span className="mr-4">Daha Fazla Görüntüle</span>
-                        <ArrowCircleRight width={20} height={20} />
-                      </Link>
-                    </Button>
+                    <Link href={`/arsa-arazi/satilik/`} className="w-full">
+                      <Button className="bg-blue-950 w-full">
+                        <span className="text-white font-bold flex flex-row">
+                          <span className="mr-4">Daha Fazla Görüntüle</span>
+                          <ArrowCircleRight width={20} height={20} />
+                        </span>
+                      </Button>
+                    </Link>
                   </div>
                 </CardBody>
               </Card>
