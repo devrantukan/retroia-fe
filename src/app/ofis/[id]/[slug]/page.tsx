@@ -36,7 +36,17 @@ const OfficePage = async ({ params }: Props) => {
                   role: true,
                 },
               },
-              images: true,
+              images: {
+                select: {
+                  id: true,
+                  url: true,
+                  propertyId: true,
+                  order: true,
+                },
+                orderBy: {
+                  order: "asc",
+                },
+              },
             },
           },
           office: true,

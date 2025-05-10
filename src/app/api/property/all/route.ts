@@ -6,6 +6,17 @@ export async function GET() {
     const properties = await prisma.property.findMany({
       select: {
         id: true,
+        images: {
+          select: {
+            id: true,
+            url: true,
+            propertyId: true,
+            order: true,
+          },
+          orderBy: {
+            order: "asc",
+          },
+        },
       },
       where: {
         publishingStatus: "PUBLISHED",

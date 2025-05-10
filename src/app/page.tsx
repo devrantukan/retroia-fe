@@ -49,6 +49,10 @@ export default async function Home({ searchParams }: Props) {
       images: {
         select: {
           url: true,
+          order: true,
+        },
+        orderBy: {
+          order: "asc",
         },
       },
       location: {

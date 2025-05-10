@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef } from "react";
 
 import { Tabs, Tab, Card, CardBody, Button } from "@nextui-org/react";
 import Link from "next/link";
@@ -27,13 +27,14 @@ const OfficeTabs = ({ office }: Props) => {
   const router = useRouter();
   const [sortBy, setSortBy] = useState("newest");
   const [filters, setFilters] = useState<any>({});
+  const tabsRef = useRef<HTMLDivElement>(null);
 
   const activeTab = searchParams.get("tab") || "properties";
 
   const handleTabChange = (key: React.Key) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("tab", key.toString());
-    router.push(`?${params.toString()}`);
+    router.push(`?${params.toString()}`, { scroll: false });
   };
 
   const handleSortChange = (sortBy: string) => {
@@ -147,6 +148,20 @@ const OfficeTabs = ({ office }: Props) => {
       setActiveTab(tabParam);
     }
   }, []);
+
+  // Add useEffect to handle initial scroll position
+  React.useEffect(() => {
+    if (window.innerWidth < 768 && tabsRef.current) {
+      const header = document.querySelector("header");
+      const headerHeight = header ? header.getBoundingClientRect().height : 0;
+      const tabsTop =
+        tabsRef.current.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: tabsTop - headerHeight - 60, // Add 60px extra space above
+        behavior: "smooth",
+      });
+    }
+  }, [activeTab]);
 
   const aytekTopuzoglu = {
     id: 1,
@@ -268,7 +283,11 @@ const OfficeTabs = ({ office }: Props) => {
 
   return (
     <div className="p-4 flex flex-col justify-between lg:w-3/4">
-      <div className="flex w-full flex-col">
+      <div
+        className="flex w-full flex-col"
+        ref={tabsRef}
+        style={{ scrollMarginTop: "80px" }}
+      >
         <Tabs
           aria-label="Options"
           selectedKey={activeTab}

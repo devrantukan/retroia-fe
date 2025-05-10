@@ -13,17 +13,7 @@ export async function GET(
       id: +params.id,
       publishingStatus: "PUBLISHED",
     },
-    select: {
-      id: true,
-      name: true,
-      description: true,
-      price: true,
-      discountedPrice: true,
-      videoSource: true,
-      threeDSource: true,
-      publishingStatus: true,
-      createdAt: true,
-      updatedAt: true,
+    include: {
       status: true,
       feature: true,
       location: true,
@@ -33,7 +23,6 @@ export async function GET(
           role: true,
         },
       },
-      images: true,
       contract: true,
       type: true,
       subType: true,
@@ -46,9 +35,19 @@ export async function GET(
           },
         },
       },
+      images: {
+        select: {
+          id: true,
+          url: true,
+          propertyId: true,
+          order: true,
+        },
+        orderBy: {
+          order: "asc",
+        },
+      },
     },
   });
-  //console.log(property);
 
   return NextResponse.json(property);
 }

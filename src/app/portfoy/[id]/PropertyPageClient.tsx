@@ -90,6 +90,11 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
         const data = await response.json();
         setProperty(data);
 
+        if (data && data.images) {
+          // Sort images by order field
+          data.images.sort((a: any, b: any) => a.order - b.order);
+        }
+
         if (data && data.descriptors) {
           const descriptors = data.descriptors.map((descriptor: any) => ({
             category: descriptor.descriptor.category.value,
@@ -187,7 +192,15 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
   }, [params.agentId, params.agentSlug]);
 
   const getGalleryImages = (propertyImages: any[]) => {
-    let galleryItems = [];
+    interface GalleryItem {
+      original: string;
+      thumbnail: string;
+      fallback?: string;
+      renderItem?: (item: any) => JSX.Element;
+      renderThumbInner?: (item: any) => JSX.Element;
+    }
+
+    let galleryItems: GalleryItem[] = [];
 
     if (property?.videoSource && property.videoSource.startsWith("http")) {
       if (
@@ -235,8 +248,27 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
     }
 
     if (propertyImages && propertyImages.length > 0) {
-      const imageItems = propertyImages.map((image) => {
-        // Transform the URL to use the correct bucket names
+      // Log raw image data structure with all fields
+      console.log(
+        "Raw image data structure:",
+        JSON.stringify(propertyImages[0], null, 2)
+      );
+
+      // Sort images by order field if available, otherwise keep original order
+      const sortedImages = [...propertyImages].sort((a, b) => {
+        if (a.order !== undefined && b.order !== undefined) {
+          return a.order - b.order;
+        }
+        return 0;
+      });
+
+      // Log sorted order
+      console.log(
+        "Sorted image order:",
+        sortedImages.map((img) => ({ id: img.id, order: img.order }))
+      );
+
+      const imageItems = sortedImages.map((image) => {
         const originalUrl = image.url.includes("/propertyImages/")
           ? image.url.replace("/propertyImages/", "/property-images/")
           : image.url;
@@ -253,11 +285,9 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
             )
           : image.url;
 
-        // console.log(image.url, thumbnailUrl, originalUrl);
-
         return {
-          original: image.url, // Use original URL for main image
-          thumbnail: thumbnailUrl, // Use original URL for thumbnail
+          original: image.url,
+          thumbnail: thumbnailUrl,
           fallback: image.url,
           renderItem: (item: any) => (
             <div className="relative w-full h-full">
@@ -286,6 +316,9 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                   img.src = thumbnailUrl;
                 }}
               />
+              <div className="absolute top-1 right-1 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
+                {(image.order ?? 0) + 1}
+              </div>
             </div>
           ),
         };
@@ -432,6 +465,7 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                 items={getGalleryImages(property.images)}
                 additionalClass="aspect-ratio-gallery"
                 lazyLoad={true}
+                startIndex={0}
               />
               <style jsx global>{`
                 .image-gallery-image {

@@ -20,6 +20,7 @@ interface PropertyCardProps {
     images: {
       url: string;
       thumbnailUrl?: string;
+      order?: number;
     }[];
     slug: string;
     discountedPrice: number;
@@ -116,7 +117,11 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
       ? "w-full flex lg:flex-row mb-4 min-h-[150px] lg:max-h-[150px]"
       : "w-full flex lg:flex-row mb-4 min-h-[150px] lg:max-h-[150px]";
 
-  const originalUrl = property.images?.[0]?.url;
+  // Sort images by order field and get the first image
+  const sortedImages =
+    property.images?.sort((a, b) => (a.order ?? 0) - (b.order ?? 0)) || [];
+  const originalUrl = sortedImages[0]?.url;
+
   const thumbnailUrl = originalUrl
     ? originalUrl.includes("/propertyImages/")
       ? originalUrl.replace("/propertyImages/", "/thumbnails-property-images/")

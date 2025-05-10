@@ -40,7 +40,13 @@ const PropertySearchCard = ({ property, showAvatar }: any) => {
     ? "object-cover w-full lg:w-auto h-auto lg:max-w-[200px] lg:min-w-[200px] lg:min-h-[130px] lg:max-h-[150px] bg-gray-200"
     : "object-cover w-full lg:w-auto h-auto lg:max-w-[220px] lg:min-w-[220px] lg:min-h-[150px] lg:max-h-[160px] bg-gray-200";
 
-  const originalUrl = property.images?.[0]?.url;
+  // Sort images by order field and get the first image
+  const sortedImages =
+    property.images?.sort(
+      (a: { order?: number }, b: { order?: number }) =>
+        (a.order ?? 0) - (b.order ?? 0)
+    ) || [];
+  const originalUrl = sortedImages[0]?.url;
 
   const thumbnailUrl = originalUrl
     ? originalUrl.includes("/propertyImages/")
