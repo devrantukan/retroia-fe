@@ -48,6 +48,9 @@ const OfficePage = async ({ params }: Props) => {
                 },
               },
             },
+            orderBy: {
+              price: "asc",
+            },
           },
           office: true,
           role: true,
@@ -69,7 +72,16 @@ const OfficePage = async ({ params }: Props) => {
           publishingStatus: "PUBLISHED",
         },
         include: {
-          images: true,
+          images: {
+            select: {
+              id: true,
+              url: true,
+              order: true,
+            },
+            orderBy: {
+              order: "asc",
+            },
+          },
           location: true,
           feature: true,
           unitSizes: {

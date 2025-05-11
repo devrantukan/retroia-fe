@@ -391,8 +391,9 @@ model ProjectSocialFeatures {
 model ProjectImage {
   id         Int      @id @default(autoincrement())
   url        String
-  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId Int
+  order      Int      @default(0)
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId  Int
 }
 
 model ProspectAgent {

@@ -83,7 +83,7 @@ const OfficeWorkerSidebar = ({ officeWorker }: Props) => {
             </li>
           )}
           {officeWorker.linkedInAccountId && (
-            <li key={3}>
+            <li key={4}>
               <Link
                 target="_blank"
                 href={`https://linkedin.com/in/${officeWorker.linkedInAccountId}`}
@@ -97,7 +97,7 @@ const OfficeWorkerSidebar = ({ officeWorker }: Props) => {
             </li>
           )}
           {officeWorker.instagramAccountId && (
-            <li key={4}>
+            <li key={5}>
               <Link
                 target="_blank"
                 href={`https://instagram.com/${officeWorker.instagramAccountId}`}
@@ -111,7 +111,7 @@ const OfficeWorkerSidebar = ({ officeWorker }: Props) => {
             </li>
           )}
           {officeWorker.webUrl && (
-            <li key={5}>
+            <li key={6}>
               <Link target="_blank" href={`${officeWorker.webUrl}`}>
                 <Globe
                   width={32}

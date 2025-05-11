@@ -69,12 +69,51 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
     }
 
     // Apply sorting
-    return filtered.sort((a, b) => {
+    const sorted = filtered.sort((a, b) => {
+      // Get effective price (lower of regular and discounted price)
+      const getEffectivePrice = (property: any) => {
+        const regularPrice = property.price || 0;
+        const discountedPrice = property.discountedPrice || 0;
+
+        // If there's a valid discount, use the discounted price
+        if (discountedPrice > 0 && discountedPrice < regularPrice) {
+          return discountedPrice;
+        }
+        return regularPrice;
+      };
+
+      const priceA = getEffectivePrice(a);
+      const priceB = getEffectivePrice(b);
+
+      // Debug logging for each comparison
+      console.log("Price Comparison:", {
+        propertyA: {
+          id: a.id,
+          name: a.name,
+          regularPrice: a.price,
+          discountedPrice: a.discountedPrice,
+          effectivePrice: priceA,
+          hasDiscount: a.discountedPrice > 0 && a.discountedPrice < a.price,
+        },
+        propertyB: {
+          id: b.id,
+          name: b.name,
+          regularPrice: b.price,
+          discountedPrice: b.discountedPrice,
+          effectivePrice: priceB,
+          hasDiscount: b.discountedPrice > 0 && b.discountedPrice < b.price,
+        },
+        comparison:
+          sortBy === "price_asc"
+            ? `${priceA} vs ${priceB} = ${priceA - priceB}`
+            : `${priceB} vs ${priceA} = ${priceB - priceA}`,
+      });
+
       switch (sortBy) {
         case "price_desc":
-          return (b.price || 0) - (a.price || 0);
+          return priceB - priceA;
         case "price_asc":
-          return (a.price || 0) - (b.price || 0);
+          return priceA - priceB;
         case "newest":
           return (
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -87,6 +126,24 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
           return 0;
       }
     });
+
+    // Log final sorted order
+    console.log(
+      "Final Sorted Order:",
+      sorted.map((property) => ({
+        id: property.id,
+        name: property.name,
+        regularPrice: property.price,
+        discountedPrice: property.discountedPrice,
+        effectivePrice:
+          property.discountedPrice > 0 &&
+          property.discountedPrice < property.price
+            ? property.discountedPrice
+            : property.price,
+      }))
+    );
+
+    return sorted;
   }, [officeWorker.properties, sortBy, filters]);
 
   const pathname = usePathname();
