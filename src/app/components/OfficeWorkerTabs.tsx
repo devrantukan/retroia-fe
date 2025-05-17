@@ -33,6 +33,19 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("pagenum", page.toString());
     router.push(`?${params.toString()}`, { scroll: false });
+
+    // Scroll to the beginning of the properties section
+    const propertiesSection = document.getElementById("tab-properties");
+    if (propertiesSection) {
+      const header = document.querySelector("header");
+      const headerHeight = header ? header.getBoundingClientRect().height : 0;
+      const propertiesTop =
+        propertiesSection.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: propertiesTop - headerHeight - 20,
+        behavior: "smooth",
+      });
+    }
   };
 
   const handleSortChange = (sortBy: string) => {

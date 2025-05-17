@@ -42,7 +42,7 @@ const OfficeTabs = ({ office }: Props) => {
     params.set("pagenum", page.toString());
     router.push(`?${params.toString()}`, { scroll: false });
 
-    // Scroll to the properties section
+    // Scroll to the beginning of the properties section
     const propertiesSection = document.getElementById("tab-properties");
     if (propertiesSection) {
       const header = document.querySelector("header");
@@ -169,20 +169,20 @@ const OfficeTabs = ({ office }: Props) => {
     });
 
     // Log final sorted order
-    console.log(
-      "Final Sorted Order:",
-      sorted.map((property) => ({
-        id: property.id,
-        name: property.name,
-        regularPrice: property.price,
-        discountedPrice: property.discountedPrice,
-        effectivePrice:
-          property.discountedPrice > 0 &&
-          property.discountedPrice < property.price
-            ? property.discountedPrice
-            : property.price,
-      }))
-    );
+    // console.log(
+    //   "Final Sorted Order:",
+    //   sorted.map((property) => ({
+    //     id: property.id,
+    //     name: property.name,
+    //     regularPrice: property.price,
+    //     discountedPrice: property.discountedPrice,
+    //     effectivePrice:
+    //       property.discountedPrice > 0 &&
+    //       property.discountedPrice < property.price
+    //         ? property.discountedPrice
+    //         : property.price,
+    //   }))
+    // );
 
     return sorted;
   }, [flatArrayProperties, sortBy, filters]);
