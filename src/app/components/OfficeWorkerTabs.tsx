@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 
 import { Tabs, Tab, Card, CardBody, Pagination } from "@nextui-org/react";
 import Link from "next/link";
@@ -48,19 +48,23 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
     }
   };
 
-  // Add useEffect to handle initial scroll position
-  React.useEffect(() => {
-    if (window.innerWidth < 768 && tabsRef.current) {
+  // Handle initial scroll position
+  useEffect(() => {
+    if (tabsRef.current) {
       const header = document.querySelector("header");
       const headerHeight = header ? header.getBoundingClientRect().height : 0;
       const tabsTop =
         tabsRef.current.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({
-        top: tabsTop - headerHeight - 60, // Add 60px extra space above
-        behavior: "smooth",
-      });
+
+      // Add a small delay to ensure content is rendered
+      setTimeout(() => {
+        window.scrollTo({
+          top: tabsTop - headerHeight - 20,
+          behavior: "smooth",
+        });
+      }, 100);
     }
-  }, [activeTab]);
+  }, []); // Run only on initial mount
 
   const handleSortChange = (sortBy: string) => {
     setSortBy(sortBy);
@@ -147,20 +151,20 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
     });
 
     // Log final sorted order
-    console.log(
-      "Final Sorted Order:",
-      sorted.map((property) => ({
-        id: property.id,
-        name: property.name,
-        regularPrice: property.price,
-        discountedPrice: property.discountedPrice,
-        effectivePrice:
-          property.discountedPrice > 0 &&
-          property.discountedPrice < property.price
-            ? property.discountedPrice
-            : property.price,
-      }))
-    );
+    // console.log(
+    //   "Final Sorted Order:",
+    //   sorted.map((property) => ({
+    //     id: property.id,
+    //     name: property.name,
+    //     regularPrice: property.price,
+    //     discountedPrice: property.discountedPrice,
+    //     effectivePrice:
+    //       property.discountedPrice > 0 &&
+    //       property.discountedPrice < property.price
+    //         ? property.discountedPrice
+    //         : property.price,
+    //   }))
+    // );
 
     return sorted;
   }, [officeWorker.properties, sortBy, filters]);
