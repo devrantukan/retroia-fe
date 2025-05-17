@@ -141,17 +141,19 @@ const OfficeWorkerSidebar = ({ officeWorker }: Props) => {
         {officeWorker.office.country.country_name}
       </p>
       <hr className="mb-0 mt-4" />
-      <Link
-        target="_blank"
-        href={`https://www.google.com/maps/search/?api=1&query=${officeWorker.office.latitude},${officeWorker.office.longitude}`}
-        rel="noopener noreferrer"
-        className="w-full"
+      <Button
+        className="w-full mt-4 bg-blue-950 text-white font-bold text-md flex flex-row gap-x-1 justify-center items-center"
+        onClick={() => {
+          window.open(
+            `https://www.google.com/maps/search/?api=1&query=${officeWorker.office.latitude},${officeWorker.office.longitude}`,
+            "_blank",
+            "noopener,noreferrer"
+          );
+        }}
       >
-        <Button className="w-full mt-4 bg-blue-950 text-white font-bold text-md flex flex-row gap-x-1 justify-center items-center">
-          <Compass width={20} height={20} />
-          Yol Tarifi Al
-        </Button>
-      </Link>
+        <Compass width={20} height={20} />
+        Yol Tarifi Al
+      </Button>
       <hr className="mb-2 mt-4" />
       <ShowContactDetailsButton
         phone={officeWorker.phone}
