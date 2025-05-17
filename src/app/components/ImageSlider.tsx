@@ -13,7 +13,7 @@ export const ImagesSlider = ({
   autoplay = true,
   direction = "up",
 }: {
-  images: string[];
+  images: { url: string; order?: number }[];
   children?: React.ReactNode;
   overlay?: React.ReactNode;
   overlayClassName?: string;
@@ -25,12 +25,22 @@ export const ImagesSlider = ({
   const [loading, setLoading] = useState(false);
   const [loadedImages, setLoadedImages] = useState<string[]>([]);
 
+  // Sort images by order field
+  const sortedImages = [...images].sort(
+    (a, b) => (a.order ?? 0) - (b.order ?? 0)
+  );
+  const imageUrls = sortedImages.map((img) => img.url);
+
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1 === images.length ? 0 : prevIndex + 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex + 1 === imageUrls.length ? 0 : prevIndex + 1
+    );
   };
 
   const handlePrevious = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex - 1 < 0 ? imageUrls.length - 1 : prevIndex - 1
+    );
   };
 
   useEffect(() => {
@@ -39,7 +49,7 @@ export const ImagesSlider = ({
 
   const loadImages = () => {
     setLoading(true);
-    const loadPromises = images.map((image) => {
+    const loadPromises = imageUrls.map((image) => {
       return new Promise((resolve, reject) => {
         const img = new Image();
         img.src = image;
@@ -55,6 +65,7 @@ export const ImagesSlider = ({
       })
       .catch((error) => console.error("Failed to load images", error));
   };
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "ArrowRight") {
@@ -125,7 +136,9 @@ export const ImagesSlider = ({
     >
       {areImagesLoaded && children}
       {areImagesLoaded && overlay && (
-        <div className={cn("absolute inset-0 bg-black/60 z-40", overlayClassName)} />
+        <div
+          className={cn("absolute inset-0 bg-black/60 z-40", overlayClassName)}
+        />
       )}
 
       {areImagesLoaded && (

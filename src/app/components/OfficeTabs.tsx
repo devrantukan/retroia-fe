@@ -37,6 +37,25 @@ const OfficeTabs = ({ office }: Props) => {
     router.push(`?${params.toString()}`, { scroll: false });
   };
 
+  const handlePageChange = (page: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("pagenum", page.toString());
+    router.push(`?${params.toString()}`, { scroll: false });
+
+    // Scroll to the properties section
+    const propertiesSection = document.getElementById("tab-properties");
+    if (propertiesSection) {
+      const header = document.querySelector("header");
+      const headerHeight = header ? header.getBoundingClientRect().height : 0;
+      const propertiesTop =
+        propertiesSection.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: propertiesTop - headerHeight - 20,
+        behavior: "smooth",
+      });
+    }
+  };
+
   const handleSortChange = (sortBy: string) => {
     setSortBy(sortBy);
   };
@@ -362,7 +381,11 @@ const OfficeTabs = ({ office }: Props) => {
           selectedKey={activeTab}
           onSelectionChange={handleTabChange}
         >
-          <Tab id="tab-properties" key="properties" title="Portföylerimiz">
+          <Tab
+            id="tab-properties"
+            key="properties"
+            title={`Portföylerimiz (${filteredAndSortedProperties.length})`}
+          >
             <Card>
               <CardBody>
                 <PropertySearchPanel
@@ -383,6 +406,7 @@ const OfficeTabs = ({ office }: Props) => {
                     currentPage={selectedPage}
                     totalPages={totalPages}
                     route={pathname}
+                    onPageChange={handlePageChange}
                   />
                 </div>
               </CardBody>

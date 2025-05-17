@@ -125,7 +125,11 @@ async function main() {
 
       images: {
         select: {
+          order: true,
           url: true,
+        },
+        orderBy: {
+          order: "asc",
         },
       },
       location: {

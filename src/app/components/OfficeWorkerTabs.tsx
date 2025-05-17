@@ -29,6 +29,25 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
     router.push(`?${params.toString()}`, { scroll: false });
   };
 
+  const handlePageChange = (page: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("pagenum", page.toString());
+    router.push(`?${params.toString()}`, { scroll: false });
+
+    // Scroll to the properties section
+    const propertiesSection = document.getElementById("tab-properties");
+    if (propertiesSection) {
+      const header = document.querySelector("header");
+      const headerHeight = header ? header.getBoundingClientRect().height : 0;
+      const propertiesTop =
+        propertiesSection.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: propertiesTop - headerHeight - 20,
+        behavior: "smooth",
+      });
+    }
+  };
+
   // Add useEffect to handle initial scroll position
   React.useEffect(() => {
     if (window.innerWidth < 768 && tabsRef.current) {
@@ -180,7 +199,11 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
               </CardBody>
             </Card>
           </Tab>
-          <Tab id="tab-properties" key="properties" title="Portföylerim">
+          <Tab
+            id="tab-properties"
+            key="properties"
+            title={`Portföylerim (${filteredAndSortedProperties.length})`}
+          >
             <Card>
               <CardBody>
                 <PropertySearchPanel
@@ -200,6 +223,7 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
                         currentPage={selectedPage}
                         totalPages={totalPages}
                         route={pathname}
+                        onPageChange={handlePageChange}
                       />
                     </div>
                   </>

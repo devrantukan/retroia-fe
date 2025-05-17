@@ -6,16 +6,26 @@ interface Props {
   currentPage: number;
   totalPages: number;
   route: string;
+  onPageChange?: (page: number) => void;
 }
 
-const PaginationContainer = ({ currentPage, totalPages, route }: Props) => {
+const PaginationContainer = ({
+  currentPage,
+  totalPages,
+  route,
+  onPageChange,
+}: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const handlePageChange = (page: number) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("pagenum", page.toString());
-    router.push(`${route}?${params.toString()}`);
+    if (onPageChange) {
+      onPageChange(page);
+    } else {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("pagenum", page.toString());
+      router.push(`${route}?${params.toString()}`, { scroll: false });
+    }
   };
 
   if (totalPages <= 1) return null;
@@ -27,6 +37,12 @@ const PaginationContainer = ({ currentPage, totalPages, route }: Props) => {
         initialPage={currentPage}
         page={currentPage}
         onChange={handlePageChange}
+        showControls
+        classNames={{
+          wrapper: "gap-0 overflow-visible h-8",
+          item: "w-8 h-8 text-small rounded-none bg-transparent",
+          cursor: "bg-primary-500 text-white font-bold",
+        }}
       />
     </div>
   );
