@@ -33,38 +33,7 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("pagenum", page.toString());
     router.push(`?${params.toString()}`, { scroll: false });
-
-    // Scroll to the properties section
-    const propertiesSection = document.getElementById("tab-properties");
-    if (propertiesSection) {
-      const header = document.querySelector("header");
-      const headerHeight = header ? header.getBoundingClientRect().height : 0;
-      const propertiesTop =
-        propertiesSection.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({
-        top: propertiesTop - headerHeight - 20,
-        behavior: "smooth",
-      });
-    }
   };
-
-  // Handle initial scroll position
-  useEffect(() => {
-    if (tabsRef.current) {
-      const header = document.querySelector("header");
-      const headerHeight = header ? header.getBoundingClientRect().height : 0;
-      const tabsTop =
-        tabsRef.current.getBoundingClientRect().top + window.scrollY;
-
-      // Add a small delay to ensure content is rendered
-      setTimeout(() => {
-        window.scrollTo({
-          top: tabsTop - headerHeight - 20,
-          behavior: "smooth",
-        });
-      }, 100);
-    }
-  }, []); // Run only on initial mount
 
   const handleSortChange = (sortBy: string) => {
     setSortBy(sortBy);
@@ -186,11 +155,7 @@ const OfficeWorkerTabs = ({ officeWorker }: Props) => {
 
   return (
     <div className="p-4 flex flex-col justify-between lg:w-3/4">
-      <div
-        className="flex w-full flex-col"
-        ref={tabsRef}
-        style={{ scrollMarginTop: "80px" }}
-      >
+      <div className="flex w-full flex-col">
         <Tabs
           aria-label="Options"
           selectedKey={activeTab}
