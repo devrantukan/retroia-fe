@@ -371,11 +371,7 @@ const OfficeTabs = ({ office }: Props) => {
 
   return (
     <div className="p-4 flex flex-col justify-between lg:w-3/4">
-      <div
-        className="flex w-full flex-col"
-        ref={tabsRef}
-        style={{ scrollMarginTop: "80px" }}
-      >
+      <div className="flex w-full flex-col">
         <Tabs
           aria-label="Options"
           selectedKey={activeTab}
