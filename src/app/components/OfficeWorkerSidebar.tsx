@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
 
@@ -23,6 +25,14 @@ interface Props {
 }
 
 const OfficeWorkerSidebar = ({ officeWorker }: Props) => {
+  const handleMapsClick = () => {
+    window.open(
+      `https://www.google.com/maps/search/?api=1&query=${officeWorker.office.latitude},${officeWorker.office.longitude}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
+
   return (
     <div className="p-4 flex flex-col justify-start w-full lg:w-1/4 ">
       <Image src={officeWorker.avatarUrl} alt="" width={640} height={800} />
@@ -143,13 +153,7 @@ const OfficeWorkerSidebar = ({ officeWorker }: Props) => {
       <hr className="mb-0 mt-4" />
       <Button
         className="w-full mt-4 bg-blue-950 text-white font-bold text-md flex flex-row gap-x-1 justify-center items-center"
-        onClick={() => {
-          window.open(
-            `https://www.google.com/maps/search/?api=1&query=${officeWorker.office.latitude},${officeWorker.office.longitude}`,
-            "_blank",
-            "noopener,noreferrer"
-          );
-        }}
+        onClick={handleMapsClick}
       >
         <Compass width={20} height={20} />
         Yol Tarifi Al
