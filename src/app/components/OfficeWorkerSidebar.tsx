@@ -144,7 +144,7 @@ const OfficeWorkerSidebar = ({ officeWorker }: Props) => {
       <Button className="mt-4 bg-blue-950 text-white font-bold text-md">
         <Link
           target="_blank"
-          href={`https://maps.google.com/maps?q=${officeWorker.office.latitude},${officeWorker.office.longitude}&z=17&t=m`}
+          href={`https://www.google.com/maps/search/?api=1&query=${officeWorker.office.latitude},${officeWorker.office.longitude}`}
           rel="noopener noreferrer"
           className="flex flex-row gap-x-1 justify-center items-center"
         >

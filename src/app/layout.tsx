@@ -9,6 +9,7 @@ import GoogleAnalytics from "./components/GoogleAnalytics";
 import Footer from "./components/Footer";
 import "react-toastify/dist/ReactToastify.css";
 import { CurrencyProvider } from "./context/CurrencyContext";
+import MetaPixel from "./components/MetaPixel";
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -127,6 +128,7 @@ export default function RootLayout({
       </head>
       <body className={`${raleway.className} font-sans`}>
         <CurrencyProvider>
+          <MetaPixel />
           <Providers>
             <Appbar>{/* <SignInPanel /> */}</Appbar>
             {children}
