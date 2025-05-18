@@ -37,6 +37,8 @@ export default function Share({
   // Custom description for link sharing
   const shareDescription = `${description} `;
 
+  console.log(shareDescription);
+
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [scrollBehavior, setScrollBehavior] = React.useState<
     "inside" | "normal" | "outside"
