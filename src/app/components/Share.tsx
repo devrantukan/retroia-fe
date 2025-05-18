@@ -81,6 +81,7 @@ export default function Share({
     let ogDescription = document.querySelector(
       'meta[property="og:description"]'
     );
+
     if (!ogDescription) {
       ogDescription = document.createElement("meta");
       ogDescription.setAttribute("property", "og:description");

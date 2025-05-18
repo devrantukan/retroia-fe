@@ -3,9 +3,7 @@ import PropertyPageClient from "./PropertyPageClient";
 
 const stripHtml = (html: string) => {
   if (!html) return "";
-  const tmp = document.createElement("DIV");
-  tmp.innerHTML = html;
-  return tmp.textContent || tmp.innerText || "";
+  return html.replace(/<[^>]*>/g, "");
 };
 
 export async function generateMetadata({
@@ -54,11 +52,12 @@ export async function generateMetadata({
         process.env.NEXT_PUBLIC_SITE_URL || "https://www.retroia.com/emlak"
       ),
       title: `${property.name} - ${property.location?.city}, ${property.location?.district}`,
-      description: `${property.feature?.bedrooms} Yatak Odalı, ${
-        property.feature?.bathrooms
-      } Banyolu, ${property.feature?.area}m² ${property.type} ${
-        property.contract === "sale" ? "Satılık" : "Kiralık"
-      } - ${locationString}`,
+      // description: `${property.feature?.bedrooms} Yatak Odalı, ${
+      //   property.feature?.bathrooms
+      // } Banyolu, ${property.feature?.area}m² ${property.type} ${
+      //   property.contract === "sale" ? "Satılık" : "Kiralık"
+      // } - ${locationString}`,
+      description: stripHtml(property.description).slice(0, 80) + "...",
       keywords: `${property.type}, ${
         property.contract === "sale" ? "satılık" : "kiralık"
       }, ${property.location?.city}, ${property.location?.district}, ${
