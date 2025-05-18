@@ -21,6 +21,18 @@ export async function generateMetadata({
 
     const property = await response.json();
 
+    const thumbnailUrl = property.images[0].url.includes("/propertyImages/")
+      ? property.images[0].url.replace(
+          "/propertyImages/",
+          "/thumbnails-property-images/"
+        )
+      : property.images[0].url.includes("/property-images/")
+      ? property.images[0].url.replace(
+          "/property-images/",
+          "/thumbnails-property-images/"
+        )
+      : property.images[0].url;
+
     const locationString = [
       property.location?.neighborhood,
       property.location?.district,
@@ -50,7 +62,7 @@ export async function generateMetadata({
         description: property.description,
         images:
           property.images && property.images.length > 0
-            ? [{ url: property.images[0].url }]
+            ? [{ url: thumbnailUrl }]
             : [],
         siteName: "Retroia",
         locale: "tr_TR",

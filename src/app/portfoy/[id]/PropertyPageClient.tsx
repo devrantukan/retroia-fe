@@ -356,6 +356,13 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
   if (loading) return <LoadingSpinner />;
   if (!property) return <NotFound />;
 
+  const thumbnailUrl = property.images[0].url.includes("/propertyImages/")
+    ? property.images[0].url.replace(
+        "/propertyImages/",
+        "/thumbnails-property-images/"
+      )
+    : property.images[0].url;
+
   return (
     <div className="w-full">
       <div className="p-4 lg:p-6 pb-0">
@@ -446,7 +453,7 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                     }
                     avatarUrl={
                       property.images && property.images.length > 0
-                        ? property.images[0].url
+                        ? thumbnailUrl
                         : "/images/placeholder.png"
                     }
                   />
