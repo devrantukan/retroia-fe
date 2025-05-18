@@ -316,9 +316,6 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                   img.src = thumbnailUrl;
                 }}
               />
-              <div className="absolute top-1 right-1 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
-                {(image.order ?? 0) + 1}
-              </div>
             </div>
           ),
         };
@@ -505,8 +502,8 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                   text-align: center !important;
                 }
                 .image-gallery-thumbnail {
-                  width: 100px !important;
-                  height: 75px !important;
+                  width: 160px !important;
+                  height: 90px !important;
                   margin: 0 5px !important;
                   border: 2px solid transparent !important;
                   border-radius: 0.5rem !important;
