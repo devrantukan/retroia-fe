@@ -1,113 +1,235 @@
+import { ImagesSlider } from "@/app/components/ImageSlider";
+import OfficeWorkerSidebar from "@/app/components/OfficeWorkerSidebar";
+import OfficeWorkerTabs from "@/app/components/OfficeWorkerTabs";
+import PageTitle from "@/app/components/pageTitle";
+import ReviewModal from "@/app/components/ReviewModal";
+import Share from "@/app/components/Share";
+import prisma from "@/lib/prisma";
+import { Card } from "@nextui-org/react";
 import { Metadata } from "next";
-import OfficeWorkerPageClient from "./OfficeWorkerPageClient";
+import { notFound } from "next/navigation";
+
+interface Props {
+  params: {
+    officeId: string;
+    workerId: string;
+    workerSlug: string;
+    slug: string;
+    title: string;
+  };
+}
 
 const stripHtml = (html: string) => {
   if (!html) return "";
   return html.replace(/<[^>]*>/g, "");
 };
 
-export async function generateMetadata({
-  params,
-}: {
-  params: {
-    officeId: string;
-    officeSlug: string;
-    roleSlug: string;
-    workerId: string;
-    workerSlug: string;
-  };
-}): Promise<Metadata> {
-  try {
-    console.log("Generating metadata for worker:", params.workerId);
-    const API_URL =
-      process.env.NEXT_PUBLIC_API_URL || "https://www.retroia.com/emlak/api/";
-    const url = `${API_URL}officeWorker/${params.workerId}`;
-    console.log("Fetching from URL:", url);
-
-    const response = await fetch(url, {
-      next: { revalidate: 3600 },
-      headers: {
-        Accept: "application/json",
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const officeWorker = await prisma.officeWorker.findUnique({
+    where: {
+      id: +params.workerId,
+    },
+    include: {
+      office: {
+        include: {
+          neighborhood: true,
+          district: true,
+          city: true,
+          country: true,
+        },
       },
-    });
+      role: true,
+    },
+  });
 
-    if (!response.ok) {
-      console.log(
-        "Failed to fetch worker data:",
-        response.status,
-        response.statusText
-      );
-      const errorText = await response.text();
-      console.log("Error response:", errorText);
-      return {
-        title: "Danışman Bulunamadı",
-        description: "Danışman detayları bulunamadı.",
-      };
-    }
-
-    const worker = await response.json();
-    console.log("Worker data received:", worker);
-
-    const locationString = [
-      worker.office?.neighborhood?.neighborhood_name,
-      worker.office?.district?.district_name,
-      worker.office?.city?.city_name,
-      worker.office?.country?.country_name,
-    ]
-      .filter(Boolean)
-      .join(", ");
-
+  if (!officeWorker) {
     return {
-      metadataBase: new URL(
-        process.env.NEXT_PUBLIC_SITE_URL || "https://www.retroia.com/emlak"
-      ),
-      title: `${worker.name} ${worker.surname} - ${worker.title} - ${worker.office?.name}`,
-      description: `${worker.title} ${worker.name} ${worker.surname} - ${worker.office?.name} - ${locationString}`,
-      keywords: `${worker.title}, ${worker.name} ${worker.surname}, ${worker.office?.name}, ${worker.office?.city?.city_name}, ${worker.office?.district?.district_name}, emlak danışmanı, gayrimenkul danışmanı`,
-      openGraph: {
-        title: `${worker.name} ${worker.surname} - ${worker.title}`,
-        description: stripHtml(worker.about || "").slice(0, 80) + "...",
-        images: worker.avatarUrl
-          ? [
-              {
-                url: worker.avatarUrl,
-                alt: `${worker.name} ${worker.surname} - ${worker.title}`,
-              },
-            ]
-          : [],
-        siteName: "Retroia",
-        locale: "tr_TR",
-        type: "website",
-        url: `/ofis/${params.officeId}/${params.officeSlug}/${params.roleSlug}/${params.workerId}/${params.workerSlug}`,
-      },
-      alternates: {
-        canonical: `/ofis/${params.officeId}/${params.officeSlug}/${params.roleSlug}/${params.workerId}/${params.workerSlug}`,
-      },
-      other: {
-        "geo.position": `${worker.office?.latitude};${worker.office?.longitude}`,
-        "geo.placename": locationString,
-        "geo.region": "TR",
-      },
-    };
-  } catch (error) {
-    console.error("Error generating metadata:", error);
-    return {
-      title: "Danışman Detayı",
-      description: "Danışman detay sayfası",
+      title: "Danışman Bulunamadı",
+      description: "Danışman detayları bulunamadı.",
     };
   }
+
+  const locationString = [
+    officeWorker.office?.neighborhood?.neighborhood_name,
+    officeWorker.office?.district?.district_name,
+    officeWorker.office?.city?.city_name,
+    officeWorker.office?.country?.country_name,
+  ]
+    .filter(Boolean)
+    .join(", ");
+
+  const title = `${officeWorker.name} ${officeWorker.surname} - ${
+    officeWorker.title || "Gayrimenkul Danışmanı"
+  } - ${officeWorker.office?.name || ""}`;
+  const description = `${officeWorker.title || "Gayrimenkul Danışmanı"} ${
+    officeWorker.name
+  } ${officeWorker.surname} - ${
+    officeWorker.office?.name || ""
+  } - ${locationString}`;
+  const keywords = `${officeWorker.title || "Gayrimenkul Danışmanı"}, ${
+    officeWorker.name
+  } ${officeWorker.surname}, ${officeWorker.office?.name || ""}, ${
+    officeWorker.office?.city?.city_name || ""
+  }, ${
+    officeWorker.office?.district?.district_name || ""
+  }, emlak danışmanı, gayrimenkul danışmanı`;
+  const ogTitle = `${officeWorker.name} ${officeWorker.surname} - ${
+    officeWorker.title || "Gayrimenkul Danışmanı"
+  }`;
+  const ogDescription = officeWorker.about
+    ? stripHtml(officeWorker.about).slice(0, 80) + "..."
+    : description;
+  const ogImageAlt = `${officeWorker.name} ${officeWorker.surname} - ${
+    officeWorker.title || "Gayrimenkul Danışmanı"
+  } - ${officeWorker.office?.name || ""}`;
+  const twitterDescription = ogDescription;
+
+  return {
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_SITE_URL || "https://www.retroia.com/emlak"
+    ),
+    title,
+    description,
+    keywords,
+    openGraph: {
+      title: ogTitle,
+      description: ogDescription,
+      images: officeWorker.avatarUrl
+        ? [
+            {
+              url: officeWorker.avatarUrl,
+              alt: ogImageAlt,
+            },
+          ]
+        : [],
+      siteName: "Retroia",
+      locale: "tr_TR",
+      type: "website",
+      url: `/ofis/${params.officeId}/${params.slug}/${params.title}/${params.workerId}/${params.workerSlug}`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: ogTitle,
+      description: twitterDescription,
+      images: officeWorker.avatarUrl ? [officeWorker.avatarUrl] : [],
+      creator: "@retroia",
+      site: "@retroia",
+    },
+    alternates: {
+      canonical: `/ofis/${params.officeId}/${params.slug}/${params.title}/${params.workerId}/${params.workerSlug}`,
+    },
+  };
 }
 
-export default function OfficeWorkerPage({
-  params,
-}: {
-  params: {
-    officeId: string;
-    officeSlug: string;
-    roleSlug: string;
-    workerId: string;
-    workerSlug: string;
-  };
-}) {
-  return <OfficeWorkerPageClient params={params} />;
-}
+const OfficeWorkerPage = async ({ params }: Props) => {
+  const officeWorker = await prisma.officeWorker.findUnique({
+    where: {
+      id: +params.workerId,
+    },
+    include: {
+      office: {
+        include: {
+          neighborhood: true,
+          district: true,
+          city: true,
+          country: true,
+        },
+      },
+      properties: {
+        where: {
+          publishingStatus: "PUBLISHED",
+        },
+        include: {
+          status: true,
+          feature: true,
+          location: true,
+          contract: true,
+          agent: { include: { office: true, role: true } },
+          images: true,
+        },
+      },
+      reviews: {
+        where: {
+          isApproved: 1,
+        },
+      },
+      role: true,
+    },
+  });
+
+  if (!officeWorker) return notFound();
+
+  // find the office worker's projects
+  const projects = await prisma.project.findMany({
+    where: {
+      officeId: officeWorker?.office?.id,
+      publishingStatus: "PUBLISHED",
+    },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      startDate: true,
+      endDate: true,
+      assignedAgents: true,
+      images: {
+        select: {
+          url: true,
+        },
+      },
+      location: {
+        select: {
+          country: true,
+          city: true,
+          district: true,
+          neighborhood: true,
+        },
+      },
+      feature: true,
+      unitSizes: {
+        select: {
+          value: true,
+        },
+      },
+      socialFeatures: {
+        select: {
+          value: true,
+        },
+      },
+      slug: true,
+    },
+  });
+
+  // find the office worker's projects
+  let assignedProjects: any[] = [];
+  projects.map((project) => {
+    if (project.assignedAgents.includes(params.workerId)) {
+      assignedProjects.push(project);
+    }
+  });
+
+  if (officeWorker) {
+    (officeWorker as any).assignedProjects = assignedProjects;
+  }
+
+  return (
+    <div>
+      <div className="p-4">
+        <div className="flex lg:flex-row flex-col">
+          <OfficeWorkerSidebar officeWorker={officeWorker} />
+          <div className="absolute right-0 mr-10 mt-4 flex gap-x-2">
+            <ReviewModal officeWorkerId={officeWorker.id} />
+            <Share
+              title={`${officeWorker.name} ${officeWorker.surname}`}
+              type={"Danışmanı"}
+              avatarUrl={officeWorker.avatarUrl || ""}
+            />
+          </div>
+          <OfficeWorkerTabs officeWorker={officeWorker} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default OfficeWorkerPage;

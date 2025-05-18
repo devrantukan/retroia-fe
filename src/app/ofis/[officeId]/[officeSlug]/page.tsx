@@ -10,7 +10,7 @@ import { Metadata } from "next";
 
 interface Props {
   params: {
-    id: string;
+    officeId: string;
     slug: string;
   };
 }
@@ -18,7 +18,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const office = await prisma.office.findUnique({
     where: {
-      id: +params.id,
+      id: +params.officeId,
     },
     include: {
       country: true,
@@ -70,7 +70,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: "Retroia",
       locale: "tr_TR",
       type: "website",
-      url: `/ofis/${params.id}/${params.slug}`,
+      url: `/ofis/${params.officeId}/${params.slug}`,
     },
     twitter: {
       card: "summary_large_image",
@@ -81,7 +81,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       site: "@retroia",
     },
     alternates: {
-      canonical: `/ofis/${params.id}/${params.slug}`,
+      canonical: `/ofis/${params.officeId}/${params.slug}`,
     },
     other: {
       "geo.position": `${office.latitude};${office.longitude}`,
@@ -94,7 +94,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const OfficePage = async ({ params }: Props) => {
   const office = await prisma.office.findUnique({
     where: {
-      id: +params.id,
+      id: +params.officeId,
     },
     include: {
       workers: {

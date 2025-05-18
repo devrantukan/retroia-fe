@@ -91,23 +91,23 @@ const OfficeTabs = ({ office }: Props) => {
     }
 
     // Log all properties with their effective prices before sorting
-    console.log(
-      "Properties before sorting:",
-      filtered.map((property) => ({
-        id: property.id,
-        name: property.name,
-        regularPrice: property.price,
-        discountedPrice: property.discountedPrice,
-        effectivePrice:
-          property.discountedPrice > 0 &&
-          property.discountedPrice < property.price
-            ? property.discountedPrice
-            : property.price,
-        hasDiscount:
-          property.discountedPrice > 0 &&
-          property.discountedPrice < property.price,
-      }))
-    );
+    // console.log(
+    //   "Properties before sorting:",
+    //   filtered.map((property) => ({
+    //     id: property.id,
+    //     name: property.name,
+    //     regularPrice: property.price,
+    //     discountedPrice: property.discountedPrice,
+    //     effectivePrice:
+    //       property.discountedPrice > 0 &&
+    //       property.discountedPrice < property.price
+    //         ? property.discountedPrice
+    //         : property.price,
+    //     hasDiscount:
+    //       property.discountedPrice > 0 &&
+    //       property.discountedPrice < property.price,
+    //   }))
+    // );
 
     // Apply sorting
     const sorted = filtered.sort((a, b) => {
@@ -194,14 +194,14 @@ const OfficeTabs = ({ office }: Props) => {
   const totalPages = Math.ceil(
     filteredAndSortedProperties.length / elementsPerPage
   );
-  console.log("Total pages:", totalPages, "Current page:", selectedPage);
+  // console.log("Total pages:", totalPages, "Current page:", selectedPage);
 
   // Get the current page's items
   const paginatedProperties = useMemo(() => {
     const startIndex = (selectedPage - 1) * elementsPerPage;
     const endIndex = startIndex + elementsPerPage;
     const pageItems = filteredAndSortedProperties.slice(startIndex, endIndex);
-    console.log("Items on current page:", pageItems.length);
+    // console.log("Items on current page:", pageItems.length);
     return pageItems;
   }, [filteredAndSortedProperties, selectedPage, elementsPerPage]);
 
