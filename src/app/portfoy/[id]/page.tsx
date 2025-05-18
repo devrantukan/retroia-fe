@@ -1,6 +1,13 @@
 import { Metadata } from "next";
 import PropertyPageClient from "./PropertyPageClient";
 
+const stripHtml = (html: string) => {
+  if (!html) return "";
+  const tmp = document.createElement("DIV");
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || "";
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -59,7 +66,7 @@ export async function generateMetadata({
       }, emlak, gayrimenkul`,
       openGraph: {
         title: property.name,
-        description: property.description,
+        description: stripHtml(property.description).slice(0, 80) + "...",
         images:
           property.images && property.images.length > 0
             ? [{ url: thumbnailUrl }]
