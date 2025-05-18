@@ -127,28 +127,28 @@ const OfficeTabs = ({ office }: Props) => {
       const priceB = getEffectivePrice(b);
 
       // Debug logging for each comparison
-      console.log("Price Comparison:", {
-        propertyA: {
-          id: a.id,
-          name: a.name,
-          regularPrice: a.price,
-          discountedPrice: a.discountedPrice,
-          effectivePrice: priceA,
-          hasDiscount: a.discountedPrice > 0 && a.discountedPrice < a.price,
-        },
-        propertyB: {
-          id: b.id,
-          name: b.name,
-          regularPrice: b.price,
-          discountedPrice: b.discountedPrice,
-          effectivePrice: priceB,
-          hasDiscount: b.discountedPrice > 0 && b.discountedPrice < b.price,
-        },
-        comparison:
-          sortBy === "price_asc"
-            ? `${priceA} vs ${priceB} = ${priceA - priceB}`
-            : `${priceB} vs ${priceA} = ${priceB - priceA}`,
-      });
+      // console.log("Price Comparison:", {
+      //   propertyA: {
+      //     id: a.id,
+      //     name: a.name,
+      //     regularPrice: a.price,
+      //     discountedPrice: a.discountedPrice,
+      //     effectivePrice: priceA,
+      //     hasDiscount: a.discountedPrice > 0 && a.discountedPrice < a.price,
+      //   },
+      //   propertyB: {
+      //     id: b.id,
+      //     name: b.name,
+      //     regularPrice: b.price,
+      //     discountedPrice: b.discountedPrice,
+      //     effectivePrice: priceB,
+      //     hasDiscount: b.discountedPrice > 0 && b.discountedPrice < b.price,
+      //   },
+      //   comparison:
+      //     sortBy === "price_asc"
+      //       ? `${priceA} vs ${priceB} = ${priceA - priceB}`
+      //       : `${priceB} vs ${priceA} = ${priceB - priceA}`,
+      // });
 
       switch (sortBy) {
         case "price_desc":

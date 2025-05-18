@@ -158,7 +158,7 @@ const PropertyCard = ({ property, showAvatar }: PropertyCardProps) => {
                 defaultImageUrl ||
                 "/images/placeholder.png"
               }
-              alt={property.title}
+              alt={`${property.name} - ${property.location.city} ${property.location.district} ${property.location.neighborhood} - ${property.type} ${property.contract}`}
               width={400}
               height={240}
               className={imageClassName}

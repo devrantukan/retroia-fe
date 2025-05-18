@@ -6,10 +6,88 @@ import { notFound } from "next/navigation";
 
 import OfficeTabs from "@/app/components/OfficeTabs";
 import Share from "@/app/components/Share";
+import { Metadata } from "next";
 
 interface Props {
   params: {
     id: string;
+    slug: string;
+  };
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const office = await prisma.office.findUnique({
+    where: {
+      id: +params.id,
+    },
+    include: {
+      country: true,
+      city: true,
+      district: true,
+      neighborhood: true,
+      workers: {
+        include: {
+          role: true,
+        },
+      },
+    },
+  });
+
+  if (!office) {
+    return {
+      title: "Ofis Bulunamadı | Retroia Gayrimenkul",
+      description: "Aradığınız ofis bulunamadı.",
+    };
+  }
+
+  const locationString = [
+    office.neighborhood?.neighborhood_name,
+    office.district?.district_name,
+    office.city?.city_name,
+    office.country?.country_name,
+  ]
+    .filter(Boolean)
+    .join(", ");
+
+  const workerCount = office.workers?.length || 0;
+  const brokerCount =
+    office.workers?.filter((w) => w.role?.slug === "broker-manager").length ||
+    0;
+
+  return {
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_SITE_URL || "https://www.retroia.com/emlak"
+    ),
+    title: `${office.name} | ${office.city?.city_name} Gayrimenkul Ofisi | Retroia`,
+    description: `${office.name} - ${office.city?.city_name}'de ${brokerCount} gayrimenkul danışmanı ile hizmet veren güvenilir gayrimenkul ofisi. ${locationString} bölgesinde konut, ticari ve arsa araziler için profesyonel danışmanlık.`,
+    keywords: `${office.name}, ${office.city?.city_name} gayrimenkul, ${office.district?.district_name} gayrimenkul, ${office.neighborhood?.neighborhood_name} gayrimenkul, emlak ofisi, gayrimenkul danışmanlığı, ${office.city?.city_name} emlak`,
+    openGraph: {
+      title: `${office.name} | ${office.city?.city_name} Gayrimenkul Ofisi | Retroia`,
+      description: `${office.name} - ${office.city?.city_name}'de ${brokerCount} gayrimenkul danışmanı ile hizmet veren güvenilir gayrimenkul ofisi. ${locationString} bölgesinde konut, ticari ve arsa araziler için profesyonel danışmanlık.`,
+      images: office.avatarUrl
+        ? [{ url: office.avatarUrl, alt: `${office.name} ofisi` }]
+        : [],
+      siteName: "Retroia",
+      locale: "tr_TR",
+      type: "website",
+      url: `/ofis/${params.id}/${params.slug}`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${office.name} | ${office.city?.city_name} Gayrimenkul Ofisi | Retroia`,
+      description: `${office.name} - ${office.city?.city_name}'de ${brokerCount} gayrimenkul danışmanı ile hizmet veren güvenilir gayrimenkul ofisi. ${locationString} bölgesinde konut, ticari ve arsa araziler için profesyonel danışmanlık.`,
+      images: office.avatarUrl ? [office.avatarUrl] : [],
+      creator: "@retroia",
+      site: "@retroia",
+    },
+    alternates: {
+      canonical: `/ofis/${params.id}/${params.slug}`,
+    },
+    other: {
+      "geo.position": `${office.latitude};${office.longitude}`,
+      "geo.placename": locationString,
+      "geo.region": "TR",
+    },
   };
 }
 

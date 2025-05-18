@@ -6,7 +6,7 @@ import ReviewModal from "@/app/components/ReviewModal";
 import Share from "@/app/components/Share";
 import prisma from "@/lib/prisma";
 import { Card } from "@nextui-org/react";
-
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -16,6 +16,108 @@ interface Props {
     workerSlug: string;
     slug: string;
     title: string;
+  };
+}
+
+const stripHtml = (html: string) => {
+  if (!html) return "";
+  return html.replace(/<[^>]*>/g, "");
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const officeWorker = await prisma.officeWorker.findUnique({
+    where: {
+      id: +params.workerId,
+    },
+    include: {
+      office: {
+        include: {
+          neighborhood: true,
+          district: true,
+          city: true,
+          country: true,
+        },
+      },
+      role: true,
+    },
+  });
+
+  if (!officeWorker) {
+    return {
+      title: "Danışman Bulunamadı",
+      description: "Danışman detayları bulunamadı.",
+    };
+  }
+
+  const locationString = [
+    officeWorker.office?.neighborhood?.neighborhood_name,
+    officeWorker.office?.district?.district_name,
+    officeWorker.office?.city?.city_name,
+    officeWorker.office?.country?.country_name,
+  ]
+    .filter(Boolean)
+    .join(", ");
+
+  const title = `${officeWorker.name} ${officeWorker.surname} - ${
+    officeWorker.title || "Gayrimenkul Danışmanı"
+  } - ${officeWorker.office?.name || ""}`;
+  const description = `${officeWorker.title || "Gayrimenkul Danışmanı"} ${
+    officeWorker.name
+  } ${officeWorker.surname} - ${
+    officeWorker.office?.name || ""
+  } - ${locationString}`;
+  const keywords = `${officeWorker.title || "Gayrimenkul Danışmanı"}, ${
+    officeWorker.name
+  } ${officeWorker.surname}, ${officeWorker.office?.name || ""}, ${
+    officeWorker.office?.city?.city_name || ""
+  }, ${
+    officeWorker.office?.district?.district_name || ""
+  }, emlak danışmanı, gayrimenkul danışmanı`;
+  const ogTitle = `${officeWorker.name} ${officeWorker.surname} - ${
+    officeWorker.title || "Gayrimenkul Danışmanı"
+  }`;
+  const ogDescription = officeWorker.about
+    ? stripHtml(officeWorker.about).slice(0, 80) + "..."
+    : description;
+  const ogImageAlt = `${officeWorker.name} ${officeWorker.surname} - ${
+    officeWorker.title || "Gayrimenkul Danışmanı"
+  } - ${officeWorker.office?.name || ""}`;
+  const twitterDescription = ogDescription;
+
+  return {
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_SITE_URL || "https://www.retroia.com/emlak"
+    ),
+    title,
+    description,
+    keywords,
+    openGraph: {
+      title: ogTitle,
+      description: ogDescription,
+      images: officeWorker.avatarUrl
+        ? [
+            {
+              url: officeWorker.avatarUrl,
+              alt: ogImageAlt,
+            },
+          ]
+        : [],
+      siteName: "Retroia",
+      locale: "tr_TR",
+      type: "website",
+      url: `/ofis/${params.id}/${params.slug}/${params.title}/${params.workerId}/${params.workerSlug}`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: ogTitle,
+      description: twitterDescription,
+      images: officeWorker.avatarUrl ? [officeWorker.avatarUrl] : [],
+      creator: "@retroia",
+      site: "@retroia",
+    },
+    alternates: {
+      canonical: `/ofis/${params.id}/${params.slug}/${params.title}/${params.workerId}/${params.workerSlug}`,
+    },
   };
 }
 
@@ -55,7 +157,8 @@ const OfficeWorkerPage = async ({ params }: Props) => {
     },
   });
 
-  // console.log(officeWorker);
+  if (!officeWorker) return notFound();
+
   // find the office worker's projects
   const projects = await prisma.project.findMany({
     where: {
@@ -109,7 +212,6 @@ const OfficeWorkerPage = async ({ params }: Props) => {
     (officeWorker as any).assignedProjects = assignedProjects;
   }
 
-  if (!officeWorker) return notFound();
   return (
     <div>
       <div className="p-4">
@@ -129,4 +231,5 @@ const OfficeWorkerPage = async ({ params }: Props) => {
     </div>
   );
 };
+
 export default OfficeWorkerPage;
