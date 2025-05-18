@@ -1,7 +1,5 @@
-import ProspectAgentForm from "../components/forms/ProspectAgentForm";
-
+import dynamic from "next/dynamic";
 import { Metadata } from "next";
-import GoogleReCaptchaWrapper from "../components/GoogleReCaptchaWrapper";
 import prisma from "@/lib/prisma";
 
 export const metadata: Metadata = {
@@ -10,6 +8,22 @@ export const metadata: Metadata = {
   description:
     "Retroia Gayrimenkul, Real Estate - Gayrimenkul Danışmanı Başvuru Formu",
 };
+
+const ProspectAgentForm = dynamic(
+  () => import("../components/forms/ProspectAgentForm"),
+  {
+    loading: () => <div>Loading...</div>,
+    ssr: false,
+  }
+);
+
+const GoogleReCaptchaWrapper = dynamic(
+  () => import("../components/GoogleReCaptchaWrapper"),
+  {
+    loading: () => <div>Loading...</div>,
+    ssr: false,
+  }
+);
 
 const ProspectAgentPage = async () => {
   const countries = await prisma.country.findMany();
@@ -36,4 +50,5 @@ const ProspectAgentPage = async () => {
     </div>
   );
 };
+
 export default ProspectAgentPage;
