@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "notional-cirrus-460311-i3",
+  "private_key_id": "ef5697c5ef55418342bfc2a734ff58234a76ef09",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCcqKEfxcf+kEej\n5+SOUgIIHkrg/ySzDP/ZVo+lB2OJCd5WdJpw48cIC2dC5QwLgyw+UgrE/6A16LJp\nu1Je8pkzve5k0GkF/50+Uy+uN7WyuU21D2pMjE9c2aWaIeymgHTuQQmvN25rxWAt\ns+noG6ZYJ6se5bNqk6b0FruM9ME0q35CV8fdCqvFFJv8/uRCh1FtB/14o8EOjmQY\ntKF4Qq08bEfr9MO8F7eRy8AqAT96o5Voab5xa3r+AqEgh+OqNA+Jkh7JSgIuIaGG\nYzMmCQIHBBVSW5ZAlVMuDdtVwSnH2cRzPF6XZ8Tu9Y6AtvqBC/GGoSNmLI6yqOpY\nEJujQ3qfAgMBAAECggEAQJfPB5i3I6E9yLk+pefuaoaC/U52RVVg0K4+QB9RzRlC\nkYc2fsGMOSbqhsyGMOD/Bxsw0ZVM661skufnyLpirNDtUKgWBaElpqMKD91sj6qT\n/cnDXJilyHT9MRY3y1c/31T1t0c1wj35sB50nX15EvQYPH8dgR4sQox0/GOWni5K\neu/wJgiZbbIqBqaoGCnV2YQVLURTy7yZCaCY4VaE1G/LiyaCWNgdclOGVLuYc4QV\nNjEFgjgoalHE3/IZlXeKYwWFCQflzV/AG5XojL5pwwIlRY0ztL3zLlkPR7Ds10zY\nARC2dfiRo3uIMfKTRLDmc9MjJTA+z0BYQGf9UnOPEQKBgQDPirK5CWk/Di6mUn03\nnUpBwpAcbEn/z77BCAA8zOzs9UKkzOr281ht+XE9KYePBOJB/8SaNs2/GuzAaX31\n8T6hbwc9hWMNnnpXGpyNHJgIgOfrmNjVs+N0FQY8ut1OEBZtk9Gpd/noAh8D3SOi\nQ0AZG3kN7BUw129cUayyoPL0DQKBgQDBPIUQb/9VbNYVkOINqv/NwOv2yYcCq6kv\nY3OzmvN3++9frZR7TAe9dH7ifrRW8Pwc83PS7q15KxWVD2t0uksX3kCa6Gooti2T\no/ljhl9F3nG6M9ACG8ouj5UHSHKMCpXtwLIzdViu8GOb4tpeELMWzlAXhSmTQVdO\nnpMSujEiWwKBgBDngSslIxdptk8BxQU0oIm+qTJHd7eIWkcquao6HsomJ+l4b2Lx\n6y/580lCCrKReURa6s6MzDFWphX+Aa54mdtYScSvCqRfViOmHT45KAD5TuqXpoGx\nh0M7OyjTJ5dmJA2Ezrz48rf9BD2yU2ayB5SD8lY59nfl9EIWvPRHu8I5AoGBAKJO\nehn3aIlRNHTC0AzY76nb/Ja6aSuGEkJaj4lxgkTqmQJNYyU5FFs+qYEHGeTY33pV\nxpiKn6zh0mv0mrZd78sphCxZQSnW82tKVKQS7p1aHT5gXLwYqXb4ZR3L7WLRVWNw\n8n0keIvgIFqEbhSKhFKIkl9fGy+zt2iy6yfUuoZ3AoGBALPct7GQm+D/Rjzv+iqO\nbNAdDi7RuKoQwW6EUTfLQRDt2nm+Xgj/cMqCB62PxAn65hQGUMrCDDE3Gr/52CS1\n3Dw/GweLt8dkB1NXanr81ujSFQB+KcFskW09LnKn1rOfG36nnWpOj6fHOS9fFfMi\nBECv/MX/PN6XFw7m1zQXsAA4\n-----END PRIVATE KEY-----\n",
+  "client_email": "analytics-data-fetcher@notional-cirrus-460311-i3.iam.gserviceaccount.com",
+  "client_id": "113516603520444805045",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/analytics-data-fetcher%40notional-cirrus-460311-i3.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

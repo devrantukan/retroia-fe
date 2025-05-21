@@ -69,11 +69,32 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
     "inside" | "outside" | "normal"
   >("outside");
   const [agent, setAgent] = useState<any>(null);
+  const [totalPageViews, setTotalPageViews] = useState<number>(0);
 
   const defaultImage = {
     original: "https://picsum.photos/id/1018/1000/600",
     thumbnail: "https://picsum.photos/id/1018/250/150",
   };
+
+  useEffect(() => {
+    const loadAnalytics = async () => {
+      try {
+        const response = await fetch("/data/analytics-routes.json");
+        if (!response.ok) {
+          throw new Error("Failed to fetch analytics data");
+        }
+        const data = await response.json();
+        const propertyData = data.find((item: any) => item.id === params.id);
+        if (propertyData) {
+          setTotalPageViews(propertyData.totalPageViews);
+        }
+      } catch (error) {
+        console.error("Error loading analytics:", error);
+      }
+    };
+
+    loadAnalytics();
+  }, [params.id]);
 
   useEffect(() => {
     const fetchProperty = async () => {
@@ -396,6 +417,11 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                       year: "numeric",
                     })}
                   </span>
+                  {totalPageViews > 0 && (
+                    <div className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full ml-2">
+                      {totalPageViews} görüntülenme
+                    </div>
+                  )}
                 </div>
               </div>
               {/* Desktop View */}
@@ -413,6 +439,11 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
                       year: "numeric",
                     })}
                   </span>
+                  {totalPageViews > 0 && (
+                    <div className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full ml-2">
+                      {totalPageViews} görüntülenme
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
+    "@google-analytics/data": "^5.1.0",
     "@heroicons/react": "^2.1.1",
     "@hookform/resolvers": "^3.9.1",
     "@kinde-oss/kinde-auth-nextjs": "^2.1.15",
