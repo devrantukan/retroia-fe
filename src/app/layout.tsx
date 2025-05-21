@@ -80,7 +80,11 @@ export default function RootLayout({
   const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
   return (
-    <html lang="tr" className={raleway.variable}>
+    <html
+      lang="tr"
+      className={`${raleway.variable} notranslate`}
+      translate="no"
+    >
       <head>
         <link
           rel="apple-touch-icon"

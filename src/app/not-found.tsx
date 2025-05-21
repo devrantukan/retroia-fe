@@ -71,13 +71,13 @@ export default function NotFound() {
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <Link
-                href="/konut/kiralik"
+                href="/emlak/konut/kiralik/"
                 className="p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 text-gray-700 hover:text-primary-500 hover:scale-105"
               >
                 Kiralık Konutlar
               </Link>
               <Link
-                href="/ticari/kiralik"
+                href="/emlak/ticari/kiralik/"
                 className="p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 text-gray-700 hover:text-primary-500 hover:scale-105"
               >
                 Kiralık Ticari
@@ -89,7 +89,7 @@ export default function NotFound() {
                 Satılık Arsa
               </Link>
               <Link
-                href="/arsa-arazi/kiralik"
+                href="/emlak/arsa-arazi/kiralik/"
                 className="p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 text-gray-700 hover:text-primary-500 hover:scale-105"
               >
                 Kiralık Arsa
@@ -100,7 +100,7 @@ export default function NotFound() {
           {/* Navigation Buttons */}
           <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
             <Link
-              href="/"
+              href="/emlak/"
               className="inline-flex items-center justify-center px-6 py-3 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-all duration-200 hover:scale-105"
             >
               <House className="w-5 h-5 mr-2" />
