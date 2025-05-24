@@ -1,31 +1,29 @@
 const { BetaAnalyticsDataClient } = require('@google-analytics/data');
-const fs = require('fs').promises;
+const fs = require('fs');
 const path = require('path');
-
-// Initialize the Analytics Data client
-const credentialsPath = path.join(__dirname, 'notional-cirrus-460311-i3-ef5697c5ef55.json');
 
 async function getAnalyticsData() {
   try {
-    // Check if credentials file exists
+    // Read credentials from base64 environment variable
+    const base64 = process.env.GOOGLE_SERVICE_ACCOUNT_BASE64;
+    if (!base64) {
+      throw new Error('GOOGLE_SERVICE_ACCOUNT_BASE64 environment variable is not set');
+    }
+    let credentials;
     try {
-      await fs.access(credentialsPath);
-    } catch (error) {
-      console.error('Error: Credentials file not found at:', credentialsPath);
-      console.error('Please ensure the service account credentials file is present in the correct location.');
-      process.exit(1);
+      const jsonString = Buffer.from(base64.replace(/\s/g, ''), 'base64').toString('utf8');
+      credentials = JSON.parse(jsonString);
+    } catch (err) {
+      throw new Error('Failed to decode or parse GOOGLE_SERVICE_ACCOUNT_BASE64: ' + err.message);
     }
 
-    // Read and parse credentials
-    const credentials = JSON.parse(await fs.readFile(credentialsPath, 'utf8'));
-    
-    // Initialize client with explicit credentials
+    // Initialize the Google Analytics client
     const analyticsDataClient = new BetaAnalyticsDataClient({
       credentials: {
         client_email: credentials.client_email,
         private_key: credentials.private_key,
-      },
-      projectId: credentials.project_id,
+        project_id: credentials.project_id
+      }
     });
 
     const propertyId = '428297775';
@@ -81,10 +79,10 @@ async function getAnalyticsData() {
 
     // Save the data to public directory
     const outputDir = path.join(__dirname, '../../public/data');
-    await fs.mkdir(outputDir, { recursive: true });
+    fs.mkdirSync(outputDir, { recursive: true });
 
     const outputPath = path.join(outputDir, 'analytics-routes.json');
-    await fs.writeFile(outputPath, JSON.stringify(routeData, null, 2));
+    fs.writeFileSync(outputPath, JSON.stringify(routeData, null, 2));
 
     console.log('Analytics data has been successfully saved to:', outputPath);
     return routeData;
@@ -92,9 +90,9 @@ async function getAnalyticsData() {
     console.error('Error fetching analytics data:', error);
     if (error.code === 16) {
       console.error('\nAuthentication Error:');
-      console.error('1. Make sure the service account credentials file is present and readable');
+      console.error('1. Make sure the GOOGLE_SERVICE_ACCOUNT_BASE64 environment variable is set and valid');
       console.error('2. Verify that the service account has the necessary permissions');
-      console.error('3. Check if the credentials file contains valid JSON with client_email and private_key');
+      console.error('3. Check if the credentials JSON contains valid client_email and private_key');
     }
     throw error;
   }
