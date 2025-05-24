@@ -79,7 +79,7 @@ const PropertyPageClient = ({ params }: PropertyPageClientProps) => {
   useEffect(() => {
     const loadAnalytics = async () => {
       try {
-        const response = await fetch("/data/analytics-routes.json/");
+        const response = await fetch("/emlak/data/analytics-routes.json");
         if (!response.ok) {
           throw new Error("Failed to fetch analytics data");
         }
