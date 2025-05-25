@@ -29,7 +29,7 @@ export default function NotFound() {
           {/* Quick Actions */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Link
-              href="/konut/satilik"
+              href="/emlak/konut/satilik/"
               className="group p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200"
             >
               <Building className="w-8 h-8 text-primary-500 mb-3 mx-auto group-hover:scale-110 transition-transform" />
@@ -41,7 +41,7 @@ export default function NotFound() {
               </p>
             </Link>
             <Link
-              href="/ticari/satilik"
+              href="/emlak/ticari/satilik/"
               className="group p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200"
             >
               <MapPin className="w-8 h-8 text-primary-500 mb-3 mx-auto group-hover:scale-110 transition-transform" />
@@ -83,7 +83,7 @@ export default function NotFound() {
                 Kiralık Ticari
               </Link>
               <Link
-                href="/arsa-arazi/satilik"
+                href="/emlak/arsa-arazi/satilik/"
                 className="p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 text-gray-700 hover:text-primary-500 hover:scale-105"
               >
                 Satılık Arsa
