@@ -41,7 +41,7 @@ export default function NotFound() {
               </p>
             </Link>
             <Link
-              href="/ticari/satilik"
+              href="/emlak/ticari/satilik/"
               className="group p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200"
             >
               <MapPin className="w-8 h-8 text-primary-500 mb-3 mx-auto group-hover:scale-110 transition-transform" />
