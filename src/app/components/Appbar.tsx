@@ -100,8 +100,8 @@ const Appbar = () => {
           <Link
             href="/danismanlarimiz"
             {...(pathname === "/danismanlarimiz"
-              ? { "aria-current": "page" }
-              : { color: "foreground" })}
+              ? { "aria-current": "page" as const }
+              : {})}
           >
             Danışmanlarımız
           </Link>
@@ -111,8 +111,8 @@ const Appbar = () => {
         >
           <Link
             {...(pathname === "/gayrimenkul-danismani-basvuru-formu"
-              ? { "aria-current": "page" }
-              : { color: "foreground" })}
+              ? { "aria-current": "page" as const }
+              : {})}
             href="/gayrimenkul-danismani-basvuru-formu"
           >
             Danışman ol
@@ -123,8 +123,8 @@ const Appbar = () => {
         >
           <Link
             {...(pathname === "/gayrimenkullerinizi-satalim-kiralayalim"
-              ? { "aria-current": "page" }
-              : { color: "foreground" })}
+              ? { "aria-current": "page" as const }
+              : {})}
             href="/gayrimenkullerinizi-satalim-kiralayalim"
           >
             Retroia ile Sat Kirala
@@ -169,8 +169,8 @@ const Appbar = () => {
           <Link
             href="/ofislerimiz"
             {...(pathname === "/ofislerimiz"
-              ? { "aria-current": "page" }
-              : { color: "foreground" })}
+              ? { "aria-current": "page" as const }
+              : {})}
             className="text-3xl text-blue-950"
             onClick={() => setIsMenuOpen()}
           >
@@ -184,8 +184,8 @@ const Appbar = () => {
           <Link
             href="/danismanlarimiz"
             {...(pathname === "/danismanlarimiz"
-              ? { "aria-current": "page" }
-              : { color: "foreground" })}
+              ? { "aria-current": "page" as const }
+              : {})}
             className="text-3xl text-blue-950"
             onClick={() => setIsMenuOpen()}
           >
@@ -198,8 +198,8 @@ const Appbar = () => {
         >
           <Link
             {...(pathname === "/gayrimenkul-danismani-basvuru-formu"
-              ? { "aria-current": "page" }
-              : { color: "foreground" })}
+              ? { "aria-current": "page" as const }
+              : {})}
             href="/gayrimenkul-danismani-basvuru-formu"
             className="text-3xl text-blue-950"
             onClick={() => setIsMenuOpen()}
@@ -213,8 +213,8 @@ const Appbar = () => {
         >
           <Link
             {...(pathname === "/gayrimenkullerinizi-satalim-kiralayalim"
-              ? { "aria-current": "page" }
-              : { color: "foreground" })}
+              ? { "aria-current": "page" as const }
+              : {})}
             href="/gayrimenkullerinizi-satalim-kiralayalim"
             className="text-3xl text-blue-950"
             onClick={() => setIsMenuOpen()}

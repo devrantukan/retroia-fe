@@ -7,8 +7,6 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { city: string } }
 ) {
-  // console.log("params", params.city);
-
   const city = await prisma.city.findFirst({
     where: {
       slug: params.city,

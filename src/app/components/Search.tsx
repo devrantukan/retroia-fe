@@ -1,11 +1,4 @@
-//  "use client";
-import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
-import { Input } from "@nextui-org/react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React from "react";
-import { useDebouncedCallback } from "use-debounce";
 import BlogSearchComponent from "./BlogSearchComponent";
-import prisma from "@/lib/prisma";
 
 const Search = ({
   type,

@@ -1,3 +1,5 @@
+"use client";
+
 import { Card } from "@nextui-org/react";
 import Image from "next/image";
 import { Prisma } from "@prisma/client";

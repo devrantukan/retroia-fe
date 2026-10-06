@@ -3,7 +3,6 @@ import Image from "next/image";
 import PropertyCard from "@/app/components/PropertyCard";
 import PropertyContainer from "@/app/components/PropertyContainer";
 import Search from "@/app/components/Search";
-import { useRouter } from "next/navigation";
 const PAGE_SIZE = 8;
 
 interface Props {

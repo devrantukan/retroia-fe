@@ -5,8 +5,7 @@ import slugify from "slugify";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { district: string } },
-  response: NextResponse
+  { params }: { params: { district: string } }
 ) {
   const projectLocations = await prisma.propertyLocation.findMany({
     include: {
