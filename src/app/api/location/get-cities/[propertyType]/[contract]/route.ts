@@ -5,10 +5,8 @@ import slugify from "slugify";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { propertyType: string; contract: string } },
-  response: NextResponse
+  { params }: { params: { propertyType: string; contract: string } }
 ) {
-  // console.log(params.propertyType);
   const projectLocations = await prisma.propertyLocation.findMany({
     include: {
       property: {

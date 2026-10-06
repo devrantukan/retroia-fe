@@ -8,12 +8,14 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "overrides": {
+    "postcss-selector-parser": "^7.1.6"
+  },
   "dependencies": {
-    "@faker-js/faker": "^8.4.1",
     "@heroicons/react": "^2.1.1",
     "@hookform/resolvers": "^3.9.1",
     "@kinde-oss/kinde-auth-nextjs": "^2.1.15",
-    "@next/third-parties": "^14.2.4",
+    "@next/third-parties": "^14.2.35",
     "@nextui-org/modal": "^2.0.41",
     "@nextui-org/react": "^2.2.9",
     "@nextui-org/system": "^2.2.6",
@@ -32,7 +34,7 @@
     "@stripe/react-stripe-js": "^2.7.1",
     "@stripe/stripe-js": "^3.4.1",
     "@supabase/supabase-js": "^2.39.7",
-    "axios": "^1.7.9",
+    "axios": "^1.20.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
@@ -43,7 +45,7 @@
     "google-maps-react-markers": "^2.0.11",
     "instantsearch.css": "^8.5.1",
     "lucide-react": "^0.465.0",
-    "next": "^14.2.3",
+    "next": "^14.2.35",
     "react": "^18",
     "react-dom": "^18",
     "react-google-recaptcha-v3": "^1.10.1",
@@ -51,10 +53,9 @@
     "react-image-gallery": "^1.3.0",
     "react-instantsearch-dom": "^6.40.4",
     "react-instantsearch-dom-maps": "^6.40.4",
-    "react-share-social": "^0.1.60",
     "react-toastify": "^10.0.5",
     "rheostat": "^4.1.1",
-    "sharp": "^0.33.5",
+    "sharp": "^0.35.5",
     "slugify": "^1.6.6",
     "stripe": "^15.8.0",
     "tailwind-merge": "^2.5.5",
@@ -62,7 +63,7 @@
     "typesense": "^1.8.2",
     "typesense-instantsearch-adapter": "^2.8.0",
     "use-debounce": "^10.0.0",
-    "validator": "^13.11.0",
+    "validator": "^13.15.35",
     "vaul": "^1.1.1",
     "zod": "^3.23.8"
   },
@@ -76,10 +77,10 @@
     "@types/validator": "^13.11.9",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
-    "eslint-config-next": "14.1.0",
-    "postcss": "^8",
+    "eslint-config-next": "^14.2.35",
+    "postcss": "^8.5.3",
     "prisma": "^5.10.2",
-    "tailwindcss": "^3.3.0",
+    "tailwindcss": "^3.4.17",
     "typescript": "^5"
   }
 }

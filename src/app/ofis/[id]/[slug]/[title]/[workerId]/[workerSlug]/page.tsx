@@ -5,8 +5,6 @@ import PageTitle from "@/app/components/pageTitle";
 import ReviewModal from "@/app/components/ReviewModal";
 import Share from "@/app/components/Share";
 import prisma from "@/lib/prisma";
-import { Card } from "@nextui-org/react";
-
 import { notFound } from "next/navigation";
 
 interface Props {

@@ -9,7 +9,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import React from "react";
-import { ShareSocial } from "react-share-social";
+import ShareLinks from "@/app/components/ShareLinks";
 import { ShareFat } from "@phosphor-icons/react/dist/ssr";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -65,9 +65,9 @@ export default function Share({
                   )}
                   <h2 className="font-bold">{title}</h2>
                 </div>
-                <ShareSocial
+                <ShareLinks
                   url={`${baseUrl}${currentPage}`}
-                  socialTypes={["facebook", "twitter", "linkedin", "whatsapp"]}
+                  platforms={["facebook", "twitter", "linkedin", "whatsapp"]}
                 />
               </ModalBody>
             </>

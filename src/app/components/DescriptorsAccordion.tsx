@@ -1,3 +1,5 @@
+"use client";
+
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import { CheckCircle } from "@phosphor-icons/react/dist/ssr";
 

@@ -4,10 +4,8 @@ import "./globals.css";
 import { Providers } from "./components/providers";
 import Appbar from "./components/Appbar";
 import SignInPanel from "./components/signInPanel";
-import { ToastContainer } from "react-toastify";
-
 import Footer from "./components/Footer";
-import "react-toastify/dist/ReactToastify.css";
+import ToastProvider from "./components/ToastProvider";
 
 const raleway = Raleway({ subsets: ["latin"] });
 
@@ -116,9 +114,9 @@ export default function RootLayout({
       </head>
       <body className={raleway.className}>
         <Providers>
-          <Appbar>{/* <SignInPanel /> */}</Appbar>
+          <Appbar />
           {children}
-          <ToastContainer />
+          <ToastProvider />
           <Footer />
         </Providers>
       </body>

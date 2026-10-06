@@ -5,8 +5,7 @@ import slugify from "slugify";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: number } },
-  response: NextResponse
+  { params }: { params: { id: string } }
 ) {
   const property = await prisma.property.findUnique({
     where: {
